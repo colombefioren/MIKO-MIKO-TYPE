@@ -46,3 +46,29 @@ window.addEventListener("DOMContentLoaded", () => {
     highlight.style.transition = `transform ${MOVE_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
   }, 10);
 });
+document.addEventListener("DOMContentLoaded", function () {
+  const chevron = document.querySelector(".chevron");
+  const nav = document.querySelector("nav");
+  const navList = document.getElementById("nav-list");
+
+  // Store the original position by calculating the distance from top
+  let originalTopPosition = navList.getBoundingClientRect().top;
+
+  chevron.addEventListener("click", function () {
+    const isCollapsing = !nav.classList.contains("collapsed");
+    nav.classList.toggle("collapsed");
+    const linkContainer = document.querySelector(".link-container");
+    linkContainer.classList.toggle("px-7")
+
+    if (isCollapsing) {
+      // When collapsing, calculate needed margin to maintain position
+      const currentTop = navList.getBoundingClientRect().top;
+      const positionDifference = originalTopPosition - currentTop;
+      navList.style.marginTop = `${positionDifference}px`;
+    } else {
+      // When expanding, reset to original position
+      navList.style.marginTop = "";
+      originalTopPosition = navList.getBoundingClientRect().top; 
+    }
+  });
+});
