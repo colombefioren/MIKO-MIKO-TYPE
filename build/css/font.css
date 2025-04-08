@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("../assets/fonts/CascadiaMonoPL-Light.otf");
+}
+
+* {
+  font-family: "Cascadia Mono";
+}
