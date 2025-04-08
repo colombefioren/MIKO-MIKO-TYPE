@@ -20,7 +20,7 @@
       class="absolute bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5"
     >
       <div
-        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform"
+        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
       >
         <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
       </div>
@@ -43,26 +43,38 @@
           </div>
         </div>
       </div>
-      <ul class="flex flex-col mt-10 gap-7 w-full px-7">
-        <li class="pl-6 button-links py-3">
+      <ul class="flex flex-col mt-10 gap-6 w-full px-7 relative" id="nav-list">
+        <!-- Highlight background -->
+        <div id="focus-highlight" class="focused-btn-highlight"></div>
+
+        <!-- Navigation buttons -->
+        <li
+          class="pl-6 button-links py-[14px]"
+        >
           <a class="flex text-dusk items-center gap-15" href="#">
             <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
             <div class="text-xl font-bold button-text">Type</div>
           </a>
         </li>
-        <li class="pl-6 button-links py-3">
+        <li
+          class="pl-6 button-links py-[14px]"
+        >
           <a class="flex text-dusk items-center gap-15" href="#">
             <i class="fa-solid fa-horse text-3xl button-icon"></i>
             <div class="text-xl font-bold button-text">Race</div>
           </a>
         </li>
-        <li class="pl-6 button-links py-3">
+        <li
+          class="pl-6 button-links py-[14px]"
+        >
           <a class="flex text-dusk items-center gap-15" href="#">
             <i class="fa-solid fa-users text-[27px] button-icon"></i>
             <div class="text-xl font-bold button-text">Friends</div>
           </a>
         </li>
-        <li class="pl-6 button-links py-3">
+        <li
+          class="pl-6 button-links py-[14px]"
+        >
           <a class="flex text-dusk items-center gap-15" href="#">
             <i class="fa-solid fa-medal text-[34px] button-icon"></i>
             <div class="text-xl font-bold button-text">Boards</div>
