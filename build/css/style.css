@@ -12,6 +12,7 @@
     --font-mono: Cascadia Mono;
     --color-amber-300: oklch(87.9% 0.169 91.605);
     --color-amber-600: oklch(66.6% 0.179 58.318);
+    --color-green-500: oklch(72.3% 0.219 149.579);
     --color-pink-300: oklch(82.3% 0.12 346.018);
     --color-slate-300: oklch(86.9% 0.022 252.894);
     --color-slate-500: oklch(55.4% 0.046 257.417);
@@ -214,8 +215,14 @@
   .left-0 {
     left: calc(var(--spacing) * 0);
   }
+  .mx-auto {
+    margin-inline: auto;
+  }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
+  }
+  .ml-\[90px\] {
+    margin-left: 90px;
   }
   .flex {
     display: flex;
@@ -241,8 +248,26 @@
   .w-28 {
     width: calc(var(--spacing) * 28);
   }
+  .w-\[\%\] {
+    width: %;
+  }
+  .w-\[9\] {
+    width: 9;
+  }
+  .w-\[80\%\] {
+    width: 80%;
+  }
+  .w-\[90\%\] {
+    width: 90%;
+  }
+  .w-\[95\%\] {
+    width: 95%;
+  }
   .w-\[369px\] {
     width: 369px;
+  }
+  .w-\[calc\(100\%\)\] {
+    width: calc(100%);
   }
   .w-full {
     width: 100%;
@@ -308,6 +333,9 @@
   .bg-blaze {
     background-color: var(--color-blaze);
   }
+  .bg-green-500 {
+    background-color: var(--color-green-500);
+  }
   .bg-lightmidnight {
     background-color: var(--color-lightmidnight);
   }
@@ -358,6 +386,9 @@
   }
   .text-\[34px\] {
     font-size: 34px;
+  }
+  .text-\[46px\] {
+    font-size: 46px;
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
