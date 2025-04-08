@@ -85,7 +85,6 @@ const getCurrentStats = () => {
 const updateWord = (event) => {
   // Check if spacebar is pressed
   if (event.key === " ") {
-    
     if (inputField.value.trim() === "") {
       event.preventDefault(); // Disable spacebar if no characters are typed
       return;
@@ -110,7 +109,7 @@ const highlightNextWord = () => {
 
   if (currentWordIndex < wordElements.length) {
     if (currentWordIndex > 0) {
-      wordElements[currentWordIndex - 1].style.color = "black";
+      wordElements[currentWordIndex - 1].style.color = "green";
     }
     wordElements[currentWordIndex].style.color = "red";
   }

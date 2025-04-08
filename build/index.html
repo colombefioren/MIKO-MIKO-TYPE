@@ -82,10 +82,7 @@
         </li>
       </ul>
     </nav>
-    <header>
-      <h1 class="font-bold bg-pink-300 text-5xl text-center py-5">
-        Typing Test
-      </h1>
+    <header class="flex items-center text-white flex-col">
       <label for="mode">Select Mode:</label>
       <select id="mode">
         <option value="easy">Easy</option>
@@ -94,15 +91,18 @@
       </select>
     </header>
 
-    <main class="bg-green-500 flex flex-col items-center ml-[90px]">
-      <p class="text-white bg-amber-300 w-[90%] text-[46px]" id="word-display"></p>
+    <main class="flex flex-col items-center ml-[90px]">
+      <p
+        class="text-textPrimary w-[90%] leading-[70px] tracking-[0.16px] text-[46px]"
+        id="word-display"
+      ></p>
       <input
-        class="border border-slate-300"
+        class="border border-slate-300 text-white"
         type="text"
         id="input-field"
         autofocus
       />
-      <p id="results">Results :</p>
+      <p id="results" class="text-white">Results :</p>
     </main>
 
     <script src="./js/gameLogic.js"></script>
