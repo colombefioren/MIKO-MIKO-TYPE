@@ -8,9 +8,11 @@
 @theme {
   --font-mono: Cascadia Mono;
   --color-midnight: #041322;
+  --color-lightmidnight: #1d2142;
+  --color-lightabyss: #131536;
   --color-abyss: #010d1a;
   --color-azure: #2596d1;
-  --color-dusk: #4e5481;
+  --color-dusk: #4E5481;
   --color-frost: #a2bffe;
   --color-blaze: #ffa62f;
   --color-primary: #fff;
