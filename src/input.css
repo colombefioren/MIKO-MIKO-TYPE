@@ -12,8 +12,22 @@
   --color-lightabyss: #131536;
   --color-abyss: #010d1a;
   --color-azure: #2596d1;
-  --color-dusk: #4E5481;
+  --color-dusk: #4e5481;
   --color-frost: #a2bffe;
   --color-blaze: #ffa62f;
-  --color-primary: #fff;
+  --color-whitedusk: #a0a4b0;
+  --gradient-azure-frost: linear-gradient(
+    to right,
+    var(--color-midnight) 5%,
+    #202e54 95%
+  );
+}
+
+@layer utilities {
+  .focused-btn {
+    border-radius: 1.5rem 0.5rem 1.5rem 0.5rem;
+    background-image: var(--gradient-azure-frost);
+    border: 3px solid #475f94;
+    padding-block: 12px;
+  }
 }

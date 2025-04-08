@@ -10,21 +10,15 @@
     --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: Cascadia Mono;
-    --color-red-400: oklch(70.4% 0.191 22.216);
     --color-pink-300: oklch(82.3% 0.12 346.018);
-    --color-pink-400: oklch(71.8% 0.202 349.761);
     --color-slate-300: oklch(86.9% 0.022 252.894);
     --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
-    --text-2xl: 1.5rem;
-    --text-2xl--line-height: calc(2 / 1.5);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
-    --text-4xl: 2.25rem;
-    --text-4xl--line-height: calc(2.5 / 2.25);
     --text-5xl: 3rem;
     --text-5xl--line-height: 1;
     --font-weight-bold: 700;
@@ -36,9 +30,15 @@
     --color-midnight: #041322;
     --color-lightmidnight: #1d2142;
     --color-abyss: #010d1a;
-    --color-azure: #2596d1;
-    --color-dusk: #4E5481;
+    --color-dusk: #4e5481;
+    --color-frost: #a2bffe;
     --color-blaze: #ffa62f;
+    --color-whitedusk: #a0a4b0;
+    --gradient-azure-frost: linear-gradient(
+    to right,
+    var(--color-midnight) 5%,
+    #202e54 95%
+  );
   }
 }
 @layer base {
@@ -290,29 +290,23 @@
   .bg-pink-300 {
     background-color: var(--color-pink-300);
   }
-  .bg-red-400 {
-    background-color: var(--color-red-400);
-  }
   .bg-slate-500 {
     background-color: var(--color-slate-500);
   }
   .bg-white {
     background-color: var(--color-white);
   }
+  .p-6 {
+    padding: calc(var(--spacing) * 6);
+  }
+  .px-7 {
+    padding-inline: calc(var(--spacing) * 7);
+  }
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
   }
-  .pl-5 {
-    padding-left: calc(var(--spacing) * 5);
-  }
-  .pl-13 {
-    padding-left: calc(var(--spacing) * 13);
-  }
-  .pl-15 {
-    padding-left: calc(var(--spacing) * 15);
-  }
-  .pl-20 {
-    padding-left: calc(var(--spacing) * 20);
+  .pl-6 {
+    padding-left: calc(var(--spacing) * 6);
   }
   .text-center {
     text-align: center;
@@ -342,8 +336,14 @@
   .text-dusk {
     color: var(--color-dusk);
   }
+  .text-frost {
+    color: var(--color-frost);
+  }
   .text-white {
     color: var(--color-white);
+  }
+  .text-whitedusk {
+    color: var(--color-whitedusk);
   }
   .underline {
     text-decoration-line: underline;
@@ -366,6 +366,14 @@
         scale: var(--tw-scale-x) var(--tw-scale-y);
       }
     }
+  }
+}
+@layer utilities {
+  .focused-btn {
+    border-radius: 1.5rem 0.5rem 1.5rem 0.5rem;
+    background-image: var(--gradient-azure-frost);
+    border: 3px solid #475f94;
+    padding-block: 12px;
   }
 }
 @property --tw-border-style {
