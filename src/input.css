@@ -1,8 +1,3 @@
-@font-face {
-  font-family: Cascadia Mono;
-  src: url("../build/assets/fonts/CascadiaMono-Light.otf");
-}
-
 @import "tailwindcss";
 
 @theme {
