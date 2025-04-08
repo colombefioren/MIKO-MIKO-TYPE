@@ -17,6 +17,7 @@ const modeSelect = document.getElementById("mode");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
+const totalResult = document.getElementById("total_result");
 
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -58,6 +59,7 @@ const startTest = (wordCount = 5) => {
 
   inputField.value = "";
   results.textContent = "";
+  totalResult.textContent = "";
 };
 
 // Start the timer when user begins typing
@@ -112,10 +114,8 @@ const updateWord = (event) => {
     if (currentWordIndex >= wordsToType.length) {
       const avgWpm = (totalStat.wpm / totalStat.count).toFixed(2);
       const avgAccuracy = (totalStat.accuracy / totalStat.count).toFixed(2);
-
-      alert(
-        `Congratulations! Your average WPM is ${avgWpm} and average Accuracy is ${avgAccuracy}%`
-      );
+      results.textContent = "";
+      totalResult.textContent = `Congratulations! WPM : ${avgWpm} | ACCURACY : ${avgAccuracy}%`;
     }
 
     inputField.value = ""; // Clear input field after space
