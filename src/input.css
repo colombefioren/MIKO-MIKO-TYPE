@@ -1,1 +1,17 @@
+@font-face {
+  font-family: Cascadia Mono;
+  src: url("../build/assets/fonts/CascadiaMono-Light.otf");
+}
+
 @import "tailwindcss";
+
+@theme {
+  --font-mono: Cascadia Mono;
+  --color-midnight: #041322;
+  --color-abyss: #010d1a;
+  --color-azure: #2596d1;
+  --color-dusk: #4e5481;
+  --color-frost: #a2bffe;
+  --color-blaze: #ffa62f;
+  --color-primary: #fff;
+}
