@@ -125,18 +125,25 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <main class="flex flex-col items-center ml-[90px] mt-40">
       <div class="flex flex-col items-center gap-18">
         <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
-        <div class="relative w-[90%]">
-          <input
-            class="border border-slate-300 text-white absolute"
-            type="text"
-            id="input-field"
-            autofocus
-          />
+        <div class="relative w-[90%] bg-pink-700 flex items-center justify-center">
+          <button
+          id="start-btn"
+            class="text-white py-2 px-1 rounded-sm text-xl bg-red-600 cursor-pointer hover:scale-110 absolute z-100"
+          >
+            Start Test
+          </button>
+
           <div
             class="text-textPrimary leading-[70px] tracking-[3px] text-[40px] flex flex-wrap"
             id="word-display"
           ></div>
           <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+          <input
+            class="border border-slate-300 text-white absolute h-full top-0 w-full"
+            type="text"
+            id="input-field"
+            autofocus
+          />
         </div>
 
         <p id="results" class="text-white">Results :</p>
