@@ -9,6 +9,7 @@ let startTime = null,
   previousEndTime = null;
 let currentWordIndex = 0;
 const wordsToType = [];
+let charSpans = []; // Store all character spans for cursor positioning
 
 // Total stats container - now with count and initialized as numbers
 let totalStat = { wpm: 0, accuracy: 0, count: 0 };
@@ -18,6 +19,11 @@ const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
 const totalResult = document.getElementById("total_result");
+const cursor = document.createElement("div"); // Create cursor element
+
+// Add cursor to DOM
+cursor.id = "typing-cursor";
+document.body.appendChild(cursor);
 
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -30,40 +36,7 @@ const words = {
     "misconception",
   ],
   phrases: [
-    "the",
-    "quick",
-    "brown",
-    "fox",
-    "jumps",
-    "over",
-    "the",
-    "lazy",
-    "dog",
-    "while",
-    "chasing",
-    "a",
-    "small",
-    "rabbit",
-    "through",
-    "the",
-    "green",
-    "meadow",
-    "birds",
-    "fly",
-    "high",
-    "in",
-    "the",
-    "bright",
-    "blue",
-    "sky",
-    "and",
-    "soft",
-    "wind",
-    "today",
-    "with",
-    "the",
-    "red",
-    "sun",
+    "the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"
   ],
 };
 
@@ -73,10 +46,34 @@ const getRandomWord = (mode) => {
   return wordList[Math.floor(Math.random() * wordList.length)];
 };
 
+// Update cursor position
+const updateCursorPosition = () => {
+  if (charSpans.length === 0 || currentWordIndex >= wordsToType.length) return;
+
+  const currentPosition = inputField.value.length;
+  const currentWordLength = wordsToType[currentWordIndex].length;
+  const spanIndex = charSpans.findIndex(span => 
+    parseInt(span.dataset.wordIndex) === currentWordIndex && 
+    parseInt(span.dataset.charIndex) === Math.min(currentPosition, currentWordLength)
+  );
+
+  if (spanIndex >= 0) {
+    const span = charSpans[spanIndex];
+    const rect = span.getBoundingClientRect();
+    const wordDisplayRect = wordDisplay.getBoundingClientRect();
+    
+    cursor.style.left = `${rect.left - wordDisplayRect.left + wordDisplay.offsetLeft}px`;
+    cursor.style.top = `${rect.top - wordDisplayRect.top + wordDisplay.offsetTop}px`;
+    cursor.style.height = `${rect.height}px`;
+    cursor.style.opacity = '1';
+  }
+};
+
 // Initialize the typing test
 const startTest = (wordCount = 25) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
+  charSpans = []; // Reset character spans
   currentWordIndex = 0;
   startTime = null;
   previousEndTime = null;
@@ -86,21 +83,43 @@ const startTest = (wordCount = 25) => {
     wordsToType.push(getRandomWord(modeSelect.value));
   }
 
-  wordsToType.forEach((word, index) => {
-    const span = document.createElement("span");
-    span.textContent = word + " ";
-    if (index === 0) span.style.color = "red"; // Highlight first word
-    wordDisplay.appendChild(span);
+  // Create word display with individual character spans
+  wordsToType.forEach((word, wordIndex) => {
+    // Add word characters
+    [...word].forEach((char, charIndex) => {
+      const charSpan = document.createElement("span");
+      charSpan.className = "char-span";
+      charSpan.textContent = char;
+      charSpan.dataset.wordIndex = wordIndex;
+      charSpan.dataset.charIndex = charIndex;
+      wordDisplay.appendChild(charSpan);
+      charSpans.push(charSpan);
+    });
+
+    // Add space after word (except after last word)
+    if (wordIndex < wordCount - 1) {
+      const spaceSpan = document.createElement("span");
+      spaceSpan.className = "char-span space";
+      spaceSpan.textContent = " ";
+      spaceSpan.dataset.wordIndex = wordIndex;
+      spaceSpan.dataset.charIndex = word.length;
+      wordDisplay.appendChild(spaceSpan);
+      charSpans.push(spaceSpan);
+    }
   });
 
+  // Highlight first word
+  highlightNextWord();
   inputField.value = "";
   results.textContent = "";
   totalResult.textContent = "";
+  updateCursorPosition();
 };
 
 // Start the timer when user begins typing
 const startTimer = () => {
   if (!startTime) startTime = Date.now();
+  updateCursorPosition();
 };
 
 // Calculate and return WPM & accuracy
@@ -162,26 +181,68 @@ const updateWord = (event) => {
     }
 
     inputField.value = ""; // Clear input field after space
+    updateCursorPosition(); // Update cursor position
     event.preventDefault(); // Prevent adding extra spaces
   }
 };
 
 // Highlight the current word in red
 const highlightNextWord = () => {
-  const wordElements = wordDisplay.children;
+  // Reset all words to default color
+  charSpans.forEach(span => {
+    span.style.color = "";
+  });
 
-  if (currentWordIndex < wordElements.length) {
-    if (currentWordIndex > 0) {
-      wordElements[currentWordIndex - 1].style.color = "green";
+  // Highlight current word in red
+  const currentWordSpans = charSpans.filter(span => 
+    parseInt(span.dataset.wordIndex) === currentWordIndex
+  );
+  currentWordSpans.forEach(span => {
+    if (span.textContent !== " ") {
+      span.style.color = "red";
     }
-    wordElements[currentWordIndex].style.color = "red";
+  });
+
+  // Mark previous word as green
+  if (currentWordIndex > 0) {
+    const prevWordSpans = charSpans.filter(span => 
+      parseInt(span.dataset.wordIndex) === currentWordIndex - 1
+    );
+    prevWordSpans.forEach(span => {
+      if (span.textContent !== " ") {
+        span.style.color = "green";
+      }
+    });
   }
+
+  updateCursorPosition();
 };
 
 // Event listeners
 inputField.addEventListener("keydown", (event) => {
   startTimer();
   updateWord(event);
+});
+
+inputField.addEventListener("input", () => {
+  // Update character colors as user types
+  const currentWord = wordsToType[currentWordIndex];
+  const typed = inputField.value;
+  
+  const currentWordSpans = charSpans.filter(span => 
+    parseInt(span.dataset.wordIndex) === currentWordIndex
+  );
+  
+  for (let i = 0; i < typed.length && i < currentWord.length; i++) {
+    const charSpan = currentWordSpans[i];
+    if (typed[i] === currentWord[i]) {
+      charSpan.style.color = "white"; // Correct character
+    } else {
+      charSpan.style.color = "red"; // Incorrect character
+    }
+  }
+  
+  updateCursorPosition();
 });
 
 modeSelect.addEventListener("change", () => startTest());
@@ -196,3 +257,6 @@ window.addEventListener("keydown", (event) => {
     startTest();
   }
 });
+
+// Make sure cursor is always visible
+cursor.style.display = 'block';

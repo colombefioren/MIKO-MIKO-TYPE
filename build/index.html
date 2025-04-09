@@ -9,6 +9,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/cursor.css">
     <link rel="stylesheet" href="./css/font.css" />
     <link rel="stylesheet" href="./css/navbar.css" />
     <link rel="shortcut icon" href="./assets/images/mikomiko-logo-reduced.svg" type="image/x-icon">
@@ -103,21 +104,25 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     </header>
 
     <main class="flex flex-col items-center ml-[90px] mt-40">
-     <div class="flex flex-col items-center gap-18">
-      <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
-      <p
-      class="text-textPrimary w-[90%] leading-[70px] tracking-[3px] text-[40px]"
-      id="word-display"
-    ></p>
-     </div>
-      <input
-        class="border border-slate-300 text-white"
-        type="text"
-        id="input-field"
-        autofocus
-      />
-      <p id="results" class="text-white">Results :</p>
-      <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
+      <div class="flex flex-col items-center gap-18">
+        <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
+        <div class="relative w-[90%]">
+          <div 
+            class="text-textPrimary leading-[70px] tracking-[3px] text-[40px] flex flex-wrap" 
+            id="word-display"
+          ></div>
+          <div id="cursor" class="absolute h-10 w-0.5 bg-white"></div>
+        </div>
+        
+        <input
+          class="border border-slate-300 text-white opacity-0 absolute -z-10"
+          type="text"
+          id="input-field"
+          autofocus
+        />
+        <p id="results" class="text-white">Results :</p>
+        <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
+      </div>
     </main>
 
     <script src="./js/gameLogic.js"></script>
