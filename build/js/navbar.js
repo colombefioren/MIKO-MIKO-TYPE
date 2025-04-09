@@ -52,11 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const chevron = document.querySelector(".chevron");
   const nav = document.querySelector("nav");
   const mainElement = document.querySelector("main");
+  const linkContainer = document.querySelector(".link-container");
 
   chevron.addEventListener("click", function () {
     nav.classList.toggle("collapsed");
-    const linkContainer = document.querySelector(".link-container");
-    linkContainer.classList.toggle("px-7");
+      linkContainer.classList.toggle("px-7");
     // Add blur when navabr is not collasped
     mainElement.classList.toggle("blur-sm");
   });
@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!nav.classList.contains("collapsed")) {
         nav.classList.add("collapsed");
         mainElement.classList.toggle("blur-sm");
+        linkContainer.classList.toggle("px-7");
       }
     });
   });
