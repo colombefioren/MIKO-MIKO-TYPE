@@ -52,13 +52,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const chevron = document.querySelector(".chevron");
   const nav = document.querySelector("nav");
   const mainElement = document.querySelector("main");
+  const headerElement = document.querySelector("header");
   const linkContainer = document.querySelector(".link-container");
 
   chevron.addEventListener("click", function () {
     nav.classList.toggle("collapsed");
-      linkContainer.classList.toggle("px-7");
+    linkContainer.classList.toggle("px-7");
     // Add blur when navabr is not collasped
     mainElement.classList.toggle("blur-sm");
+    headerElement.classList.toggle("blur-sm");
   });
   // Close navbar when the user switches mode
   buttons.forEach((button) => {
@@ -66,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!nav.classList.contains("collapsed")) {
         nav.classList.add("collapsed");
         mainElement.classList.toggle("blur-sm");
+        headerElement.classList.toggle("blur-sm");
         linkContainer.classList.toggle("px-7");
       }
     });
