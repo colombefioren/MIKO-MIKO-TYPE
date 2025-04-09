@@ -9,6 +9,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/cursor.css" />
     <link rel="stylesheet" href="./css/font.css" />
     <link rel="stylesheet" href="./css/navbar.css" />
     <link
@@ -101,6 +102,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
+          <option value="phrases">Phrases</option>
         </select>
       </div>
       <div class="flex gap-5">
@@ -119,20 +121,27 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
       </div>
     </header>
-    <!-- Main content -->
-    <main class="flex flex-col justify-center items-center ml-[90px] grow">
-      <p
-        class="text-textPrimary w-[90%] leading-[70px] tracking-[0.16px] text-[46px] font-semilight"
-        id="word-display"
-      ></p>
-      <input
-        class="border border-slate-300 text-white"
-        type="text"
-        id="input-field"
-        autofocus
-      />
-      <p id="results" class="text-white">Results :</p>
-      <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
+
+    <main class="flex flex-col items-center ml-[90px] mt-40">
+      <div class="flex flex-col items-center gap-18">
+        <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
+        <div class="relative w-[90%]">
+          <input
+            class="border border-slate-300 text-white absolute"
+            type="text"
+            id="input-field"
+            autofocus
+          />
+          <div
+            class="text-textPrimary leading-[70px] tracking-[3px] text-[40px] flex flex-wrap"
+            id="word-display"
+          ></div>
+          <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+        </div>
+
+        <p id="results" class="text-white">Results :</p>
+        <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
+      </div>
     </main>
 
     <script src="./js/gameLogic.js"></script>
