@@ -110,12 +110,19 @@ const updateWord = (event) => {
     currentWordIndex++;
     previousEndTime = Date.now();
     highlightNextWord();
+    // To insert new line in .textContent with \r\n
+    totalResult.setAttribute("style", "white-space: pre;");
 
     if (currentWordIndex >= wordsToType.length) {
       const avgWpm = (totalStat.wpm / totalStat.count).toFixed(2);
       const avgAccuracy = (totalStat.accuracy / totalStat.count).toFixed(2);
       results.textContent = "";
-      totalResult.textContent = `Congratulations! WPM : ${avgWpm} | ACCURACY : ${avgAccuracy}%`;
+      // Disqualifying if avgAccuracy is <= 25
+      if (avgAccuracy > 25) {
+        totalResult.textContent = `Congratulations ! \r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
+      } else {
+        totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
+      }
     }
 
     inputField.value = ""; // Clear input field after space
