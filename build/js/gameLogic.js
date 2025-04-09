@@ -267,9 +267,7 @@ startTest();
 window.addEventListener("keydown", (event) => {
   if (event.key == "Tab") {
     event.preventDefault();
-    startTest();
     startTyping();
+    startTest();
   }
 });
-
-startTyping();
