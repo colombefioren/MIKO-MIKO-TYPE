@@ -58,17 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const isCollapsing = !nav.classList.contains("collapsed");
     nav.classList.toggle("collapsed");
     const linkContainer = document.querySelector(".link-container");
-    linkContainer.classList.toggle("px-7")
-
-    if (isCollapsing) {
-      // When collapsing, calculate needed margin to maintain position
-      const currentTop = navList.getBoundingClientRect().top;
-      const positionDifference = originalTopPosition - currentTop;
-      navList.style.marginTop = `${positionDifference}px`;
-    } else {
-      // When expanding, reset to original position
-      navList.style.marginTop = "";
-      originalTopPosition = navList.getBoundingClientRect().top; 
-    }
+    linkContainer.classList.toggle("px-7");
   });
 });
