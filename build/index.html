@@ -9,10 +9,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/cursor.css">
+    <link rel="stylesheet" href="./css/cursor.css" />
     <link rel="stylesheet" href="./css/font.css" />
     <link rel="stylesheet" href="./css/navbar.css" />
-    <link rel="shortcut icon" href="./assets/images/mikomiko-logo-reduced.svg" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="./assets/images/mikomiko-logo-reduced.svg"
+      type="image/x-icon"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -106,20 +110,27 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <main class="flex flex-col items-center ml-[90px] mt-40">
       <div class="flex flex-col items-center gap-18">
         <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
-        <div class="relative w-[90%]">
-          <div 
-            class="text-textPrimary leading-[70px] tracking-[3px] text-[40px] flex flex-wrap" 
+        <div class="relative w-[90%] bg-pink-700 flex items-center justify-center">
+          <button
+          id="start-btn"
+            class="text-white py-2 px-1 rounded-sm text-xl bg-red-600 cursor-pointer hover:scale-110 absolute z-100"
+          >
+            Start Test
+          </button>
+
+          <div
+            class="text-textPrimary leading-[70px] tracking-[3px] text-[40px] flex flex-wrap"
             id="word-display"
           ></div>
           <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+          <input
+            class="border border-slate-300 text-white absolute h-full top-0 w-full"
+            type="text"
+            id="input-field"
+            autofocus
+          />
         </div>
-        
-        <input
-          class="border border-slate-300 text-white opacity-0 absolute -z-10"
-          type="text"
-          id="input-field"
-          autofocus
-        />
+
         <p id="results" class="text-white">Results :</p>
         <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
       </div>

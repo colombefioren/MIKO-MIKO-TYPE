@@ -262,12 +262,26 @@ modeSelect.addEventListener("change", () => startTest());
 
 // Start the test
 startTest();
+startTyping();
 
 // Restart test when pressing TAB key
 window.addEventListener("keydown", (event) => {
   if (event.key == "Tab") {
     event.preventDefault();
     startTyping();
-    startTest();
+    // startTest();
+    // handleStartButton();
   }
 });
+
+const startBtn = document.getElementById("start-btn");
+
+const handleStartButton = () => {
+  if (inputField.event === document.activeElement) {
+    startBtn.classList.add("hidden");
+  } else {
+    startBtn.classList.remove("hidden");
+  }
+};
+
+// handleStartButton();
