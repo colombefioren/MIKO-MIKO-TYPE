@@ -38,7 +38,7 @@ const getRandomWord = (mode) => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 10) => {
+const startTest = (wordCount = 5) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   currentWordIndex = 0;
