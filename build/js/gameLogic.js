@@ -32,7 +32,15 @@ const words = {
     "misconception",
   ],
   phrases: [
-    "the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"
+    "the",
+    "quick",
+    "brown",
+    "fox",
+    "jumps",
+    "over",
+    "the",
+    "lazy",
+    "dog",
   ],
 };
 
@@ -48,20 +56,26 @@ const updateCursorPosition = () => {
 
   const currentPosition = inputField.value.length;
   const currentWordLength = wordsToType[currentWordIndex].length;
-  const spanIndex = charSpans.findIndex(span => 
-    parseInt(span.dataset.wordIndex) === currentWordIndex && 
-    parseInt(span.dataset.charIndex) === Math.min(currentPosition, currentWordLength)
+  const spanIndex = charSpans.findIndex(
+    (span) =>
+      parseInt(span.dataset.wordIndex) === currentWordIndex &&
+      parseInt(span.dataset.charIndex) ===
+        Math.min(currentPosition, currentWordLength)
   );
 
   if (spanIndex >= 0) {
     const span = charSpans[spanIndex];
     const rect = span.getBoundingClientRect();
     const wordDisplayRect = wordDisplay.getBoundingClientRect();
-    
-    cursor.style.left = `${rect.left - wordDisplayRect.left + wordDisplay.offsetLeft}px`;
-    cursor.style.top = `${rect.top - wordDisplayRect.top + wordDisplay.offsetTop}px`;
+
+    cursor.style.left = `${
+      rect.left - wordDisplayRect.left + wordDisplay.offsetLeft
+    }px`;
+    cursor.style.top = `${
+      rect.top - wordDisplayRect.top + wordDisplay.offsetTop
+    }px`;
     cursor.style.height = `${rect.height}px`;
-    cursor.style.opacity = '1';
+    cursor.style.opacity = "1";
   }
 };
 
@@ -185,50 +199,53 @@ const updateWord = (event) => {
 // Highlight the current word in red
 const highlightNextWord = () => {
   // Reset all words to default color
-  charSpans.forEach(span => {
-    span.style.color = "";
-  });
+  // charSpans.forEach(span => {
+  //   span.style.color = "";
+  // });
 
   // Highlight current word in red
-  const currentWordSpans = charSpans.filter(span => 
-    parseInt(span.dataset.wordIndex) === currentWordIndex
+  const currentWordSpans = charSpans.filter(
+    (span) => parseInt(span.dataset.wordIndex) === currentWordIndex
   );
-  currentWordSpans.forEach(span => {
-    if (span.textContent !== " ") {
-      span.style.color = "red";
-    }
-  });
+  // currentWordSpans.forEach(span => {
+  //   if (span.textContent !== " ") {
+  //     span.style.color = "blue";
+  //   }
+  // });
 
   // Mark previous word as green
   if (currentWordIndex > 0) {
-    const prevWordSpans = charSpans.filter(span => 
-      parseInt(span.dataset.wordIndex) === currentWordIndex - 1
+    const prevWordSpans = charSpans.filter(
+      (span) => parseInt(span.dataset.wordIndex) === currentWordIndex - 1
     );
-    prevWordSpans.forEach(span => {
-      if (span.textContent !== " ") {
-        span.style.color = "green";
-      }
-    });
+    // prevWordSpans.forEach(span => {
+    //   if (span.textContent !== " ") {
+    //     span.style.color = "white";
+    //   }
+    // });
   }
 
   updateCursorPosition();
 };
 
 // Event listeners
-inputField.addEventListener("keydown", (event) => {
-  startTimer();
-  updateWord(event);
-});
+
+const startTyping = () => {
+  inputField.addEventListener("keydown", (event) => {
+    startTimer();
+    updateWord(event);
+  });
+};
 
 inputField.addEventListener("input", () => {
   // Update character colors as user types
   const currentWord = wordsToType[currentWordIndex];
   const typed = inputField.value;
-  
-  const currentWordSpans = charSpans.filter(span => 
-    parseInt(span.dataset.wordIndex) === currentWordIndex
+
+  const currentWordSpans = charSpans.filter(
+    (span) => parseInt(span.dataset.wordIndex) === currentWordIndex
   );
-  
+
   for (let i = 0; i < typed.length && i < currentWord.length; i++) {
     const charSpan = currentWordSpans[i];
     if (typed[i] === currentWord[i]) {
@@ -237,7 +254,7 @@ inputField.addEventListener("input", () => {
       charSpan.style.color = "red"; // Incorrect character
     }
   }
-  
+
   updateCursorPosition();
 });
 
@@ -250,6 +267,7 @@ startTest();
 window.addEventListener("keydown", (event) => {
   if (event.key == "Tab") {
     event.preventDefault();
+    startTyping();
     startTest();
   }
 });
