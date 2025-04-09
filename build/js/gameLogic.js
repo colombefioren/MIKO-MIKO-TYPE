@@ -29,6 +29,42 @@ const words = {
     "extravagant",
     "misconception",
   ],
+  phrases: [
+    "the",
+    "quick",
+    "brown",
+    "fox",
+    "jumps",
+    "over",
+    "the",
+    "lazy",
+    "dog",
+    "while",
+    "chasing",
+    "a",
+    "small",
+    "rabbit",
+    "through",
+    "the",
+    "green",
+    "meadow",
+    "birds",
+    "fly",
+    "high",
+    "in",
+    "the",
+    "bright",
+    "blue",
+    "sky",
+    "and",
+    "soft",
+    "wind",
+    "today",
+    "with",
+    "the",
+    "red",
+    "sun",
+  ],
 };
 
 // Generate a random word from the selected mode
@@ -38,7 +74,7 @@ const getRandomWord = (mode) => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 10) => {
+const startTest = (wordCount = 25) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   currentWordIndex = 0;

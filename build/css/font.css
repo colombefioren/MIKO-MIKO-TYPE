@@ -2,7 +2,16 @@
   font-family: "Cascadia Mono";
   src: url("../assets/fonts/CascadiaMonoPL-ExtraLight.otf");
 }
+@font-face {
+  font-family: "Cascadia Display";
+  src: url("../assets/fonts/CascadiaMonoPL-Regular.otf");
+}
 
 * {
   font-family: "Cascadia Mono";
+}
+
+#word-display {
+  font-family: "Cascadia Display" !important;
+  font-weight: 600;
 }

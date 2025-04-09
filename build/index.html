@@ -97,15 +97,19 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
+          <option value="phrases">Phrases</option>
         </select>
       </div>
     </header>
 
-    <main class="flex flex-col items-center ml-[90px]">
+    <main class="flex flex-col items-center ml-[90px] mt-40">
+     <div class="flex flex-col items-center gap-18">
+      <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
       <p
-        class="text-textPrimary w-[90%] leading-[70px] tracking-[0.16px] text-[46px]"
-        id="word-display"
-      ></p>
+      class="text-textPrimary w-[90%] leading-[70px] tracking-[3px] text-[40px]"
+      id="word-display"
+    ></p>
+     </div>
       <input
         class="border border-slate-300 text-white"
         type="text"

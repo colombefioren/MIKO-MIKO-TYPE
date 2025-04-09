@@ -2,6 +2,7 @@
 
 @theme {
   --color-textPrimary: rgba(211, 225, 255, 0.25);
+  --color-crystalMidnight: #0a0f29;
   --font-mono: Cascadia Mono;
   --color-midnight: #041322;
   --color-lightmidnight: #1d2142;
