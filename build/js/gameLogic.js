@@ -145,3 +145,11 @@ modeSelect.addEventListener("change", () => startTest());
 
 // Start the test
 startTest();
+
+// Restart test when pressing TAB key
+window.addEventListener("keydown", (event) => {
+  if (event.key == "Tab") {
+    event.preventDefault();
+    startTest();
+  }
+});
