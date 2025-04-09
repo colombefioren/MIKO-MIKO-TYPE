@@ -46,18 +46,27 @@ window.addEventListener("DOMContentLoaded", () => {
     highlight.style.transition = `transform ${MOVE_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
   }, 10);
 });
+
+// Close and open the sidebar
 document.addEventListener("DOMContentLoaded", function () {
   const chevron = document.querySelector(".chevron");
   const nav = document.querySelector("nav");
-  const navList = document.getElementById("nav-list");
-
-  // Store the original position by calculating the distance from top
-  let originalTopPosition = navList.getBoundingClientRect().top;
+  const mainElement = document.querySelector("main");
 
   chevron.addEventListener("click", function () {
-    const isCollapsing = !nav.classList.contains("collapsed");
     nav.classList.toggle("collapsed");
     const linkContainer = document.querySelector(".link-container");
     linkContainer.classList.toggle("px-7");
+    // Add blur when navabr is not collasped
+    mainElement.classList.toggle("blur-sm");
+  });
+  // Close navbar when the user switches mode
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!nav.classList.contains("collapsed")) {
+        nav.classList.add("collapsed");
+        mainElement.classList.toggle("blur-sm");
+      }
+    });
   });
 });

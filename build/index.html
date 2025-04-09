@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!-- 
+
+Don't forget to :
+npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch  
+
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,7 +25,7 @@
   <body class="bg-abyss">
     <!--Navbar-->
     <nav
-      class="absolute bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5"
+      class="absolute bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
@@ -83,13 +89,15 @@
         </li>
       </ul>
     </nav>
-    <header class="flex items-center text-white flex-col">
-      <label for="mode">Select Mode:</label>
-      <select id="mode">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
+    <header class="flex items-end text-white flex-col">
+      <div>
+        <label for="mode">Select Mode:</label>
+        <select id="mode">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
     </header>
 
     <main class="flex flex-col items-center ml-[90px]">

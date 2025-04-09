@@ -38,7 +38,7 @@ const getRandomWord = (mode) => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 5) => {
+const startTest = (wordCount = 10) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   currentWordIndex = 0;
@@ -119,7 +119,7 @@ const updateWord = (event) => {
       results.textContent = "";
       // Disqualifying if avgAccuracy is <= 25
       if (avgAccuracy > 25) {
-        totalResult.textContent = `Congratulations ! \r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
+        totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
       } else {
         totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
       }
