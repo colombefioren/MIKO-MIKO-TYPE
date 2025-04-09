@@ -19,11 +19,7 @@ const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
 const totalResult = document.getElementById("total_result");
-const cursor = document.createElement("div"); // Create cursor element
-
-// Add cursor to DOM
-cursor.id = "typing-cursor";
-document.body.appendChild(cursor);
+const cursor = document.getElementById("typing-cursor"); //Get the cursor in the js
 
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -257,6 +253,3 @@ window.addEventListener("keydown", (event) => {
     startTest();
   }
 });
-
-// Make sure cursor is always visible
-cursor.style.display = 'block';

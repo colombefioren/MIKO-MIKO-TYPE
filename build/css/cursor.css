@@ -1,20 +1,21 @@
 #typing-cursor {
-    position: absolute;
-    width: 2px;
-    height: 1.2em;
-    background-color: white;
-    transition: left 0.1s ease, top 0.1s ease;
-    z-index: 100;
-    pointer-events: none;
-    transform: translateY(0.15em); /* Fine-tune vertical alignment */
-  }
-  
-  .char-span {
-    position: relative;
-    white-space: pre-wrap; /* Preserve spaces */
-  }
-  
-  .space {
-    display: inline-block;
-    width: 0.5em; /* Ensure consistent space width */
-  }
+  display: block;
+  position: absolute;
+  width: 2px;
+  height: 1.2em;
+  background-color: #ffa62f;
+  transition: left 0.1s ease, top 0.1s ease;
+  z-index: 100;
+  pointer-events: none;
+  transform: translateY(0.15em); /* Fine-tune vertical alignment */
+}
+
+.char-span {
+  position: relative;
+  white-space: pre-wrap; /* Preserve spaces */
+}
+
+.space {
+  display: inline-block;
+  width: 0.5em; /* Ensure consistent space width */
+}

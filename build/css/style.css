@@ -6,9 +6,11 @@
     --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: Cascadia Mono;
+    --color-amber-300: oklch(87.9% 0.169 91.605);
     --color-pink-200: oklch(89.9% 0.061 343.231);
     --color-slate-300: oklch(86.9% 0.022 252.894);
     --color-slate-500: oklch(55.4% 0.046 257.417);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-xl: 1.25rem;
@@ -228,17 +230,8 @@
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
-  .mt-20 {
-    margin-top: calc(var(--spacing) * 20);
-  }
-  .mt-30 {
-    margin-top: calc(var(--spacing) * 30);
-  }
   .mt-40 {
     margin-top: calc(var(--spacing) * 40);
-  }
-  .mt-50 {
-    margin-top: calc(var(--spacing) * 50);
   }
   .ml-\[90px\] {
     margin-left: 90px;
@@ -270,11 +263,11 @@
   .h-full {
     height: 100%;
   }
+  .w-0 {
+    width: calc(var(--spacing) * 0);
+  }
   .w-0\.5 {
     width: calc(var(--spacing) * 0.5);
-  }
-  .w-1 {
-    width: calc(var(--spacing) * 1);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
@@ -282,14 +275,8 @@
   .w-28 {
     width: calc(var(--spacing) * 28);
   }
-  .w-\[6\] {
-    width: 6;
-  }
   .w-\[85\%\] {
     width: 85%;
-  }
-  .w-\[85\] {
-    width: 85;
   }
   .w-\[90\%\] {
     width: 90%;
@@ -339,20 +326,8 @@
   .gap-15 {
     gap: calc(var(--spacing) * 15);
   }
-  .gap-16 {
-    gap: calc(var(--spacing) * 16);
-  }
   .gap-18 {
     gap: calc(var(--spacing) * 18);
-  }
-  .gap-24 {
-    gap: calc(var(--spacing) * 24);
-  }
-  .gap-25 {
-    gap: calc(var(--spacing) * 25);
-  }
-  .gap-28 {
-    gap: calc(var(--spacing) * 28);
   }
   .overflow-hidden {
     overflow: hidden;
@@ -373,6 +348,12 @@
   .bg-abyss {
     background-color: var(--color-abyss);
   }
+  .bg-amber-300 {
+    background-color: var(--color-amber-300);
+  }
+  .bg-black {
+    background-color: var(--color-black);
+  }
   .bg-blaze {
     background-color: var(--color-blaze);
   }
@@ -384,9 +365,6 @@
   }
   .bg-midnight {
     background-color: var(--color-midnight);
-  }
-  .bg-pink-200 {
-    background-color: var(--color-pink-200);
   }
   .bg-slate-500 {
     background-color: var(--color-slate-500);
@@ -429,12 +407,6 @@
   .text-\[40px\] {
     font-size: 40px;
   }
-  .text-\[43px\] {
-    font-size: 43px;
-  }
-  .text-\[46px\] {
-    font-size: 46px;
-  }
   .leading-\[70px\] {
     --tw-leading: 70px;
     line-height: 70px;
@@ -443,41 +415,9 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
-  .tracking-\[0\.2px\] {
-    --tw-tracking: 0.2px;
-    letter-spacing: 0.2px;
-  }
-  .tracking-\[0\.5px\] {
-    --tw-tracking: 0.5px;
-    letter-spacing: 0.5px;
-  }
-  .tracking-\[0\.16px\] {
-    --tw-tracking: 0.16px;
-    letter-spacing: 0.16px;
-  }
-  .tracking-\[0\.px\] {
-    --tw-tracking: 0.px;
-    letter-spacing: 0.px;
-  }
-  .tracking-\[1px\] {
-    --tw-tracking: 1px;
-    letter-spacing: 1px;
-  }
   .tracking-\[3px\] {
     --tw-tracking: 3px;
     letter-spacing: 3px;
-  }
-  .tracking-\[4px\] {
-    --tw-tracking: 4px;
-    letter-spacing: 4px;
-  }
-  .tracking-\[5px\] {
-    --tw-tracking: 5px;
-    letter-spacing: 5px;
-  }
-  .tracking-\[px\] {
-    --tw-tracking: px;
-    letter-spacing: px;
   }
   .text-dusk {
     color: var(--color-dusk);
