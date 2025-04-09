@@ -437,6 +437,9 @@
   .opacity-0 {
     opacity: 0%;
   }
+  .opacity-1 {
+    opacity: 1%;
+  }
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
