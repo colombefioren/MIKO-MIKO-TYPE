@@ -80,7 +80,7 @@ const updateCursorPosition = () => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 15) => {
+const startTest = (wordCount = 25) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   charSpans = []; // Reset character spans
@@ -273,3 +273,9 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
+//Focus on the input when press a key except on TAB
+window.addEventListener("keydown", (event) => {
+  if (event.key !== "Tab") {
+    inputField.focus({ preventScroll: true });
+  }
+});
