@@ -31,7 +31,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   <body class="bg-abyss flex flex-col min-h-screen">
     <!--Navbar-->
     <nav
-      class="absolute bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
+      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
@@ -122,29 +122,22 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </div>
     </header>
 
-    <main class="flex flex-col items-center ml-[90px] mt-40">
-      <div class="flex flex-col items-center gap-18">
+    <main class="flex flex-col items-center ml-[90px] mt-40 grow">
+      <div class="flex flex-col items-center gap-18 mx-10">
         <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
-        <div class="relative w-[90%] bg-pink-700 flex items-center justify-center">
-          <button
-          id="start-btn"
-            class="text-white py-2 px-1 rounded-sm text-xl bg-red-600 cursor-pointer hover:scale-110 absolute z-100"
-          >
-            Start Test
-          </button>
-
-          <div
-            class="text-textPrimary leading-[70px] tracking-[3px] text-[40px] flex flex-wrap"
-            id="word-display"
-          ></div>
-          <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
-          <input
-            class="border border-slate-300 text-white absolute h-full top-0 w-full"
-            type="text"
-            id="input-field"
-            autofocus
-          />
-        </div>
+        <div class="relative">
+            <input
+              class="border border-slate-300 text-white w-full h-full absolute z-10 opacity-0"
+              type="text"
+              id="input-field"
+              autofocus
+            />
+            <p
+              class="text-textPrimary leading-[70px] tracking-[3px] text-[40px]"
+              id="word-display"
+            ></p>
+            <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+          </div>
 
         <p id="results" class="text-white">Results :</p>
         <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
