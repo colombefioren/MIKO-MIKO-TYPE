@@ -80,7 +80,7 @@ const updateCursorPosition = () => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 25) => {
+const startTest = (wordCount = 15) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   charSpans = []; // Reset character spans
@@ -182,8 +182,8 @@ const updateWord = (event) => {
       const avgWpm = (totalStat.wpm / totalStat.count).toFixed(2);
       const avgAccuracy = (totalStat.accuracy / totalStat.count).toFixed(2);
       results.textContent = "";
-      // Disqualifying if avgAccuracy is <= 25
-      if (avgAccuracy > 25) {
+      // Disqualifying if avgAccuracy is below 50
+      if (avgAccuracy >= 50) {
         totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
       } else {
         totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
@@ -269,19 +269,7 @@ window.addEventListener("keydown", (event) => {
   if (event.key == "Tab") {
     event.preventDefault();
     startTyping();
-    // startTest();
-    // handleStartButton();
+    startTest();
   }
 });
 
-const startBtn = document.getElementById("start-btn");
-
-const handleStartButton = () => {
-  if (inputField.event === document.activeElement) {
-    startBtn.classList.add("hidden");
-  } else {
-    startBtn.classList.remove("hidden");
-  }
-};
-
-// handleStartButton();
