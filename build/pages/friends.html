@@ -121,11 +121,26 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
         <div class="h-96 rounded-md w-full bg-pink-500"></div>
       </div>
-      <div class="bg-slate-600 w-[430px] h-full">
-        
+      <div class="w-[430px] h-full pt-5 pr-5">
+        <div class="flex flex-col gap-8">
+          <div class="w-full h-52 bg-green-600 rounded-2xl"></div>
+          <div class="w-full h-32 bg-red-400 rounded-2xl"></div>
+        </div>
+        <div class="w-full justify-between flex mt-8 px-8 pb-4 border-b border-b-dusk">
+          <div class="flex gap-2 items-center">
+            <i class="fa-regular fa-comment-dots text-frost text-3xl"></i>
+            <div class="text-dusk font-bold text-lg">Chat</div>
+          </div>
+          <div class="flex gap-2 items-center">
+            <div class="text-dusk font-bold text-lg">Messages<span class="text-white">(4)</span></div>
+          </div>
+          <div class="flex gap-2 items-center">
+            <div class="text-dusk font-bold text-lg">Friends</div>
+          </div>
+        </div>
       </div>
     </main>
 
-    <script src="../js/navbarFriends.js"></script>
+    <script src="../js/friends.js"></script>
   </body>
 </html>

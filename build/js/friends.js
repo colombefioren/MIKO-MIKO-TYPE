@@ -61,3 +61,20 @@ document.addEventListener("DOMContentLoaded", function () {
     linkContainer.classList.toggle("px-7");
   });
 });
+
+function switchTab(tabName, position) {
+  // Hide all content divs
+  document.querySelectorAll(".content").forEach((content) => {
+    content.classList.add("hidden");
+    content.classList.remove("flex");
+  });
+
+  // Show the selected content
+  const activeContent = document.getElementById(tabName + "-content");
+  activeContent.classList.remove("hidden");
+  activeContent.classList.add("flex");
+
+  // Move the indicator
+  const indicator = document.getElementById("indicator");
+  indicator.style.transform = `translateX(${position * 100}%)`;
+}
