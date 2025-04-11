@@ -36,11 +36,11 @@ buttons.forEach((button, index) => {
 //Initially always have the type button active cause thats the first page were in
 window.addEventListener("DOMContentLoaded", () => {
   highlight.style.transition = "none";
-  moveHighlightTo(0);
+  moveHighlightTo(2);
 
-  buttons[0].classList.add("active");
-  buttonTexts[0].classList.add("text-white");
-  buttonIcons[0].classList.add("text-frost");
+  buttons[2].classList.add("active");
+  buttonTexts[2].classList.add("text-white");
+  buttonIcons[2].classList.add("text-frost");
 
   setTimeout(() => {
     highlight.style.transition = `transform ${MOVE_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
