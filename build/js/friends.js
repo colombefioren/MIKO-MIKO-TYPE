@@ -15,14 +15,14 @@ function moveHighlightTo(index) {
 
   buttons.forEach((btn) => btn.classList.remove("active"));
   buttonTexts.forEach((text) => text.classList.remove("text-white"));
-  buttonIcons.forEach((icon) => icon.classList.remove("text-blaze"));
+  buttonIcons.forEach((icon) => icon.classList.remove("text-frost"));
 
   highlight.style.transform = `translateY(${offset}px)`;
 
   setTimeout(() => {
     button.classList.add("active");
     buttonTexts[index].classList.add("text-white");
-    buttonIcons[index].classList.add("text-blaze");
+    buttonIcons[index].classList.add("text-frost");
   }, COLOR_DELAY);
 }
 
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   buttons[2].classList.add("active");
   buttonTexts[2].classList.add("text-white");
-  buttonIcons[2].classList.add("text-blaze");
+  buttonIcons[2].classList.add("text-frost");
 
   setTimeout(() => {
     highlight.style.transition = `transform ${MOVE_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('chat-icon').classList.add('text-blaze');
     document.getElementById('indicator').style.transform = 'translateX(0%)';
     
+    // Hide all content except chat
     document.getElementById('messages-content').classList.add('hidden');
     document.getElementById('friends-content').classList.add('hidden');
 });
