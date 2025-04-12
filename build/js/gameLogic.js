@@ -273,9 +273,26 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-//Focus on the input when press a key except on TAB
-window.addEventListener("keydown", (event) => {
-  if (event.key !== "Tab") {
-    inputField.focus({ preventScroll: true });
-  }
+//Focus on the input when press a key
+window.addEventListener("keydown", () => {
+  inputField.focus({ preventScroll: true });
+});
+
+const textField = document.getElementById("text-field");
+const pointerFocus = document.getElementById("pointer-focus");
+
+//Disable blur on input when focused
+inputField.addEventListener("focus", () => {
+  textField.classList.remove("blur-sm");
+  pointerFocus.classList.remove("flex");
+  pointerFocus.classList.add("hidden");
+  cursor.classList.toggle("hidden");
+});
+
+//Enable blur on input when unfocused
+inputField.addEventListener("blur", () => {
+  textField.classList.add("blur-sm");
+  pointerFocus.classList.add("flex");
+  pointerFocus.classList.remove("hidden");
+  cursor.classList.toggle("hidden");
 });
