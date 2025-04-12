@@ -122,11 +122,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         <div class="h-96 rounded-md w-full bg-pink-500"></div>
       </div>
       <div class="w-[430px] h-full pt-5 pr-5">
-        <div class="flex flex-col gap-8">
+        <!-- <div class="flex flex-col gap-8">
           <div class="w-full h-52 bg-green-600 rounded-2xl"></div>
           <div class="w-full h-32 bg-red-400 rounded-2xl"></div>
-        </div>
-        <!-- Navigation Tabs -->
+        </div> -->
         <div
           class="w-full justify-between flex px-8 pb-4 border-b border-b-dusk relative mt-5"
         >
@@ -172,53 +171,233 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         <div class="content-container mt-4">
           <!-- Chat Content -->
           <div class="content active" id="chat-content">
-            <div
-              class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
-            >
-              <div class="flex gap-3 h-full items-center">
-                <img
-                  src="../assets/images/profile-picture.png"
-                  alt="Profile Pic"
-                  class="rounded-full w-12 object-cover"
-                />
-                <div class="flex flex-col justify-between h-[85%]">
-                  <div class="text-white text-[14px]">Coco Thebest</div>
-                  <div class="text-azure text-[12px]">Online</div>
+            <!-- Active Chats -->
+            <div class="flex flex-col gap-3 max-h-[500px] overflow-y-auto">
+              <!-- Chat Item 1 -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+              >
+                <div class="flex gap-3 h-full items-center">
+                  <img
+                    src="../assets/images/profile-picture.png"
+                    alt="Profile Pic"
+                    class="rounded-full w-12 object-cover"
+                  />
+                  <div class="flex flex-col justify-between h-[85%]">
+                    <div class="text-white text-[14px]">Coco Thebest</div>
+                    <div class="text-azure text-[12px]">
+                      Hey! Ready for the race tonight?
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                  <div class="text-dusk text-xs">2:30 PM</div>
+                  <div
+                    class="bg-green-400 rounded-full w-5 h-5 flex items-center justify-center text-xs text-midnight"
+                  >
+                    3
+                  </div>
                 </div>
               </div>
-              <div class="flex gap-3">
-                <div
-                  class="bg-blaze cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
-                >
-                  <i
-                    class="fa-solid fa-xmark font-bold text-xl text-midnight"
-                  ></i>
+
+              <!-- Chat Item 2 -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+              >
+                <div class="flex gap-3 h-full items-center">
+                  <img
+                    src="../assets/images/events.jpg"
+                    alt="Profile Pic"
+                    class="rounded-full w-12 object-cover"
+                  />
+                  <div class="flex flex-col justify-between h-[85%]">
+                    <div class="text-white text-[14px]">Mimi Lord</div>
+                    <div class="text-azure text-[12px]">
+                      Check out my new post!
+                    </div>
+                  </div>
                 </div>
-                <div
-                  class="bg-green-400 cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
-                >
-                  <i
-                    class="fa-solid fa-check font-bold text-xl text-midnight"
-                  ></i>
-                </div>
+                <div class="text-dusk text-xs">1:15 PM</div>
               </div>
+
+              <!-- Chat Item 3 -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+              >
+                <div class="flex gap-3 h-full items-center">
+                  <img
+                    src="../assets/images/mikomiko-logo.png"
+                    alt="Profile Pic"
+                    class="rounded-full w-12 object-cover"
+                  />
+                  <div class="flex flex-col justify-between h-[85%]">
+                    <div class="text-white text-[14px]">Choco Ta</div>
+                    <div class="text-azure text-[12px]">
+                      Thanks for the like!
+                    </div>
+                  </div>
+                </div>
+                <div class="text-dusk text-xs">Yesterday</div>
+              </div>
+            </div>
+
+            <!-- New Message Button -->
+            <div class="mt-6 flex justify-center">
+              <button
+                class="bg-blaze text-midnight font-bold py-3 px-6 rounded-3xl flex items-center gap-2 cursor-pointer"
+              >
+                <i class="fa-solid fa-plus"></i> New Message
+              </button>
             </div>
           </div>
 
           <!-- Messages Content -->
           <div class="content hidden" id="messages-content">
-            <div class="w-full h-32 bg-gray-200 rounded-lg mt-4">
-              Messages content goes here (4 unread)
+            <!-- Notifications List -->
+            <div class="flex flex-col gap-4 max-h-[500px]">
+              <!-- Notification Item 1 (Unread) -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
+              >
+                <img
+                  src="../assets/images/profile-picture.png"
+                  alt="Profile Pic"
+                  class="rounded-full w-12 object-cover"
+                />
+                <div class="flex-1">
+                  <div class="text-white text-[14px] font-bold">
+                    Coco Thebest
+                    <span class="text-dusk font-normal">posted a new race</span>
+                  </div>
+                  <div class="text-azure text-[12px] mt-1">
+                    "Join me for the Miko WPMers challenge!"
+                  </div>
+                  <div class="text-dusk text-xs mt-2">30 mins ago</div>
+                </div>
+                <div class="w-3 h-3 bg-blaze rounded-full"></div>
+              </div>
+
+              <!-- Notification Item 2 (Unread) -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
+              >
+                <img
+                  src="../assets/images/events.jpg"
+                  alt="Profile Pic"
+                  class="rounded-full w-12 object-cover"
+                />
+                <div class="flex-1">
+                  <div class="text-white text-[14px] font-bold">
+                    Mimi Lord
+                    <span class="text-dusk font-normal">liked your post</span>
+                  </div>
+                  <div class="text-azure text-[12px] mt-1">
+                    "Check out my record"
+                  </div>
+                  <div class="text-dusk text-xs mt-2">2 hours ago</div>
+                </div>
+                <div class="w-3 h-3 bg-blaze rounded-full"></div>
+              </div>
+
+              <!-- Notification Item 3 (Unread) -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
+              >
+                <img
+                  src="../assets/images/mikomiko-logo.png"
+                  alt="Profile Pic"
+                  class="rounded-full w-12 object-cover"
+                />
+                <div class="flex-1">
+                  <div class="text-white text-[14px] font-bold">
+                    Choco Ta
+                    <span class="text-dusk font-normal"
+                      >invited you to a race</span
+                    >
+                  </div>
+                  <div class="text-azure text-[12px] mt-1">"Code Mode"</div>
+                  <div class="flex gap-2 mt-3">
+                    <button
+                      class="bg-green-400 text-midnight text-xs py-1 px-3 rounded-full"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      class="bg-lightabyss text-dusk text-xs py-1 px-3 rounded-full"
+                    >
+                      Decline
+                    </button>
+                  </div>
+                  <div class="text-dusk text-xs mt-2">5 hours ago</div>
+                </div>
+                <div class="w-3 h-3 bg-blaze rounded-full"></div>
+              </div>
+
+              <!-- Notification Item 4 (Unread) -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
+              >
+                <div
+                  class="bg-frost rounded-full w-12 h-12 flex items-center justify-center"
+                >
+                  <i class="fa-solid fa-trophy text-midnight text-xl"></i>
+                </div>
+                <div class="flex-1">
+                  <div class="text-white text-[14px] font-bold">
+                    Achievement Unlocked
+                    <span class="text-dusk font-normal">Speed Demon</span>
+                  </div>
+                  <div class="text-azure text-[12px] mt-1">
+                    You reached 200 wpm! Congrats!
+                  </div>
+                  <div class="text-dusk text-xs mt-2">Yesterday</div>
+                </div>
+                <div class="w-3 h-3 bg-blaze rounded-full"></div>
+              </div>
+
+              <!-- Notification Item 5 (Read) -->
+              <div
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3 opacity-70"
+              >
+                <img
+                  src="../assets/images/profile-picture.png"
+                  alt="Profile Pic"
+                  class="rounded-full w-12 object-cover"
+                />
+                <div class="flex-1">
+                  <div class="text-white text-[14px] font-bold">
+                    Coco Thebest
+                    <span class="text-dusk font-normal"
+                      >commented on your post</span
+                    >
+                  </div>
+                  <div class="text-azure text-[12px] mt-1">
+                    "You are good! Let's race again!"
+                  </div>
+                  <div class="text-dusk text-xs mt-2">2 days ago</div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Friends Content -->
           <div class="content hidden" id="friends-content">
-            <div class="w-full rounded-lg">
+            <!-- Search Bar -->
+            <div class="relative w-full mb-4">
+              <input
+                class="bg-abyss border border-lightabyss w-full rounded-4xl py-3 px-6 h-16 text-dusk font-bold"
+                placeholder="Search Friend..."
+              />
+              <i
+                class="fa-solid fa-search cursor-pointer text-frost text-xl absolute right-6 -translate-y-1/2 top-1/2"
+              ></i>
+            </div>
+
+            <!-- Friends List -->
+            <div class="flex flex-col gap-4 max-h-[500px] overflow-y-auto">
+              <!-- Friend Requests Section -->
               <div>
-                <div class="text-white font-bold mt-5 mb-4">
-                  Friend Request (2)
-                </div>
+                <div class="text-white font-bold mb-3">Friend Request (2)</div>
                 <div class="flex flex-col gap-3">
                   <div
                     class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
@@ -253,8 +432,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   </div>
                 </div>
               </div>
+
+              <!-- Online Friends Section -->
               <div>
-                <div class="text-white font-bold mt-5 mb-4">Online (1)</div>
+                <div class="text-white font-bold mb-3">Online (1)</div>
                 <div class="flex flex-col gap-3">
                   <div
                     class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
@@ -274,15 +455,16 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                       class="bg-lightmidnight cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
                     >
                       <i
-                        id="chat-icon"
-                        class="fa-regular fa-comment-dots text-2xl"
+                        class="fa-regular fa-comment-dots text-2xl text-frost"
                       ></i>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <!-- Offline Friends Section -->
               <div>
-                <div class="text-white font-bold mt-5 mb-4">Offline (16)</div>
+                <div class="text-white font-bold mb-3">Offline (16)</div>
                 <div class="flex flex-col gap-3">
                   <div
                     class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
@@ -302,22 +484,39 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                       class="bg-lightmidnight cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
                     >
                       <i
-                        id="chat-icon"
-                        class="fa-regular fa-comment-dots text-2xl"
+                        class="fa-regular fa-comment-dots text-2xl text-frost"
+                      ></i>
+                    </div>
+                  </div>
+
+                  <!-- Additional offline friend example -->
+                  <div
+                    class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                  >
+                    <div class="flex gap-3 h-full items-center">
+                      <img
+                        src="../assets/images/profile-picture.png"
+                        alt="Profile Pic"
+                        class="rounded-full w-12 object-cover"
+                      />
+                      <div class="flex flex-col justify-between h-[85%]">
+                        <div class="text-white text-[14px]">Mayah TheBee</div>
+                        <div class="text-azure text-[12px]">
+                          Offline
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="bg-lightmidnight cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
+                    >
+                      <i
+                        class="fa-regular fa-comment-dots text-2xl text-frost"
                       ></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-           <div class="relative w-full mt-8">
-            <input
-            class="bg-abyss border border-lightabyss w-full rounded-4xl py-3 px-6 h-16 text-dusk font-bold"
-            placeholder="Search Friend..."
-          />
-          <i class="fa-solid fa-search cursor-pointer text-frost text-xl absolute right-6 -translate-y-1/2 top-1/2"></i>
-
-           </div>
           </div>
         </div>
       </div>
