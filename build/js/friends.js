@@ -150,12 +150,12 @@ function postComment() {
         class="w-10 h-10 rounded-full object-cover"
       >
       <div class="w-fit bg-lightabyss rounded-2xl p-3">
-        <div class="text-subtlegray font-bold text-sm">Coco Thebest</div>
+        <div class="text-slate-200 font-bold text-sm">Coco Thebest</div>
         <p class="text-azure text-sm">${commentText}</p>
         <div class="flex items-center gap-3 mt-1">
           <span class="text-dusk text-xs">Just now</span>
-          <button class="text-dusk text-xs hover:text-subtlegray">Like</button>
-          <button class="text-dusk text-xs hover:text-subtlegray">Reply</button>
+          <button class="text-dusk text-xs hover:text-slate-200">Like</button>
+          <button class="text-dusk text-xs hover:text-slate-200">Reply</button>
         </div>
       </div>
     `;
