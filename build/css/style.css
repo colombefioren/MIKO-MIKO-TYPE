@@ -48,6 +48,8 @@
     --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
@@ -266,9 +268,6 @@
   .top-10 {
     top: calc(var(--spacing) * 10);
   }
-  .top-\[50\%\] {
-    top: 50%;
-  }
   .-right-6 {
     right: calc(var(--spacing) * -6);
   }
@@ -404,12 +403,6 @@
   .flex {
     display: flex;
   }
-  .grid {
-    display: grid;
-  }
-  .hidden {
-    display: none;
-  }
   .hidden {
     display: none;
   }
@@ -418,6 +411,9 @@
   }
   .aspect-square {
     aspect-ratio: 1 / 1;
+  }
+  .h-0 {
+    height: calc(var(--spacing) * 0);
   }
   .h-2 {
     height: calc(var(--spacing) * 2);
@@ -433,6 +429,9 @@
   }
   .h-8 {
     height: calc(var(--spacing) * 8);
+  }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
   }
   .h-10 {
     height: calc(var(--spacing) * 10);
@@ -520,6 +519,9 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-5 {
+    width: calc(var(--spacing) * 5);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
@@ -627,6 +629,9 @@
   .flex-col {
     flex-direction: column;
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
   .items-center {
     align-items: center;
   }
@@ -660,11 +665,17 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
   .gap-5 {
     gap: calc(var(--spacing) * 5);
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
+  }
+  .gap-7 {
+    gap: calc(var(--spacing) * 7);
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
@@ -971,6 +982,9 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .fill-white {
+    fill: var(--color-white);
+  }
   .object-cover {
     object-fit: cover;
   }
@@ -1143,6 +1157,9 @@
   }
   .text-azure {
     color: var(--color-azure);
+  }
+  .text-blaze {
+    color: var(--color-blaze);
   }
   .text-blaze {
     color: var(--color-blaze);
@@ -1374,6 +1391,13 @@
         --tw-scale-y: 110%;
         --tw-scale-z: 110%;
         scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
+  }
+  .hover\:cursor-pointer {
+    &:hover {
+      @media (hover: hover) {
+        cursor: pointer;
       }
     }
   }
