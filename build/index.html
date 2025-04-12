@@ -12,6 +12,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <link rel="stylesheet" href="./css/cursor.css" />
     <link rel="stylesheet" href="./css/font.css" />
     <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/utilities.css" />
     <link
       rel="shortcut icon"
       href="./assets/images/mikomiko-logo-reduced.svg"
@@ -28,7 +29,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <title>Miko-Miko Type</title>
   </head>
 
-  <body class="bg-abyss flex flex-col min-h-screen">
+  <body class="bg-abyss flex flex-col min-h-screen prevent-select">
     <!--Navbar-->
     <nav
       class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
@@ -126,18 +127,32 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       <div class="flex flex-col items-center gap-18 mx-10">
         <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
         <div class="relative">
+          <div
+            id="pointer-focus"
+            class="hidden justify-center items-center text-dusk gap-5 absolute -z-10 w-full h-full"
+          >
+            <i class="fa-solid fa-arrow-pointer"></i>
+            <p>Click here or press any key to focus</p>
+          </div>
+          <div id="text-field" class="relative">
             <input
               class="border border-slate-300 text-white w-full h-full absolute z-10 opacity-0"
               type="text"
               id="input-field"
               autofocus
+              autocomplete="off"
+              autocomplete="false"
             />
             <p
               class="text-textPrimary leading-[70px] tracking-[3px] text-[40px]"
               id="word-display"
             ></p>
-            <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+            <div
+              id="typing-cursor"
+              class="hidden absolute h-10 w-0.5 bg-white"
+            ></div>
           </div>
+        </div>
 
         <p id="results" class="text-white">Results :</p>
         <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
