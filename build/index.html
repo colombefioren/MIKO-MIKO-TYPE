@@ -97,15 +97,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </ul>
     </nav>
     <header class="flex text-white justify-around items-center p-7">
-      <div>
-        <label for="mode">Select Mode:</label>
-        <select id="mode">
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-          <option value="phrases">Phrases</option>
-        </select>
-      </div>
       <div class="flex gap-5">
         <img
           src="./assets/images/profile-picture.png"
@@ -125,7 +116,71 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
     <main class="flex flex-col items-center ml-[90px] mt-40 grow">
       <div class="flex flex-col items-center gap-18 mx-10">
-        <div class="rounded-full bg-crystalMidnight w-[85%] h-14"></div>
+        <div
+          class="flex items-center p-7 rounded-full bg-crystalMidnight w-[85%] h-14"
+        >
+          <div>
+            <form action="" id="mode-form" class="flex gap-5 text-white">
+              <label
+                for="easy"
+                class="mode-option flex gap-2 hover:cursor-pointer items-center"
+              >
+                <i class="fa-solid fa-circle"></i>
+                <input
+                  type="radio"
+                  name="mode"
+                  id="easy"
+                  value="easy"
+                  class="absolute w-0 h-0 opacity-0"
+                  checked
+                />
+                <span class="hover:cursor-pointer">Easy</span>
+              </label>
+              <label
+                for="medium"
+                class="mode-option flex gap-2 hover:cursor-pointer items-center"
+              >
+                <i class="fa-solid fa-square"></i>
+                <input
+                  type="radio"
+                  name="mode"
+                  id="medium"
+                  value="medium"
+                  class="absolute w-0 h-0 opacity-0"
+                />
+                <span class="hover:cursor-pointer">Medium</span>
+              </label>
+              <label
+                for="hard"
+                class="mode-option flex gap-2 hover:cursor-pointer items-center"
+              >
+                <i class="fa-solid fa-diamond"></i>
+                <input
+                  type="radio"
+                  name="mode"
+                  id="hard"
+                  value="hard"
+                  class="absolute w-0 h-0 opacity-0"
+                />
+                <span class="hover:cursor-pointer">Hard</span>
+              </label>
+              <label
+                for="phrases"
+                class="mode-option flex gap-2 hover:cursor-pointer items-center"
+              >
+                <i class="fa-solid fa-quote-left"></i>
+                <input
+                  type="radio"
+                  name="mode"
+                  id="phrases"
+                  value="phrases"
+                  class="absolute w-0 h-0 opacity-0"
+                />
+                <span class="hover:cursor-pointer">Phrases</span>
+              </label>
+            </form>
+          </div>
+        </div>
         <div class="relative">
           <div
             id="pointer-focus"

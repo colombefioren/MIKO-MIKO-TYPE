@@ -13,8 +13,7 @@ let charSpans = []; // Store all character spans for cursor positioning
 
 // Total stats container - now with count and initialized as numbers
 let totalStat = { wpm: 0, accuracy: 0, count: 0 };
-
-const modeSelect = document.getElementById("mode");
+const modeForm = document.getElementById("mode-form");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const results = document.getElementById("results");
@@ -88,9 +87,14 @@ const startTest = (wordCount = 25) => {
   startTime = null;
   previousEndTime = null;
   totalStat = { wpm: 0, accuracy: 0, count: 0 }; // Reset stats for new test
-
+  modeForm
+    .querySelector('input[name="mode"]:checked')
+    .classList.add("text-blaze");
   for (let i = 0; i < wordCount; i++) {
-    wordsToType.push(getRandomWord(modeSelect.value));
+    const selectedMode = modeForm.querySelector(
+      'input[name="mode"]:checked'
+    ).value;
+    wordsToType.push(getRandomWord(selectedMode));
   }
 
   // Create word display with individual character spans
@@ -125,6 +129,29 @@ const startTest = (wordCount = 25) => {
   totalResult.textContent = "";
   updateCursorPosition();
 };
+
+// Select all radio inputs with the name "mode"
+const modeInputs = document.querySelectorAll('input[name="mode"]');
+
+// Function to update classes based on which input is checked
+function updateModeClasses() {
+  modeInputs.forEach((input) => {
+    const parentLabel = input.closest(".mode-option");
+    if (input.checked) {
+      parentLabel.classList.add("text-blaze");
+    } else {
+      parentLabel.classList.remove("text-blaze");
+    }
+  });
+}
+
+// Add event listeners on each radio input
+modeInputs.forEach((input) => {
+  input.addEventListener("change", updateModeClasses);
+});
+
+// Initialize the class state when the page loads
+document.addEventListener("DOMContentLoaded", updateModeClasses);
 
 // Start the timer when user begins typing
 const startTimer = () => {
@@ -258,7 +285,10 @@ inputField.addEventListener("input", () => {
   updateCursorPosition();
 });
 
-modeSelect.addEventListener("change", () => startTest());
+modeForm.addEventListener("change", () => {
+  startTest();
+  inputField.focus({ preventScroll: true });
+});
 
 // Start the test
 startTest();

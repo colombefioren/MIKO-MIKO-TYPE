@@ -196,9 +196,6 @@
   .top-10 {
     top: calc(var(--spacing) * 10);
   }
-  .top-\[50\%\] {
-    top: 50%;
-  }
   .-right-6 {
     right: calc(var(--spacing) * -6);
   }
@@ -253,8 +250,14 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
+  .h-0 {
+    height: calc(var(--spacing) * 0);
+  }
   .h-3 {
     height: calc(var(--spacing) * 3);
+  }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
   }
   .h-10 {
     height: calc(var(--spacing) * 10);
@@ -285,6 +288,9 @@
   }
   .w-3 {
     width: calc(var(--spacing) * 3);
+  }
+  .w-5 {
+    width: calc(var(--spacing) * 5);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
@@ -331,11 +337,20 @@
   .justify-center {
     justify-content: center;
   }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
   .gap-5 {
     gap: calc(var(--spacing) * 5);
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
+  }
+  .gap-7 {
+    gap: calc(var(--spacing) * 7);
+  }
+  .gap-8 {
+    gap: calc(var(--spacing) * 8);
   }
   .gap-10 {
     gap: calc(var(--spacing) * 10);
@@ -386,6 +401,9 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .fill-white {
+    fill: var(--color-white);
+  }
   .object-cover {
     object-fit: cover;
   }
@@ -435,6 +453,9 @@
   .tracking-\[3px\] {
     --tw-tracking: 3px;
     letter-spacing: 3px;
+  }
+  .text-blaze {
+    color: var(--color-blaze);
   }
   .text-dusk {
     color: var(--color-dusk);
@@ -489,6 +510,13 @@
         --tw-scale-y: 110%;
         --tw-scale-z: 110%;
         scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
+  }
+  .hover\:cursor-pointer {
+    &:hover {
+      @media (hover: hover) {
+        cursor: pointer;
       }
     }
   }
