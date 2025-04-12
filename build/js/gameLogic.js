@@ -316,7 +316,7 @@ inputField.addEventListener("focus", () => {
   textField.classList.remove("blur-sm");
   pointerFocus.classList.remove("flex");
   pointerFocus.classList.add("hidden");
-  cursor.classList.toggle("hidden");
+  cursor.classList.remove("hidden");
 });
 
 //Enable blur on input when unfocused
@@ -324,5 +324,5 @@ inputField.addEventListener("blur", () => {
   textField.classList.add("blur-sm");
   pointerFocus.classList.add("flex");
   pointerFocus.classList.remove("hidden");
-  cursor.classList.toggle("hidden");
+  cursor.classList.add("hidden");
 });
