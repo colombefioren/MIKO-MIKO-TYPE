@@ -28,7 +28,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <title>Miko-Miko Type</title>
   </head>
 
-  <body class="bg-abyss flex flex-col min-h-screen">
+  <body class="bg-abyss flex flex-col min-h-screen prevent-select">
     <!--Navbar-->
     <nav
       class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
@@ -94,14 +94,509 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="#">
+          <a class="flex text-dusk items-center gap-15" href="./boards.html">
             <i class="fa-solid fa-medal text-[34px] button-icon"></i>
             <div class="text-xl font-bold button-text">Boards</div>
           </a>
         </li>
       </ul>
     </nav>
-    <main class="flex ml-[420px] justify-between pb-5"></main>
-    <script src="../js/boards.js"></script>
+
+    <!-- Main Content -->
+    <main class="ml-[369px] p-8">
+      <!-- Page Header -->
+      <div class="flex items-center justify-between mb-8">
+        <h1 class="text-white text-3xl font-bold flex items-center gap-3">
+          <i class="fas fa-trophy text-blaze"></i> Leaderboards
+        </h1>
+        <div class="flex items-center gap-4">
+          <div class="relative">
+            <select
+              class="bg-midnight border border-lightabyss text-white rounded-2xl py-2 px-4 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blaze"
+            >
+              <option>All Time</option>
+              <option>This Month</option>
+              <option>This Week</option>
+              <option>Today</option>
+            </select>
+            <i
+              class="fas fa-chevron-down text-azure absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+            ></i>
+          </div>
+          <div class="relative w-64">
+            <input
+              type="text"
+              placeholder="Search players..."
+              class="bg-midnight border border-lightabyss w-full rounded-2xl py-2 px-4 pl-10 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+            />
+            <i
+              class="fas fa-search text-azure absolute left-3 top-1/2 transform -translate-y-1/2"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Leaderboard Sections -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- All-Time Champions -->
+        <div class="bg-midnight border border-lightabyss rounded-3xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-white text-xl font-bold flex items-center gap-2">
+              <i class="fas fa-crown text-yellow-400"></i> All-Time Champions
+            </h2>
+            <span class="text-azure text-sm">Updated: Today</span>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Legendary Tier -->
+            <div
+              class="bg-gradient-to-r from-yellow-400/10 to-transparent p-4 rounded-xl border border-yellow-400/20"
+            >
+              <div class="text-yellow-400 font-bold text-sm mb-2">
+                LEGENDARY TIER
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="relative">
+                  <img
+                    src="./assets/images/legendary-player.png"
+                    class="w-16 h-16 rounded-full object-cover border-2 border-yellow-400"
+                  />
+                  <div
+                    class="absolute -bottom-1 -right-1 bg-yellow-400 rounded-full w-6 h-6 flex items-center justify-center text-midnight font-bold text-xs"
+                  >
+                    1
+                  </div>
+                </div>
+                <div>
+                  <div class="text-white font-bold">TypeGod</div>
+                  <div class="text-azure text-sm">175 WPM Avg</div>
+                  <div class="flex gap-2 mt-1">
+                    <span
+                      class="bg-yellow-400/10 text-yellow-400 text-xs px-2 py-0.5 rounded-full"
+                      >98.7% Acc</span
+                    >
+                    <span
+                      class="bg-lightabyss text-azure text-xs px-2 py-0.5 rounded-full"
+                      >2,148 Races</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Champion Tier -->
+            <div
+              class="bg-gradient-to-r from-gray-400/10 to-transparent p-4 rounded-xl border border-gray-400/20"
+            >
+              <div class="text-gray-300 font-bold text-sm mb-2">
+                CHAMPION TIER
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <img
+                      src="./assets/images/champion-1.png"
+                      class="w-12 h-12 rounded-full object-cover border-2 border-gray-400"
+                    />
+                    <div
+                      class="absolute -bottom-1 -right-1 bg-gray-400 rounded-full w-5 h-5 flex items-center justify-center text-midnight font-bold text-xs"
+                    >
+                      2
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-white font-medium text-sm">KeyMaster</div>
+                    <div class="text-azure text-xs">168 WPM</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <img
+                      src="./assets/images/champion-2.png"
+                      class="w-12 h-12 rounded-full object-cover border-2 border-gray-400"
+                    />
+                    <div
+                      class="absolute -bottom-1 -right-1 bg-gray-400 rounded-full w-5 h-5 flex items-center justify-center text-midnight font-bold text-xs"
+                    >
+                      3
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-white font-medium text-sm">
+                      SpeedyGonzales
+                    </div>
+                    <div class="text-azure text-xs">165 WPM</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Elite Tier -->
+            <div
+              class="bg-gradient-to-r from-amber-600/10 to-transparent p-4 rounded-xl border border-amber-600/20"
+            >
+              <div class="text-amber-500 font-bold text-sm mb-2">
+                ELITE TIER (Top 10)
+              </div>
+              <div
+                class="flex items-center justify-between text-azure text-xs mb-2 px-2"
+              >
+                <span>Player</span>
+                <span>WPM</span>
+              </div>
+              <div class="space-y-2">
+                <!-- Elite Players 4-10 -->
+                <div
+                  class="flex items-center justify-between bg-lightabyss/5 hover:bg-lightabyss/10 p-2 rounded-lg cursor-pointer transition-colors"
+                >
+                  <div class="flex items-center gap-3">
+                    <span class="text-amber-500 font-bold w-5 text-center"
+                      >4</span
+                    >
+                    <img
+                      src="./assets/images/elite-1.png"
+                      class="w-8 h-8 rounded-full object-cover"
+                    />
+                    <span class="text-white text-sm">FastFingers</span>
+                  </div>
+                  <span class="text-amber-500 font-bold">163</span>
+                </div>
+                <!-- More elite players... -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Rankings -->
+        <div class="bg-midnight border border-lightabyss rounded-3xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-white text-xl font-bold flex items-center gap-2">
+              <i class="fas fa-calendar-week text-blaze"></i> Weekly Rankings
+            </h2>
+            <div class="flex items-center gap-2 text-azure text-sm">
+              <i class="far fa-clock"></i>
+              <span>Ends in 2d 5h</span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div
+              class="flex items-center justify-between text-azure text-sm mb-2 px-2"
+            >
+              <span>Rank</span>
+              <span>Progress</span>
+            </div>
+
+            <!-- Weekly Top Performers -->
+            <div class="space-y-3">
+              <!-- Rank 1 -->
+              <div
+                class="flex items-center gap-4 p-3 rounded-xl bg-lightabyss/10 hover:bg-lightabyss/20 transition-colors cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 rounded-full bg-yellow-400/20 flex items-center justify-center text-yellow-400 font-bold"
+                >
+                  1
+                </div>
+                <img
+                  src="./assets/images/weekly-1.png"
+                  class="w-10 h-10 rounded-full object-cover border border-yellow-400"
+                />
+                <div class="flex-1">
+                  <div class="text-white font-medium">TypingTornado</div>
+                  <div class="h-2 w-full bg-lightabyss rounded-full mt-1">
+                    <div
+                      class="h-2 bg-yellow-400 rounded-full"
+                      style="width: 92%"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-yellow-400 font-bold">158 WPM</div>
+              </div>
+
+              <!-- Rank 2 -->
+              <div
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-lightabyss/10 transition-colors cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 rounded-full bg-gray-400/20 flex items-center justify-center text-gray-300 font-bold"
+                >
+                  2
+                </div>
+                <img
+                  src="./assets/images/weekly-2.png"
+                  class="w-10 h-10 rounded-full object-cover border border-gray-400"
+                />
+                <div class="flex-1">
+                  <div class="text-white font-medium">KeyboardQueen</div>
+                  <div class="h-2 w-full bg-lightabyss rounded-full mt-1">
+                    <div
+                      class="h-2 bg-gray-400 rounded-full"
+                      style="width: 85%"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-gray-300 font-bold">152 WPM</div>
+              </div>
+
+              <!-- Rank 3 -->
+              <div
+                class="flex items-center gap-4 p-3 rounded-xl hover:bg-lightabyss/10 transition-colors cursor-pointer"
+              >
+                <div
+                  class="w-8 h-8 rounded-full bg-amber-600/20 flex items-center justify-center text-amber-500 font-bold"
+                >
+                  3
+                </div>
+                <img
+                  src="./assets/images/weekly-3.png"
+                  class="w-10 h-10 rounded-full object-cover border border-amber-500"
+                />
+                <div class="flex-1">
+                  <div class="text-white font-medium">LightningFingers</div>
+                  <div class="h-2 w-full bg-lightabyss rounded-full mt-1">
+                    <div
+                      class="h-2 bg-amber-500 rounded-full"
+                      style="width: 78%"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-amber-500 font-bold">148 WPM</div>
+              </div>
+
+              <!-- Current User (example at rank 15) -->
+              <div
+                class="flex items-center gap-4 p-3 rounded-xl bg-lightabyss/30 mt-4"
+              >
+                <div
+                  class="w-8 h-8 rounded-full bg-blaze/20 flex items-center justify-center text-white font-bold"
+                >
+                  15
+                </div>
+                <img
+                  src="./assets/images/profile-picture.png"
+                  class="w-10 h-10 rounded-full object-cover border border-blaze"
+                />
+                <div class="flex-1">
+                  <div class="text-white font-medium">You</div>
+                  <div class="h-2 w-full bg-lightabyss rounded-full mt-1">
+                    <div
+                      class="h-2 bg-blaze rounded-full"
+                      style="width: 62%"
+                    ></div>
+                  </div>
+                </div>
+                <div class="text-blaze font-bold">132 WPM</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-lightabyss/20 rounded-xl p-3 text-center">
+            <p class="text-azure text-sm">
+              Top 3 weekly finishers earn exclusive badges!
+            </p>
+            <button
+              class="mt-2 bg-blaze text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-blaze/80 transition-colors"
+            >
+              View Full Rankings
+            </button>
+          </div>
+        </div>
+
+        <!-- Your Stats & Progress -->
+        <div class="bg-midnight border border-lightabyss rounded-3xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-white text-xl font-bold flex items-center gap-2">
+              <i class="fas fa-user-circle text-frost"></i> Your Stats
+            </h2>
+            <div class="text-azure text-sm">Season 12</div>
+          </div>
+
+          <!-- Personal Ranking -->
+          <div class="bg-lightabyss/20 rounded-xl p-4 mb-6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="text-white font-medium">Global Ranking</div>
+              <div class="text-frost font-bold">#142</div>
+            </div>
+            <div class="flex items-center justify-between text-azure text-sm">
+              <span>Top 8% of players</span>
+              <span>+12 this week</span>
+            </div>
+            <div class="h-2 w-full bg-lightabyss rounded-full mt-2">
+              <div
+                class="h-2 bg-gradient-to-r from-blaze to-frost rounded-full"
+                style="width: 8%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-lightabyss/10 rounded-xl p-3 text-center">
+              <div class="text-frost text-3xl font-bold mb-1">132</div>
+              <div class="text-azure text-xs">Avg WPM</div>
+            </div>
+            <div class="bg-lightabyss/10 rounded-xl p-3 text-center">
+              <div class="text-green-400 text-3xl font-bold mb-1">97.4%</div>
+              <div class="text-azure text-xs">Accuracy</div>
+            </div>
+            <div class="bg-lightabyss/10 rounded-xl p-3 text-center">
+              <div class="text-yellow-400 text-3xl font-bold mb-1">214</div>
+              <div class="text-azure text-xs">Races</div>
+            </div>
+            <div class="bg-lightabyss/10 rounded-xl p-3 text-center">
+              <div class="text-blaze text-3xl font-bold mb-1">12</div>
+              <div class="text-azure text-xs">Win Streak</div>
+            </div>
+          </div>
+
+          <!-- Achievement Progress -->
+          <div class="mb-4">
+            <div class="text-white font-medium mb-3">Next Milestone</div>
+            <div class="flex items-center gap-3">
+              <div class="bg-yellow-400/10 rounded-lg p-2 text-center">
+                <i class="fas fa-trophy text-yellow-400 text-xl"></i>
+              </div>
+              <div class="flex-1">
+                <div class="text-white text-sm">Top 100 Player</div>
+                <div
+                  class="flex items-center justify-between text-azure text-xs mt-1"
+                >
+                  <span>42 ranks to go</span>
+                  <span>+12% this week</span>
+                </div>
+                <div class="h-1.5 w-full bg-lightabyss rounded-full mt-1">
+                  <div
+                    class="h-1.5 bg-yellow-400 rounded-full"
+                    style="width: 28%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="w-full bg-frost text-midnight py-3 rounded-xl font-bold hover:bg-frost/90 transition-colors mt-4"
+          >
+            View Detailed Stats
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Leaderboards -->
+      <div class="mt-8">
+        <h2 class="text-white text-2xl font-bold mb-6 flex items-center gap-3">
+          <i class="fas fa-layer-group text-blaze"></i> Category Leaderboards
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Accuracy Kings -->
+          <div
+            class="bg-midnight border border-lightabyss rounded-2xl p-4 hover:border-frost/50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="bg-green-400/10 rounded-lg p-2">
+                <i class="fas fa-bullseye text-green-400"></i>
+              </div>
+              <div class="text-white font-bold">Accuracy Kings</div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@PerfectTyper</span>
+                <span class="text-green-400">99.8%</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@PrecisionMaster</span>
+                <span class="text-green-400">99.6%</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@NoMistakes</span>
+                <span class="text-green-400">99.5%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Speed Demons -->
+          <div
+            class="bg-midnight border border-lightabyss rounded-2xl p-4 hover:border-blaze/50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="bg-blaze/10 rounded-lg p-2">
+                <i class="fas fa-bolt text-blaze"></i>
+              </div>
+              <div class="text-white font-bold">Speed Demons</div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@LightningFingers</span>
+                <span class="text-blaze">175 WPM</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@SonicTyper</span>
+                <span class="text-blaze">172 WPM</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@VelocityMaster</span>
+                <span class="text-blaze">170 WPM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marathon Runners -->
+          <div
+            class="bg-midnight border border-lightabyss rounded-2xl p-4 hover:border-frost/50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="bg-blue-400/10 rounded-lg p-2">
+                <i class="fas fa-running text-blue-400"></i>
+              </div>
+              <div class="text-white font-bold">Marathon Runners</div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@EnduranceKing</span>
+                <span class="text-blue-400">8h 42m</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@NonStopTyper</span>
+                <span class="text-blue-400">7h 56m</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@IronFingers</span>
+                <span class="text-blue-400">7h 23m</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rising Stars -->
+          <div
+            class="bg-midnight border border-lightabyss rounded-2xl p-4 hover:border-yellow-400/50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="bg-yellow-400/10 rounded-lg p-2">
+                <i class="fas fa-star text-yellow-400"></i>
+              </div>
+              <div class="text-white font-bold">Rising Stars</div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@NewbiePro</span>
+                <span class="text-yellow-400">+82 ranks</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@FastLearner</span>
+                <span class="text-yellow-400">+76 ranks</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-white">@QuickStudy</span>
+                <span class="text-yellow-400">+68 ranks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+<script src="../js/boards.js"></script>
   </body>
 </html>
