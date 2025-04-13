@@ -97,85 +97,87 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="p-8">
+    <main class="px-8 pb-8">
       <div class="max-w-6xl mx-auto">
-        <!-- Page Header -->
         <div
-          class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4"
+          class="pt-8 sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm w-full border-b border-lightabyss"
         >
-          <h1 class="text-white text-3xl font-bold flex items-center gap-3">
-            <i class="fas fa-trophy text-blaze"></i> Leaderboards
-          </h1>
+          <!-- Page Header -->
+          <div
+            class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4"
+          >
+            <h1 class="text-white text-3xl font-bold flex items-center gap-3">
+              <i class="fas fa-trophy text-blaze"></i> Leaderboards
+            </h1>
 
-          <div class="flex flex-col sm:flex-row gap-4">
-         
-            <div class="relative">
-              <select
-                class="bg-midnight border border-lightabyss text-white rounded-lg py-2 px-4 pr-8 appearance-none focus:outline-none"
-              >
-                <option>All Time</option>
-                <option>Daily</option>
-                <option>Weekly</option>
-                <option>Monthly</option>
-              </select>
-              <i
-                class="fas fa-chevron-down text-azure absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
-              ></i>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <div class="relative">
+                <select
+                  class="bg-midnight border border-lightabyss text-white rounded-lg py-2 px-4 pr-8 appearance-none focus:outline-none"
+                >
+                  <option>All Time</option>
+                  <option>Daily</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                </select>
+                <i
+                  class="fas fa-chevron-down text-azure absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"
+                ></i>
+              </div>
+
+              <div class="relative w-full sm:w-64">
+                <input
+                  type="text"
+                  placeholder="Search players..."
+                  class="w-full bg-midnight border border-lightabyss rounded-lg py-2 px-4 pl-10 text-white focus:outline-none"
+                />
+                <i
+                  class="fas fa-search text-azure absolute left-3 top-1/2 transform -translate-y-1/2"
+                ></i>
+              </div>
             </div>
-
-            <div class="relative w-full sm:w-64">
-              <input
-                type="text"
-                placeholder="Search players..."
-                class="w-full bg-midnight border border-lightabyss rounded-lg py-2 px-4 pl-10 text-white focus:outline-none"
-              />
-              <i
-                class="fas fa-search text-azure absolute left-3 top-1/2 transform -translate-y-1/2"
-              ></i>
+          </div>
+          <!-- Category Btn -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            <div
+              class="category-item cursor-pointer bg-buttonBlue text-strongAzure activeButton hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-bolt mr-2"></i>Time (15s)
+            </div>
+            <div
+              class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-bullseye mr-2"></i>Accuracy
+            </div>
+            <div
+              class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-keyboard mr-2"></i>Words (10)
+            </div>
+            <div
+              class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-running mr-2"></i>Time (60s)
+            </div>
+            <div
+              class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-infinity mr-2"></i>Time (120s)
+            </div>
+            <div
+              class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-medal mr-2"></i>Custom
+            </div>
+            <div
+              class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
+            >
+              <i class="fas fa-code mr-2"></i>Programming
             </div>
           </div>
         </div>
-        <!-- Category Btn -->
-        <div class="flex flex-wrap gap-2 mb-6">
-          <div
-            class="category-item cursor-pointer bg-buttonBlue text-strongAzure activeButton hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-bolt mr-2"></i>Time (15s)
-          </div>
-          <div
-            class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-bullseye mr-2"></i>Accuracy
-          </div>
-          <div
-            class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-keyboard mr-2"></i>Words (10)
-          </div>
-          <div
-            class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-running mr-2"></i>Time (60s)
-          </div>
-          <div
-            class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-infinity mr-2"></i>Time (120s)
-          </div>
-          <div
-            class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-medal mr-2"></i>Custom
-          </div>
-          <div
-            class="category-item cursor-pointer text-slate-200 hover:bg-[#3b82f61a] py-3 px-6 rounded-lg transition-all"
-          >
-            <i class="fas fa-code mr-2"></i>Programming
-          </div>
-        </div>
-
         <div
-          class="bg-midnight border border-lightabyss rounded-xl overflow-hidden mb-8"
+          class="bg-midnight  border border-lightabyss rounded-xl overflow-hidden mb-8"
         >
           <div
             class="grid grid-cols-12 bg-lightabyss/30 text-azure text-sm font-medium p-4"
