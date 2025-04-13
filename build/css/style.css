@@ -7,9 +7,11 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: Cascadia Mono;
     --color-red-400: oklch(70.4% 0.191 22.216);
+    --color-red-800: oklch(44.4% 0.177 26.899);
     --color-amber-300: oklch(87.9% 0.169 91.605);
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-amber-600: oklch(66.6% 0.179 58.318);
+    --color-amber-700: oklch(55.5% 0.163 48.998);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-600: oklch(62.7% 0.194 149.214);
@@ -22,7 +24,9 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
+    --container-xl: 36rem;
     --container-6xl: 72rem;
+    --container-7xl: 80rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
@@ -244,6 +248,12 @@
   .top-10 {
     top: calc(var(--spacing) * 10);
   }
+  .top-\[106\.4px\] {
+    top: 106.4px;
+  }
+  .top-\[180px\] {
+    top: 180px;
+  }
   .-right-6 {
     right: calc(var(--spacing) * -6);
   }
@@ -343,6 +353,12 @@
   .mt-40 {
     margin-top: calc(var(--spacing) * 40);
   }
+  .mt-52 {
+    margin-top: calc(var(--spacing) * 52);
+  }
+  .mt-80 {
+    margin-top: calc(var(--spacing) * 80);
+  }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
@@ -373,8 +389,17 @@
   .mb-20 {
     margin-bottom: calc(var(--spacing) * 20);
   }
+  .ml-\[21\%\] {
+    margin-left: 21%;
+  }
   .ml-\[90px\] {
     margin-left: 90px;
+  }
+  .ml-\[380px\] {
+    margin-left: 380px;
+  }
+  .ml-\[390px\] {
+    margin-left: 390px;
   }
   .ml-\[420px\] {
     margin-left: 420px;
@@ -445,6 +470,9 @@
   .h-\[500px\] {
     height: 500px;
   }
+  .h-fit {
+    height: fit-content;
+  }
   .h-full {
     height: 100%;
   }
@@ -487,11 +515,26 @@
   .w-28 {
     width: calc(var(--spacing) * 28);
   }
+  .w-\[10\%\] {
+    width: 10%;
+  }
+  .w-\[20\%\] {
+    width: 20%;
+  }
+  .w-\[30\%\] {
+    width: 30%;
+  }
   .w-\[70\%\] {
     width: 70%;
   }
+  .w-\[80\%\] {
+    width: 80%;
+  }
   .w-\[85\%\] {
     width: 85%;
+  }
+  .w-\[90\%\] {
+    width: 90%;
   }
   .w-\[96\%\] {
     width: 96%;
@@ -514,8 +557,14 @@
   .max-w-6xl {
     max-width: var(--container-6xl);
   }
+  .max-w-7xl {
+    max-width: var(--container-7xl);
+  }
   .max-w-\[80\%\] {
     max-width: 80%;
+  }
+  .max-w-xl {
+    max-width: var(--container-xl);
   }
   .min-w-14 {
     min-width: calc(var(--spacing) * 14);
@@ -808,6 +857,9 @@
       background-color: color-mix(in oklab, var(--color-amber-600) 20%, transparent);
     }
   }
+  .bg-amber-700 {
+    background-color: var(--color-amber-700);
+  }
   .bg-blaze {
     background-color: var(--color-blaze);
   }
@@ -897,6 +949,9 @@
   }
   .bg-red-400 {
     background-color: var(--color-red-400);
+  }
+  .bg-red-800 {
+    background-color: var(--color-red-800);
   }
   .bg-slate-500 {
     background-color: var(--color-slate-500);
@@ -1029,6 +1084,9 @@
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
+  .py-2\.5 {
+    padding-block: calc(var(--spacing) * 2.5);
+  }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
@@ -1040,6 +1098,9 @@
   }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
+  }
+  .py-8 {
+    padding-block: calc(var(--spacing) * 8);
   }
   .py-\[14px\] {
     padding-block: 14px;
