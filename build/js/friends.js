@@ -116,6 +116,11 @@ function switchTab(tabName, position) {
   const indicator = document.getElementById("indicator");
   indicator.style.transform = `translateX(${position * 100}%)`;
 }
+// Comments functionality
+function toggleComments(sectionId) {
+  const commentsSection = document.getElementById(sectionId);
+  commentsSection.classList.toggle("hidden");
+}
 
 function checkCommentInput(input) {
   const sendBtn = input.nextElementSibling;
@@ -130,8 +135,8 @@ function checkCommentInput(input) {
   }
 }
 
-function postComment() {
-  const input = document.getElementById("comment-input");
+function postComment(inputId, sectionId) {
+  const input = document.getElementById(inputId);
   const commentText = input.value.trim();
   if (commentText) {
     // for the backend
@@ -139,7 +144,7 @@ function postComment() {
 
     // simulation
     const commentsContainer = document.querySelector(
-      "#comments-section > div:first-child"
+      `#${sectionId} > div:first-child`
     );
     const newComment = document.createElement("div");
     newComment.className = "flex gap-3 mb-3";
@@ -163,16 +168,17 @@ function postComment() {
 
     input.value = "";
     checkCommentInput(input);
-
-    newComment.scrollIntoView({ behavior: "smooth" });
   }
 }
 
-document
-  .getElementById("comment-input")
-  .addEventListener("keypress", function (e) {
+//all comment inputs
+document.querySelectorAll('[id^="comment-input-"]').forEach((input) => {
+  input.addEventListener("keypress", function (e) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      postComment();
+      const inputId = this.id;
+      const sectionId = this.closest('[id^="comments-section-"]').id;
+      postComment(inputId, sectionId);
     }
   });
+});

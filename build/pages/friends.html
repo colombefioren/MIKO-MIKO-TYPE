@@ -190,7 +190,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
             <button
               class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
-              onclick="toggleComments(this)"
+              onclick="toggleComments('comments-section-1')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
@@ -203,7 +203,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
           </div>
 
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-1">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -270,14 +270,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-1"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-1', 'comments-section-1')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -346,7 +345,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
             <button
               class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-frost py-2 transition-colors"
-              onclick="toggleComments(this)"
+              onclick="toggleComments('comments-section-2')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
@@ -360,7 +359,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </div>
 
           <!-- Comments Section -->
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-2">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -429,14 +428,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-2"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-2', 'comments-section-2')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -621,7 +619,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
             <button
               class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
-              onclick="toggleComments(this)"
+              onclick="toggleComments('comments-section-3')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
@@ -634,7 +632,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
           </div>
 
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-3">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -701,14 +699,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-3"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-3', 'comments-section-3')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -997,7 +994,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
             <button
               class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-frost py-2 transition-colors"
-              onclick="toggleComments(this)"
+              onclick="toggleComments('comments-section-4')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
@@ -1011,7 +1008,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </div>
 
           <!-- Comments Section -->
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-4">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -1080,14 +1077,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-4"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-4', 'comments-section-4')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
