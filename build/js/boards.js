@@ -56,3 +56,19 @@ document.addEventListener("DOMContentLoaded", function () {
     linkContainer.classList.toggle("px-7");
   });
 });
+
+document.querySelectorAll(".category-item").forEach((item) => {
+  item.addEventListener("click", function () {
+    itemActive = document.querySelector(".activeButton");
+    itemActive.classList.remove("text-strongAzure");
+    itemActive.classList.remove("bg-buttonBlue");
+    itemActive.classList.remove("activeButton");
+    itemActive.classList.add("text-slate-200");
+
+    this.classList.remove("text-slate-200");
+    this.classList.add("text-strongAzure");
+    this.classList.add("text-strongAzure");
+    this.classList.add("bg-buttonBlue");
+    this.classList.add("activeButton");
+  });
+});
