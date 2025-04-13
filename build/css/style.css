@@ -938,6 +938,12 @@
       background-color: color-mix(in oklab, var(--color-lightabyss) 30%, transparent);
     }
   }
+  .bg-lightabyss\/70 {
+    background-color: color-mix(in srgb, #131536 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-lightabyss) 70%, transparent);
+    }
+  }
   .bg-lightmidnight {
     background-color: var(--color-lightmidnight);
   }
