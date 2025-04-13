@@ -116,6 +116,11 @@ function switchTab(tabName, position) {
   const indicator = document.getElementById("indicator");
   indicator.style.transform = `translateX(${position * 100}%)`;
 }
+// Comments functionality
+function toggleComments(sectionId) {
+  const commentsSection = document.getElementById(sectionId);
+  commentsSection.classList.toggle("hidden");
+}
 
 function checkCommentInput(input) {
   const sendBtn = input.nextElementSibling;
@@ -130,8 +135,8 @@ function checkCommentInput(input) {
   }
 }
 
-function postComment() {
-  const input = document.getElementById("comment-input");
+function postComment(inputId, sectionId) {
+  const input = document.getElementById(inputId);
   const commentText = input.value.trim();
   if (commentText) {
     // for the backend
@@ -139,7 +144,7 @@ function postComment() {
 
     // simulation
     const commentsContainer = document.querySelector(
-      "#comments-section > div:first-child"
+      `#${sectionId} > div:first-child`
     );
     const newComment = document.createElement("div");
     newComment.className = "flex gap-3 mb-3";
@@ -163,16 +168,87 @@ function postComment() {
 
     input.value = "";
     checkCommentInput(input);
+  }
+}
 
-    newComment.scrollIntoView({ behavior: "smooth" });
+//all comment inputs
+document.querySelectorAll('[id^="comment-input-"]').forEach((input) => {
+  input.addEventListener("keypress", function (e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      const inputId = this.id;
+      const sectionId = this.closest('[id^="comments-section-"]').id;
+      postComment(inputId, sectionId);
+    }
+  });
+});
+
+function toggleChatConversation() {
+  const chat = document.getElementById("chat-conversation");
+  chat.classList.toggle("hidden");
+  chat.classList.toggle("flex")
+  chat.classList.toggle("translate-y-full");
+  chat.classList.toggle("translate-y-0");
+}
+
+function openChatConversation(contactName) {
+  const chat = document.getElementById("chat-conversation");
+  document.getElementById("chat-contact-name").textContent = contactName;
+
+  // Show the chat if hidden
+  if (chat.classList.contains("hidden")) {
+    chat.classList.remove("hidden");
+    chat.classList.add("flex")
+    setTimeout(() => {
+      chat.classList.remove("translate-y-full");
+      chat.classList.add("translate-y-0");
+
+    }, 10);
+  }
+}
+
+function sendChatMessage() {
+  const input = document.getElementById("chat-message-input");
+  const message = input.value.trim();
+  if (message) {
+    const messagesContainer = document.getElementById("chat-messages");
+
+    // Create sent message
+    const sentMsg = document.createElement("div");
+    sentMsg.className = "mb-4 flex flex-col items-end";
+    sentMsg.innerHTML = `
+      <div class="text-azure text-xs">You</div>
+      <div class="mt-1 px-4 py-2 bg-blaze rounded-xl text-white max-w-[80%]">${message}</div>
+    `;
+    messagesContainer.appendChild(sentMsg);
+
+    // Clear input
+    input.value = "";
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Simulation reply after 1 second
+    setTimeout(() => {
+      const contactName =
+        document.getElementById("chat-contact-name").textContent;
+      const replyMsg = document.createElement("div");
+      replyMsg.className = "mb-4 flex flex-col items-start";
+      replyMsg.innerHTML = `
+        <div class="text-azure text-xs">${contactName}</div>
+        <div class="mt-1 px-4 py-2 bg-lightabyss rounded-xl text-slate-200 max-w-[80%]">
+          Thanks for your message! I'll get back to you soon.
+        </div>
+      `;
+      messagesContainer.appendChild(replyMsg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 1000);
   }
 }
 
 document
-  .getElementById("comment-input")
+  .getElementById("chat-message-input")
   .addEventListener("keypress", function (e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      postComment();
+    if (e.key === "Enter") {
+      sendChatMessage();
     }
   });

@@ -29,6 +29,67 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   </head>
 
   <body class="bg-abyss flex flex-col min-h-screen">
+    <div
+      id="chat-conversation"
+      class="fixed right-[450px] bottom-5 shadow-sm shadow-black w-[350px] h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
+    >
+      <div
+        class="p-4 border-b border-lightabyss flex justify-between items-center"
+      >
+        <div class="flex items-center gap-2">
+          <img
+            src="../assets/images/profile-picture.png"
+            alt="Profile"
+            class="w-8 h-8 rounded-full"
+          />
+          <div class="text-slate-200 font-bold" id="chat-contact-name">
+            Coco Thebest
+          </div>
+        </div>
+        <button
+          class="text-dusk hover:text-slate-200"
+          onclick="toggleChatConversation()"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="chat-messages" class="flex-1 p-4 overflow-y-auto">
+        <!-- Example messages -->
+        <div class="mb-4 flex flex-col items-start">
+          <div class="text-azure text-xs">Coco Thebest</div>
+          <div
+            class="mt-1 px-4 py-2 bg-lightabyss rounded-xl text-slate-200 max-w-[80%]"
+          >
+            Hey! Ready for the race tonight?
+          </div>
+        </div>
+        <div class="mb-4 flex flex-col items-end">
+          <div class="text-azure text-xs">You</div>
+          <div
+            class="mt-1 px-4 py-2 bg-blaze rounded-xl text-white max-w-[80%]"
+          >
+            Yeah, definitely! What time?
+          </div>
+        </div>
+      </div>
+      <div class="p-4 border-t border-lightabyss flex justify-end">
+        <div class="flex gap-2">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            id="chat-message-input"
+            class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none"
+          />
+          <button
+            class="bg-blaze text-white px-4 rounded-full"
+            onclick="sendChatMessage()"
+          >
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!--Navbar-->
     <nav
       class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
@@ -190,7 +251,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
             <button
               class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
-              onclick="toggleComments(this)"
+              onclick="toggleComments('comments-section-1')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
@@ -203,7 +264,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
           </div>
 
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-1">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -270,14 +331,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-1"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-1', 'comments-section-1')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -339,20 +399,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Actions -->
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-blaze py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-frost py-2 transition-colors"
-              onclick="toggleComments(this)"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              onclick="toggleComments('comments-section-2')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-green-400 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -360,7 +420,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </div>
 
           <!-- Comments Section -->
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-2">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -429,14 +489,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-2"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-2', 'comments-section-2')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -621,7 +680,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
             <button
               class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
-              onclick="toggleComments(this)"
+              onclick="toggleComments('comments-section-3')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
@@ -634,7 +693,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </button>
           </div>
 
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-3">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -701,14 +760,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-3"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-3', 'comments-section-3')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -990,20 +1048,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Actions -->
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-blaze py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-frost py-2 transition-colors"
-              onclick="toggleComments(this)"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              onclick="toggleComments('comments-section-4')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-green-400 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -1011,7 +1069,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </div>
 
           <!-- Comments Section -->
-          <div class="hidden" id="comments-section">
+          <div class="hidden" id="comments-section-4">
             <div class="mb-4">
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
@@ -1080,14 +1138,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   type="text"
                   placeholder="Write a comment..."
                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input"
+                  id="comment-input-4"
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  id="send-comment-btn"
-                  class="text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
                   disabled
-                  onclick="postComment()"
+                  onclick="postComment('comment-input-4', 'comments-section-4')"
                 >
                   <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
                 </button>
@@ -1194,9 +1251,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Chat Content -->
           <div class="content active" id="chat-content">
             <div class="flex flex-col gap-3 max-h-[500px] overflow-y-auto">
-              <!-- Chat Item 1 -->
               <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                onclick="openChatConversation('Coco Thebest')"
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
@@ -1221,9 +1278,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 </div>
               </div>
 
-              <!-- Chat Item 2 -->
+              <!-- Updated Chat Item 2 -->
               <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                onclick="openChatConversation('Mimi Lord')"
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
@@ -1241,9 +1299,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 <div class="text-dusk text-xs">1:15 PM</div>
               </div>
 
-              <!-- Chat Item 3 -->
+              <!-- Updated Chat Item 3 -->
               <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                onclick="openChatConversation('Choco Ta')"
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
