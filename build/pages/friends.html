@@ -29,6 +29,67 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   </head>
 
   <body class="bg-abyss flex flex-col min-h-screen">
+    <div
+      id="chat-conversation"
+      class="fixed right-[430px] bottom-5 shadow-sm shadow-black w-[350px] h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
+    >
+      <div
+        class="p-4 border-b border-lightabyss flex justify-between items-center"
+      >
+        <div class="flex items-center gap-2">
+          <img
+            src="../assets/images/profile-picture.png"
+            alt="Profile"
+            class="w-8 h-8 rounded-full"
+          />
+          <div class="text-slate-200 font-bold" id="chat-contact-name">
+            Coco Thebest
+          </div>
+        </div>
+        <button
+          class="text-dusk hover:text-slate-200"
+          onclick="toggleChatConversation()"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="chat-messages" class="flex-1 p-4 overflow-y-auto">
+        <!-- Example messages -->
+        <div class="mb-4 flex flex-col items-start">
+          <div class="text-azure text-xs">Coco Thebest</div>
+          <div
+            class="mt-1 px-4 py-2 bg-lightabyss rounded-xl text-slate-200 max-w-[80%]"
+          >
+            Hey! Ready for the race tonight?
+          </div>
+        </div>
+        <div class="mb-4 flex flex-col items-end">
+          <div class="text-azure text-xs">You</div>
+          <div
+            class="mt-1 px-4 py-2 bg-blaze rounded-xl text-white max-w-[80%]"
+          >
+            Yeah, definitely! What time?
+          </div>
+        </div>
+      </div>
+      <div class="p-4 border-t border-lightabyss flex justify-end">
+        <div class="flex gap-2">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            id="chat-message-input"
+            class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none"
+          />
+          <button
+            class="bg-blaze text-white px-4 rounded-full"
+            onclick="sendChatMessage()"
+          >
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!--Navbar-->
     <nav
       class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
@@ -1190,9 +1251,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Chat Content -->
           <div class="content active" id="chat-content">
             <div class="flex flex-col gap-3 max-h-[500px] overflow-y-auto">
-              <!-- Chat Item 1 -->
               <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                onclick="openChatConversation('Coco Thebest')"
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
@@ -1217,9 +1278,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 </div>
               </div>
 
-              <!-- Chat Item 2 -->
+              <!-- Updated Chat Item 2 -->
               <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                onclick="openChatConversation('Mimi Lord')"
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
@@ -1237,9 +1299,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 <div class="text-dusk text-xs">1:15 PM</div>
               </div>
 
-              <!-- Chat Item 3 -->
+              <!-- Updated Chat Item 3 -->
               <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
+                onclick="openChatConversation('Choco Ta')"
+                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
               >
                 <div class="flex gap-3 h-full items-center">
                   <img

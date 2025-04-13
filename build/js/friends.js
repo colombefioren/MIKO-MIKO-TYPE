@@ -182,3 +182,73 @@ document.querySelectorAll('[id^="comment-input-"]').forEach((input) => {
     }
   });
 });
+
+function toggleChatConversation() {
+  const chat = document.getElementById("chat-conversation");
+  chat.classList.toggle("hidden");
+  chat.classList.toggle("flex")
+  chat.classList.toggle("translate-y-full");
+  chat.classList.toggle("translate-y-0");
+}
+
+function openChatConversation(contactName) {
+  const chat = document.getElementById("chat-conversation");
+  document.getElementById("chat-contact-name").textContent = contactName;
+
+  // Show the chat if hidden
+  if (chat.classList.contains("hidden")) {
+    chat.classList.remove("hidden");
+    chat.classList.add("flex")
+    setTimeout(() => {
+      chat.classList.remove("translate-y-full");
+      chat.classList.add("translate-y-0");
+
+    }, 10);
+  }
+}
+
+function sendChatMessage() {
+  const input = document.getElementById("chat-message-input");
+  const message = input.value.trim();
+  if (message) {
+    const messagesContainer = document.getElementById("chat-messages");
+
+    // Create sent message
+    const sentMsg = document.createElement("div");
+    sentMsg.className = "mb-4 flex flex-col items-end";
+    sentMsg.innerHTML = `
+      <div class="text-azure text-xs">You</div>
+      <div class="mt-1 px-4 py-2 bg-blaze rounded-xl text-white max-w-[80%]">${message}</div>
+    `;
+    messagesContainer.appendChild(sentMsg);
+
+    // Clear input
+    input.value = "";
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Simulation reply after 1 second
+    setTimeout(() => {
+      const contactName =
+        document.getElementById("chat-contact-name").textContent;
+      const replyMsg = document.createElement("div");
+      replyMsg.className = "mb-4 flex flex-col items-start";
+      replyMsg.innerHTML = `
+        <div class="text-azure text-xs">${contactName}</div>
+        <div class="mt-1 px-4 py-2 bg-lightabyss rounded-xl text-slate-200 max-w-[80%]">
+          Thanks for your message! I'll get back to you soon.
+        </div>
+      `;
+      messagesContainer.appendChild(replyMsg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 1000);
+  }
+}
+
+document
+  .getElementById("chat-message-input")
+  .addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      sendChatMessage();
+    }
+  });
