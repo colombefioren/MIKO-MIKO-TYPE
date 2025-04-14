@@ -19,5 +19,7 @@
     var(--color-midnight) 5%,
     #202e54 95%
   );
+  --color-buttonBlue: rgba(59, 130, 246, 0.2);
+  --color-strongAzure: #3b82f6;
   --color-subtlegray: #999ca6;
 }
