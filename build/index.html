@@ -39,11 +39,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
       </div>
-      <img
-        src="./assets/images/mikomiko-logo.png"
-        alt="Miko-Miko Type Logo"
-        class="h-40"
-      />
+      <div class="logo-container">
+        <img
+          src="./assets/images/mikomiko-logo.png"
+          alt="Miko-Miko Type Logo"
+          class="h-[160px] transition-all duration-300 [transition-timing-function:cubic-bezier(0.25,0.8,0.25,1)] drop-shadow-[0_0_10px_rgba(255,107,53,0.3)] hover:drop-shadow-[0_0_15px_rgba(255,107,53,0.3)]"
+        />
+      </div>
+
       <div class="flex gap-10">
         <div class="rounded-md overflow-hidden flex flex-col w-28">
           <img
@@ -83,7 +86,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="./pages/friends.html">
+          <a
+            class="flex text-dusk items-center gap-15"
+            href="./pages/friends.html"
+          >
             <i class="fa-solid fa-users text-[27px] button-icon"></i>
             <div class="text-xl font-bold button-text">Friends</div>
           </a>
@@ -114,74 +120,87 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </div>
     </header>
 
-    <main class="flex flex-col items-center ml-[90px] mt-40 grow">
-      <div class="flex flex-col items-center gap-18 mx-10">
-        <div
-          class="flex items-center p-7 rounded-full bg-crystalMidnight w-[85%] h-14"
-        >
-          <div>
-            <form action="" id="mode-form" class="flex gap-5 text-white">
-              <label
-                for="easy"
-                class="mode-option flex gap-2 hover:cursor-pointer items-center"
-              >
-                <i class="fa-solid fa-circle"></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="easy"
-                  value="easy"
-                  class="absolute w-0 h-0 opacity-0"
-                  checked
-                />
-                <span class="hover:cursor-pointer">Easy</span>
+    <main class="flex flex-col items-center mt-5">
+      <div class="flex flex-col justify-center items-center gap-22">
+        <div class="flex items-center p-7 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight h-16 shadow-lg shadow-crystalTwilight/30">
+          <div class="w-full">
+            <form action="" id="mode-form" class="flex flex-wrap justify-center gap-2 text-white items-center">
+              <!-- Difficulty Levels -->
+              <label for="easy" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-seedling text-emerald-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="easy" value="easy" class="absolute w-0 h-0 opacity-0" checked />
+                <span class="font-medium tracking-wide">Easy</span>
               </label>
-              <label
-                for="medium"
-                class="mode-option flex gap-2 hover:cursor-pointer items-center"
-              >
-                <i class="fa-solid fa-square"></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="medium"
-                  value="medium"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="hover:cursor-pointer">Medium</span>
+              
+              <label for="medium" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-mountain text-amber-400 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="medium" value="medium" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Medium</span>
               </label>
-              <label
-                for="hard"
-                class="mode-option flex gap-2 hover:cursor-pointer items-center"
-              >
-                <i class="fa-solid fa-diamond"></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="hard"
-                  value="hard"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="hover:cursor-pointer">Hard</span>
+              
+              <label for="hard" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-bolt text-rose-500 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="hard" value="hard" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Hard</span>
               </label>
-              <label
-                for="phrases"
-                class="mode-option flex gap-2 hover:cursor-pointer items-center"
-              >
-                <i class="fa-solid fa-quote-left"></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="phrases"
-                  value="phrases"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="hover:cursor-pointer">Phrases</span>
+              
+              <!-- Glass Divider -->
+              <div class="h-8 w-[1px] mx-2 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent animate-shine"></div>
+              </div>
+              
+              <!-- Content Types -->
+              <label for="words" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-font text-sky-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="words" value="words" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Words</span>
+              </label>
+              
+              <label for="symbols" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-asterisk text-teal-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="symbols" value="symbols" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Symbols</span>
+              </label>
+              
+              <label for="numbers" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-hashtag text-indigo-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="numbers" value="numbers" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Numbers</span>
+              </label>
+              
+              <label for="code" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-code text-blue-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="code" value="code" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Code</span>
+              </label>
+              
+              <!-- Glass Divider -->
+              <div class="h-8 w-[1px] mx-2 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent animate-shine"></div>
+              </div>
+              
+              <!-- Challenge Modes -->
+              <label for="timed" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-stopwatch text-yellow-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="timed" value="timed" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Timed</span>
+              </label>
+              
+              <label for="target" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-bullseye text-green-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="target" value="target" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Target WPM</span>
+              </label>
+              
+              <label for="zen" class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20">
+                <i class="fas fa-spa text-fuchsia-300 group-hover:scale-110 transition-transform"></i>
+                <input type="radio" name="mode" id="zen" value="zen" class="absolute w-0 h-0 opacity-0" />
+                <span class="font-medium tracking-wide">Zen</span>
               </label>
             </form>
           </div>
         </div>
-        <div class="relative">
+        <div class="relative w-[1600px]">
           <div
             id="pointer-focus"
             class="hidden justify-center items-center text-dusk gap-5 absolute -z-10 w-full h-full"
@@ -199,7 +218,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               autocomplete="false"
             />
             <p
-              class="text-textPrimary leading-[70px] tracking-[3px] text-[40px]"
+              class="text-textPrimary leading-[70px] tracking-[2px]"
               id="word-display"
             ></p>
             <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>

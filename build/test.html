@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/cursor.css" />
+    <link rel="stylesheet" href="./css/font.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/utilities.css" />
+    <link
+      rel="shortcut icon"
+      href="./assets/images/mikomiko-logo-reduced.svg"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Miko-Miko Type</title>
+    <style>
+      /* Simplified color scheme */
+      :root {
+        --bg-dark: #0f172a;
+        --bg-darker: #020617;
+        --bg-light: #1e293b;
+        --accent: #f97316;
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --border: #1e293b;
+      }
+      
+      body {
+        background-color: var(--bg-darker);
+        color: var(--text-primary);
+      }
+      
+      /* Simplified navbar */
+      nav {
+        background-color: var(--bg-dark);
+        border-right: 1px solid var(--border);
+      }
+      
+      .chevron {
+        background-color: var(--accent);
+      }
+      
+      /* Consolidated mode selector */
+      .mode-selector {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border);
+      }
+      
+      .mode-option {
+        color: var(--text-secondary);
+      }
+      
+      .mode-option:hover, .mode-option input:checked + span {
+        color: var(--text-primary);
+      }
+      
+      .mode-option input:checked + span {
+        font-weight: bold;
+      }
+      
+      /* Typing area */
+      .typing-container {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border);
+      }
+      
+      #word-display {
+        text-align: center;
+      }
+      
+      /* Results */
+      .results-container {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border);
+      }
+      
+      /* Buttons */
+      .btn {
+        background-color: var(--bg-light);
+        color: var(--text-primary);
+      }
+      
+      .btn-primary {
+        background-color: var(--accent);
+      }
+      
+      /* Simplified mode selector bar */
+      .mode-bar {
+        display: flex;
+        justify-content: center;
+        background-color: var(--bg-dark);
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        border: 1px solid var(--border);
+      }
+      
+      .mode-section {
+        display: flex;
+        gap: 0.5rem;
+      }
+      
+      .mode-divider {
+        width: 1px;
+        background-color: var(--border);
+        margin: 0 1rem;
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col min-h-screen prevent-select">
+    <!-- Simplified Navbar -->
+    <nav
+      class="fixed left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
+    >
+      <div
+        class="rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron shadow-lg"
+      >
+        <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
+      </div>
+      <div class="logo-container">
+        <img
+          src="./assets/images/mikomiko-logo.png"
+          alt="Miko-Miko Type Logo"
+          class="hover:scale-105 transition-transform"
+        />
+      </div>
+      <div class="flex gap-10">
+        <div
+          class="rounded-xl overflow-hidden flex flex-col w-28 shadow-lg"
+        >
+          <img
+            src="./assets/images/events.jpg"
+            alt="People typing"
+            class="w-full bg-white h-20 object-cover"
+          />
+          <div class="w-full text-center font-bold py-2">
+            EVENTS
+          </div>
+        </div>
+        <div
+          class="rounded-xl overflow-hidden flex flex-col w-28 shadow-lg"
+        >
+          <div
+            class="w-full bg-gradient-to-br from-accent to-accent h-20 flex items-center justify-center"
+          >
+            <i class="fas fa-trophy text-3xl text-white"></i>
+          </div>
+          <div class="w-full text-center font-bold py-2">
+            WHEEL
+          </div>
+        </div>
+      </div>
+      <ul
+        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        id="nav-list"
+      >
+        <div
+          id="focus-highlight"
+          class="focused-btn-highlight rounded-xl"
+        ></div>
+
+        <li class="pl-6 button-links py-[14px] relative">
+          <a
+            class="flex items-center gap-15 hover:text-white transition-colors"
+            href="#"
+          >
+            <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Type</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a
+            class="flex items-center gap-15 hover:text-white transition-colors"
+            href="#"
+          >
+            <i class="fa-solid fa-flag-checkered text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Race</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a
+            class="flex items-center gap-15 hover:text-white transition-colors"
+            href="./pages/friends.html"
+          >
+            <i class="fa-solid fa-users text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Friends</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a
+            class="flex items-center gap-15 hover:text-white transition-colors"
+            href="#"
+          >
+            <i class="fa-solid fa-trophy text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Leaderboard</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a
+            class="flex items-center gap-15 hover:text-white transition-colors"
+            href="#"
+          >
+            <i class="fa-solid fa-cog text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Settings</div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Simplified Header -->
+    <header
+      class="flex justify-around items-center p-7 border-b"
+    >
+      <div class="flex gap-5 items-center">
+        <img
+          src="./assets/images/profile-picture.png"
+          alt="Profile picture"
+          class="w-14 h-14 rounded-full border-2 border-accent shadow-lg"
+          id="profile-picture"
+        />
+        <div>
+          <div class="flex gap-5 items-center">
+            <p class="font-bold text-xl" id="username">
+              Coco TheBest
+            </p>
+            <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+          </div>
+          <p class="text-sm" id="account-id">@cocothebest18</p>
+        </div>
+      </div>
+      <div class="flex gap-6">
+        <button
+          class="btn px-6 py-2 rounded-xl transition-all flex items-center gap-2 shadow-md"
+        >
+          <i class="fas fa-plus"></i> New Race
+        </button>
+        <button
+          class="btn-primary px-6 py-2 rounded-xl transition-all flex items-center gap-2 shadow-md"
+        >
+          <i class="fas fa-share-alt"></i> Share
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex flex-col items-center ml-[90px] mt-40 grow px-10">
+      <div class="flex flex-col items-center gap-18 w-full max-w-6xl">
+        <!-- Consolidated Mode Selector Bar -->
+        <div class="mode-bar w-full">
+          <!-- Difficulty Modes -->
+          <div class="mode-section">
+            <label for="easy" class="mode-option">
+              <input type="radio" name="mode" id="easy" value="easy" checked />
+              <span>Easy</span>
+            </label>
+            <label for="medium" class="mode-option">
+              <input type="radio" name="mode" id="medium" value="medium" />
+              <span>Medium</span>
+            </label>
+            <label for="hard" class="mode-option">
+              <input type="radio" name="mode" id="hard" value="hard" />
+              <span>Hard</span>
+            </label>
+          </div>
+          
+          <div class="mode-divider"></div>
+          
+          <!-- Content Modes -->
+          <div class="mode-section">
+            <label for="words" class="mode-option">
+              <input type="radio" name="mode" id="words" value="words" />
+              <span>Words</span>
+            </label>
+            <label for="phrases" class="mode-option">
+              <input type="radio" name="mode" id="phrases" value="phrases" />
+              <span>Phrases</span>
+            </label>
+            <label for="quotes" class="mode-option">
+              <input type="radio" name="mode" id="quotes" value="quotes" />
+              <span>Quotes</span>
+            </label>
+          </div>
+          
+          <div class="mode-divider"></div>
+          
+          <!-- Special Modes -->
+          <div class="mode-section">
+            <label for="zen" class="mode-option">
+              <input type="radio" name="mode" id="zen" value="zen" />
+              <span>Zen</span>
+            </label>
+            <label for="code" class="mode-option">
+              <input type="radio" name="mode" id="code" value="code" />
+              <span>Code</span>
+            </label>
+            <label for="time" class="mode-option">
+              <input type="radio" name="mode" id="time" value="time" />
+              <span>Time Trial</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Typing Area -->
+        <div class="relative w-full mt-10">
+          <div
+            id="pointer-focus"
+            class="hidden justify-center items-center gap-5 absolute -z-10 w-full h-full rounded-2xl backdrop-blur-sm"
+          >
+            <i class="fa-solid fa-keyboard text-3xl animate-bounce"></i>
+            <p class="text-xl">Click here or press any key to start typing</p>
+          </div>
+          <div
+            id="text-field"
+            class="relative typing-container p-10 rounded-2xl"
+          >
+            <input
+              class="border text-white w-full h-full absolute z-10 opacity-0"
+              type="text"
+              id="input-field"
+              autofocus
+              autocomplete="off"
+              autocomplete="false"
+            />
+            <p
+              class="leading-[80px] tracking-[3px] text-[42px] font-light"
+              id="word-display"
+            ></p>
+            <div
+              id="typing-cursor"
+              class="absolute h-12 w-1 bg-accent animate-pulse"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Results Display -->
+        <div class="flex justify-between w-full mt-10">
+          <div class="results-container p-6 rounded-2xl w-full">
+            <h3 class="text-xl font-bold mb-4 pb-2">
+              Results
+            </h3>
+            <div class="grid grid-cols-4 gap-4">
+              <div class="text-center">
+                <p class="text-sm">WPM</p>
+                <p class="text-3xl font-bold" id="wpm-result">0</p>
+              </div>
+              <div class="text-center">
+                <p class="text-sm">Accuracy</p>
+                <p class="text-3xl font-bold" id="accuracy-result">
+                  0%
+                </p>
+              </div>
+              <div class="text-center">
+                <p class="text-sm">Time</p>
+                <p class="text-3xl font-bold" id="time-result">0s</p>
+              </div>
+              <div class="text-center">
+                <p class="text-sm">Score</p>
+                <p class="text-3xl font-bold" id="total_result">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4 w-full justify-center mt-6">
+          <button class="btn px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-redo"></i> Restart
+          </button>
+          <button class="btn px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-chart-line"></i> Statistics
+          </button>
+          <button class="btn-primary px-6 py-3 rounded-xl flex items-center gap-2">
+            <i class="fas fa-share"></i> Share Results
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script src="./js/gameLogic.js"></script>
+    <script src="./js/navbar.js"></script>
+  </body>
+</html>
