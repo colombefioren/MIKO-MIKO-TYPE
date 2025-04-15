@@ -1,6 +1,6 @@
 const loginSection = document.getElementById("login-section");
-const signinSection = document.getElementById("signin-section");
-const crossSignin = document.getElementById("cross-signin");
+const signupSection = document.getElementById("signup-section");
+const crossSignup = document.getElementById("cross-signup");
 const crossLogin = document.getElementById("cross-login");
 
 const toggleLoginSection = () => {
@@ -8,13 +8,13 @@ const toggleLoginSection = () => {
   loginSection.classList.toggle("flex");
 };
 const toggleSigninSection = () => {
-  signinSection.classList.toggle("hidden");
-  signinSection.classList.toggle("flex");
+  signupSection.classList.toggle("hidden");
+  signupSection.classList.toggle("flex");
 };
 
-crossSignin.addEventListener("click", () => {
-  signinSection.classList.toggle("hidden");
-  signinSection.classList.toggle("flex");
+crossSignup.addEventListener("click", () => {
+  signupSection.classList.toggle("hidden");
+  signupSection.classList.toggle("flex");
 });
 
 crossLogin.addEventListener("click", () => {
