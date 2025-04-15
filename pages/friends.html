@@ -36,7 +36,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       <div
         class="p-4 border-b border-lightabyss flex justify-between items-center"
       >
-        <div class="flex items-center gap-2">
+        <div class="flex items-center">
           <img
             src="../public/assets/images/profile-picture.png"
             alt="Profile"
@@ -90,78 +90,75 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </div>
     </div>
 
-     <!--Navbar-->
-     <nav
-     class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
-   >
-     <div
-       class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
-     >
-       <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
-     </div>
-     <img
-       src="/build/assets/images/mikomiko-logo.png"
-       alt="Miko-Miko Type Logo"
-       class="h-40"
-     />
-     <div class="flex gap-10">
-       <div class="rounded-md overflow-hidden flex flex-col w-28">
-         <img
-           src="/build/assets/images/events.jpg"
-           alt="People typing"
-           class="w-full bg-white h-20 object-cover"
-         />
-         <div
-           class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-         >
-           EVENTS
-         </div>
-       </div>
-       <div class="rounded-md overflow-hidden flex flex-col w-28">
-         <div class="w-full bg-slate-500 h-20"></div>
-         <div
-           class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-         >
-           WHEEL
-         </div>
-       </div>
-     </div>
-     <ul
-       class="flex flex-col mt-10 gap-6 w-full relative link-container"
-       id="nav-list"
-     >
-       <div id="focus-highlight" class="focused-btn-highlight"></div>
+    <!--Navbar-->
+    <nav
+      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
+    >
+      <div
+        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
+      >
+        <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
+      </div>
+      <img
+        src="../public/assets/images/mikomiko-logo.png"
+        alt="Miko-Miko Type Logo"
+        class="h-40"
+      />
+      <div class="flex gap-10">
+        <div class="rounded-md overflow-hidden flex flex-col w-28">
+          <img
+            src="../public/assets/images/events.jpg"
+            alt="People typing"
+            class="w-full bg-white h-20 object-cover"
+          />
+          <div
+            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
+          >
+            EVENTS
+          </div>
+        </div>
+        <div class="rounded-md overflow-hidden flex flex-col w-28">
+          <div class="w-full bg-slate-500 h-20"></div>
+          <div
+            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
+          >
+            WHEEL
+          </div>
+        </div>
+      </div>
+      <ul
+        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        id="nav-list"
+      >
+        <div id="focus-highlight" class="focused-btn-highlight"></div>
 
-       <!-- Navigation buttons -->
-       <li class="pl-6 button-links py-[14px] relative">
-         <a class="flex text-dusk items-center gap-15" href="../index.html">
-           <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
-           <div class="text-xl font-bold button-text">Type</div>
-         </a>
-       </li>
-       <li class="pl-6 button-links py-[14px] relative">
-         <a class="flex text-dusk items-center gap-15" href="./race.html">
-           <i class="fa-solid fa-horse text-3xl button-icon"></i>
-           <div class="text-xl font-bold button-text">Race</div>
-         </a>
-       </li>
-       <li class="pl-6 button-links py-[14px] relative">
-         <a
-           class="flex text-dusk items-center gap-15"
-           href="./friends.html"
-         >
-           <i class="fa-solid fa-users text-[27px] button-icon"></i>
-           <div class="text-xl font-bold button-text">Friends</div>
-         </a>
-       </li>
-       <li class="pl-6 button-links py-[14px] relative">
-         <a class="flex text-dusk items-center gap-15" href="./boards.html">
-           <i class="fa-solid fa-medal text-[34px] button-icon"></i>
-           <div class="text-xl font-bold button-text">Boards</div>
-         </a>
-       </li>
-     </ul>
-   </nav>
+        <!-- Navigation buttons -->
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="../index.html">
+            <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Type</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="./race.html">
+            <i class="fa-solid fa-horse text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Race</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="./friends.html">
+            <i class="fa-solid fa-users text-[27px] button-icon"></i>
+            <div class="text-xl font-bold button-text">Friends</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="./boards.html">
+            <i class="fa-solid fa-medal text-[34px] button-icon"></i>
+            <div class="text-xl font-bold button-text">Boards</div>
+          </a>
+        </li>
+      </ul>
+    </nav>
     <main class="flex ml-[420px] justify-between pb-5">
       <div class="flex w-[70%] items-center gap-5 flex-col relative">
         <div
@@ -188,6 +185,33 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </div>
         </div>
 
+        <!-- Post Creation Form -->
+        <div class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6">
+          <div class="flex items-center gap-3 mb-4">
+            <img
+              src="../public/assets/images/blank-profile.png"
+              alt="You"
+              class="w-12 h-12 rounded-full object-cover"
+              id="current-user-avatar"
+            />
+            <input
+              type="text"
+              placeholder="What's on your mind?"
+              class="bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none flex-1"
+              id="post-content-input"
+            />
+          </div>
+          <div class="flex justify-end">
+            <button
+              id="create-post-btn"
+              class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+            >
+              Post
+            </button>
+          </div>
+        </div>
+
+        <div class="w-full posts-container"></div>
         <!-- Post Container -->
 
         <div
@@ -244,20 +268,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
               onclick="toggleComments('comments-section-1')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -399,20 +423,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Actions -->
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
               onclick="toggleComments('comments-section-2')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -673,20 +697,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
               onclick="toggleComments('comments-section-3')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -1048,20 +1072,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Actions -->
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
               onclick="toggleComments('comments-section-4')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -1600,6 +1624,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </div>
     </main>
 
-    <script src="../public/js/friends.js"></script>
+    <script>
+      console.log("Hi its friend page");
+    </script>
+    <script type="module" src="../public/js/friends.js"></script>
+    <script type="module" src="../public/js/socials.js"></script>
   </body>
 </html>

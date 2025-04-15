@@ -365,3 +365,37 @@ export async function saveGameResult(result) {
 
   return result;
 }
+
+async function onGameComplete(result) {
+  const user = await getCurrentUser();
+  if (!user) {
+    const login = confirm(
+      "You need to be logged in to save your results. Would you like to log in now?"
+    );
+    if (login) {
+      loginModal.classList.remove("hidden");
+    }
+    return;
+  }
+
+  try {
+    // Save game result
+    await saveGameResult(result);
+
+    // Ask to share
+    const share = confirm(`Your score: ${result.wpm} WPM! Share your result?`);
+
+    if (share) {
+      const content = prompt("Add a message to your post:");
+      if (content) {
+        await createPost(content, result);
+        alert("Your score has been shared!");
+        // Refresh posts
+        await loadPosts();
+      }
+    }
+  } catch (error) {
+    console.error("Error saving/sharing result:", error);
+    alert("Failed to save/share your result");
+  }
+}

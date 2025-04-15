@@ -1,23 +1,29 @@
 import { supabase } from "./database.js";
+import { getCurrentUser } from "./auth.js";
 
-export async function createPost(content, gameResult) {
+// Post functions
+export async function createPost(content, gameResult = null) {
   const user = await getCurrentUser();
+  if (!user) throw new Error("User not logged in");
+
+  const postData = {
+    user_id: user.id,
+    content: content,
+  };
+
+  if (gameResult) {
+    postData.wpm = gameResult.wpm;
+    postData.accuracy = gameResult.accuracy;
+    postData.mode = gameResult.mode;
+    postData.difficulty = gameResult.difficulty;
+  }
 
   const { data, error } = await supabase
     .from("posts")
-    .insert({
-      user_id: user.id,
-      content,
-      wpm: gameResult?.wpm,
-      accuracy: gameResult?.accuracy,
-      mode: gameResult?.mode,
-      difficulty: gameResult?.difficulty,
-    })
-    .select()
-    .single();
-
+    .insert(postData)
+    .select();
   if (error) throw error;
-  return data;
+  return data[0];
 }
 
 export async function getPosts() {
@@ -25,16 +31,10 @@ export async function getPosts() {
     .from("posts")
     .select(
       `
-      id, 
-      content,
-      wpm,
-      accuracy,
-      mode,
-      difficulty,
-      created_at,
-      profiles:user_id (id, username, avatar_url),
-      likes(count),
-      comments(count)
+      *,
+      profiles:user_id (username, avatar_url),
+      comments:comments (count),
+      likes:likes (count)
     `
     )
     .order("created_at", { ascending: false });
@@ -43,30 +43,102 @@ export async function getPosts() {
   return data;
 }
 
-export async function likePost(postId) {
+// Comment functions
+export async function createComment(postId, content) {
   const user = await getCurrentUser();
-
-  const { error } = await supabase.from("likes").insert({
-    post_id: postId,
-    user_id: user.id,
-  });
-
-  if (error) throw error;
-}
-
-export async function addComment(postId, content) {
-  const user = await getCurrentUser();
+  if (!user) throw new Error("User not logged in");
 
   const { data, error } = await supabase
     .from("comments")
     .insert({
       post_id: postId,
       user_id: user.id,
-      content,
+      content: content,
     })
-    .select()
-    .single();
+    .select();
+
+  if (error) throw error;
+  return data[0];
+}
+
+export async function getComments(postId) {
+  const { data, error } = await supabase
+    .from("comments")
+    .select(
+      `
+      *,
+      profiles:user_id (username, avatar_url)
+    `
+    )
+    .eq("post_id", postId)
+    .order("created_at", { ascending: true });
 
   if (error) throw error;
   return data;
+}
+
+// Like functions
+export async function toggleLike(postId) {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("User not logged in");
+
+  // Check if already liked
+  const { data: existingLike, error: checkError } = await supabase
+    .from("likes")
+    .select()
+    .eq("post_id", postId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (existingLike) {
+    // Unlike
+    const { error } = await supabase
+      .from("likes")
+      .delete()
+      .eq("post_id", postId)
+      .eq("user_id", user.id);
+
+    if (error) throw error;
+    return { liked: false };
+  } else {
+    // Like
+    const { error } = await supabase.from("likes").insert({
+      post_id: postId,
+      user_id: user.id,
+    });
+
+    if (error) throw error;
+    return { liked: true };
+  }
+}
+
+// Notification functions
+export async function getNotifications() {
+  const user = await getCurrentUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from("notifications")
+    .select(
+      `
+      *,
+      sender:from_user (username, avatar_url),
+      post:post_id (id)
+    `
+    )
+    .eq("to_user", user.id)
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  if (error) throw error;
+  return data;
+}
+
+export async function markNotificationAsRead(notificationId) {
+  const { error } = await supabase
+    .from("notifications")
+    .update({ read: true })
+    .eq("id", notificationId);
+
+  if (error) throw error;
 }

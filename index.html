@@ -657,7 +657,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       }
 
       // After game completes
-      async function onGameComplete(result) {
+      async function eComplete(result) {
         const user = await getCurrentUser();
         if (!user) {
           const login = confirm(
