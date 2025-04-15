@@ -9,9 +9,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/cursor.css" />
-    <link rel="stylesheet" href="../css/font.css" />
-    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../public/css/cursor.css" />
+    <link rel="stylesheet" href="../public/css/font.css" />
+    <link rel="stylesheet" href="../public/css/navbar.css" />
     <link
       rel="shortcut icon"
       href="./assets/images/mikomiko-logo-reduced.svg"
@@ -24,7 +24,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/build/css/style.css" />
+    <link rel="stylesheet" href="../public/css/style.css" />
     <title>Miko-Miko Type</title>
   </head>
 
@@ -38,7 +38,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <div class="flex items-center gap-2">
           <img
-            src="../assets/images/profile-picture.png"
+            src="../public/assets/images/profile-picture.png"
             alt="Profile"
             class="w-8 h-8 rounded-full"
           />
@@ -90,78 +90,78 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </div>
     </div>
 
-    <!--Navbar-->
-    <nav
-      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
-    >
-      <div
-        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
-      >
-        <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
-      </div>
-      <img
-        src="/build/assets/images/mikomiko-logo.png"
-        alt="Miko-Miko Type Logo"
-        class="h-40"
-      />
-      <div class="flex gap-10">
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <img
-            src="/build/assets/images/events.jpg"
-            alt="People typing"
-            class="w-full bg-white h-20 object-cover"
-          />
-          <div
-            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-          >
-            EVENTS
-          </div>
-        </div>
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <div class="w-full bg-slate-500 h-20"></div>
-          <div
-            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-          >
-            WHEEL
-          </div>
-        </div>
-      </div>
-      <ul
-        class="flex flex-col mt-10 gap-6 w-full relative link-container"
-        id="nav-list"
-      >
-        <div id="focus-highlight" class="focused-btn-highlight"></div>
+     <!--Navbar-->
+     <nav
+     class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
+   >
+     <div
+       class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
+     >
+       <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
+     </div>
+     <img
+       src="/build/assets/images/mikomiko-logo.png"
+       alt="Miko-Miko Type Logo"
+       class="h-40"
+     />
+     <div class="flex gap-10">
+       <div class="rounded-md overflow-hidden flex flex-col w-28">
+         <img
+           src="/build/assets/images/events.jpg"
+           alt="People typing"
+           class="w-full bg-white h-20 object-cover"
+         />
+         <div
+           class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
+         >
+           EVENTS
+         </div>
+       </div>
+       <div class="rounded-md overflow-hidden flex flex-col w-28">
+         <div class="w-full bg-slate-500 h-20"></div>
+         <div
+           class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
+         >
+           WHEEL
+         </div>
+       </div>
+     </div>
+     <ul
+       class="flex flex-col mt-10 gap-6 w-full relative link-container"
+       id="nav-list"
+     >
+       <div id="focus-highlight" class="focused-btn-highlight"></div>
 
-        <!-- Navigation buttons -->
-        <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="../index.html">
-            <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
-            <div class="text-xl font-bold button-text">Type</div>
-          </a>
-        </li>
-        <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="#">
-            <i class="fa-solid fa-horse text-3xl button-icon"></i>
-            <div class="text-xl font-bold button-text">Race</div>
-          </a>
-        </li>
-        <li class="pl-6 button-links py-[14px] relative">
-          <a
-            class="flex text-dusk items-center gap-15"
-            href="/build/pages/friends.html"
-          >
-            <i class="fa-solid fa-users text-[27px] button-icon"></i>
-            <div class="text-xl font-bold button-text">Friends</div>
-          </a>
-        </li>
-        <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="./boards.html">
-            <i class="fa-solid fa-medal text-[34px] button-icon"></i>
-            <div class="text-xl font-bold button-text">Boards</div>
-          </a>
-        </li>
-      </ul>
-    </nav>
+       <!-- Navigation buttons -->
+       <li class="pl-6 button-links py-[14px] relative">
+         <a class="flex text-dusk items-center gap-15" href="../index.html">
+           <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
+           <div class="text-xl font-bold button-text">Type</div>
+         </a>
+       </li>
+       <li class="pl-6 button-links py-[14px] relative">
+         <a class="flex text-dusk items-center gap-15" href="./race.html">
+           <i class="fa-solid fa-horse text-3xl button-icon"></i>
+           <div class="text-xl font-bold button-text">Race</div>
+         </a>
+       </li>
+       <li class="pl-6 button-links py-[14px] relative">
+         <a
+           class="flex text-dusk items-center gap-15"
+           href="./friends.html"
+         >
+           <i class="fa-solid fa-users text-[27px] button-icon"></i>
+           <div class="text-xl font-bold button-text">Friends</div>
+         </a>
+       </li>
+       <li class="pl-6 button-links py-[14px] relative">
+         <a class="flex text-dusk items-center gap-15" href="./boards.html">
+           <i class="fa-solid fa-medal text-[34px] button-icon"></i>
+           <div class="text-xl font-bold button-text">Boards</div>
+         </a>
+       </li>
+     </ul>
+   </nav>
     <main class="flex ml-[420px] justify-between pb-5">
       <div class="flex w-[70%] items-center gap-5 flex-col relative">
         <div
@@ -170,7 +170,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex justify-end items-center w-full">
             <div class="flex gap-5">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="Profile picture"
                 class="w-12 h-12"
                 id="profile-picture"
@@ -196,7 +196,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="Profile"
                 class="w-12 h-12 rounded-full object-cover"
               />
@@ -224,7 +224,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Image -->
           <div class="rounded-2xl overflow-hidden mb-6">
             <img
-              src="../assets/images/type.png"
+              src="../public/assets/images/type.png"
               alt="Post Image"
               class="w-full h-96 object-cover"
             />
@@ -269,7 +269,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover"
                 />
@@ -295,7 +295,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 2 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/mikomiko-logo.png"
+                  src="../public/assets/images/mikomiko-logo.png"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover"
                 />
@@ -322,7 +322,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <!-- Write comment -->
             <div class="flex gap-3 items-center mt-4">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="You"
                 class="w-10 h-10 rounded-full object-cover"
               />
@@ -353,7 +353,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="Profile"
                 class="w-12 h-12 rounded-full object-cover border border-blaze/50"
               />
@@ -425,7 +425,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover border border-lightabyss"
                 />
@@ -452,7 +452,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 2 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/mikomiko-logo.png"
+                  src="../public/assets/images/mikomiko-logo.png"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover border border-lightabyss"
                 />
@@ -480,7 +480,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <!-- Write comment -->
             <div class="flex gap-3 items-center mt-4">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="You"
                 class="w-10 h-10 rounded-full object-cover"
               />
@@ -625,7 +625,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="Profile"
                 class="w-12 h-12 rounded-full object-cover"
               />
@@ -653,7 +653,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Image -->
           <div class="rounded-2xl overflow-hidden mb-6">
             <img
-              src="../assets/images/type.png"
+              src="../public/assets/images/type.png"
               alt="Post Image"
               class="w-full h-96 object-cover"
             />
@@ -698,7 +698,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover"
                 />
@@ -724,7 +724,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 2 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/mikomiko-logo.png"
+                  src="../public/assets/images/mikomiko-logo.png"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover"
                 />
@@ -751,7 +751,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <!-- Write comment -->
             <div class="flex gap-3 items-center mt-4">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="You"
                 class="w-10 h-10 rounded-full object-cover"
               />
@@ -864,7 +864,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Achievement 1 -->
               <div class="flex items-center gap-3">
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   class="w-12 h-12 rounded-full object-cover"
                 />
                 <div class="flex-1">
@@ -884,7 +884,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Achievement 2 -->
               <div class="flex items-center gap-3">
                 <img
-                  src="../assets/images/mikomiko-logo.png"
+                  src="../public/assets/images/mikomiko-logo.png"
                   class="w-12 h-12 rounded-full object-cover"
                 />
                 <div class="flex-1">
@@ -902,7 +902,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Achievement 3 -->
               <div class="flex items-center gap-3">
                 <img
-                  src="../assets/images/profile-picture.png"
+                  src="../public/assets/images/profile-picture.png"
                   class="w-12 h-12 rounded-full object-cover"
                 />
                 <div class="flex-1">
@@ -919,7 +919,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Achievement 4 -->
               <div class="flex items-center gap-3">
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   class="w-12 h-12 rounded-full object-cover"
                 />
                 <div class="flex-1">
@@ -966,7 +966,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
           <div class="bg-lightabyss/30 rounded-2xl p-4 flex items-center gap-4">
             <img
-              src="../assets/images/profile-picture.png"
+              src="../public/assets/images/profile-picture.png"
               alt="New Leader"
               class="w-16 h-16 rounded-full object-cover border-2 border-blaze"
             />
@@ -1002,7 +1002,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="Profile"
                 class="w-12 h-12 rounded-full object-cover border border-blaze/50"
               />
@@ -1074,7 +1074,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 1 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover border border-lightabyss"
                 />
@@ -1101,7 +1101,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               <!-- Comment 2 -->
               <div class="flex gap-3 mb-3">
                 <img
-                  src="../assets/images/mikomiko-logo.png"
+                  src="../public/assets/images/mikomiko-logo.png"
                   alt="Commenter"
                   class="w-10 h-10 rounded-full object-cover border border-lightabyss"
                 />
@@ -1129,7 +1129,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <!-- Write comment -->
             <div class="flex gap-3 items-center mt-4">
               <img
-                src="../assets/images/profile-picture.png"
+                src="../public/assets/images/profile-picture.png"
                 alt="You"
                 class="w-10 h-10 rounded-full object-cover"
               />
@@ -1257,7 +1257,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
-                    src="../assets/images/profile-picture.png"
+                    src="../public/assets/images/profile-picture.png"
                     alt="Profile Pic"
                     class="rounded-full w-12 object-cover"
                   />
@@ -1285,7 +1285,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
-                    src="../assets/images/events.jpg"
+                    src="../public/assets/images/events.jpg"
                     alt="Profile Pic"
                     class="rounded-full w-12 object-cover"
                   />
@@ -1306,7 +1306,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               >
                 <div class="flex gap-3 h-full items-center">
                   <img
-                    src="../assets/images/mikomiko-logo.png"
+                    src="../public/assets/images/mikomiko-logo.png"
                     alt="Profile Pic"
                     class="rounded-full w-12 object-cover"
                   />
@@ -1339,7 +1339,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
               >
                 <img
-                  src="../assets/images/profile-picture.png"
+                  src="../public/assets/images/profile-picture.png"
                   alt="Profile Pic"
                   class="rounded-full w-12 object-cover"
                 />
@@ -1361,7 +1361,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
               >
                 <img
-                  src="../assets/images/events.jpg"
+                  src="../public/assets/images/events.jpg"
                   alt="Profile Pic"
                   class="rounded-full w-12 object-cover"
                 />
@@ -1383,7 +1383,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
               >
                 <img
-                  src="../assets/images/mikomiko-logo.png"
+                  src="../public/assets/images/mikomiko-logo.png"
                   alt="Profile Pic"
                   class="rounded-full w-12 object-cover"
                 />
@@ -1439,7 +1439,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                 class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3 opacity-70"
               >
                 <img
-                  src="../assets/images/profile-picture.png"
+                  src="../public/assets/images/profile-picture.png"
                   alt="Profile Pic"
                   class="rounded-full w-12 object-cover"
                 />
@@ -1483,7 +1483,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   >
                     <div class="flex gap-3 h-full items-center">
                       <img
-                        src="../assets/images/profile-picture.png"
+                        src="../public/assets/images/profile-picture.png"
                         alt="Profile Pic"
                         class="rounded-full w-12 object-cover"
                       />
@@ -1522,7 +1522,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   >
                     <div class="flex gap-3 h-full items-center">
                       <img
-                        src="../assets/images/events.jpg"
+                        src="../public/assets/images/events.jpg"
                         alt="Profile Pic"
                         class="rounded-full w-12 object-cover"
                       />
@@ -1550,7 +1550,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   >
                     <div class="flex gap-3 h-full items-center">
                       <img
-                        src="../assets/images/mikomiko-logo.png"
+                        src="../public/assets/images/mikomiko-logo.png"
                         alt="Profile Pic"
                         class="rounded-full w-12 object-cover"
                       />
@@ -1573,7 +1573,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   >
                     <div class="flex gap-3 h-full items-center">
                       <img
-                        src="../assets/images/profile-picture.png"
+                        src="../public/assets/images/profile-picture.png"
                         alt="Profile Pic"
                         class="rounded-full w-12 object-cover"
                       />
@@ -1600,6 +1600,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       </div>
     </main>
 
-    <script src="../js/friends.js"></script>
+    <script src="../public/js/friends.js"></script>
   </body>
 </html>

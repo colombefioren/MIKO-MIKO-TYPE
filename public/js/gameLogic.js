@@ -304,9 +304,9 @@ window.addEventListener("keydown", (event) => {
 });
 
 //Focus on the input when press a key
-window.addEventListener("keydown", () => {
-  inputField.focus({ preventScroll: true });
-});
+// window.addEventListener("keydown", () => {
+//   inputField.focus({ preventScroll: true });
+// });
 
 const textField = document.getElementById("text-field");
 const pointerFocus = document.getElementById("pointer-focus");
@@ -326,3 +326,42 @@ inputField.addEventListener("blur", () => {
   pointerFocus.classList.remove("hidden");
   cursor.classList.add("hidden");
 });
+
+import { supabase } from "./database.js";
+
+export async function saveGameResult(result) {
+  const user = await getCurrentUser();
+
+  // Save to leaderboard
+  const { error } = await supabase.from("leaderboard").insert({
+    user_id: user.id,
+    wpm: result.wpm,
+    accuracy: result.accuracy,
+    mode: result.mode,
+    difficulty: result.difficulty,
+  });
+
+  if (error) console.error("Error saving result:", error);
+
+  // Update user's records if this is a new high score
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("wpm_record, accuracy_record")
+    .eq("id", user.id)
+    .single();
+
+  if (
+    result.wpm > profile.wpm_record ||
+    result.accuracy > profile.accuracy_record
+  ) {
+    await supabase
+      .from("profiles")
+      .update({
+        wpm_record: Math.max(result.wpm, profile.wpm_record),
+        accuracy_record: Math.max(result.accuracy, profile.accuracy_record),
+      })
+      .eq("id", user.id);
+  }
+
+  return result;
+}
