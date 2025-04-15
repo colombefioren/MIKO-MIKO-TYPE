@@ -52,7 +52,7 @@ const getRandomWord = (mode) => {
 // Update cursor position
 const updateCursorPosition = () => {
   if (charSpans.length === 0 || currentWordIndex >= wordsToType.length) return;
-
+1
   const currentPosition = inputField.value.length;
   const currentWordLength = wordsToType[currentWordIndex].length;
   const spanIndex = charSpans.findIndex(
