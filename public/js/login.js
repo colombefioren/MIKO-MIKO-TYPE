@@ -90,6 +90,7 @@ async function handleSignup(e) {
 
 async function handleLogout() {
   try {
+    console.log("Loggin out!");
     await signOut();
   } catch (error) {
     alert(error.message);
@@ -116,7 +117,7 @@ function updateUIForGuest() {
   authButtons.classList.remove("hidden");
   userMenu.classList.add("hidden");
   document.getElementById("profile-picture").src =
-    "./public/assets/images/profile-picture.png";
+    "./public/assets/images/blank-profile.png";
 }
 
 // After game completes

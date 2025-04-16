@@ -14,22 +14,18 @@ import {
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     user = await getCurrentUser();
-    if (!user) {
-      // redirect to typing main page
-      window.location.href = "../index.html";
-      return;
+    if (user) {
+      //the user avatar
+      document.getElementById("current-user-avatar").src =
+        user.user_metadata?.avatar_url ||
+        "../public/assets/images/blank-picture.png";
+
+      // Load every existing posts
+      await loadPosts();
+
+      // real time updates
+      setupRealtime();
     }
-
-    //the user avatar
-    document.getElementById("current-user-avatar").src =
-      user.user_metadata?.avatar_url ||
-      "../public/assets/images/blank-picture.png";
-
-    // Load every existing posts
-    await loadPosts();
-
-    // real time updates
-    setupRealtime();
   } catch (error) {
     console.error("Initialization error:", error);
   }
