@@ -23,6 +23,7 @@ const results = document.getElementById("results");
 const totalResult = document.getElementById("total_result");
 const cursor = document.getElementById("typing-cursor"); //Get the cursor in the js
 
+// Updated content dictionaries
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
   medium: ["keyboard", "monitor", "printer", "charger", "battery"],
@@ -33,23 +34,95 @@ const words = {
     "extravagant",
     "misconception",
   ],
-  phrases: [
-    "the",
-    "quick",
-    "brown",
-    "fox",
-    "jumps",
-    "over",
-    "the",
-    "lazy",
-    "dog",
+};
+
+const symbols = [
+  "!",
+  "@",
+  "#",
+  "$",
+  "%",
+  "^",
+  "&",
+  "*",
+  "(",
+  ")",
+  "-",
+  "_",
+  "+",
+  "=",
+  "{",
+  "}",
+  "[",
+  "]",
+  "|",
+  "\\",
+  ":",
+  ";",
+  '"',
+  "'",
+  "<",
+  ">",
+  ",",
+  ".",
+  "?",
+  "/",
+];
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+const code = {
+  easy: ["var x = 5;", "if(true){}", "i += 1;", "x == y;", "a && b;"],
+  medium: [
+    "function(){}",
+    "for(let i=0;)",
+    "while(x<10)",
+    "switch(val){}",
+    "try{catch(){}}",
+  ],
+  hard: [
+    "const getData = async () => {",
+    "export default class App {",
+    "document.querySelector('#id')",
+    "return new Promise((res, rej) => {",
+    "Object.keys(data).map(key => {",
   ],
 };
 
-// Generate a random word from the selected mode
-const getRandomWord = (mode) => {
-  const wordList = words[mode];
-  return wordList[Math.floor(Math.random() * wordList.length)];
+// Generate a random word based on difficulty and selected content types
+const getRandomWord = (difficulty) => {
+  // Get all checked content type checkboxes
+  const contentTypes = document.querySelectorAll(
+    'input[name="content-type"]:checked'
+  );
+
+  // If no content types are selected, default to words
+  if (contentTypes.length === 0) {
+    document.getElementById("words").checked = true;
+    return getRandomFromArray(words[difficulty]);
+  }
+
+  // Randomly select one of the checked content types
+  const randomTypeIndex = Math.floor(Math.random() * contentTypes.length);
+  const selectedType = contentTypes[randomTypeIndex].value;
+
+  // Return a random item from the selected content type
+  switch (selectedType) {
+    case "words":
+      return getRandomFromArray(words[difficulty]);
+    case "symbols":
+      return getRandomFromArray(symbols);
+    case "numbers":
+      return getRandomFromArray(numbers);
+    case "code":
+      return getRandomFromArray(code[difficulty]);
+    default:
+      return getRandomFromArray(words[difficulty]);
+  }
+};
+
+// Helper function to get random item from array
+const getRandomFromArray = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
 };
 
 // Update cursor position
@@ -82,7 +155,7 @@ const updateCursorPosition = () => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 25) => {
+const startTest = (wordCount = 50) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   charSpans = []; // Reset character spans
@@ -90,14 +163,25 @@ const startTest = (wordCount = 25) => {
   startTime = null;
   previousEndTime = null;
   totalStat = { wpm: 0, accuracy: 0, count: 0 }; // Reset stats for new test
-  modeForm
-    .querySelector('input[name="mode"]:checked')
-    .classList.add("text-blaze");
+
+  // Get selected difficulty
+  const difficultyRadios = document.querySelectorAll(
+    'input[type="radio"][name="mode"]:checked'
+  );
+  const difficulty =
+    difficultyRadios.length > 0 ? difficultyRadios[0].value : "easy";
+
+  // Ensure at least one content type is selected
+  const contentCheckboxes = document.querySelectorAll(
+    'input[name="content-type"]:checked'
+  );
+  if (contentCheckboxes.length === 0) {
+    document.getElementById("words").checked = true;
+  }
+
+  // Generate words to type
   for (let i = 0; i < wordCount; i++) {
-    const selectedMode = modeForm.querySelector(
-      'input[name="mode"]:checked'
-    ).value;
-    wordsToType.push(getRandomWord(selectedMode));
+    wordsToType.push(getRandomWord(difficulty));
   }
 
   // Create word display with individual character spans
@@ -133,12 +217,41 @@ const startTest = (wordCount = 25) => {
   updateCursorPosition();
 };
 
-// Select all radio inputs with the name "mode"
-const modeInputs = document.querySelectorAll('input[name="mode"]');
+// Handle content type checkbox changes
+function updateContentTypeClasses() {
+  const contentCheckboxes = document.querySelectorAll(
+    'input[name="content-type"]'
+  );
+  contentCheckboxes.forEach((checkbox) => {
+    const parentLabel = checkbox.closest(".mode-option");
+    if (checkbox.checked) {
+      parentLabel.classList.add("text-blaze");
+    } else {
+      parentLabel.classList.remove("text-blaze");
+    }
+  });
 
-// Function to update classes based on which input is checked
-function updateModeClasses() {
-  modeInputs.forEach((input) => {
+  // Make sure at least one checkbox is checked
+  const checkedCount = document.querySelectorAll(
+    'input[name="content-type"]:checked'
+  ).length;
+  if (checkedCount === 0) {
+    document.getElementById("words").checked = true;
+    document
+      .getElementById("words")
+      .closest(".mode-option")
+      .classList.add("text-blaze");
+  }
+}
+
+// Select difficulty radio inputs
+const difficultyInputs = document.querySelectorAll(
+  'input[type="radio"][name="mode"]'
+);
+
+// Function to update classes based on which difficulty is checked
+function updateDifficultyClasses() {
+  difficultyInputs.forEach((input) => {
     const parentLabel = input.closest(".mode-option");
     if (input.checked) {
       parentLabel.classList.add("text-blaze");
@@ -148,13 +261,28 @@ function updateModeClasses() {
   });
 }
 
-// Add event listeners on each radio input
-modeInputs.forEach((input) => {
-  input.addEventListener("change", updateModeClasses);
+// Add event listeners on each difficulty radio input
+difficultyInputs.forEach((input) => {
+  input.addEventListener("change", updateDifficultyClasses);
 });
 
-// Initialize the class state when the page loads
-document.addEventListener("DOMContentLoaded", updateModeClasses);
+// Add event listeners on each content type checkbox
+const contentCheckboxes = document.querySelectorAll(
+  'input[name="content-type"]'
+);
+contentCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    updateContentTypeClasses();
+    startTest();
+    inputField.focus({ preventScroll: true });
+  });
+});
+
+// Initialize the class states when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  updateDifficultyClasses();
+  updateContentTypeClasses();
+});
 
 // Start the timer when user begins typing
 const startTimer = () => {
@@ -289,9 +417,12 @@ inputField.addEventListener("input", () => {
   updateCursorPosition();
 });
 
-modeForm.addEventListener("change", () => {
-  startTest();
-  inputField.focus({ preventScroll: true });
+// Update for difficulty radio buttons
+modeForm.addEventListener("change", (e) => {
+  if (e.target.name === "mode" && e.target.type === "radio") {
+    startTest();
+    inputField.focus({ preventScroll: true });
+  }
 });
 
 // Start the test
@@ -306,11 +437,6 @@ window.addEventListener("keydown", (event) => {
     startTest();
   }
 });
-
-//Focus on the input when press a key
-// window.addEventListener("keydown", () => {
-//   inputField.focus({ preventScroll: true });
-// });
 
 const textField = document.getElementById("text-field");
 const pointerFocus = document.getElementById("pointer-focus");
