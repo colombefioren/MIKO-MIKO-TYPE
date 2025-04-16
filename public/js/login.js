@@ -54,10 +54,9 @@ switchToLogin.addEventListener("click", () => {
 loginForm.addEventListener("submit", handleLogin);
 signupForm.addEventListener("submit", handleSignup);
 
-// Check auth state on load
+
 checkAuthState();
 
-// Auth state change handler
 supabase.auth.onAuthStateChange((_event, session) => {
   if (session) {
     updateUIForLoggedInUser(session.user);
@@ -115,7 +114,7 @@ async function updateUIForLoggedInUser(user) {
     authButtons.classList.add("hidden");
     userMenu.classList.remove("hidden");
 
-    // Get the most up-to-date avatar URL
+    // get the avatarurl
     const profile = await getUserProfile(user.id);
     const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url;
 
@@ -138,33 +137,7 @@ function updateUIForGuest() {
   userMenu.classList.add("hidden");
 }
 
-// After game completes
-async function eComplete(result) {
-  const user = await getCurrentUser();
-  if (!user) {
-    const login = confirm(
-      "You need to be logged in to save your results. Would you like to log in now?"
-    );
-    if (login) {
-      loginModal.classList.remove("hidden");
-    }
-    return;
-  }
 
-  const savedResult = await saveGameResult(result);
-
-  // Show share modal
-  const share = confirm(
-    `Your score: ${savedResult.wpm} WPM! Share your result?`
-  );
-  if (share) {
-    const content = prompt("Add a message to your post:");
-    if (content) {
-      await createPost(content, savedResult);
-      alert("Your score has been shared!");
-    }
-  }
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -192,97 +165,101 @@ async function handleLogin(e) {
   }
 }
 async function handleAvatarUpload(file) {
-  const user = await getCurrentUser();
-  if (!user) {
-    alert("Please log in to upload an avatar");
-    return null;
-  }
-
-  // validata file type
-  const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-  const maxSize = 5 * 1024 * 1024; // 5MB
-
-  if (!validTypes.includes(file.type)) {
-    alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
-    return null;
-  }
-
-  if (file.size > maxSize) {
-    alert("Image size must be less than 2MB");
-    return null;
-  }
-
   try {
-  
-    document
-      .getElementById("profile-picture")
-      .classList.add("avatar-uploading");
+    const user = await getCurrentUser();
+    if (!user) {
+      showLoginPrompt("upload an avatar");
+      return null;
+    }
+
+    // Validate file
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!validTypes.includes(file.type)) {
+      alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
+      return null;
+    }
+
+    if (file.size > maxSize) {
+      alert("Image size must be less than 5MB");
+      return null;
+    }
 
     const avatarUrl = await uploadAvatar(user.id, file);
 
-    document.getElementById("profile-picture").src = avatarUrl;
-    document.getElementById("current-user-avatar").src = avatarUrl;
+    // Update all avatar images in UI
+    document.querySelectorAll(".user-avatar").forEach((img) => {
+      img.src = avatarUrl;
+    });
 
     return avatarUrl;
   } catch (error) {
     console.error("Detailed upload error:", error);
 
-   
+    let errorMessage = "Upload failed. Please try again.";
     if (error.message.includes("403")) {
-      alert(
-        "Upload failed: Permission denied. Please ensure you are logged in properly."
-      );
+      errorMessage = "Permission denied. Please log in again.";
     } else if (error.message.includes("413")) {
-      alert("Upload failed: File too large. Maximum size is 2MB.");
-    } else {
-      alert(`Upload failed: ${error.message}`);
+      errorMessage = "File is too large (max 5MB)";
     }
 
+    alert(errorMessage);
     return null;
-  } finally {
-    document
-      .getElementById("profile-picture")
-      .classList.remove("avatar-uploading");
   }
 }
+let avatarInput = null; 
 
 function addAvatarUploadHandler() {
-  const avatarInput = document.createElement("input");
-  avatarInput.type = "file";
-  avatarInput.accept = "image/*";
-  avatarInput.style.display = "none";
-  avatarInput.id = "avatar-upload-input";
+  if (!avatarInput) {
+    avatarInput = document.createElement("input");
+    avatarInput.type = "file";
+    avatarInput.accept = "image/*";
+    avatarInput.style.display = "none";
+    avatarInput.id = "avatar-upload-input";
+    document.body.appendChild(avatarInput);
 
-  avatarInput.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      await handleAvatarUpload(file);
+    avatarInput.addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        await handleAvatarUpload(file);
+      }
+      // reset the input to allow selecting the same file again
+      avatarInput.value = "";
+    });
+  }
+
+  // add click handlers to both avatar elements
+  const avatarElements = [
+    document.getElementById("profile-picture"),
+    document.getElementById("current-user-avatar"),
+  ];
+
+  avatarElements.forEach((element) => {
+    if (element && !element.hasAttribute("data-avatar-listener")) {
+      element.style.cursor = "pointer";
+      element.addEventListener("click", handleAvatarClick);
+      element.setAttribute("data-avatar-listener", "true");
     }
   });
+}
 
-  document.body.appendChild(avatarInput);
+function handleAvatarClick() {
+  if (!avatarInput) return;
 
-  // make profile picture clickable for upload
-  const profilePic = document.getElementById("profile-picture");
-  if (profilePic) {
-    profilePic.style.cursor = "pointer";
-    profilePic.addEventListener("click", () => {
-      avatarInput.click();
-    });
+  const user = getCurrentUser();
+  if (!user) {
+    showLoginPrompt("upload an avatar");
+    return;
   }
-  const currentUserAvatar = document.getElementById("current-user-avatar");
-  if (currentUserAvatar) {
-    currentUserAvatar.style.cursor = "pointer";
-    currentUserAvatar.addEventListener("click", () => {
-      avatarInput.click();
-    });
-  }
+
+  avatarInput.click();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await checkAuthState();
-    addAvatarUploadHandler(); 
+    addAvatarUploadHandler();
   } catch (error) {
     console.error("Auth initialization error:", error);
   }

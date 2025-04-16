@@ -96,6 +96,7 @@ function renderPosts(posts) {
       <div class="flex items-center justify-between mb-4 w-full">
         <div class="flex items-center gap-3">
           <img
+          id="profile-picture"
             src="${
               post.profiles?.avatar_url ||
               "../public/assets/images/blank-profile.png"
@@ -167,6 +168,7 @@ function renderPosts(posts) {
             ? `
         <div class="flex gap-3 items-center mt-4">
           <img
+          id="profile-picture"
             src="${
               user.user_metadata?.avatar_url ||
               "../public/assets/images/blank-profile.png"
@@ -192,6 +194,7 @@ function renderPosts(posts) {
             : `
         <div class="flex gap-3 items-center mt-4">
           <img
+          id="profile-picture"
             src="../public/assets/images/blank-profile.png"
             alt="You"
             class="w-10 h-10 rounded-full object-cover"
