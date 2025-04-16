@@ -130,7 +130,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         class="flex flex-col mt-10 gap-6 w-full relative link-container"
         id="nav-list"
       >
-        <div id="focus-highlight" class="focused-btn-highlight"></div>
+        <div
+          id="focus-highlight"
+          class="focused-btn cursor-pointer-highlight"
+        ></div>
 
         <!-- Navigation buttons -->
         <li class="pl-6 button-links py-[14px] relative">
@@ -223,6 +226,30 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               id="post-content-input"
             />
           </div>
+
+          <!-- add image upload section -->
+          <div class="mb-4">
+            <input
+              type="file"
+              id="post-image-input"
+              accept="image/*"
+              class="hidden"
+            />
+            <button
+              id="add-image-btn"
+              class="text-azure hover:text-slate-200 flex items-center gap-2"
+            >
+              <i class="fas fa-image"></i>
+              <span>Add Image</span>
+            </button>
+            <div id="image-preview" class="mt-2 hidden">
+              <img id="preview-image" class="max-h-60 rounded-lg" />
+              <button id="remove-image-btn" class="text-blaze mt-2 text-sm">
+                <i class="fas fa-times"></i> Remove
+              </button>
+            </div>
+          </div>
+
           <div class="flex justify-end">
             <button
               id="create-post-btn"
@@ -290,20 +317,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
               onclick="toggleComments('comments-section-1')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -381,7 +408,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
                   disabled
                   onclick="postComment('comment-input-1', 'comments-section-1')"
                 >
@@ -445,20 +472,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Actions -->
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
               onclick="toggleComments('comments-section-2')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -539,7 +566,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
                   disabled
                   onclick="postComment('comment-input-2', 'comments-section-2')"
                 >
@@ -719,20 +746,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
               onclick="toggleComments('comments-section-3')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -810,7 +837,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
                   disabled
                   onclick="postComment('comment-input-3', 'comments-section-3')"
                 >
@@ -1094,20 +1121,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Post Actions -->
           <div class="flex border-t border-b border-lightabyss py-2 mb-4">
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
             >
               <i class="far fa-heart"></i>
               <span>Like</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
               onclick="toggleComments('comments-section-4')"
             >
               <i class="fa-solid fa-comment"></i>
               <span>Comment</span>
             </button>
             <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn transition-colors"
+              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
             >
               <i class="fas fa-share"></i>
               <span>Share</span>
@@ -1188,7 +1215,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
                   onkeyup="checkCommentInput(this)"
                 />
                 <button
-                  class="send-comment-btn text-frost opacity-50 cursor-not-allowed"
+                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
                   disabled
                   onclick="postComment('comment-input-4', 'comments-section-4')"
                 >
@@ -1790,7 +1817,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     </div>
 
     <!--Login Warning-->
-
 
     <script src="../public/js/friends.js"></script>
     <script type="module" src="../public/js/friendsocial.js"></script>

@@ -410,6 +410,9 @@
   .mx-2 {
     margin-inline: calc(var(--spacing) * 2);
   }
+  .my-2 {
+    margin-block: calc(var(--spacing) * 2);
+  }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
   }
@@ -559,6 +562,9 @@
   }
   .h-px {
     height: 1px;
+  }
+  .max-h-60 {
+    max-height: calc(var(--spacing) * 60);
   }
   .max-h-\[500px\] {
     max-height: 500px;

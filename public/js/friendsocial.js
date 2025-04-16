@@ -8,6 +8,7 @@ import {
   toggleLike,
 } from "./socials.js";
 
+let selectedImageFile = null;
 let user;
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -27,10 +28,58 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadPosts();
     setupRealtime();
+    setupImageUpload();
   } catch (error) {
     console.error("Initialization error:", error);
   }
 });
+
+function setupImageUpload() {
+  const imageInput = document.getElementById("post-image-input");
+  const addImageBtn = document.getElementById("add-image-btn");
+  const removeImageBtn = document.getElementById("remove-image-btn");
+  const imagePreview = document.getElementById("image-preview");
+  const previewImage = document.getElementById("preview-image");
+
+  addImageBtn.addEventListener("click", () => {
+    imageInput.click();
+  });
+
+  imageInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type and size
+      const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+      const maxSize = 5 * 1024 * 1024; // 5MB
+
+      if (!validTypes.includes(file.type)) {
+        alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
+        return;
+      }
+
+      if (file.size > maxSize) {
+        alert("Image size must be less than 5MB");
+        return;
+      }
+
+      selectedImageFile = file;
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImage.src = e.target.result;
+        imagePreview.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  removeImageBtn.addEventListener("click", () => {
+    selectedImageFile = null;
+    imagePreview.classList.add("hidden");
+    imageInput.value = "";
+  });
+}
 
 function setupUnauthenticatedPostForm() {
   const postForm = document.getElementById("post-creation-form");
@@ -62,11 +111,25 @@ document
     if (!user) return showLoginPrompt("create posts");
 
     const content = document.getElementById("post-content-input").value.trim();
-    if (!content) return;
+    if (!content && !selectedImageFile) {
+      alert("Please add content or an image to your post");
+      return;
+    }
 
     try {
-      await createPost(content);
+      let imageUrl = null;
+      if (selectedImageFile) {
+        imageUrl = await uploadPostImage(user.id, selectedImageFile);
+      }
+
+      await createPost(content, imageUrl);
+
+      // Reset form
       document.getElementById("post-content-input").value = "";
+      document.getElementById("image-preview").classList.add("hidden");
+      document.getElementById("post-image-input").value = "";
+      selectedImageFile = null;
+
       await loadPosts();
     } catch (error) {
       console.error("Error creating post:", error);
@@ -125,6 +188,19 @@ function renderPosts(posts) {
         }
       </div>
 
+
+      ${
+        post.image_url
+          ? `<div class="rounded-2xl overflow-hidden my-2">
+        <img
+          src="${post.image_url}"
+          alt="Post Image"
+          class="w-full h-96 object-cover"
+        />
+      </div>`
+          : ""
+      }
+
       <div class="flex items-center justify-between text-dusk text-sm mb-4">
         <div class="flex items-center gap-2">
           <i class="fas fa-heart"></i>
@@ -136,7 +212,7 @@ function renderPosts(posts) {
       </div>
 
       <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
+       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn cursor-pointer" 
         data-post-id="${post.id}">
   <i class="${
     likedByUser ? "fas fa-heart text-blaze" : "far fa-heart"
@@ -148,12 +224,12 @@ function renderPosts(posts) {
    }
 
 </button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
                 data-post-id="${post.id}">
           <i class="fa-solid fa-comment"></i>
           <span>Comment</span>
         </button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn" data-post-id="${
+        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn cursor-pointer" data-post-id="${
           post.id
         }">
           <i class="fas fa-share"></i>
@@ -515,6 +591,23 @@ function setupRealtime() {
       () => loadPosts()
     )
     .subscribe();
+}
+
+async function uploadPostImage(userId, file) {
+  const fileExt = file.name.split(".").pop();
+  const fileName = `post-${userId}-${Date.now()}.${fileExt}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("post-images")
+    .upload(fileName, file);
+
+  if (uploadError) throw uploadError;
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("post-images").getPublicUrl(fileName);
+
+  return publicUrl;
 }
 
 window.showLoginPrompt = showLoginPrompt;
