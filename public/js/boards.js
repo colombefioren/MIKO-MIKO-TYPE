@@ -141,13 +141,13 @@ async function loadLeaderboard() {
             </div>
           </div>
           <div class="col-span-2 text-right text-white font-bold text-lg">
-            ${Math.round(profile.wpm_avg || 0)}
+            ${profile.wpm_avg || 0}
           </div>
           <div class="col-span-2 text-right text-green-400 text-lg">
-            ${(profile.accuracy_avg || 0).toFixed(1)}%
+            ${profile.accuracy_avg || 0}%
           </div>
           <div class="col-span-1 text-right text-azure text-lg">
-            ${Math.round((profile.wpm_avg || 0) * 1.04)}
+            ${((profile.wpm_avg || 0) * 1.04).toFixed()}
           </div>
         `;
 

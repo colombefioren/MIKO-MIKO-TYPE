@@ -21,6 +21,7 @@
     --color-yellow-400: oklch(85.2% 0.199 91.936);
     --color-green-300: oklch(87.1% 0.15 154.449);
     --color-green-400: oklch(79.2% 0.209 151.711);
+    --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
     --color-emerald-300: oklch(84.5% 0.143 164.978);
     --color-emerald-400: oklch(76.5% 0.177 163.223);
@@ -386,8 +387,14 @@
   .col-span-2 {
     grid-column: span 2 / span 2;
   }
+  .col-span-3 {
+    grid-column: span 3 / span 3;
+  }
   .col-span-6 {
     grid-column: span 6 / span 6;
+  }
+  .col-span-12 {
+    grid-column: span 12 / span 12;
   }
   .container {
     width: 100%;
@@ -509,6 +516,9 @@
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
+  .h-4 {
+    height: calc(var(--spacing) * 4);
+  }
   .h-5 {
     height: calc(var(--spacing) * 5);
   }
@@ -590,6 +600,9 @@
   .w-1 {
     width: calc(var(--spacing) * 1);
   }
+  .w-1\/2 {
+    width: calc(1/2 * 100%);
+  }
   .w-1\/3 {
     width: calc(1/3 * 100%);
   }
@@ -598,6 +611,9 @@
   }
   .w-3 {
     width: calc(var(--spacing) * 3);
+  }
+  .w-3\/4 {
+    width: calc(3/4 * 100%);
   }
   .w-5 {
     width: calc(var(--spacing) * 5);
@@ -626,11 +642,17 @@
   .w-28 {
     width: calc(var(--spacing) * 28);
   }
+  .w-40 {
+    width: calc(var(--spacing) * 40);
+  }
   .w-\[1px\] {
     width: 1px;
   }
   .w-\[20\%\] {
     width: 20%;
+  }
+  .w-\[30\%\] {
+    width: 30%;
   }
   .w-\[70\%\] {
     width: 70%;
@@ -734,6 +756,9 @@
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -881,6 +906,10 @@
   .border-2 {
     border-style: var(--tw-border-style);
     border-width: 2px;
+  }
+  .border-4 {
+    border-style: var(--tw-border-style);
+    border-width: 4px;
   }
   .border-t {
     border-top-style: var(--tw-border-style);
@@ -1064,6 +1093,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-green-400) 10%, transparent);
     }
+  }
+  .bg-green-500 {
+    background-color: var(--color-green-500);
   }
   .bg-green-600 {
     background-color: var(--color-green-600);
@@ -1308,6 +1340,9 @@
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
+  .py-8 {
+    padding-block: calc(var(--spacing) * 8);
+  }
   .py-\[14px\] {
     padding-block: 14px;
   }
@@ -1334,6 +1369,9 @@
   }
   .pb-5 {
     padding-bottom: calc(var(--spacing) * 5);
+  }
+  .pb-6 {
+    padding-bottom: calc(var(--spacing) * 6);
   }
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
@@ -1492,6 +1530,9 @@
   }
   .text-slate-200 {
     color: var(--color-slate-200);
+  }
+  .text-slate-300 {
+    color: var(--color-slate-300);
   }
   .text-strongAzure {
     color: var(--color-strongAzure);
@@ -1814,6 +1855,16 @@
       width: calc(var(--spacing) * 64);
     }
   }
+  .sm\:grid-cols-2 {
+    @media (width >= 40rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .sm\:grid-cols-3 {
+    @media (width >= 40rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
@@ -1822,6 +1873,11 @@
   .md\:grid-cols-3 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .md\:grid-cols-4 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
   .md\:flex-row {
