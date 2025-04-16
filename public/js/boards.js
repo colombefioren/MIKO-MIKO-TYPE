@@ -1,3 +1,5 @@
+import { supabase } from "./database.js";
+
 const buttons = document.querySelectorAll(".button-links");
 const buttonTexts = document.querySelectorAll(".button-text");
 const buttonIcons = document.querySelectorAll(".button-icon");
@@ -72,3 +74,129 @@ document.querySelectorAll(".category-item").forEach((item) => {
     this.classList.add("activeButton");
   });
 });
+
+async function loadLeaderboard() {
+  try {
+    // Fetch top 10 profiles ordered by wpm_avg
+    const { data: profiles, error } = await supabase
+      .from("profiles")
+      .select("id, username, avatar_url, wpm_avg, accuracy_avg")
+      .order("wpm_avg", { ascending: false })
+      .limit(10);
+
+    if (error) throw error;
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    let currentUserProfile = null;
+    let currentUserRank = null;
+
+    if (user) {
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("id, username, avatar_url, wpm_avg, accuracy_avg")
+        .eq("id", user.id)
+        .single();
+
+      if (!profileError && profile) {
+        currentUserProfile = profile;
+
+        // Get current user's rank
+        const { count } = await supabase
+          .from("profiles")
+          .select("*", { count: "exact", head: true })
+          .gt("wpm_avg", profile.wpm_avg);
+
+        currentUserRank = count + 1; // +1 because count is number of users above
+      }
+    }
+
+    const container = document.getElementById("leaderboard-container");
+    container.innerHTML = "";
+
+    // Create leaderboard rows for top 10
+    profiles.forEach((profile, index) => {
+      const row = document.createElement("div");
+      row.className = "grid grid-cols-12 items-center p-4 leaderboard-row";
+
+      let rankClass = "text-gray-300";
+      if (index === 0) rankClass = "text-yellow-400";
+      else if (index === 1) rankClass = "text-gray-300";
+      else if (index === 2) rankClass = "text-amber-500";
+
+      row.innerHTML = `
+          <div class="col-span-1 text-center ${rankClass} font-bold">${
+        index + 1
+      }</div>
+          <div class="col-span-6 flex items-center gap-4">
+            <img src="${
+              profile.avatar_url || "../public/assets/images/blank-profile.png"
+            }" 
+                 class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="text-white font-medium text-lg">${
+                profile.username
+              }</div>
+              <div class="text-azure text-sm">@${profile.username.toLowerCase()}</div>
+            </div>
+          </div>
+          <div class="col-span-2 text-right text-white font-bold text-lg">
+            ${Math.round(profile.wpm_avg || 0)}
+          </div>
+          <div class="col-span-2 text-right text-green-400 text-lg">
+            ${(profile.accuracy_avg || 0).toFixed(1)}%
+          </div>
+          <div class="col-span-1 text-right text-azure text-lg">
+            ${Math.round((profile.wpm_avg || 0) * 1.04)}
+          </div>
+        `;
+
+      container.appendChild(row);
+    });
+
+    console.log(currentUserRank);
+
+    if (
+      currentUserProfile &&
+      (currentUserRank > 10 || currentUserRank === null)
+    ) {
+      const currentUserRow = document.createElement("div");
+      currentUserRow.className =
+        "grid grid-cols-12 items-center p-4 bg-lightabyss/30 flex justify-end";
+
+      currentUserRow.innerHTML = `
+          <div class="col-span-1 text-center text-blaze font-bold text-lg">
+            ${currentUserRank || "--"}
+          </div>
+          <div class="col-span-6 flex items-center gap-4">
+            <img src="${
+              currentUserProfile.avatar_url ||
+              "../public/assets/images/profile-picture.png"
+            }" 
+                 class="w-12 h-12 rounded-full object-cover" />
+            <div>
+              <div class="text-white font-medium text-lg">${
+                currentUserProfile.username
+              }</div>
+              <div class="text-azure text-sm">@${currentUserProfile.username.toLowerCase()}</div>
+            </div>
+          </div>
+          <div class="col-span-2 text-right text-blaze font-bold text-lg">
+            ${Math.round(currentUserProfile.wpm_avg || 0)}
+          </div>
+          <div class="col-span-2 text-right text-green-400 text-lg">
+            ${(currentUserProfile.accuracy_avg || 0).toFixed(1)}%
+          </div>
+          <div class="col-span-1 text-right text-azure text-lg">
+            ${Math.round((currentUserProfile.wpm_avg || 0) * 1.04)}
+          </div>
+        `;
+
+      container.appendChild(currentUserRow);
+    }
+  } catch (error) {
+    console.error("Error loading leaderboard:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadLeaderboard);

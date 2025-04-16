@@ -3,8 +3,8 @@ CREATE TABLE profiles (
   username TEXT UNIQUE NOT NULL,
   avatar_url TEXT,
   bio TEXT,
-  wpm_record INTEGER DEFAULT 0,
-  accuracy_record NUMERIC(5,2) DEFAULT 0,
+  wpm_avg numeric,
+  accuracy_avg numeric,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -73,13 +73,13 @@ CREATE TABLE race_participants (
   position INTEGER
 );
 
-CREATE TABLE leaderboard (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  wpm INTEGER,
-  accuracy NUMERIC(5,2),
-  mode TEXT,
-  difficulty TEXT,
-  date DATE DEFAULT CURRENT_DATE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- CREATE TABLE leaderboard (
+--   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+--   user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+--   wpm INTEGER,
+--   accuracy NUMERIC(5,2),
+--   mode TEXT,
+--   difficulty TEXT,
+--   date DATE DEFAULT CURRENT_DATE,
+--   created_at TIMESTAMPTZ DEFAULT NOW()
+-- );

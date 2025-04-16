@@ -5,6 +5,9 @@
  *
  * Sur ce... Amusez-vous bien !
  */
+
+import { getCurrentUser } from "./auth.js";
+import { supabase } from "./database.js";
 let startTime = null,
   previousEndTime = null;
 let currentWordIndex = 0;
@@ -12,7 +15,7 @@ const wordsToType = [];
 let charSpans = []; // Store all character spans for cursor positioning
 
 // Total stats container - now with count and initialized as numbers
-let totalStat = { wpm: 0, accuracy: 0, count: 0 };
+let totalStat = { wpm: 0, accuracy: 0, count: 0, mode: "" };
 const modeForm = document.getElementById("mode-form");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
@@ -182,7 +185,7 @@ const getCurrentStats = () => {
 };
 
 // Move to the next word and update stats only on spacebar press
-const updateWord = (event) => {
+const updateWord = async (event) => {
   // Check if spacebar is pressed
   if (event.key === " ") {
     if (inputField.value.trim() === "") {
@@ -204,14 +207,15 @@ const updateWord = (event) => {
     highlightNextWord();
     // To insert new line in .textContent with \r\n
     totalResult.setAttribute("style", "white-space: pre;");
-
     if (currentWordIndex >= wordsToType.length) {
       const avgWpm = (totalStat.wpm / totalStat.count).toFixed(2);
       const avgAccuracy = (totalStat.accuracy / totalStat.count).toFixed(2);
       results.textContent = "";
-      // Disqualifying if avgAccuracy is below 50
+
       if (avgAccuracy >= 50) {
         totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
+        // Save results only if accuracy is >= 50%
+        await onGameComplete({ wpm: avgWpm, accuracy: avgAccuracy });
       } else {
         totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
       }
@@ -326,47 +330,59 @@ inputField.addEventListener("blur", () => {
   pointerFocus.classList.remove("hidden");
   cursor.classList.add("hidden");
 });
-
-import { supabase } from "./database.js";
-
 export async function saveGameResult(result) {
-  const user = await getCurrentUser();
-
-  // Save to leaderboard
-  const { error } = await supabase.from("leaderboard").insert({
-    user_id: user.id,
-    wpm: result.wpm,
-    accuracy: result.accuracy,
-    mode: result.mode,
-    difficulty: result.difficulty,
-  });
-
-  if (error) console.error("Error saving result:", error);
-
-  // Update user's records if this is a new high score
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("wpm_record, accuracy_record")
-    .eq("id", user.id)
-    .single();
-
-  if (
-    result.wpm > profile.wpm_record ||
-    result.accuracy > profile.accuracy_record
-  ) {
-    await supabase
-      .from("profiles")
-      .update({
-        wpm_record: Math.max(result.wpm, profile.wpm_record),
-        accuracy_record: Math.max(result.accuracy, profile.accuracy_record),
-      })
-      .eq("id", user.id);
+  // Validate the result object
+  if (!result) {
+    console.error("No result provided to saveGameResult");
+    return null;
   }
 
-  return result;
+  // Ensure required properties exist with defaults
+  const completeResult = {
+    wpm: result.wpm || 0,
+    accuracy: result.accuracy || 0,
+    mode: result.mode || "normal",
+    difficulty: result.difficulty || "normal",
+  };
+
+  const user = await getCurrentUser();
+  if (!user) {
+    console.error("User not found");
+    return null;
+  }
+
+  try {
+    // Save to game_results
+    const { error: gameResultsError } = await supabase
+      .from("game_results")
+      .insert({
+        user_id: user.id,
+        wpm: completeResult.wpm,
+        accuracy: completeResult.accuracy,
+        mode: completeResult.mode,
+      });
+
+    if (gameResultsError) {
+      throw new Error(`Game results error: ${gameResultsError.message}`);
+    }
+
+    // Update user averages
+    await updateUserAverages(user.id);
+
+    return completeResult;
+  } catch (error) {
+    console.error("Error in saveGameResult:", error);
+    throw error; // Re-throw for calling function to handle
+  }
 }
 
-async function onGameComplete(result) {
+async function onGameComplete(gameStats) {
+  // Validate gameStats exists
+  if (!gameStats) {
+    console.error("No game stats provided");
+    return;
+  }
+
   const user = await getCurrentUser();
   if (!user) {
     const login = confirm(
@@ -378,24 +394,88 @@ async function onGameComplete(result) {
     return;
   }
 
+  // Create complete result object with defaults
+  const result = {
+    wpm: gameStats.wpm || 0,
+    accuracy: gameStats.accuracy || 0,
+    mode: gameStats.mode || "normal",
+    difficulty: gameStats.difficulty || "medium",
+  };
+
   try {
     // Save game result
-    await saveGameResult(result);
+    const savedResult = await saveGameResult(result);
+    if (!savedResult) {
+      throw new Error("Failed to save game result");
+    }
 
     // Ask to share
-    const share = confirm(`Your score: ${result.wpm} WPM! Share your result?`);
+    const share = confirm(
+      `Your score: ${savedResult.wpm} WPM! Share your result?`
+    );
 
     if (share) {
       const content = prompt("Add a message to your post:");
       if (content) {
-        await createPost(content, result);
+        await createPost(content, savedResult);
         alert("Your score has been shared!");
-        // Refresh posts
         await loadPosts();
       }
     }
   } catch (error) {
-    console.error("Error saving/sharing result:", error);
+    console.error("Error in onGameComplete:", error);
     alert("Failed to save/share your result");
+  }
+}
+
+async function updateUserAverages(userId) {
+  try {
+    // Get all game results for the user
+    const { data: results, error } = await supabase
+      .from("game_results")
+      .select("wpm, accuracy")
+      .eq("user_id", userId);
+
+    if (error) {
+      throw new Error(`Fetch error: ${error.message}`);
+    }
+
+    if (!results || results.length === 0) {
+      console.log("No results found to update averages");
+      return;
+    }
+
+    // Calculate averages
+    const totalWpm = results.reduce(
+      (sum, result) => sum + (parseFloat(result.wpm) || 0),
+      0
+    );
+    const totalAccuracy = results.reduce(
+      (sum, result) => sum + (parseFloat(result.accuracy) || 0),
+      0
+    );
+
+    const avgWpm = (totalWpm / results.length).toFixed(2);
+    const avgAccuracy = (totalAccuracy / results.length).toFixed(2);
+
+   
+
+    // Update user profile
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        wpm_avg: avgWpm,
+        accuracy_avg: avgAccuracy,
+      })
+      .eq("id", userId);
+
+    if (updateError) {
+      throw new Error(`Update error: ${updateError.message}`);
+    }
+
+    console.log("Averages updated successfully");
+  } catch (error) {
+    console.error("Error in updateUserAverages:", error);
+    throw error;
   }
 }
