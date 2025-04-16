@@ -172,7 +172,7 @@ function renderPosts(posts) {
             <input
               type="text"
               placeholder="Write a comment..."
-              class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-3 px-4 text-slate-200 text-sm"
+              class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-4 px-5 text-slate-200 text-sm"
               id="comment-input-${post.id}"
               data-post-id="${post.id}"
             />
@@ -281,15 +281,19 @@ function setupPostInteractions() {
 
       const postId = btn.dataset.postId;
       try {
-        const result = await toggleLike(postId);
-        const icon = btn.querySelector("i");
-        if (result.liked) {
-          icon.classList.remove("far");
-          icon.classList.add("fas", "text-blaze");
-        } else {
-          icon.classList.remove("fas", "text-blaze");
-          icon.classList.add("far");
-        }
+        await toggleLike(postId);
+
+        const postElement = btn.closest(".bg-midnight");
+        const likeIcon = postElement.querySelector(".fa-heart");
+        const likeText = postElement.querySelector("span");
+
+        const posts = await getPosts();
+        const updatedPost = posts.find((post) => post.id === postId);
+
+        const newCount = updatedPost.likes[0]?.count || 0;
+
+        likeText.textContent = `${newCount} likes`;
+        likeIcon.classList.add("text-blaze");
       } catch (error) {
         console.error("Error toggling like:", error);
       }
@@ -322,9 +326,7 @@ function setupPostInteractions() {
 
   document.querySelectorAll(".comment-submit-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      if (!user) return showLoginPrompt("comment");
-
-      const postId = btn.dataset.postId;
+      const postId = btn.getAttribute("data-post-id");
       const input = document.getElementById(`comment-input-${postId}`);
       const content = input.value.trim();
 
@@ -333,10 +335,33 @@ function setupPostInteractions() {
       try {
         await createComment(postId, content);
         input.value = "";
-        const comments = await getComments(postId);
-        renderComments(postId, comments);
-      } catch (error) {
-        console.error("Error creating comment:", error);
+
+        // appen new comment
+        const commentsContainer = document.querySelector(
+          `#comments-section-${postId} .comments-container`
+        );
+        const newComment = document.createElement("div");
+        newComment.className = "text-slate-200 text-sm mb-2";
+        newComment.textContent = `${
+          user.user_metadata.username || "You"
+        }: ${content}`;
+        commentsContainer.appendChild(newComment);
+
+        //directly update in the ui
+        const commentCountSpan = Array.from(
+          btn.closest(".bg-midnight").querySelectorAll("span")
+        ).find((span) => span.textContent.includes("comments"));
+
+        if (commentCountSpan) {
+          const currentText = commentCountSpan.textContent;
+          const match = currentText.match(/(\d+)\scomments/);
+          if (match) {
+            const count = parseInt(match[1], 10);
+            commentCountSpan.textContent = `${count + 1} comments`;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to submit comment", err);
       }
     });
   });
@@ -357,6 +382,31 @@ function setupPostInteractions() {
         try {
           await createComment(postId, content);
           input.value = "";
+
+          const commentsContainer = document.querySelector(
+            `#comments-section-${postId} .comments-container`
+          );
+          const newComment = document.createElement("div");
+          newComment.className = "text-slate-200 text-sm mb-2";
+          newComment.textContent = `${
+            user.user_metadata.username || "You"
+          }: ${content}`;
+          commentsContainer.appendChild(newComment);
+
+          // instand ui unpdate
+          const commentCountSpan = Array.from(
+            input.closest(".bg-midnight").querySelectorAll("span")
+          ).find((span) => span.textContent.includes("comments"));
+
+          if (commentCountSpan) {
+            const currentText = commentCountSpan.textContent;
+            const match = currentText.match(/(\d+)\scomments/);
+            if (match) {
+              const count = parseInt(match[1], 10);
+              commentCountSpan.textContent = `${count + 1} comments`;
+            }
+          }
+
           const comments = await getComments(postId);
           renderComments(postId, comments);
         } catch (error) {
