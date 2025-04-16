@@ -125,14 +125,14 @@ document
         imageUrl = await uploadPostImage(user.id, selectedImageFile);
       }
 
-      // Process hashtags - remove # if present and make lowercase
+      // remove # if present and make lowercase
       const processedHashtags = hashtags.map((tag) =>
         tag.startsWith("#") ? tag.slice(1).toLowerCase() : tag.toLowerCase()
       );
 
       await createPost(title, content, imageUrl, processedHashtags);
 
-      // Reset form
+
       document.getElementById("post-title-input").value = "";
       document.getElementById("post-content-input").value = "";
       document.getElementById("image-preview").classList.add("hidden");
