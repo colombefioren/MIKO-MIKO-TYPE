@@ -137,7 +137,10 @@ async function loadLeaderboard() {
               <div class="text-white font-medium text-lg">${
                 profile.username
               }</div>
-              <div class="text-azure text-sm">@${profile.username.toLowerCase()}</div>
+              <div class="text-azure text-sm">@${profile.username
+                .toLowerCase()
+                .split(" ")
+                .join("")}</div>
             </div>
           </div>
           <div class="col-span-2 text-right text-white font-bold text-lg">
