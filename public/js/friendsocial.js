@@ -132,7 +132,6 @@ document
 
       await createPost(title, content, imageUrl, processedHashtags);
 
-
       document.getElementById("post-title-input").value = "";
       document.getElementById("post-content-input").value = "";
       document.getElementById("image-preview").classList.add("hidden");
@@ -164,6 +163,7 @@ function renderPosts(posts) {
 
   posts.forEach((post) => {
     const likedByUser = post.likes.some((like) => like.user_id === user?.id);
+    console.log(likedByUser);
     const postElement = document.createElement("div");
     postElement.className =
       "bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 w-full";
@@ -228,87 +228,98 @@ function renderPosts(posts) {
 
       <div class="flex items-center justify-between text-dusk text-sm mb-4">
         <div class="flex items-center gap-2">
-          <i class="fas fa-heart ${likedByUser ? "text-blaze" : ""}"></i>
+          <i class="fas fa-heart"></i>
           <span>${post.likes_count || 0} likes</span>
         </div>
         <div>
           <span>${post.comments[0]?.count || 0} comments</span>
         </div>
       </div>
+<div class="flex border-t border-b border-lightabyss py-2 mb-4">
+       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
+        data-post-id="${post.id}">
+  <i class="${
+    likedByUser ? "fas fa-heart text-blaze" : "far fa-heart"
+  } like-button-icon"></i>
+   ${
+     likedByUser
+       ? `<span class="text-blaze like-span">Liked</span>`
+       : `<span class="like-span">Like</span>`
+   }
 
-      <!-- Rest of your existing post buttons and comments section -->
-      ${renderPostActions(post.id)}
-      ${renderCommentsSection(post.id)}
+</button>
+        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+                data-post-id="${post.id}">
+          <i class="fa-solid fa-comment"></i>
+          <span>Comment</span>
+        </button>
+        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn" data-post-id="${
+          post.id
+        }">
+          <i class="fas fa-share"></i>
+          <span>Share</span>
+        </button>
+      </div>
+
+      <div class="hidden comments-section" id="comments-section-${post.id}">
+        <div class="comments-container mb-4"></div>
+        ${
+          user
+            ? `
+        <div class="flex gap-3 items-center mt-4">
+          <img
+          id="profile-picture"
+            src="${
+              user.user_metadata?.avatar_url ||
+              "../public/assets/images/blank-profile.png"
+            }"
+            alt="You"
+            class="w-10 h-10 rounded-full object-cover"
+          />
+          <div class="flex justify-between items-center w-full">
+            <input
+              type="text"
+              placeholder="Write a comment..."
+              class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-4 px-5 text-slate-200 text-sm"
+              id="comment-input-${post.id}"
+              data-post-id="${post.id}"
+            />
+            <button class="text-frost ml-2 comment-submit-btn" data-post-id="${
+              post.id
+            }">
+              <i class="fas fa-paper-plane text-xl"></i>
+            </button>
+          </div>
+        </div>`
+            : `
+        <div class="flex gap-3 items-center mt-4">
+          <img
+          id="profile-picture"
+            src="../public/assets/images/blank-profile.png"
+            alt="You"
+            class="w-10 h-10 rounded-full object-cover"
+          />
+          <div class="flex justify-between items-center w-full">
+            <input
+              type="text"
+              placeholder="Log in to comment"
+              class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-3 px-4 text-slate-200 text-sm"
+              readonly
+            />
+            <button class="text-frost ml-2" onclick="showLoginPrompt('comment')">
+              <i class="fas fa-sign-in text-xl"></i>
+            </button>
+          </div>
+        </div>`
+        }
+      </div>
+  
     `;
 
     postsContainer.appendChild(postElement);
   });
 
   setupPostInteractions();
-}
-
-function renderPostActions(postId) {
-  return `
-    <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn cursor-pointer" 
-              data-post-id="${postId}">
-        <i class="far fa-heart like-button-icon"></i>
-        <span class="like-span">Like</span>
-      </button>
-      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-              data-post-id="${postId}">
-        <i class="fa-solid fa-comment"></i>
-        <span>Comment</span>
-      </button>
-      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn cursor-pointer" 
-              data-post-id="${postId}">
-        <i class="fas fa-share"></i>
-        <span>Share</span>
-      </button>
-    </div>
-  `;
-}
-
-function renderCommentsSection(postId) {
-  return `
-    <div class="hidden comments-section" id="comments-section-${postId}">
-      <div class="comments-container mb-4"></div>
-      ${
-        user
-          ? `
-        <div class="flex gap-3 items-center mt-4">
-          <img src="${
-            user.user_metadata?.avatar_url ||
-            "../public/assets/images/blank-profile.png"
-          }"
-               alt="You" class="w-10 h-10 rounded-full object-cover">
-          <div class="flex justify-between items-center w-full">
-            <input type="text" placeholder="Write a comment..."
-                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-4 px-5 text-slate-200 text-sm"
-                   id="comment-input-${postId}" data-post-id="${postId}">
-            <button class="text-frost ml-2 cursor-pointer comment-submit-btn" data-post-id="${postId}">
-              <i class="fas fa-paper-plane text-xl"></i>
-            </button>
-          </div>
-        </div>
-      `
-          : `
-        <div class="flex gap-3 items-center mt-4">
-          <img src="../public/assets/images/blank-profile.png"
-               alt="You" class="w-10 h-10 rounded-full object-cover">
-          <div class="flex justify-between items-center w-full">
-            <input type="text" placeholder="Log in to comment"
-                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-3 px-4 text-slate-200 text-sm"
-                   readonly>
-            <button class="text-frost ml-2" onclick="showLoginPrompt('comment')">
-              <i class="fas fa-sign-in text-xl"></i>
-            </button>
-          </div>
-        </div>
-      `
-      }
-    </div>
-  `;
 }
 
 function formatDate(dateString) {
