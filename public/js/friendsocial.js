@@ -78,9 +78,6 @@ async function loadPosts() {
   try {
     const posts = await getPosts();
     renderPosts(posts);
-    posts.forEach((post) =>
-      console.log(post.likes.some((like) => like.user_id === user?.id))
-    );
   } catch (error) {
     console.error("Error loading posts:", error);
   }

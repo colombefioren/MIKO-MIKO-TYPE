@@ -32,7 +32,7 @@ export async function getPosts() {
       `
       *,
       profiles:user_id (username, avatar_url),
-      comments:comments (id),
+      comments:comments (count),
       likes:likes (user_id)
     `
     )

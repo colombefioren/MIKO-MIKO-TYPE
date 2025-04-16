@@ -1,5 +1,12 @@
 import { supabase } from "./database.js";
-import { signIn, signUp, signOut, getCurrentUser } from "./auth.js";
+import {
+  signIn,
+  signUp,
+  signOut,
+  getCurrentUser,
+  getUserProfile,
+  uploadAvatar,
+} from "./auth.js";
 // import { saveGameResult } from "./gameLogic.js";
 import { createPost } from "./socials.js";
 
@@ -99,17 +106,28 @@ async function handleLogout() {
   }
 }
 
-function updateUIForLoggedInUser(user) {
-  document.getElementById("username").textContent =
-    user.user_metadata?.username || "User";
-  document.getElementById("account-id").textContent = user.email;
+async function updateUIForLoggedInUser(user) {
+  try {
+    document.getElementById("username").textContent =
+      user.user_metadata?.username || "User";
+    document.getElementById("account-id").textContent = user.email;
 
-  authButtons.classList.add("hidden");
-  userMenu.classList.remove("hidden");
+    authButtons.classList.add("hidden");
+    userMenu.classList.remove("hidden");
 
-  if (user.user_metadata?.avatar_url) {
-    document.getElementById("profile-picture").src =
-      user.user_metadata.avatar_url;
+    // Get the most up-to-date avatar URL
+    const profile = await getUserProfile(user.id);
+    const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url;
+
+    if (avatarUrl) {
+      const profilePic = document.getElementById("profile-picture");
+      const currentUserAvatar = document.getElementById("current-user-avatar");
+
+      if (profilePic) profilePic.src = avatarUrl;
+      if (currentUserAvatar) currentUserAvatar.src = avatarUrl;
+    }
+  } catch (error) {
+    console.error("Error updating UI:", error);
   }
 }
 
@@ -173,3 +191,123 @@ async function handleLogin(e) {
     alert(`Login failed: ${error.message}`);
   }
 }
+async function handleAvatarUpload(file) {
+  const user = await getCurrentUser();
+  if (!user) {
+    alert("Please log in to upload an avatar");
+    return null;
+  }
+
+  // validata file type
+  const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  const maxSize = 5 * 1024 * 1024; // 5MB
+
+  if (!validTypes.includes(file.type)) {
+    alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
+    return null;
+  }
+
+  if (file.size > maxSize) {
+    alert("Image size must be less than 2MB");
+    return null;
+  }
+
+  try {
+  
+    document
+      .getElementById("profile-picture")
+      .classList.add("avatar-uploading");
+
+    const avatarUrl = await uploadAvatar(user.id, file);
+
+    document.getElementById("profile-picture").src = avatarUrl;
+    document.getElementById("current-user-avatar").src = avatarUrl;
+
+    return avatarUrl;
+  } catch (error) {
+    console.error("Detailed upload error:", error);
+
+   
+    if (error.message.includes("403")) {
+      alert(
+        "Upload failed: Permission denied. Please ensure you are logged in properly."
+      );
+    } else if (error.message.includes("413")) {
+      alert("Upload failed: File too large. Maximum size is 2MB.");
+    } else {
+      alert(`Upload failed: ${error.message}`);
+    }
+
+    return null;
+  } finally {
+    document
+      .getElementById("profile-picture")
+      .classList.remove("avatar-uploading");
+  }
+}
+
+function addAvatarUploadHandler() {
+  const avatarInput = document.createElement("input");
+  avatarInput.type = "file";
+  avatarInput.accept = "image/*";
+  avatarInput.style.display = "none";
+  avatarInput.id = "avatar-upload-input";
+
+  avatarInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      await handleAvatarUpload(file);
+    }
+  });
+
+  document.body.appendChild(avatarInput);
+
+  // make profile picture clickable for upload
+  const profilePic = document.getElementById("profile-picture");
+  if (profilePic) {
+    profilePic.style.cursor = "pointer";
+    profilePic.addEventListener("click", () => {
+      avatarInput.click();
+    });
+  }
+  const currentUserAvatar = document.getElementById("current-user-avatar");
+  if (currentUserAvatar) {
+    currentUserAvatar.style.cursor = "pointer";
+    currentUserAvatar.addEventListener("click", () => {
+      avatarInput.click();
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await checkAuthState();
+    addAvatarUploadHandler(); 
+  } catch (error) {
+    console.error("Auth initialization error:", error);
+  }
+});
+
+function setupAvatarErrorHandling() {
+  document.querySelectorAll('img[src*="avatar"]').forEach((img) => {
+    img.onerror = function () {
+      const user = getCurrentUser();
+      if (user && user.user_metadata?.username) {
+        // UI Avatars if custom avatar fails to load
+        this.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          user.user_metadata.username
+        )}&background=random`;
+      }
+    };
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await checkAuthState();
+    addAvatarUploadHandler();
+    setupAvatarErrorHandling();
+  } catch (error) {
+    console.error("Auth initialization error:", error);
+  }
+});
