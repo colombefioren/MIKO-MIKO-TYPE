@@ -337,7 +337,6 @@ export async function saveGameResult(result) {
     return null;
   }
 
-  // Ensure required properties exist with defaults
   const completeResult = {
     wpm: result.wpm || 0,
     accuracy: result.accuracy || 0,
@@ -372,7 +371,7 @@ export async function saveGameResult(result) {
     return completeResult;
   } catch (error) {
     console.error("Error in saveGameResult:", error);
-    throw error; // Re-throw for calling function to handle
+    throw error;
   }
 }
 
@@ -394,7 +393,6 @@ async function onGameComplete(gameStats) {
     return;
   }
 
-  // Create complete result object with defaults
   const result = {
     wpm: gameStats.wpm || 0,
     accuracy: gameStats.accuracy || 0,
