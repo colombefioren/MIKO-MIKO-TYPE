@@ -2,14 +2,21 @@ import { supabase } from "./database.js";
 import { getCurrentUser } from "./auth.js";
 
 // Post functions
-export async function createPost(content, imageUrl = null) {
+export async function createPost(
+  title,
+  content,
+  imageUrl = null,
+  hashtags = []
+) {
   const user = await getCurrentUser();
   if (!user) throw new Error("User not logged in");
 
   const postData = {
     user_id: user.id,
+    title: title,
     content: content,
     image_url: imageUrl,
+    hashtags: hashtags,
   };
 
   const { data, error } = await supabase

@@ -208,53 +208,45 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
 
         <!-- Post Creation Form -->
-        <div
-          id="post-creation-form"
-          class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6"
-        >
+        <div id="post-creation-form" class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6">
           <div class="flex items-center gap-3 mb-4">
-            <img
-              src="../public/assets/images/blank-profile.png"
-              alt="You"
-              class="w-12 h-12 rounded-full object-cover"
-              id="current-user-avatar"
-            />
-            <input
-              type="text"
-              placeholder="What's on your mind?"
-              class="bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none flex-1"
-              id="post-content-input"
-            />
+            <img src="../public/assets/images/blank-profile.png" alt="You" 
+                 class="w-12 h-12 rounded-full object-cover" id="current-user-avatar">
+            <div class="flex-1">
+              <input type="text" placeholder="Post title" 
+                     class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full mb-2"
+                     id="post-title-input">
+              <input type="text" placeholder="What's on your mind?" 
+                     class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
+                     id="post-content-input">
+            </div>
           </div>
-
-          <!-- add image upload section -->
+          
+          <!-- Hashtag input -->
+          <div class="mb-3">
+            <input type="text" placeholder="Add hashtags (space separated)" 
+                   class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
+                   id="hashtags-input">
+            <div id="hashtags-preview" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+          
+          <!-- Image upload section -->
           <div class="mb-4">
-            <input
-              type="file"
-              id="post-image-input"
-              accept="image/*"
-              class="hidden"
-            />
-            <button
-              id="add-image-btn"
-              class="text-azure hover:text-slate-200 flex items-center gap-2"
-            >
+            <input type="file" id="post-image-input" accept="image/*" class="hidden">
+            <button id="add-image-btn" class="text-azure hover:text-slate-200 flex items-center gap-2">
               <i class="fas fa-image"></i>
               <span>Add Image</span>
             </button>
             <div id="image-preview" class="mt-2 hidden">
-              <img id="preview-image" class="max-h-60 rounded-lg" />
+              <img id="preview-image" class="max-h-60 rounded-lg w-full object-contain">
               <button id="remove-image-btn" class="text-blaze mt-2 text-sm">
                 <i class="fas fa-times"></i> Remove
               </button>
             </div>
           </div>
-
+          
           <div class="flex justify-end">
-            <button
-              id="create-post-btn"
-              class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
-            >
+            <button id="create-post-btn" class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors">
               Post
             </button>
           </div>

@@ -10,6 +10,7 @@ import {
 
 let selectedImageFile = null;
 let user;
+let hashtags = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadPosts();
     setupRealtime();
     setupImageUpload();
+    setupHashtagInput();
   } catch (error) {
     console.error("Initialization error:", error);
   }
@@ -104,15 +106,16 @@ function setupUnauthenticatedPostForm() {
     document.getElementById("login-modal").classList.remove("hidden");
   });
 }
-
 document
   .getElementById("create-post-btn")
   ?.addEventListener("click", async () => {
     if (!user) return showLoginPrompt("create posts");
 
+    const title = document.getElementById("post-title-input").value.trim();
     const content = document.getElementById("post-content-input").value.trim();
-    if (!content && !selectedImageFile) {
-      alert("Please add content or an image to your post");
+
+    if (!title && !content && !selectedImageFile) {
+      alert("Please add at least a title, content, or image to your post");
       return;
     }
 
@@ -122,12 +125,21 @@ document
         imageUrl = await uploadPostImage(user.id, selectedImageFile);
       }
 
-      await createPost(content, imageUrl);
+      // Process hashtags - remove # if present and make lowercase
+      const processedHashtags = hashtags.map((tag) =>
+        tag.startsWith("#") ? tag.slice(1).toLowerCase() : tag.toLowerCase()
+      );
+
+      await createPost(title, content, imageUrl, processedHashtags);
 
       // Reset form
+      document.getElementById("post-title-input").value = "";
       document.getElementById("post-content-input").value = "";
       document.getElementById("image-preview").classList.add("hidden");
       document.getElementById("post-image-input").value = "";
+      document.getElementById("hashtags-input").value = "";
+      hashtags = [];
+      updateHashtagsPreview();
       selectedImageFile = null;
 
       await loadPosts();
@@ -155,18 +167,15 @@ function renderPosts(posts) {
     const postElement = document.createElement("div");
     postElement.className =
       "bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 w-full";
+
     postElement.innerHTML = `
       <div class="flex items-center justify-between mb-4 w-full">
         <div class="flex items-center gap-3">
-          <img
-          id="profile-picture"
-            src="${
-              post.profiles?.avatar_url ||
-              "../public/assets/images/blank-profile.png"
-            }"
-            alt="Profile"
-            class="w-12 h-12 rounded-full object-cover"
-          />
+          <img src="${
+            post.profiles?.avatar_url ||
+            "../public/assets/images/blank-profile.png"
+          }"
+               alt="Profile" class="w-12 h-12 rounded-full object-cover">
           <div>
             <div class="text-slate-200 font-bold">${
               post.profiles?.username || "Unknown User"
@@ -180,30 +189,46 @@ function renderPosts(posts) {
       </div>
 
       <div class="mb-4">
-        <p class="text-slate-200 text-lg">${post.content}</p>
+        ${
+          post.title
+            ? `<h3 class="text-slate-200 text-xl font-bold mb-2">${post.title}</h3>`
+            : ""
+        }
+        ${
+          post.content
+            ? `<p class="text-slate-200 text-lg mb-3">${post.content}</p>`
+            : ""
+        }
+        
+        ${
+          post.hashtags?.length > 0
+            ? `<div class="flex flex-wrap gap-2 mb-3">
+            ${post.hashtags
+              .map((tag) => `<span class="text-azure">#${tag}</span>`)
+              .join(" ")}
+          </div>`
+            : ""
+        }
+        
+        ${
+          post.image_url
+            ? `
+          <div class="rounded-2xl overflow-hidden mb-3">
+            <img src="${post.image_url}" alt="Post image" class="w-full h-auto max-h-96 object-cover">
+          </div>`
+            : ""
+        }
+        
         ${
           post.wpm
-            ? `<p class="text-azure mt-2">WPM: ${post.wpm} | Accuracy: ${post.accuracy}%</p>`
+            ? `<p class="text-azure">WPM: ${post.wpm} | Accuracy: ${post.accuracy}%</p>`
             : ""
         }
       </div>
 
-
-      ${
-        post.image_url
-          ? `<div class="rounded-2xl overflow-hidden my-2">
-        <img
-          src="${post.image_url}"
-          alt="Post Image"
-          class="w-full h-96 object-cover"
-        />
-      </div>`
-          : ""
-      }
-
       <div class="flex items-center justify-between text-dusk text-sm mb-4">
         <div class="flex items-center gap-2">
-          <i class="fas fa-heart"></i>
+          <i class="fas fa-heart ${likedByUser ? "text-blaze" : ""}"></i>
           <span>${post.likes_count || 0} likes</span>
         </div>
         <div>
@@ -211,90 +236,79 @@ function renderPosts(posts) {
         </div>
       </div>
 
-      <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn cursor-pointer" 
-        data-post-id="${post.id}">
-  <i class="${
-    likedByUser ? "fas fa-heart text-blaze" : "far fa-heart"
-  } like-button-icon"></i>
-   ${
-     likedByUser
-       ? `<span class="text-blaze like-span">Liked</span>`
-       : `<span class="like-span">Like</span>`
-   }
-
-</button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-                data-post-id="${post.id}">
-          <i class="fa-solid fa-comment"></i>
-          <span>Comment</span>
-        </button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn cursor-pointer" data-post-id="${
-          post.id
-        }">
-          <i class="fas fa-share"></i>
-          <span>Share</span>
-        </button>
-      </div>
-
-      <div class="hidden comments-section" id="comments-section-${post.id}">
-        <div class="comments-container mb-4"></div>
-        ${
-          user
-            ? `
-        <div class="flex gap-3 items-center mt-4">
-          <img
-          id="profile-picture"
-            src="${
-              user.user_metadata?.avatar_url ||
-              "../public/assets/images/blank-profile.png"
-            }"
-            alt="You"
-            class="w-10 h-10 rounded-full object-cover"
-          />
-          <div class="flex justify-between items-center w-full">
-            <input
-              type="text"
-              placeholder="Write a comment..."
-              class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-4 px-5 text-slate-200 text-sm"
-              id="comment-input-${post.id}"
-              data-post-id="${post.id}"
-            />
-            <button class="text-frost ml-2 comment-submit-btn" data-post-id="${
-              post.id
-            }">
-              <i class="fas fa-paper-plane text-xl"></i>
-            </button>
-          </div>
-        </div>`
-            : `
-        <div class="flex gap-3 items-center mt-4">
-          <img
-          id="profile-picture"
-            src="../public/assets/images/blank-profile.png"
-            alt="You"
-            class="w-10 h-10 rounded-full object-cover"
-          />
-          <div class="flex justify-between items-center w-full">
-            <input
-              type="text"
-              placeholder="Log in to comment"
-              class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-3 px-4 text-slate-200 text-sm"
-              readonly
-            />
-            <button class="text-frost ml-2" onclick="showLoginPrompt('comment')">
-              <i class="fas fa-sign-in text-xl"></i>
-            </button>
-          </div>
-        </div>`
-        }
-      </div>
+      <!-- Rest of your existing post buttons and comments section -->
+      ${renderPostActions(post.id)}
+      ${renderCommentsSection(post.id)}
     `;
 
     postsContainer.appendChild(postElement);
   });
 
   setupPostInteractions();
+}
+
+function renderPostActions(postId) {
+  return `
+    <div class="flex border-t border-b border-lightabyss py-2 mb-4">
+      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
+              data-post-id="${postId}">
+        <i class="far fa-heart like-button-icon"></i>
+        <span class="like-span">Like</span>
+      </button>
+      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+              data-post-id="${postId}">
+        <i class="fa-solid fa-comment"></i>
+        <span>Comment</span>
+      </button>
+      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn" 
+              data-post-id="${postId}">
+        <i class="fas fa-share"></i>
+        <span>Share</span>
+      </button>
+    </div>
+  `;
+}
+
+function renderCommentsSection(postId) {
+  return `
+    <div class="hidden comments-section" id="comments-section-${postId}">
+      <div class="comments-container mb-4"></div>
+      ${
+        user
+          ? `
+        <div class="flex gap-3 items-center mt-4">
+          <img src="${
+            user.user_metadata?.avatar_url ||
+            "../public/assets/images/blank-profile.png"
+          }"
+               alt="You" class="w-10 h-10 rounded-full object-cover">
+          <div class="flex justify-between items-center w-full">
+            <input type="text" placeholder="Write a comment..."
+                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-4 px-5 text-slate-200 text-sm"
+                   id="comment-input-${postId}" data-post-id="${postId}">
+            <button class="text-frost ml-2 comment-submit-btn" data-post-id="${postId}">
+              <i class="fas fa-paper-plane text-xl"></i>
+            </button>
+          </div>
+        </div>
+      `
+          : `
+        <div class="flex gap-3 items-center mt-4">
+          <img src="../public/assets/images/blank-profile.png"
+               alt="You" class="w-10 h-10 rounded-full object-cover">
+          <div class="flex justify-between items-center w-full">
+            <input type="text" placeholder="Log in to comment"
+                   class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-3 px-4 text-slate-200 text-sm"
+                   readonly>
+            <button class="text-frost ml-2" onclick="showLoginPrompt('comment')">
+              <i class="fas fa-sign-in text-xl"></i>
+            </button>
+          </div>
+        </div>
+      `
+      }
+    </div>
+  `;
 }
 
 function formatDate(dateString) {
@@ -611,3 +625,55 @@ async function uploadPostImage(userId, file) {
 }
 
 window.showLoginPrompt = showLoginPrompt;
+
+function setupHashtagInput() {
+  const hashtagsInput = document.getElementById("hashtags-input");
+  const hashtagsPreview = document.getElementById("hashtags-preview");
+
+  hashtagsInput.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      const tag = hashtagsInput.value.trim();
+      if (tag && !hashtags.includes(tag)) {
+        hashtags.push(tag);
+        updateHashtagsPreview();
+      }
+      hashtagsInput.value = "";
+    }
+  });
+
+  hashtagsInput.addEventListener("blur", () => {
+    const tag = hashtagsInput.value.trim();
+    if (tag && !hashtags.includes(tag)) {
+      hashtags.push(tag);
+      updateHashtagsPreview();
+    }
+    hashtagsInput.value = "";
+  });
+}
+
+function updateHashtagsPreview() {
+  const hashtagsPreview = document.getElementById("hashtags-preview");
+  hashtagsPreview.innerHTML = "";
+
+  hashtags.forEach((tag, index) => {
+    const tagElement = document.createElement("div");
+    tagElement.className =
+      "bg-lightabyss/30 text-azure px-3 py-1 rounded-full text-sm flex items-center";
+    tagElement.innerHTML = `
+      #${tag}
+      <button class="ml-1 text-dusk hover:text-slate-200 remove-hashtag" data-index="${index}">
+        <i class="fas fa-times text-xs"></i>
+      </button>
+    `;
+    hashtagsPreview.appendChild(tagElement);
+  });
+
+  document.querySelectorAll(".remove-hashtag").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const index = parseInt(btn.dataset.index);
+      hashtags.splice(index, 1);
+      updateHashtagsPreview();
+    });
+  });
+}
