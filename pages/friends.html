@@ -205,7 +205,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
 
         <!-- Post Creation Form -->
-        <div class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6">
+        <div
+          id="post-creation-form"
+          class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 hidden"
+        >
           <div class="flex items-center gap-3 mb-4">
             <img
               src="../public/assets/images/blank-profile.png"

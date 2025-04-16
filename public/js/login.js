@@ -116,8 +116,6 @@ function updateUIForGuest() {
   document.getElementById("account-id").textContent = "Not logged in";
   authButtons.classList.remove("hidden");
   userMenu.classList.add("hidden");
-  document.getElementById("profile-picture").src =
-    "./public/assets/images/blank-profile.png";
 }
 
 // After game completes

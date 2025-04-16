@@ -1,5 +1,4 @@
 import { supabase } from "./database.js";
-let user;
 
 import { getCurrentUser } from "./auth.js";
 import {
@@ -10,22 +9,26 @@ import {
   toggleLike,
 } from "./socials.js";
 
+let user;
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     user = await getCurrentUser();
-    if (user) {
-      //the user avatar
+    const postForm = document.getElementById("post-creation-form");
+    if (!user) {
+      postForm.classList.add("hidden");
+    } else {
+      postForm.classList.remove("hidden");
       document.getElementById("current-user-avatar").src =
         user.user_metadata?.avatar_url ||
-        "../public/assets/images/blank-picture.png";
-
-      // Load every existing posts
-      await loadPosts();
-
-      // real time updates
-      setupRealtime();
+        "../public/assets/images/blank-profile.png";
     }
+    console.log("This is not running!");
+    // Load every existing posts
+    await loadPosts();
+
+    // real time updates
+    setupRealtime();
   } catch (error) {
     console.error("Initialization error:", error);
   }
@@ -139,7 +142,7 @@ function renderPosts(posts) {
         <div class="flex gap-3 items-center mt-4">
           <img
             src="${
-              user.user_metadata?.avatar_url ||
+              user?.user_metadata?.avatar_url ||
               "../public/assets/images/blank-profile.png"
             }"
             alt="You"
