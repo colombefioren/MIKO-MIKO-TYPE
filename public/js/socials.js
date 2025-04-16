@@ -25,7 +25,6 @@ export async function createPost(content, gameResult = null) {
   if (error) throw error;
   return data[0];
 }
-
 export async function getPosts() {
   const { data, error } = await supabase
     .from("posts")
@@ -33,14 +32,18 @@ export async function getPosts() {
       `
       *,
       profiles:user_id (username, avatar_url),
-      comments:comments (count),
-      likes:likes (count)
+      comments:comments (id),
+      likes:likes (user_id)
     `
     )
     .order("created_at", { ascending: false });
 
   if (error) throw error;
-  return data;
+
+  return data.map((post) => ({
+    ...post,
+    likes_count: post.likes.length,
+  }));
 }
 
 // Comment functions

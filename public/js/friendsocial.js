@@ -78,6 +78,9 @@ async function loadPosts() {
   try {
     const posts = await getPosts();
     renderPosts(posts);
+    posts.forEach((post) =>
+      console.log(post.likes.some((like) => like.user_id === user?.id))
+    );
   } catch (error) {
     console.error("Error loading posts:", error);
   }
@@ -88,6 +91,7 @@ function renderPosts(posts) {
   postsContainer.innerHTML = "";
 
   posts.forEach((post) => {
+    const likedByUser = post.likes.some((like) => like.user_id === user?.id);
     const postElement = document.createElement("div");
     postElement.className =
       "bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 w-full";
@@ -125,10 +129,8 @@ function renderPosts(posts) {
 
       <div class="flex items-center justify-between text-dusk text-sm mb-4">
         <div class="flex items-center gap-2">
-          <i class="fas fa-heart ${
-            post.likes[0]?.count > 0 ? "text-blaze" : ""
-          }"></i>
-          <span>${post.likes[0]?.count || 0} likes</span>
+          <i class="fas fa-heart"></i>
+          <span>${post.likes_count || 0} likes</span>
         </div>
         <div>
           <span>${post.comments[0]?.count || 0} comments</span>
@@ -136,11 +138,18 @@ function renderPosts(posts) {
       </div>
 
       <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
-                data-post-id="${post.id}">
-          <i class="far fa-heart"></i>
-          <span>Like</span>
-        </button>
+       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
+        data-post-id="${post.id}">
+  <i class="${
+    likedByUser ? "fas fa-heart text-blaze" : "far fa-heart"
+  } like-button-icon"></i>
+   ${
+     likedByUser
+       ? `<span class="text-blaze like-span">Liked</span>`
+       : `<span class="like-span">Like</span>`
+   }
+
+</button>
         <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
                 data-post-id="${post.id}">
           <i class="fa-solid fa-comment"></i>
@@ -280,20 +289,32 @@ function setupPostInteractions() {
       if (!user) return showLoginPrompt("like posts");
 
       const postId = btn.dataset.postId;
+      const icon = btn.querySelector(".like-button-icon");
+      const likeText = btn.querySelector(".like-span");
+
       try {
         await toggleLike(postId);
 
+        const updatedPosts = await getPosts();
+        const updatedPost = updatedPosts.find((post) => post.id === postId);
+
+        const isLiked = updatedPost.likes.some(
+          (like) => like.user_id === user.id
+        );
+
+        // update icon and text style based on like status
+        icon.className = isLiked
+          ? "fas fa-heart like-button-icon text-blaze"
+          : "far fa-heart like-button-icon";
+
+        likeText.innerHTML = isLiked
+          ? `<span class="text-blaze like-span">Liked</span>`
+          : `<span class="like-span">Like</span>`;
+
+        // Optionally update the like count
         const postElement = btn.closest(".bg-midnight");
-        const likeIcon = postElement.querySelector(".fa-heart");
-        const likeText = postElement.querySelector("span");
-
-        const posts = await getPosts();
-        const updatedPost = posts.find((post) => post.id === postId);
-
-        const newCount = updatedPost.likes[0]?.count || 0;
-
-        likeText.textContent = `${newCount} likes`;
-        likeIcon.classList.add("text-blaze");
+        const likeCountSpan = postElement.querySelector(".text-dusk span");
+        likeCountSpan.textContent = `${updatedPost.likes_count || 0} likes`;
       } catch (error) {
         console.error("Error toggling like:", error);
       }
