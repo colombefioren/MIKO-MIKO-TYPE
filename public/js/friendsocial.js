@@ -250,17 +250,17 @@ function renderPosts(posts) {
 function renderPostActions(postId) {
   return `
     <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
+      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn cursor-pointer" 
               data-post-id="${postId}">
         <i class="far fa-heart like-button-icon"></i>
         <span class="like-span">Like</span>
       </button>
-      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
               data-post-id="${postId}">
         <i class="fa-solid fa-comment"></i>
         <span>Comment</span>
       </button>
-      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn" 
+      <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn cursor-pointer" 
               data-post-id="${postId}">
         <i class="fas fa-share"></i>
         <span>Share</span>
@@ -286,7 +286,7 @@ function renderCommentsSection(postId) {
             <input type="text" placeholder="Write a comment..."
                    class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-4 px-5 text-slate-200 text-sm"
                    id="comment-input-${postId}" data-post-id="${postId}">
-            <button class="text-frost ml-2 comment-submit-btn" data-post-id="${postId}">
+            <button class="text-frost ml-2 cursor-pointer comment-submit-btn" data-post-id="${postId}">
               <i class="fas fa-paper-plane text-xl"></i>
             </button>
           </div>

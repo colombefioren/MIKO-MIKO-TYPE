@@ -155,7 +155,7 @@ const updateCursorPosition = () => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 50) => {
+const startTest = (wordCount = 5) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   charSpans = []; // Reset character spans
@@ -292,6 +292,7 @@ const startTimer = () => {
 
 // Calculate and return WPM & accuracy
 const getCurrentStats = () => {
+  
   const elapsedTime = (Date.now() - (previousEndTime || startTime)) / 1000; // Seconds
   const wpm = wordsToType[currentWordIndex].length / 5 / (elapsedTime / 60); // 5 chars = 1 word
 

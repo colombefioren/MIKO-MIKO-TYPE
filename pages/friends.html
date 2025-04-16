@@ -14,7 +14,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <link rel="stylesheet" href="../public/css/navbar.css" />
     <link
       rel="shortcut icon"
-      href="./assets/images/mikomiko-logo-reduced.svg"
+      href="../public/assets/images/mikomiko-logo-reduced.svg"
       type="image/x-icon"
     />
     <link
@@ -231,20 +231,20 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <!-- Image upload section -->
           <div class="mb-4">
             <input type="file" id="post-image-input" accept="image/*" class="hidden">
-            <button id="add-image-btn" class="text-azure hover:text-slate-200 flex items-center gap-2">
+            <button id="add-image-btn" class="text-azure hover:text-slate-200 flex items-center gap-2 cursor-pointer">
               <i class="fas fa-image"></i>
               <span>Add Image</span>
             </button>
             <div id="image-preview" class="mt-2 hidden">
               <img id="preview-image" class="max-h-60 rounded-lg w-full object-contain">
-              <button id="remove-image-btn" class="text-blaze mt-2 text-sm">
+              <button id="remove-image-btn" class="text-blaze mt-2 text-sm cursor-pointer">
                 <i class="fas fa-times"></i> Remove
               </button>
             </div>
           </div>
           
           <div class="flex justify-end">
-            <button id="create-post-btn" class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors">
+            <button id="create-post-btn" class="bg-blaze text-white cursor-pointer px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors">
               Post
             </button>
           </div>
