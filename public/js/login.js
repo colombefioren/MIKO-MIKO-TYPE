@@ -83,6 +83,7 @@ async function handleSignup(e) {
     alert(
       "Account created successfully! Please check your email for verification."
     );
+    location.reload();
   } catch (error) {
     alert(error.message);
   }
@@ -92,6 +93,7 @@ async function handleLogout() {
   try {
     console.log("Loggin out!");
     await signOut();
+    location.reload();
   } catch (error) {
     alert(error.message);
   }
@@ -165,6 +167,7 @@ async function handleLogin(e) {
     loginModal.classList.add("hidden");
     loginForm.reset();
     console.log("Login successful:", data);
+    location.reload();
   } catch (error) {
     console.error("Login error:", error);
     alert(`Login failed: ${error.message}`);
