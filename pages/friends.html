@@ -12,6 +12,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <link rel="stylesheet" href="../public/css/cursor.css" />
     <link rel="stylesheet" href="../public/css/font.css" />
     <link rel="stylesheet" href="../public/css/navbar.css" />
+    <link rel="stylesheet" href="../public/css/spinner.css" />
+    <link rel="stylesheet" href="../public/css/chat_scrollbar.css">
+
     <link
       rel="shortcut icon"
       href="../public/assets/images/mikomiko-logo-reduced.svg"
@@ -29,65 +32,65 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   </head>
 
   <body class="bg-abyss flex flex-col min-h-screen">
+    <!-- <div id="global-loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blaze"></div>
+    </div> -->
     <div
-      id="chat-conversation"
-      class="fixed right-[450px] bottom-5 shadow-sm shadow-black w-[350px] h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
+    id="chat-conversation"
+    class="fixed right-[450px] bottom-5 shadow-sm shadow-black w-[350px] h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
+  >
+    <div class="p-4 border-b border-lightabyss flex justify-between items-center">
+      <div class="flex items-center">
+        <img
+          id="chat-contact-avatar"
+          src="../public/assets/images/profile-picture.png"
+          alt="Profile"
+          class="w-8 h-8 rounded-full"
+        />
+        <div class="text-slate-200 font-bold ml-2" id="chat-contact-name">
+          Loading...
+        </div>
+      </div>
+      <div class="flex items-center">
+        <button
+          class="text-dusk hover:text-slate-200 cursor-pointer"
+          onclick="toggleChatConversation()"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Messages Container with custom scrollbar -->
+    <div 
+      id="chat-messages" 
+      class="flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-blaze/50 scrollbar-track-midnight hover:scrollbar-thumb-blaze/70 scrollbar-thumb-rounded-full scrollbar-track-rounded-full transition-colors duration-300"
     >
-      <div
-        class="p-4 border-b border-lightabyss flex justify-between items-center"
-      >
-        <div class="flex items-center">
-          <img
-            id="chat-contact-avatar"
-            src="../public/assets/images/profile-picture.png"
-            alt="Profile"
-            class="w-8 h-8 rounded-full"
-          />
-          <div class="text-slate-200 font-bold ml-2" id="chat-contact-name">
-            Loading...
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="text-dusk hover:text-slate-200" id="chat-info-btn">
-            <i class="fas fa-info-circle"></i>
-          </button>
-          <button
-            class="text-dusk hover:text-slate-200"
-            onclick="toggleChatConversation()"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Messages Container -->
-      <div id="chat-messages" class="flex-1 p-4 overflow-y-auto">
-        <div class="flex items-center justify-center h-full">
-          <div class="text-dusk text-center">
-            <i class="fas fa-comments text-4xl mb-2"></i>
-            <p>Select a conversation to start chatting</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 border-t border-lightabyss">
-        <div class="flex gap-2">
-          <input
-            type="text"
-            placeholder="Type a message..."
-            id="chat-message-input"
-            class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none focus:border-blaze"
-          />
-          <button
-            class="bg-blaze text-white px-4 rounded-full hover:bg-blaze/90 transition-colors"
-            id="chat-send-btn"
-          >
-            <i class="fas fa-paper-plane"></i>
-          </button>
+      <div class="flex items-center justify-center h-full">
+        <div class="text-dusk text-center">
+          <i class="fas fa-comments text-4xl mb-2"></i>
+          <p>Select a conversation to start chatting</p>
         </div>
       </div>
     </div>
-
+  
+    <div class="p-4 border-t border-lightabyss">
+      <div class="flex gap-2">
+        <input
+          type="text"
+          placeholder="Type a message..."
+          id="chat-message-input"
+          class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none focus:border-blaze"
+        />
+        <button
+          class="bg-blaze text-white px-4 rounded-full hover:bg-blaze/90 transition-colors cursor-pointer"
+          id="chat-send-btn"
+        >
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
     <!-- New Chat Modal -->
     <div
       id="new-chat-modal"
@@ -171,7 +174,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         <li class="pl-6 button-links py-[14px] relative">
           <a class="flex text-dusk items-center gap-15" href="./friends.html">
             <i class="fa-solid fa-users text-[27px] button-icon"></i>
-            <div class="text-xl font-bold button-text">Friends</div>
+            <div class="text-xl font-bold button-text">Community</div>
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">

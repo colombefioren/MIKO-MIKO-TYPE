@@ -7,6 +7,7 @@ import {
   getComments,
   toggleLike,
 } from "./socials.js";
+import { hideLoading, showLoading } from "./utils.js";
 
 let selectedImageFile = null;
 let user;
@@ -150,10 +151,14 @@ document
 
 async function loadPosts() {
   try {
+    // showLoading();
     const posts = await getPosts();
+
     renderPosts(posts);
   } catch (error) {
     console.error("Error loading posts:", error);
+  } finally {
+    // hideLoading();
   }
 }
 

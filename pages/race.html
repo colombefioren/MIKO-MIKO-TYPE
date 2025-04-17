@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../public/css/cursor.css" />
+    <link rel="stylesheet" href="../public/css/font.css" />
+    <link rel="stylesheet" href="../public/css/navbar.css" />
+    <link
+      rel="shortcut icon"
+      href="../public/assets/images/mikomiko-logo-reduced.svg"
+      type="image/x-icon"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -10,373 +18,320 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Miko-Miko Type Race</title>
-    <style>
-      body {
-        background-color: #0f172a;
-        color: white;
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .race-track {
-        background-color: #1e293b;
-        height: 200px;
-        width: 90%;
-        margin: 20px auto;
-        border-radius: 10px;
-        position: relative;
-        overflow: hidden;
-      }
-      
-      .track-lines {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-          to bottom,
-          transparent,
-          transparent 19px,
-          #334155 20px,
-          #334155 40px
-        );
-      }
-      
-      .racer {
-        position: absolute;
-        font-size: 2rem;
-        left: 20px;
-        transition: left 0.5s ease-out;
-      }
-      
-      .race-container {
-        display: flex;
-        width: 90%;
-        margin: 0 auto;
-        gap: 20px;
-      }
-      
-      .typing-area {
-        flex: 2;
-      }
-      
-      .leaderboard {
-        flex: 1;
-        background-color: #1e293b;
-        border-radius: 10px;
-        padding: 20px;
-      }
-      
-      .leaderboard h3 {
-        margin-top: 0;
-        border-bottom: 1px solid #334155;
-        padding-bottom: 10px;
-      }
-      
-      .leaderboard-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        padding: 8px;
-        border-radius: 5px;
-      }
-      
-      .leaderboard-item.active {
-        background-color: #334155;
-      }
-      
-      .leaderboard-pos {
-        font-weight: bold;
-        margin-right: 10px;
-        width: 20px;
-        text-align: center;
-      }
-      
-      .leaderboard-avatar {
-        font-size: 1.5rem;
-        margin-right: 10px;
-      }
-      
-      .leaderboard-name {
-        flex: 1;
-      }
-      
-      .leaderboard-wpm {
-        font-weight: bold;
-        color: #f59e0b;
-      }
-      
-      #text-field {
-        background-color: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-        font-size: 1.5rem;
-        line-height: 2.5rem;
-        position: relative;
-      }
-      
-      #word-display {
-        color: #e2e8f0;
-      }
-      
-      #input-field {
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-      
-      .correct {
-        color: #10b981;
-      }
-      
-      .incorrect {
-        color: #ef4444;
-        text-decoration: underline;
-      }
-      
-      .current {
-        background-color: #334155;
-        border-radius: 3px;
-      }
-      
-      .race-controls {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin: 20px 0;
-      }
-      
-      button {
-        background-color: #f59e0b;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      
-      button:hover {
-        background-color: #f97316;
-      }
-      
-      .stats {
-        display: flex;
-        justify-content: space-around;
-        margin: 20px 0;
-        text-align: center;
-      }
-      
-      .stat-value {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #f59e0b;
-      }
-      
-      .stat-label {
-        color: #94a3b8;
-      }
-    </style>
+    <link rel="stylesheet" href="../public/css/style.css" />
+    <title>Miko-Miko Type</title>
   </head>
-  <body>
-    <header>
-      <h1 style="text-align: center; margin-top: 20px;">Miko-Miko Type Race</h1>
-    </header>
-    
-    <div class="race-container">
-      <div class="typing-area">
-        <div class="race-track">
-          <div class="track-lines"></div>
-          <div class="racer" id="racer1" data-emoji="🏎️" style="top: 30px;">🏎️</div>
-          <div class="racer" id="racer2" data-emoji="🚗" style="top: 70px;">🚗</div>
-          <div class="racer" id="racer3" data-emoji="🚓" style="top: 110px;">🚓</div>
-          <div class="racer" id="racer4" data-emoji="🚕" style="top: 150px;">🚕</div>
-        </div>
-        
-        <div class="stats">
-          <div>
-            <div class="stat-value" id="wpm-stat">0</div>
-            <div class="stat-label">WPM</div>
+
+  <body class="flex flex-col bg-abyss min-h-screen text-white">
+    <!--Navbar-->
+    <nav
+      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-20"
+    >
+      <div
+        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
+      >
+        <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
+      </div>
+      <img
+        src="../public/assets/images/mikomiko-logo.png"
+        alt="Miko-Miko Type Logo"
+        class="h-40"
+      />
+      <div class="flex gap-10">
+        <div class="rounded-md overflow-hidden flex flex-col w-28">
+          <img
+            src="../public/assets/images/events.jpg"
+            alt="People typing"
+            class="w-full bg-white h-20 object-cover"
+          />
+          <div
+            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
+          >
+            EVENTS
           </div>
-          <div>
-            <div class="stat-value" id="accuracy-stat">100%</div>
-            <div class="stat-label">Accuracy</div>
-          </div>
-          <div>
-            <div class="stat-value" id="progress-stat">0%</div>
-            <div class="stat-label">Progress</div>
-          </div>
         </div>
-        
-        <div id="text-field">
-          <input type="text" id="input-field" autofocus autocomplete="off">
-          <p id="word-display"></p>
-        </div>
-        
-        <div class="race-controls">
-          <button id="new-race-btn">New Race</button>
-          <button id="invite-btn">Invite Friends</button>
+        <div class="rounded-md overflow-hidden flex flex-col w-28">
+          <div class="w-full bg-slate-500 h-20"></div>
+          <div
+            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
+          >
+            WHEEL
+          </div>
         </div>
       </div>
-      
-      <div class="leaderboard">
-        <h3>🏆 Leaderboard</h3>
-        <div id="leaderboard-list">
-          <!-- Will be populated by JavaScript -->
+      <ul
+        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        id="nav-list"
+      >
+        <div id="focus-highlight" class="focused-btn-highlight"></div>
+
+        <!-- Navigation buttons -->
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="../index.html">
+            <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Type</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="./race.html">
+            <i class="fa-solid fa-horse text-3xl button-icon"></i>
+            <div class="text-xl font-bold button-text">Race</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="./friends.html">
+            <i class="fa-solid fa-users text-[27px] button-icon"></i>
+            <div class="text-xl font-bold button-text">Community</div>
+          </a>
+        </li>
+        <li class="pl-6 button-links py-[14px] relative">
+          <a class="flex text-dusk items-center gap-15" href="./boards.html">
+            <i class="fa-solid fa-medal text-[34px] button-icon"></i>
+            <div class="text-xl font-bold button-text">Boards</div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <header
+      class="sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm w-full pt-5 pb-4 px-6 border-b border-lightabyss"
+    >
+      <div class="flex justify-end items-center w-full gap-8">
+        <div class="flex gap-5">
+          <img
+            src="../public/assets/images/blank-profile.png"
+            alt="Profile picture"
+            class="w-12 h-12 rounded-full object-cover"
+            id="profile-picture"
+          />
+          <div id="user-info">
+            <div class="flex gap-5 items-center">
+              <p class="font-bold text-subtlegray" id="username">Guest</p>
+            </div>
+            <p class="text-dusk" id="account-id">Not logged in</p>
+          </div>
         </div>
+        <div id="auth-buttons" class="flex gap-4">
+          <button
+            id="login-btn"
+            class="bg-blaze cursor-pointer text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+          >
+            Log In
+          </button>
+          <button
+            id="signup-btn"
+            class="bg-frost cursor-pointer text-midnight px-6 py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
+          >
+            Sign Up
+          </button>
+        </div>
+        <div id="user-menu" class="hidden">
+          <button
+            id="logout-btn"
+            class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
+          >
+            Log Out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main
+      class="ml-[369px] p-10 flex flex-col items-center justify-center grow"
+    >
+      <div class="max-w-4xl w-full text-center flex flex-col gap-20">
+        <div
+          class="relative p-[2px] rounded-lg bg-gradient-to-r from-crystalMidnight to-midnight mb-10 shadow-lg shadow-crystalTwilight/30"
+        >
+          <div class="bg-midnight rounded-lg p-8 w-full">
+            <div class="flex flex-col items-center justify-center gap-6">
+              <i class="fas fa-tools text-blaze text-6xl mb-4"></i>
+              <h1
+                class="text-5xl font-bold bg-gradient-to-r from-blaze to-frost bg-clip-text text-transparent"
+              >
+                Coming Soon
+              </h1>
+              <p class="text-xl text-dusk max-w-2xl">
+                We're working hard to bring you an amazing experience. This page
+                isn't quite ready yet, but check back soon!
+              </p>
+
+              <div class="mt-8">
+                <a
+                  href="/"
+                  class="bg-blaze text-midnight px-8 py-3 rounded-sm font-medium hover:bg-frost transition-colors"
+                >
+                  Return Home
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress indicator -->
+        <div>
+          <p class="text-subtlegray mb-2">Development Progress</p>
+          <div
+            class="w-full bg-abyss h-4 rounded-full overflow-hidden border border-lightabyss"
+          >
+            <div
+              class="bg-gradient-to-r from-blaze to-frost h-full rounded-full w-3/4 animate-pulse"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Login Modal -->
+    <div
+      id="login-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
+          <button id="close-login-modal" class="text-dusk hover:text-white">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label
+              for="login-email"
+              class="block text-sm font-medium text-slate-200 mb-1"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="login-email"
+              required
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+            />
+          </div>
+
+          <div>
+            <label
+              for="login-password"
+              class="block text-sm font-medium text-slate-200 mb-1"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="login-password"
+              required
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors"
+          >
+            Log In
+          </button>
+
+          <div class="text-center text-dusk text-sm">
+            Don't have an account?
+            <button
+              type="button"
+              id="switch-to-signup"
+              class="text-frost hover:underline"
+            >
+              Sign up
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-    
-    <script>
-      // Sample data - in a real app this would come from your game logic
-      const racers = [
-        { id: 'racer1', name: 'You', emoji: '🏎️', wpm: 72, progress: 85, active: true },
-        { id: 'racer2', name: 'Speedy', emoji: '🚗', wpm: 68, progress: 75 },
-        { id: 'racer3', name: 'Flash', emoji: '🚓', wpm: 65, progress: 60 },
-        { id: 'racer4', name: 'Zippy', emoji: '🚕', wpm: 58, progress: 45 }
-      ];
-      
-      // Initialize the race track
-      function initRaceTrack() {
-        const trackWidth = document.querySelector('.race-track').offsetWidth - 40;
-        
-        racers.forEach(racer => {
-          const element = document.getElementById(racer.id);
-          const progress = racer.progress;
-          const leftPos = (trackWidth * progress / 100);
-          
-          element.style.left = `${leftPos}px`;
-          element.textContent = racer.emoji;
-          
-          // Add tooltip
-          element.title = `${racer.name}: ${racer.wpm} WPM`;
-        });
-      }
-      
-      // Update the leaderboard
-      function updateLeaderboard() {
-        const leaderboard = document.getElementById('leaderboard-list');
-        leaderboard.innerHTML = '';
-        
-        // Sort racers by progress (descending)
-        const sortedRacers = [...racers].sort((a, b) => b.progress - a.progress);
-        
-        sortedRacers.forEach((racer, index) => {
-          const item = document.createElement('div');
-          item.className = `leaderboard-item ${racer.active ? 'active' : ''}`;
-          
-          item.innerHTML = `
-            <div class="leaderboard-pos">${index + 1}</div>
-            <div class="leaderboard-avatar">${racer.emoji}</div>
-            <div class="leaderboard-name">${racer.name}</div>
-            <div class="leaderboard-wpm">${racer.wpm} WPM</div>
-          `;
-          
-          leaderboard.appendChild(item);
-        });
-      }
-      
-      // Update stats display
-      function updateStats() {
-        const player = racers.find(r => r.active);
-        if (player) {
-          document.getElementById('wpm-stat').textContent = player.wpm;
-          document.getElementById('accuracy-stat').textContent = '100%'; // Would calculate in real app
-          document.getElementById('progress-stat').textContent = `${player.progress}%`;
-        }
-      }
-      
-      // Simulate race progress - in a real app this would be driven by actual typing progress
-      function simulateRace() {
-        racers.forEach(racer => {
-          if (!racer.active) {
-            // AI racers make random progress
-            const increment = Math.floor(Math.random() * 3) + 1;
-            racer.progress = Math.min(100, racer.progress + increment);
-            racer.wpm += Math.floor(Math.random() * 3) - 1; // Small WPM fluctuations
-            racer.wpm = Math.max(30, Math.min(120, racer.wpm)); // Keep within bounds
-          }
-        });
-        
-        updateRacePositions();
-        updateLeaderboard();
-        updateStats();
-        
-        // Check if race is over
-        const raceOver = racers.some(r => r.progress >= 100);
-        if (!raceOver) {
-          setTimeout(simulateRace, 1000);
-        } else {
-          // Race finished
-          document.getElementById('new-race-btn').textContent = 'Race Again';
-        }
-      }
-      
-      // Update racer positions on track
-      function updateRacePositions() {
-        const trackWidth = document.querySelector('.race-track').offsetWidth - 40;
-        
-        racers.forEach(racer => {
-          const element = document.getElementById(racer.id);
-          const progress = racer.progress;
-          const leftPos = (trackWidth * progress / 100);
-          
-          element.style.left = `${leftPos}px`;
-          element.title = `${racer.name}: ${racer.wpm} WPM`;
-        });
-      }
-      
-      // Start a new race
-      function newRace() {
-        // Reset all racers
-        racers.forEach(racer => {
-          racer.progress = 0;
-          racer.wpm = Math.floor(Math.random() * 30) + 50; // Random WPM between 50-80 for AI
-          if (racer.active) {
-            racer.wpm = 0; // Player starts at 0
-          }
-        });
-        
-        updateRacePositions();
-        updateLeaderboard();
-        updateStats();
-        
-        document.getElementById('new-race-btn').textContent = 'New Race';
-        
-        // Start the race simulation
-        setTimeout(simulateRace, 1000);
-      }
-      
-      // Initialize the app
-      document.addEventListener('DOMContentLoaded', () => {
-        initRaceTrack();
-        updateLeaderboard();
-        updateStats();
-        
-        // Set up event listeners
-        document.getElementById('new-race-btn').addEventListener('click', newRace);
-        
-        // In a real app, you would have typing logic that updates the player's progress
-        // For this demo, we'll just simulate the player making progress when they type
-        document.getElementById('input-field').addEventListener('input', (e) => {
-          const player = racers.find(r => r.active);
-          if (player) {
-            // Simulate progress based on typing (very simplified)
-            player.progress = Math.min(100, player.progress + 0.5);
-            player.wpm = Math.min(120, player.wpm + 0.5);
-            updateRacePositions();
-            updateLeaderboard();
-            updateStats();
-          }
-        });
-        
-        // Start a race automatically for demo purposes
-        newRace();
-      });
-    </script>
+
+    <!-- Signup Modal -->
+    <div
+      id="signup-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-white">Create Account</h2>
+          <button id="close-signup-modal" class="text-dusk hover:text-white">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+
+        <form id="signup-form" class="space-y-4">
+          <div>
+            <label
+              for="signup-email"
+              class="block text-sm font-medium text-slate-200 mb-1"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="signup-email"
+              required
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+            />
+          </div>
+
+          <div>
+            <label
+              for="signup-password"
+              class="block text-sm font-medium text-slate-200 mb-1"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="signup-password"
+              required
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+            />
+          </div>
+
+          <div>
+            <label
+              for="signup-username"
+              class="block text-sm font-medium text-slate-200 mb-1"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="signup-username"
+              required
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-frost text-midnight py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors"
+          >
+            Sign Up
+          </button>
+
+          <div class="text-center text-dusk text-sm">
+            Already have an account?
+            <button
+              type="button"
+              id="switch-to-login"
+              class="text-blaze hover:underline"
+            >
+              Log in
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer
+      class="ml-[369px] p-6 text-center text-dusk border-t border-lightabyss"
+    >
+      <p>© 2023 Miko-Miko Type. All rights reserved.</p>
+    </footer>
+    <script src="../public/js/race.js"></script>
+    <script type="module" src="../public/js/login.js"></script>
   </body>
 </html>

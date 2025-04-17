@@ -1,95 +1,59 @@
-import { supabase } from "./database.js";
+const buttons = document.querySelectorAll(".button-links");
+const buttonTexts = document.querySelectorAll(".button-text");
+const buttonIcons = document.querySelectorAll(".button-icon");
+const highlight = document.getElementById("focus-highlight");
 
-let raceChannel;
+// Time config
+const MOVE_DURATION = 200;
+const COLOR_DELAY = 90;
+const COLOR_DURATION = 200;
 
-export async function createRace(textContent, mode, difficulty) {
-  const user = await getCurrentUser();
+// The highlight movement
+function moveHighlightTo(index) {
+  const button = buttons[index];
+  const offset = button.offsetTop;
 
-  const { data, error } = await supabase
-    .from("races")
-    .insert({
-      creator_id: user.id,
-      text_content,
-      mode,
-      difficulty,
-      status: "waiting",
-    })
-    .select()
-    .single();
+  buttons.forEach((btn) => btn.classList.remove("active"));
+  buttonTexts.forEach((text) => text.classList.remove("text-white"));
+  buttonIcons.forEach((icon) => icon.classList.remove("text-frost"));
 
-  if (error) throw error;
+  highlight.style.transform = `translateY(${offset}px)`;
 
-  // Join the race as participant
-  await joinRace(data.id);
-
-  return data;
+  setTimeout(() => {
+    button.classList.add("active");
+    buttonTexts[index].classList.add("text-white");
+    buttonIcons[index].classList.add("text-frost");
+  }, COLOR_DELAY);
 }
 
-export async function joinRace(raceId) {
-  const user = await getCurrentUser();
-
-  const { error } = await supabase.from("race_participants").insert({
-    race_id: raceId,
-    user_id: user.id,
+// Move the highlight according to the clicked button
+buttons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    moveHighlightTo(index);
   });
+});
 
-  if (error) throw error;
-}
+window.addEventListener("DOMContentLoaded", () => {
+  highlight.style.transition = "none";
+  moveHighlightTo(1);
 
-export function setupRaceUpdates(raceId, callback) {
-  raceChannel = supabase
-    .channel("race_updates")
-    .on(
-      "postgres_changes",
-      {
-        event: "*",
-        schema: "public",
-        table: "race_participants",
-        filter: `race_id=eq.${raceId}`,
-      },
-      (payload) => {
-        callback(payload);
-      }
-    )
-    .subscribe();
-}
+  buttons[1].classList.add("active");
+  buttonTexts[1].classList.add("text-white");
+  buttonIcons[1].classList.add("text-frost");
 
-export async function submitRaceResult(raceId, wpm, accuracy) {
-  const user = await getCurrentUser();
+  setTimeout(() => {
+    highlight.style.transition = `transform ${MOVE_DURATION}ms cubic-bezier(0.25, 0.1, 0.25, 1)`;
+  }, 10);
+});
 
-  // Get current position
-  const { count } = await supabase
-    .from("race_participants")
-    .select("*", { count: "exact" })
-    .eq("race_id", raceId)
-    .eq("finished", true);
+document.addEventListener("DOMContentLoaded", function () {
+  const chevron = document.querySelector(".chevron");
+  const nav = document.querySelector("nav");
+  const linkContainer = document.querySelector(".link-container");
 
-  const position = count + 1;
-
-  const { error } = await supabase
-    .from("race_participants")
-    .update({
-      wpm,
-      accuracy,
-      finished: true,
-      position,
-    })
-    .eq("race_id", raceId)
-    .eq("user_id", user.id);
-
-  if (error) throw error;
-
-  // Check if all participants finished
-  const { count: remaining } = await supabase
-    .from("race_participants")
-    .select("*", { count: "exact" })
-    .eq("race_id", raceId)
-    .eq("finished", false);
-
-  if (remaining === 0) {
-    await supabase
-      .from("races")
-      .update({ status: "completed" })
-      .eq("id", raceId);
-  }
-}
+  linkContainer.classList.toggle("px-7");
+  chevron.addEventListener("click", function () {
+    nav.classList.toggle("collapsed");
+    linkContainer.classList.toggle("px-7");
+  });
+});
