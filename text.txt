@@ -1,0 +1,100 @@
+Might be useful
+
+  <!-- Stats Boards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Personal Best Board -->
+          <div class="bg-midnight border border-lightabyss rounded-xl p-6">
+            <h2 class="text-white text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fas fa-user-circle text-blaze"></i> Your Personal Bests
+            </h2>
+            <div class="space-y-4">
+              <div>
+                <div class="text-azure text-sm mb-1">15 Seconds</div>
+                <div class="text-white text-2xl font-bold">148 WPM</div>
+                <div class="text-green-400 text-sm">98.2% accuracy</div>
+              </div>
+              <div>
+                <div class="text-azure text-sm mb-1">60 Seconds</div>
+                <div class="text-white text-2xl font-bold">136 WPM</div>
+                <div class="text-green-400 text-sm">97.8% accuracy</div>
+              </div>
+              <div>
+                <div class="text-azure text-sm mb-1">120 Seconds</div>
+                <div class="text-white text-2xl font-bold">128 WPM</div>
+                <div class="text-green-400 text-sm">97.5% accuracy</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Progress Board -->
+          <div class="bg-midnight border border-lightabyss rounded-xl p-6">
+            <h2 class="text-white text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fas fa-chart-line text-frost"></i> Your Progress
+            </h2>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-azure text-sm mb-1">
+                  <span>WPM (30 days)</span>
+                  <span>+12.4%</span>
+                </div>
+                <div class="h-2 w-full bg-lightabyss rounded-full">
+                  <div class="h-2 bg-blaze rounded-full" style="width: 65%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-azure text-sm mb-1">
+                  <span>Accuracy (30 days)</span>
+                  <span>+2.1%</span>
+                </div>
+                <div class="h-2 w-full bg-lightabyss rounded-full">
+                  <div class="h-2 bg-green-400 rounded-full" style="width: 45%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-azure text-sm mb-1">
+                  <span>Rank (30 days)</span>
+                  <span class="text-blaze">+28 places</span>
+                </div>
+                <div class="h-2 w-full bg-lightabyss rounded-full">
+                  <div class="h-2 bg-yellow-400 rounded-full" style="width: 30%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Achievements Board -->
+          <div class="bg-midnight border border-lightabyss rounded-xl p-6">
+            <h2 class="text-white text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fas fa-trophy text-yellow-400"></i> Recent Achievements
+            </h2>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 p-3 bg-lightabyss/10 rounded-lg">
+                <div class="bg-yellow-400/10 p-2 rounded-lg">
+                  <i class="fas fa-medal text-yellow-400"></i>
+                </div>
+                <div>
+                  <div class="text-white font-medium">Top 15%</div>
+                  <div class="text-azure text-sm">Reached top 15% of typers</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-lightabyss/10 rounded-lg">
+                <div class="bg-green-400/10 p-2 rounded-lg">
+                  <i class="fas fa-bullseye text-green-400"></i>
+                </div>
+                <div>
+                  <div class="text-white font-medium">Accuracy Master</div>
+                  <div class="text-azure text-sm">98%+ accuracy in 10 races</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-lightabyss/10 rounded-lg">
+                <div class="bg-blaze/10 p-2 rounded-lg">
+                  <i class="fas fa-bolt text-blaze"></i>
+                </div>
+                <div>
+                  <div class="text-white font-medium">Speedster</div>
+                  <div class="text-azure text-sm">150+ WPM in 15s test</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
