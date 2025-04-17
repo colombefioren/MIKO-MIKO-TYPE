@@ -25,7 +25,7 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 30,
+  wordCount: 5,
   activeListeners: new Set(),
 };
 
@@ -457,10 +457,21 @@ const game = {
 
     // Global TAB key restart
     window.addEventListener("keydown", (event) => {
-      if (event.key == "Tab") {
+      // Check if the target is already an input, textarea, or other editable element
+      const isEditableTarget =
+        event.target.tagName === "INPUT" ||
+        event.target.tagName === "TEXTAREA" ||
+        event.target.isContentEditable;
+
+      if (event.key === "Tab") {
         event.preventDefault();
         game.startTest();
+        elements.inputField.focus({ preventScroll: true });
       }
+      // } else if (document.activeElement !== elements.inputField) {
+      //   event.preventDefault();
+      //   elements.inputField.focus();
+      // }else{}
     });
   },
 
@@ -502,7 +513,9 @@ const game = {
     const typed = elements.inputField.value;
 
     for (let i = 0; i < Math.min(expected.length, typed.length); i++) {
-      if (typed[i] === expected[i]) correct++;
+      if (typed[i] === expected[i]) {
+        correct++;
+      }
     }
 
     const accuracy = (correct / Math.max(typed.length, expected.length)) * 100;
@@ -561,15 +574,28 @@ const game = {
       console.error("No game stats provided");
       return;
     }
+    const loginModal = document.getElementById("login-modal");
+    const askLoginModal = document.getElementById("ask-log-in-modal");
+    const confirmLoginButton = document.getElementById("confirm-login-btn");
+    const cancelLoginButton = document.getElementById("cancel-login-btn");
 
     const user = await getCurrentUser();
     if (!user) {
-      const login = confirm(
-        "You need to be logged in to save your results. Would you like to log in now?"
-      );
-      if (login) {
+      // const login = confirm(
+      //   "You need to be logged in to save your results. Would you like to log in now?"
+      // );
+      askLoginModal.classList.remove("hidden");
+      cancelLoginButton.addEventListener("click", () => {
+        askLoginModal.classList.add("hidden");
+      });
+      confirmLoginButton.addEventListener("click", () => {
+        askLoginModal.classList.add("hidden");
         loginModal.classList.remove("hidden");
-      }
+      });
+
+      // if (login) {
+      //   loginModal.classList.remove("hidden");
+      // }
       return;
     }
 
@@ -581,14 +607,42 @@ const game = {
     };
 
     try {
+      const askUserShareModal = document.getElementById("ask-share-modal");
+      const shareModal = document.getElementById("share-modal");
       const savedResult = await saveGameResult(result);
       if (!savedResult) {
         throw new Error("Failed to save game result");
       }
 
-      const share = confirm(
-        `Your score: ${savedResult.wpm} WPM! Share your result?`
+      // const share = confirm(
+      //   `Your score: ${savedResult.wpm} WPM! Share your result?`
+      // );
+      const shareParagraph = document.getElementById("share-text");
+      const confirmAskShareButton = document.getElementById(
+        "confirm-ask-share-btn"
       );
+      const cancelAskShareButton = document.getElementById(
+        "cancel-ask-share-btn"
+      );
+      const cancelShareButton = document.getElementById("cancel-share-btn");
+      askUserShareModal.classList.remove("hidden");
+
+      shareParagraph.textContent = `Your score: ${savedResult.wpm} WPM ! Share your result ?`;
+      confirmAskShareButton.addEventListener("click", () => {
+        askUserShareModal.classList.add("hidden");
+        shareModal.classList.remove("hidden");
+        return true;
+      });
+
+      cancelAskShareButton.addEventListener("click", () => {
+        askUserShareModal.classList.add("hidden");
+      });
+
+      cancelShareButton.addEventListener("click", () => {
+        shareModal.classList.add("hidden");
+      });
+      //I forced true
+      const share = true;
 
       if (share) {
         const content = prompt("Add a message to your post:");
@@ -599,8 +653,16 @@ const game = {
         }
       }
     } catch (error) {
+      const saveFailedModal = document.getElementById("save-failed-modal");
       console.error("Error in onGameComplete:", error);
-      alert("Failed to save/share your result");
+      saveFailedModal.classList.remove("hidden");
+      setTimeout(() => {
+        saveFailedModal.classList.add("hidden");
+      }, 10000);
+      const closeFailModal = document.getElementById("close-fail-modal");
+      closeFailModal.addEventListener("click", () => {
+        saveFailedModal.classList.add("hidden");
+      });
     }
   },
 };

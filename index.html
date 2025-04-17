@@ -390,7 +390,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Login Modal -->
     <div
       id="login-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -458,7 +458,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Signup Modal -->
     <div
       id="signup-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -534,6 +534,103 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       </div>
     </div>
 
+    <!-- Ask for log in modal -->
+    <div
+      id="ask-log-in-modal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+      >
+        <p class="text-white">You need to be logged in to save your results.</p>
+        <p class="text-white">Would you like to log in now?</p>
+        <div class="flex justify-around mt-5">
+          <button
+            id="cancel-login-btn"
+            class="text-blaze border border-blaze p-2 hover:bg-frost hover:border-frost hover:text-abyss hover:cursor-pointer transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-login-btn"
+            class="text-abyss border border-blaze bg-blaze p-2 hover:bg-frost hover:border-frost hover:text-abyss hover:cursor-pointer transition-colors"
+          >
+            Log In
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Ask Share Modal -->
+    <div
+      id="ask-share-modal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+      >
+        <p id="share-text" class="text-white"></p>
+        <div class="flex justify-around mt-5">
+          <button
+            id="cancel-ask-share-btn"
+            class="text-blaze border border-blaze p-2 hover:bg-frost hover:border-frost hover:text-abyss hover:cursor-pointer transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-ask-share-btn"
+            class="text-abyss border border-blaze bg-blaze p-2 hover:bg-frost hover:border-frost hover:text-abyss hover:cursor-pointer transition-colors"
+          >
+            Share
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Share Modal -->
+    <div
+      id="share-modal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+      >
+        <form action="" id="share-validation-form">
+          <label for="share-content" class="text-white">Content</label>
+          <input
+            type="text"
+            name="share-content"
+            id="share-content"
+            class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze mt-5"
+          />
+          <input
+            type="submit"
+            value="Share"
+            class="text-abyss border border-blaze bg-blaze p-2 hover:bg-frost hover:border-frost hover:text-abyss hover:cursor-pointer transition-colors mt-5 w-full"
+          />
+        </form>
+        <div class="flex justify-around mt-5">
+          <button
+            id="cancel-share-btn"
+            class="text-blaze border border-blaze p-2 hover:bg-frost hover:border-frost hover:text-abyss hover:cursor-pointer transition-colors w-full"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Failed to save game result modal-->
+    <div
+      id="save-failed-modal"
+      class="top-30 right-5 fixed bg-red-500 p-7 rounded-2xl hidden"
+    >
+      <button
+        id="close-fail-modal"
+        class="absolute top-1 right-2 text-dusk hover:text-white hover:cursor-pointer"
+      >
+        <i class="fas fa-times text-xl"></i>
+      </button>
+      <p class="text-white">Failed to save game result</p>
+    </div>
+    <!---->
     <script type="module" src="./public/js/gameLogic.js"></script>
     <script src="./public/js/navbar.js"></script>
     <script type="module" src="./public/js/login.js"></script>
