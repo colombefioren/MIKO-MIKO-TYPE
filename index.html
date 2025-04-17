@@ -30,11 +30,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
   </head>
 
   <body
-    class="bg-abyss justify-center min-h-screen prevent-select"
+    class="flex flex-col bg-abyss justify-center min-h-screen prevent-select"
   >
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
+      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-20"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
@@ -110,7 +110,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </li>
       </ul>
     </nav>
-    <header class="flex text-white justify-end gap-10 items-center p-3 sticky top-2  bg-abyss/80 backdrop-blur-sm">
+    <header
+      class="flex text-white justify-end items-center gap-10 p-7 fixed top-0 left-0 right-0 bg-abyss/80 backdrop-blur-sm z-10"
+    >
       <div class="flex gap-5">
         <img
           src="./public/assets/images/blank-profile.png"
@@ -128,13 +130,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       <div id="auth-buttons" class="flex gap-4">
         <button
           id="login-btn"
-          class="bg-blaze cursor-pointer text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+          class="border border-blaze cursor-pointer text-blaze px-6 py-2 rounded-sm font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
         >
           Log In
         </button>
         <button
           id="signup-btn"
-          class="bg-frost cursor-pointer text-midnight px-6 py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
+          class="bg-blaze cursor-pointer text-midnight px-6 py-2 rounded-sm font-medium hover:bg-frost transition-colors"
         >
           Sign Up
         </button>
@@ -149,7 +151,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       </div>
     </header>
 
-    <main class="flex flex-col items-center mt-20">
+    <main class="flex flex-col justify-center items-center mt-28 grow">
       <div class="flex flex-col justify-center items-center gap-22">
         <div
           class="flex items-center p-7 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight h-16 shadow-lg shadow-crystalTwilight/30"
@@ -356,7 +358,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             </form>
           </div>
         </div>
-        <div class="relative w-[1600px] ml-[90px]">
+        <div class="relative ml-[90px]">
           <div
             id="pointer-focus"
             class="hidden justify-center items-center text-dusk gap-5 absolute -z-10 w-full h-full"
@@ -366,7 +368,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
           </div>
           <div id="text-field" class="relative px-16">
             <input
-              class="border border-slate-300 text-white w-full h-full absolute z-10 opacity-0"
+              class="border border-slate-300 text-white w-full h-full absolute top-0 left-0 right-0 z-10 opacity-0"
               type="text"
               id="input-field"
               autofocus
@@ -395,7 +397,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
-          <button id="close-login-modal" class="text-dusk hover:text-white">
+          <button
+            id="close-login-modal"
+            class="text-dusk hover:text-white hover:cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
@@ -431,7 +436,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
           <button
             type="submit"
-            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors"
+            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss hover:cursor-pointer transition-colors mt-5"
           >
             Log In
           </button>
@@ -441,7 +446,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             <button
               type="button"
               id="switch-to-signup"
-              class="text-frost hover:underline"
+              class="text-blaze hover:text-frost hover:cursor-pointer hover:underline"
             >
               Sign up
             </button>
@@ -510,7 +515,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
           <button
             type="submit"
-            class="w-full bg-frost text-midnight py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors"
+            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss hover:cursor-pointer transition-colors mt-5"
           >
             Sign Up
           </button>
@@ -520,7 +525,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             <button
               type="button"
               id="switch-to-login"
-              class="text-blaze hover:underline"
+              class="text-blaze hover:text-frost hover:cursor-pointer hover:underline"
             >
               Log in
             </button>
