@@ -25,7 +25,7 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 25,
+  wordCount: 30,
   activeListeners: new Set(),
 };
 
@@ -295,85 +295,91 @@ const wordSelection = (() => {
   return { getRandomWord };
 })();
 
-// DOM Handlers
 const domHandlers = {
   createWordDisplay: () => {
-    let html = "";
+    elements.wordDisplay.innerHTML = "";
+    state.charSpans = [];
 
     state.wordsToType.forEach((word, wordIndex) => {
       // Add word characters
       [...word].forEach((char, charIndex) => {
-        html += `<span class="char-span" data-word-index="${wordIndex}" data-char-index="${charIndex}">${char}</span>`;
+        const charSpan = document.createElement("span");
+        charSpan.className = "char-span";
+        charSpan.textContent = char;
+        charSpan.dataset.wordIndex = wordIndex;
+        charSpan.dataset.charIndex = charIndex;
+        elements.wordDisplay.appendChild(charSpan);
+        state.charSpans.push(charSpan);
       });
 
       // Add space after word (except after last word)
       if (wordIndex < state.wordsToType.length - 1) {
-        html += `<span class="char-span space" data-word-index="${wordIndex}" data-char-index="${word.length}"> </span>`;
+        const spaceSpan = document.createElement("span");
+        spaceSpan.className = "char-span space";
+        spaceSpan.textContent = " ";
+        spaceSpan.dataset.wordIndex = wordIndex;
+        spaceSpan.dataset.charIndex = word.length;
+        elements.wordDisplay.appendChild(spaceSpan);
+        state.charSpans.push(spaceSpan);
       }
     });
-
-    elements.wordDisplay.innerHTML = html;
-    state.charSpans = Array.from(
-      elements.wordDisplay.querySelectorAll(".char-span")
-    );
   },
 
-  updateCursor: () => {
+  updateCursorPosition: () => {
     if (
       state.charSpans.length === 0 ||
       state.currentWordIndex >= state.wordsToType.length
     )
       return;
 
-    requestAnimationFrame(() => {
-      const currentPosition = elements.inputField.value.length;
-      const currentWordLength =
-        state.wordsToType[state.currentWordIndex].length;
+    const currentPosition = elements.inputField.value.length;
+    const currentWordLength = state.wordsToType[state.currentWordIndex].length;
+    const spanIndex = state.charSpans.findIndex(
+      (span) =>
+        parseInt(span.dataset.wordIndex) === state.currentWordIndex &&
+        parseInt(span.dataset.charIndex) ===
+          Math.min(currentPosition, currentWordLength)
+    );
 
-      // Find target span directly instead of using array methods
-      let targetSpan = null;
-      for (let i = 0; i < state.charSpans.length; i++) {
-        const span = state.charSpans[i];
-        if (
-          parseInt(span.dataset.wordIndex) === state.currentWordIndex &&
-          parseInt(span.dataset.charIndex) ===
-            Math.min(currentPosition, currentWordLength)
-        ) {
-          targetSpan = span;
-          break;
-        }
-      }
+    if (spanIndex >= 0) {
+      const span = state.charSpans[spanIndex];
+      const rect = span.getBoundingClientRect();
+      const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
 
-      if (targetSpan) {
-        const rect = targetSpan.getBoundingClientRect();
-        const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
-
-        elements.cursor.style.left = `${
-          rect.left - wordDisplayRect.left + elements.wordDisplay.offsetLeft
-        }px`;
-        elements.cursor.style.top = `${
-          rect.top - wordDisplayRect.top + elements.wordDisplay.offsetTop
-        }px`;
-        elements.cursor.style.height = `${rect.height}px`;
-        elements.cursor.style.opacity = "1";
-      }
-    });
+      elements.cursor.style.left = `${
+        rect.left - wordDisplayRect.left + elements.wordDisplay.offsetLeft
+      }px`;
+      elements.cursor.style.top = `${
+        rect.top - wordDisplayRect.top + elements.wordDisplay.offsetTop
+      }px`;
+      elements.cursor.style.height = `${rect.height}px`;
+      elements.cursor.style.opacity = "1";
+    }
   },
 
-  // Debounced cursor update for performance
-  debouncedUpdateCursor: null, // Will be initialized later
-
-  updateStyleClasses: () => {
-    // Update difficulty classes
-    elements.difficultyInputs.forEach((input) => {
-      const parentLabel = input.closest(".mode-option");
-      parentLabel.classList.toggle("text-blaze", input.checked);
-    });
-
-    // Update content type classes
+  updateContentTypeClasses: () => {
     elements.contentCheckboxes.forEach((checkbox) => {
       const parentLabel = checkbox.closest(".mode-option");
       parentLabel.classList.toggle("text-blaze", checkbox.checked);
+    });
+
+    // Ensure at least one checkbox is checked
+    const checkedCount = document.querySelectorAll(
+      'input[name="content-type"]:checked'
+    ).length;
+    if (checkedCount === 0) {
+      document.getElementById("words").checked = true;
+      document
+        .getElementById("words")
+        .closest(".mode-option")
+        .classList.add("text-blaze");
+    }
+  },
+
+  updateDifficultyClasses: () => {
+    elements.difficultyInputs.forEach((input) => {
+      const parentLabel = input.closest(".mode-option");
+      parentLabel.classList.toggle("text-blaze", input.checked);
     });
   },
 
@@ -381,129 +387,124 @@ const domHandlers = {
     const currentWord = state.wordsToType[state.currentWordIndex];
     const typed = elements.inputField.value;
 
-    // Get current word spans more efficiently
-    const currentWordSpans = [];
-    for (let i = 0; i < state.charSpans.length; i++) {
-      const span = state.charSpans[i];
-      if (
-        parseInt(span.dataset.wordIndex) === state.currentWordIndex &&
-        span.textContent !== " "
-      ) {
-        currentWordSpans.push(span);
-      }
-    }
+    const currentWordSpans = state.charSpans.filter(
+      (span) => parseInt(span.dataset.wordIndex) === state.currentWordIndex
+    );
 
-    // Update colors efficiently
-    for (let i = 0; i < currentWord.length; i++) {
-      if (i >= currentWordSpans.length) break;
-
+    for (let i = 0; i < typed.length && i < currentWord.length; i++) {
       const charSpan = currentWordSpans[i];
-
-      if (i < typed.length) {
-        charSpan.style.color = typed[i] === currentWord[i] ? "white" : "red";
+      if (typed[i] === currentWord[i]) {
+        charSpan.style.color = "white"; // Correct character
       } else {
-        charSpan.style.color = "";
+        charSpan.style.color = "red"; // Incorrect character
       }
     }
+
+    domHandlers.updateCursorPosition();
   },
 };
 
-// Game mechanics
 const game = {
-  initializeGame: () => {
-    // Initialize the debounced cursor update
-    domHandlers.debouncedUpdateCursor = utils.debounce(
-      domHandlers.updateCursor,
-      16
-    );
-
-    // Set up event listeners
+  initialize: () => {
+    domHandlers.updateDifficultyClasses();
+    domHandlers.updateContentTypeClasses();
     game.setupEventListeners();
-
-    // Initial game start
     game.startTest();
   },
 
   setupEventListeners: () => {
-    // Only set up listeners if not already active
-    if (state.activeListeners.size > 0) return;
+    // Input field events
+    elements.inputField.addEventListener("keydown", (event) => {
+      game.startTimer();
+      game.handleWordUpdate(event);
+    });
 
-    // Input field focus/blur events
-    elements.inputField.addEventListener("focus", game.handleInputFocus);
-    elements.inputField.addEventListener("blur", game.handleInputBlur);
-    state.activeListeners.add("focus");
-    state.activeListeners.add("blur");
+    elements.inputField.addEventListener("input", () => {
+      domHandlers.updateCharColors();
+    });
 
-    // Input field typing events
-    elements.inputField.addEventListener("input", game.handleInput);
-    elements.inputField.addEventListener("keydown", game.handleKeydown);
-    state.activeListeners.add("input");
-    state.activeListeners.add("keydown");
+    // Focus events
+    elements.inputField.addEventListener("focus", () => {
+      elements.textField.classList.remove("blur-sm");
+      elements.pointerFocus.classList.remove("flex");
+      elements.pointerFocus.classList.add("hidden");
+      elements.cursor.classList.remove("hidden");
+    });
 
-    // Form change events (using event delegation)
-    elements.modeForm.addEventListener("change", game.handleFormChange);
-    state.activeListeners.add("formChange");
+    elements.inputField.addEventListener("blur", () => {
+      elements.textField.classList.add("blur-sm");
+      elements.pointerFocus.classList.add("flex");
+      elements.pointerFocus.classList.remove("hidden");
+      elements.cursor.classList.add("hidden");
+    });
+
+    // Form change events
+    elements.modeForm.addEventListener("change", (e) => {
+      if (e.target.name === "mode" && e.target.type === "radio") {
+        domHandlers.updateDifficultyClasses();
+        game.startTest();
+        elements.inputField.focus({ preventScroll: true });
+      }
+    });
+
+    elements.contentCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        domHandlers.updateContentTypeClasses();
+        game.startTest();
+        elements.inputField.focus({ preventScroll: true });
+      });
+    });
 
     // Global TAB key restart
-    window.addEventListener("keydown", game.handleGlobalKeydown);
-    state.activeListeners.add("globalKeydown");
+    window.addEventListener("keydown", (event) => {
+      if (event.key == "Tab") {
+        event.preventDefault();
+        game.startTest();
+      }
+    });
   },
 
   startTest: (wordCount = state.wordCount) => {
-    // Reset game state
     state.wordsToType = [];
+    state.charSpans = [];
     state.currentWordIndex = 0;
     state.startTime = null;
     state.previousEndTime = null;
     state.totalStats = { wpm: 0, accuracy: 0, count: 0 };
 
-    // Get difficulty
     const difficulty = utils.getCurrentDifficulty();
 
-    // Ensure content type is selected
-    utils.ensureContentTypeSelected();
-
-    // Generate words efficiently
     for (let i = 0; i < wordCount; i++) {
       state.wordsToType.push(wordSelection.getRandomWord(difficulty));
     }
 
-    // Create word display
     domHandlers.createWordDisplay();
-
-    // Reset UI
     elements.inputField.value = "";
     elements.results.textContent = "";
     elements.totalResult.textContent = "";
-
-    // Update cursor
-    domHandlers.updateCursor();
-
-    // Focus input field
-    elements.inputField.focus({ preventScroll: true });
+    domHandlers.updateCursorPosition();
   },
 
   startTimer: () => {
     if (!state.startTime) state.startTime = Date.now();
-    domHandlers.updateCursor();
+    domHandlers.updateCursorPosition();
   },
 
-  calculateStats: () => {
+  getCurrentStats: () => {
     const elapsedTime =
       (Date.now() - (state.previousEndTime || state.startTime)) / 1000;
-    if (elapsedTime === 0) return { wpm: 0, accuracy: 0 };
+    const wpm =
+      state.wordsToType[state.currentWordIndex].length / 5 / (elapsedTime / 60);
 
+    // Accuracy calculation
+    let correct = 0;
     const expected = state.wordsToType[state.currentWordIndex];
     const typed = elements.inputField.value;
 
-    // Count correct characters efficiently
-    let correct = 0;
-    const minLength = Math.min(expected.length, typed.length);
-    for (let i = 0; i < minLength; i++) {
+    for (let i = 0; i < Math.min(expected.length, typed.length); i++) {
       if (typed[i] === expected[i]) correct++;
     }
 
-    const wpm = expected.length / 5 / (elapsedTime / 60);
     const accuracy = (correct / Math.max(typed.length, expected.length)) * 100;
 
     return {
@@ -512,49 +513,55 @@ const game = {
     };
   },
 
-  moveToNextWord: async () => {
-    if (!state.previousEndTime) state.previousEndTime = state.startTime;
+  handleWordUpdate: async (event) => {
+    if (event.key === " ") {
+      if (elements.inputField.value.trim() === "") {
+        event.preventDefault();
+        return;
+      }
 
-    const { wpm, accuracy } = game.calculateStats();
-    state.totalStats.wpm += wpm;
-    state.totalStats.accuracy += accuracy;
-    state.totalStats.count++;
+      if (!state.previousEndTime) state.previousEndTime = state.startTime;
 
-    elements.results.textContent = `WPM: ${wpm}, Accuracy: ${accuracy}%`;
+      const { wpm, accuracy } = game.getCurrentStats();
+      state.totalStats.wpm += wpm;
+      state.totalStats.accuracy += accuracy;
+      state.totalStats.count++;
 
-    state.currentWordIndex++;
-    state.previousEndTime = Date.now();
+      elements.results.textContent = `WPM: ${wpm}, Accuracy: ${accuracy}%`;
 
-    // Check if test is complete
-    if (state.currentWordIndex >= state.wordsToType.length) {
-      await game.completeTest();
-    } else {
+      state.currentWordIndex++;
+      state.previousEndTime = Date.now();
+
+      if (state.currentWordIndex >= state.wordsToType.length) {
+        const avgWpm = (state.totalStats.wpm / state.totalStats.count).toFixed(
+          2
+        );
+        const avgAccuracy = (
+          state.totalStats.accuracy / state.totalStats.count
+        ).toFixed(2);
+        elements.results.textContent = "";
+
+        elements.totalResult.setAttribute("style", "white-space: pre;");
+        if (avgAccuracy >= 50) {
+          elements.totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
+          await game.onGameComplete({ wpm: avgWpm, accuracy: avgAccuracy });
+        } else {
+          elements.totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
+        }
+      }
+
       elements.inputField.value = "";
-      domHandlers.updateCursor();
+      domHandlers.updateCursorPosition();
+      event.preventDefault();
     }
   },
 
-  completeTest: async () => {
-    const avgWpm = (state.totalStats.wpm / state.totalStats.count).toFixed(2);
-    const avgAccuracy = (
-      state.totalStats.accuracy / state.totalStats.count
-    ).toFixed(2);
-    elements.results.textContent = "";
-
-    // Configure totalResult for pre-formatted text
-    elements.totalResult.setAttribute("style", "white-space: pre;");
-
-    if (parseFloat(avgAccuracy) >= 50) {
-      elements.totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
-
-      // Save results only if accuracy is >= 50%
-      await game.saveResults({ wpm: avgWpm, accuracy: avgAccuracy });
-    } else {
-      elements.totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
+  onGameComplete: async (gameStats) => {
+    if (!gameStats) {
+      console.error("No game stats provided");
+      return;
     }
-  },
 
-  saveResults: async (gameStats) => {
     const user = await getCurrentUser();
     if (!user) {
       const login = confirm(
@@ -566,22 +573,19 @@ const game = {
       return;
     }
 
-    const difficulty = utils.getCurrentDifficulty();
     const result = {
       wpm: gameStats.wpm || 0,
       accuracy: gameStats.accuracy || 0,
       mode: gameStats.mode || "normal",
-      difficulty: difficulty,
+      difficulty: utils.getCurrentDifficulty(),
     };
 
     try {
-      // Save game result
       const savedResult = await saveGameResult(result);
       if (!savedResult) {
         throw new Error("Failed to save game result");
       }
 
-      // Ask to share
       const share = confirm(
         `Your score: ${savedResult.wpm} WPM! Share your result?`
       );
@@ -595,68 +599,14 @@ const game = {
         }
       }
     } catch (error) {
-      console.error("Error saving results:", error);
+      console.error("Error in onGameComplete:", error);
       alert("Failed to save/share your result");
-    }
-  },
-
-  // Event handlers
-  handleInputFocus: () => {
-    elements.textField.classList.remove("blur-sm");
-    elements.pointerFocus.classList.remove("flex");
-    elements.pointerFocus.classList.add("hidden");
-    elements.cursor.classList.remove("hidden");
-  },
-
-  handleInputBlur: () => {
-    elements.textField.classList.add("blur-sm");
-    elements.pointerFocus.classList.add("flex");
-    elements.pointerFocus.classList.remove("hidden");
-    elements.cursor.classList.add("hidden");
-  },
-
-  handleInput: () => {
-    game.startTimer();
-    domHandlers.updateCharColors();
-    domHandlers.debouncedUpdateCursor();
-  },
-
-  handleKeydown: (event) => {
-    game.startTimer();
-
-    // Process spacebar for word completion
-    if (event.key === " ") {
-      if (elements.inputField.value.trim() === "") {
-        event.preventDefault();
-        return;
-      }
-
-      game.moveToNextWord();
-      event.preventDefault();
-    }
-  },
-
-  handleGlobalKeydown: (event) => {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      game.startTest();
-    }
-  },
-
-  handleFormChange: (e) => {
-    if (e.target.name === "mode" && e.target.type === "radio") {
-      domHandlers.updateStyleClasses();
-      game.startTest();
-    } else if (e.target.name === "content-type") {
-      domHandlers.updateStyleClasses();
-      game.startTest();
     }
   },
 };
 
 // Database operations
 async function saveGameResult(result) {
-  // Validate the result object
   if (!result) {
     console.error("No result provided to saveGameResult");
     return null;
@@ -676,20 +626,22 @@ async function saveGameResult(result) {
   }
 
   try {
-    // Use a transaction for saving result and updating averages in one DB operation
-    const { data, error } = await supabase.rpc(
-      "save_game_result_and_update_averages",
-      {
+    // Save to game_results
+    const { error: gameResultsError } = await supabase
+      .from("game_results")
+      .insert({
         user_id: user.id,
-        wpm_value: completeResult.wpm,
-        accuracy_value: completeResult.accuracy,
-        mode_value: completeResult.mode,
-      }
-    );
+        wpm: completeResult.wpm,
+        accuracy: completeResult.accuracy,
+        mode: completeResult.mode,
+      });
 
-    if (error) {
-      throw new Error(`Database error: ${error.message}`);
+    if (gameResultsError) {
+      throw new Error(`Game results error: ${gameResultsError.message}`);
     }
+
+    // Update user averages
+    await updateUserAverages(user.id);
 
     return completeResult;
   } catch (error) {
@@ -698,11 +650,59 @@ async function saveGameResult(result) {
   }
 }
 
-// Initialize game when DOM is fully loaded
+async function updateUserAverages(userId) {
+  try {
+    // Get all game results for the user
+    const { data: results, error } = await supabase
+      .from("game_results")
+      .select("wpm, accuracy")
+      .eq("user_id", userId);
+
+    if (error) {
+      throw new Error(`Fetch error: ${error.message}`);
+    }
+
+    if (!results || results.length === 0) {
+      console.log("No results found to update averages");
+      return;
+    }
+
+    // Calculate averages
+    const totalWpm = results.reduce(
+      (sum, result) => sum + (parseFloat(result.wpm) || 0),
+      0
+    );
+    const totalAccuracy = results.reduce(
+      (sum, result) => sum + (parseFloat(result.accuracy) || 0),
+      0
+    );
+
+    const avgWpm = (totalWpm / results.length).toFixed(2);
+    const avgAccuracy = (totalAccuracy / results.length).toFixed(2);
+
+    // Update user profile
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        wpm_avg: avgWpm,
+        accuracy_avg: avgAccuracy,
+      })
+      .eq("id", userId);
+
+    if (updateError) {
+      throw new Error(`Update error: ${updateError.message}`);
+    }
+
+    console.log("Averages updated successfully");
+  } catch (error) {
+    console.error("Error in updateUserAverages:", error);
+    throw error;
+  }
+}
+
+// Initialize the game when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  domHandlers.updateStyleClasses();
-  game.initializeGame();
+  game.initialize();
 });
 
-// Export functions needed by other modules
 export { saveGameResult };

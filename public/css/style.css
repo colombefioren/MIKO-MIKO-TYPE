@@ -1498,21 +1498,6 @@
       }
     }
   }
-  .hover\:rounded-none {
-    &:hover {
-      @media (hover: hover) {
-        border-radius: 0;
-      }
-    }
-  }
-  .hover\:border {
-    &:hover {
-      @media (hover: hover) {
-        border-style: var(--tw-border-style);
-        border-width: 1px;
-      }
-    }
-  }
   .hover\:border-blaze\/30 {
     &:hover {
       @media (hover: hover) {
