@@ -126,3 +126,49 @@ CREATE TRIGGER update_chat_timestamp_trigger
 AFTER INSERT ON messages
 FOR EACH ROW
 EXECUTE FUNCTION update_chat_timestamp();
+
+
+
+
+
+
+-- Chats table (one-to-one conversations)
+CREATE TABLE chats (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user1_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  user2_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user1_id, user2_id)
+);
+
+-- Messages table
+CREATE TABLE messages (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  chat_id UUID REFERENCES chats(id) ON DELETE CASCADE,
+  sender_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for performance
+CREATE INDEX idx_messages_chat_id ON messages(chat_id);
+CREATE INDEX idx_messages_sender_id ON messages(sender_id);
+CREATE INDEX idx_chats_user1_user2 ON chats(user1_id, user2_id);
+CREATE INDEX idx_chats_user2_user1 ON chats(user2_id, user1_id);
+
+-- Function to update chat timestamp when new messages arrive
+CREATE OR REPLACE FUNCTION update_chat_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE chats SET updated_at = NOW() WHERE id = NEW.chat_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger for the function
+CREATE TRIGGER update_chat_timestamp_trigger
+AFTER INSERT ON messages
+FOR EACH ROW
+EXECUTE FUNCTION update_chat_timestamp();

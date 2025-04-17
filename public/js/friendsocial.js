@@ -163,7 +163,7 @@ function renderPosts(posts) {
 
   posts.forEach((post) => {
     const likedByUser = post.likes.some((like) => like.user_id === user?.id);
-    console.log(likedByUser);
+
     const postElement = document.createElement("div");
     postElement.className =
       "bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 w-full";
@@ -236,7 +236,7 @@ function renderPosts(posts) {
         </div>
       </div>
 <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn" 
+       <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 like-btn cursor-pointer" 
         data-post-id="${post.id}">
   <i class="${
     likedByUser ? "fas fa-heart text-blaze" : "far fa-heart"
@@ -248,12 +248,12 @@ function renderPosts(posts) {
    }
 
 </button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn"
+        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
                 data-post-id="${post.id}">
           <i class="fa-solid fa-comment"></i>
           <span>Comment</span>
         </button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn" data-post-id="${
+        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn cursor-pointer" data-post-id="${
           post.id
         }">
           <i class="fas fa-share"></i>
@@ -284,7 +284,7 @@ function renderPosts(posts) {
               id="comment-input-${post.id}"
               data-post-id="${post.id}"
             />
-            <button class="text-frost ml-2 comment-submit-btn" data-post-id="${
+            <button class="text-frost cursor-pointer ml-2 comment-submit-btn" data-post-id="${
               post.id
             }">
               <i class="fas fa-paper-plane text-xl"></i>
@@ -306,7 +306,7 @@ function renderPosts(posts) {
               class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-3 px-4 text-slate-200 text-sm"
               readonly
             />
-            <button class="text-frost ml-2" onclick="showLoginPrompt('comment')">
+            <button class="text-frost cursor-pointer ml-2" onclick="showLoginPrompt('comment')">
               <i class="fas fa-sign-in text-xl"></i>
             </button>
           </div>

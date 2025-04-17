@@ -38,54 +38,77 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <div class="flex items-center">
           <img
+            id="chat-contact-avatar"
             src="../public/assets/images/profile-picture.png"
             alt="Profile"
             class="w-8 h-8 rounded-full"
           />
-          <div class="text-slate-200 font-bold" id="chat-contact-name">
-            Coco Thebest
+          <div class="text-slate-200 font-bold ml-2" id="chat-contact-name">
+            Loading...
           </div>
         </div>
-        <button
-          class="text-dusk hover:text-slate-200"
-          onclick="toggleChatConversation()"
-        >
-          <i class="fas fa-times"></i>
-        </button>
+        <div class="flex items-center gap-2">
+          <button class="text-dusk hover:text-slate-200" id="chat-info-btn">
+            <i class="fas fa-info-circle"></i>
+          </button>
+          <button
+            class="text-dusk hover:text-slate-200"
+            onclick="toggleChatConversation()"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
       </div>
+
+      <!-- Messages Container -->
       <div id="chat-messages" class="flex-1 p-4 overflow-y-auto">
-        <!-- Example messages -->
-        <div class="mb-4 flex flex-col items-start">
-          <div class="text-azure text-xs">Coco Thebest</div>
-          <div
-            class="mt-1 px-4 py-2 bg-lightabyss rounded-xl text-slate-200 max-w-[80%]"
-          >
-            Hey! Ready for the race tonight?
-          </div>
-        </div>
-        <div class="mb-4 flex flex-col items-end">
-          <div class="text-azure text-xs">You</div>
-          <div
-            class="mt-1 px-4 py-2 bg-blaze rounded-xl text-white max-w-[80%]"
-          >
-            Yeah, definitely! What time?
+        <div class="flex items-center justify-center h-full">
+          <div class="text-dusk text-center">
+            <i class="fas fa-comments text-4xl mb-2"></i>
+            <p>Select a conversation to start chatting</p>
           </div>
         </div>
       </div>
-      <div class="p-4 border-t border-lightabyss flex justify-end">
+
+      <div class="p-4 border-t border-lightabyss">
         <div class="flex gap-2">
           <input
             type="text"
             placeholder="Type a message..."
             id="chat-message-input"
-            class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none"
+            class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none focus:border-blaze"
           />
           <button
-            class="bg-blaze text-white px-4 rounded-full"
-            onclick="sendChatMessage()"
+            class="bg-blaze text-white px-4 rounded-full hover:bg-blaze/90 transition-colors"
+            id="chat-send-btn"
           >
             <i class="fas fa-paper-plane"></i>
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Chat Modal -->
+    <div
+      id="new-chat-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-6 w-full max-w-md border border-lightabyss"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-white">Start New Chat</h2>
+          <button id="close-new-chat-modal" class="text-dusk hover:text-white">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+
+        <!-- zearch Friends -->
+       
+
+        <!-- friends List -->
+        <div class="max-h-96 overflow-y-auto" id="friends-list">
+          <!-- friends will be dynamically inserted here -->
         </div>
       </div>
     </div>
@@ -130,8 +153,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         class="flex flex-col mt-10 gap-6 w-full relative link-container"
         id="nav-list"
       >
-      <div id="focus-highlight" class="focused-btn-highlight"></div>
-
+        <div id="focus-highlight" class="focused-btn-highlight"></div>
 
         <!-- Navigation buttons -->
         <li class="pl-6 button-links py-[14px] relative">
@@ -206,45 +228,78 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
 
         <!-- Post Creation Form -->
-        <div id="post-creation-form" class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6">
+        <div
+          id="post-creation-form"
+          class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6"
+        >
           <div class="flex items-center gap-3 mb-4">
-            <img src="../public/assets/images/blank-profile.png" alt="You" 
-                 class="w-12 h-12 rounded-full object-cover" id="current-user-avatar">
+            <img
+              src="../public/assets/images/blank-profile.png"
+              alt="You"
+              class="w-12 h-12 rounded-full object-cover"
+              id="current-user-avatar"
+            />
             <div class="flex-1">
-              <input type="text" placeholder="Post title" 
-                     class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full mb-2"
-                     id="post-title-input">
-              <input type="text" placeholder="What's on your mind?" 
-                     class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
-                     id="post-content-input">
+              <input
+                type="text"
+                placeholder="Post title"
+                class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full mb-2"
+                id="post-title-input"
+              />
+              <input
+                type="text"
+                placeholder="What's on your mind?"
+                class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
+                id="post-content-input"
+              />
             </div>
           </div>
-          
+
           <!-- Hashtag input -->
           <div class="mb-3">
-            <input type="text" placeholder="Add hashtags (space separated)" 
-                   class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
-                   id="hashtags-input">
+            <input
+              type="text"
+              placeholder="Add hashtags (space separated)"
+              class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
+              id="hashtags-input"
+            />
             <div id="hashtags-preview" class="flex flex-wrap gap-2 mt-2"></div>
           </div>
-          
+
           <!-- Image upload section -->
           <div class="mb-4">
-            <input type="file" id="post-image-input" accept="image/*" class="hidden">
-            <button id="add-image-btn" class="text-azure hover:text-slate-200 flex items-center gap-2 cursor-pointer">
+            <input
+              type="file"
+              id="post-image-input"
+              accept="image/*"
+              class="hidden"
+            />
+            <button
+              id="add-image-btn"
+              class="text-azure hover:text-slate-200 flex items-center gap-2 cursor-pointer"
+            >
               <i class="fas fa-image"></i>
               <span>Add Image</span>
             </button>
             <div id="image-preview" class="mt-2 hidden">
-              <img id="preview-image" class="max-h-60 rounded-lg w-full object-contain">
-              <button id="remove-image-btn" class="text-blaze mt-2 text-sm cursor-pointer">
+              <img
+                id="preview-image"
+                class="max-h-60 rounded-lg w-full object-contain"
+              />
+              <button
+                id="remove-image-btn"
+                class="text-blaze mt-2 text-sm cursor-pointer"
+              >
                 <i class="fas fa-times"></i> Remove
               </button>
             </div>
           </div>
-          
+
           <div class="flex justify-end">
-            <button id="create-post-btn" class="bg-blaze text-white cursor-pointer px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors">
+            <button
+              id="create-post-btn"
+              class="bg-blaze text-white cursor-pointer px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+            >
               Post
             </button>
           </div>
@@ -1290,7 +1345,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           >
             <div class="flex gap-2 items-center">
               <div id="messages-text" class="text-dusk font-bold text-lg">
-                Messages<span class="text-slate-200">(4)</span>
+                Messages
               </div>
             </div>
           </div>
@@ -1311,82 +1366,17 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
 
         <div class="content-container mt-4">
-          <!-- Chat Content -->
           <div class="content active" id="chat-content">
-            <div class="flex flex-col gap-3 max-h-[500px] overflow-y-auto">
-              <div
-                onclick="openChatConversation('Coco Thebest')"
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
-              >
-                <div class="flex gap-3 h-full items-center">
-                  <img
-                    src="../public/assets/images/profile-picture.png"
-                    alt="Profile Pic"
-                    class="rounded-full w-12 object-cover"
-                  />
-                  <div class="flex flex-col justify-between h-[85%]">
-                    <div class="text-slate-200 text-[14px]">Coco Thebest</div>
-                    <div class="text-azure text-[12px]">
-                      Hey! Ready for the race tonight?
-                    </div>
-                  </div>
-                </div>
-                <div class="flex flex-col items-end gap-1">
-                  <div class="text-dusk text-xs">2:30 PM</div>
-                  <div
-                    class="bg-green-400 rounded-full w-5 h-5 flex items-center justify-center text-xs text-midnight"
-                  >
-                    3
-                  </div>
-                </div>
-              </div>
-
-              <!-- Updated Chat Item 2 -->
-              <div
-                onclick="openChatConversation('Mimi Lord')"
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
-              >
-                <div class="flex gap-3 h-full items-center">
-                  <img
-                    src="../public/assets/images/events.jpg"
-                    alt="Profile Pic"
-                    class="rounded-full w-12 object-cover"
-                  />
-                  <div class="flex flex-col justify-between h-[85%]">
-                    <div class="text-slate-200 text-[14px]">Mimi Lord</div>
-                    <div class="text-azure text-[12px]">
-                      Check out my new post!
-                    </div>
-                  </div>
-                </div>
-                <div class="text-dusk text-xs">1:15 PM</div>
-              </div>
-
-              <!-- Updated Chat Item 3 -->
-              <div
-                onclick="openChatConversation('Choco Ta')"
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors"
-              >
-                <div class="flex gap-3 h-full items-center">
-                  <img
-                    src="../public/assets/images/mikomiko-logo.png"
-                    alt="Profile Pic"
-                    class="rounded-full w-12 object-cover"
-                  />
-                  <div class="flex flex-col justify-between h-[85%]">
-                    <div class="text-slate-200 text-[14px]">Choco Ta</div>
-                    <div class="text-azure text-[12px]">
-                      Thanks for the like!
-                    </div>
-                  </div>
-                </div>
-                <div class="text-dusk text-xs">Yesterday</div>
-              </div>
+            <div
+              class="flex flex-col gap-3 max-h-[500px] overflow-y-auto"
+              id="chat-list-container"
+            >
+              <!-- chats will be dynamically inserted here -->
             </div>
 
-            <!-- New Message Button -->
             <div class="mt-6 flex justify-center">
               <button
+                id="new-chat-btn"
                 class="bg-blaze text-midnight font-bold py-3 px-6 rounded-3xl flex items-center gap-2 cursor-pointer"
               >
                 <i class="fa-solid fa-plus"></i> New Message
@@ -1394,139 +1384,19 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             </div>
           </div>
 
-          <!-- Messages Content -->
           <div class="content hidden" id="messages-content">
-            <div class="flex flex-col gap-4 max-h-[500px]">
-              <!-- Notification Item 1-->
-              <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
-              >
-                <img
-                  src="../public/assets/images/profile-picture.png"
-                  alt="Profile Pic"
-                  class="rounded-full w-12 object-cover"
-                />
-                <div class="flex-1">
-                  <div class="text-slate-200 text-[14px] font-bold">
-                    Coco Thebest
-                    <span class="text-dusk font-normal">shared a new post</span>
-                  </div>
-                  <div class="text-azure text-[12px] mt-1">
-                    "Join me for the Miko WPMers challenge!"
-                  </div>
-                  <div class="text-dusk text-xs mt-2">30 mins ago</div>
-                </div>
-                <div class="w-3 h-3 bg-blaze rounded-full"></div>
-              </div>
-
-              <!-- Notification Item 2-->
-              <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
-              >
-                <img
-                  src="../public/assets/images/events.jpg"
-                  alt="Profile Pic"
-                  class="rounded-full w-12 object-cover"
-                />
-                <div class="flex-1">
-                  <div class="text-slate-200 text-[14px] font-bold">
-                    Mimi Lord
-                    <span class="text-dusk font-normal">liked your post</span>
-                  </div>
-                  <div class="text-azure text-[12px] mt-1">
-                    "Check out my record"
-                  </div>
-                  <div class="text-dusk text-xs mt-2">2 hours ago</div>
-                </div>
-                <div class="w-3 h-3 bg-blaze rounded-full"></div>
-              </div>
-
-              <!-- Notification Item 3 -->
-              <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
-              >
-                <img
-                  src="../public/assets/images/mikomiko-logo.png"
-                  alt="Profile Pic"
-                  class="rounded-full w-12 object-cover"
-                />
-                <div class="flex-1">
-                  <div class="text-slate-200 text-[14px] font-bold">
-                    Choco Ta
-                    <span class="text-dusk font-normal"
-                      >invited you to a race</span
-                    >
-                  </div>
-                  <div class="text-azure text-[12px] mt-1">"Code Mode"</div>
-                  <div class="flex gap-2 mt-3">
-                    <button
-                      class="bg-green-400 text-midnight text-xs py-1 px-3 rounded-full"
-                    >
-                      Accept
-                    </button>
-                    <button
-                      class="bg-lightabyss text-dusk text-xs py-1 px-3 rounded-full"
-                    >
-                      Decline
-                    </button>
-                  </div>
-                  <div class="text-dusk text-xs mt-2">5 hours ago</div>
-                </div>
-                <div class="w-3 h-3 bg-blaze rounded-full"></div>
-              </div>
-
-              <!-- Notification Item 4-->
-              <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3"
-              >
-                <div
-                  class="bg-frost rounded-full w-12 h-12 flex items-center justify-center"
-                >
-                  <i class="fa-solid fa-trophy text-midnight text-xl"></i>
-                </div>
-                <div class="flex-1">
-                  <div class="text-slate-200 text-[14px] font-bold">
-                    Achievement Unlocked
-                    <span class="text-dusk font-normal">Speed Demon</span>
-                  </div>
-                  <div class="text-azure text-[12px] mt-1">
-                    You reached 200 wpm! Congrats!
-                  </div>
-                  <div class="text-dusk text-xs mt-2">Yesterday</div>
-                </div>
-                <div class="w-3 h-3 bg-blaze rounded-full"></div>
-              </div>
-
-              <!-- Notification Item 5 (Read) -->
-              <div
-                class="bg-midnight border border-lightabyss w-full rounded-3xl py-4 px-6 flex items-start gap-3 opacity-70"
-              >
-                <img
-                  src="../public/assets/images/profile-picture.png"
-                  alt="Profile Pic"
-                  class="rounded-full w-12 object-cover"
-                />
-                <div class="flex-1">
-                  <div class="text-slate-200 text-[14px] font-bold">
-                    Coco Thebest
-                    <span class="text-dusk font-normal"
-                      >commented on your post</span
-                    >
-                  </div>
-                  <div class="text-azure text-[12px] mt-1">
-                    "You are good! Let's race again!"
-                  </div>
-                  <div class="text-dusk text-xs mt-2">2 days ago</div>
-                </div>
-              </div>
+            <div
+              class="flex flex-col gap-4 max-h-[500px] overflow-y-auto"
+              id="notifications-container"
+            >
+              <!-- notifications will be dynamically inserted here -->
             </div>
           </div>
-
-          <!-- Friends Content -->
           <div class="content hidden" id="friends-content">
             <!-- Search Bar -->
             <div class="relative w-full mb-4">
               <input
+                id="search-friends-input"
                 class="bg-abyss border border-lightabyss w-full rounded-4xl py-3 px-6 h-16 text-dusk font-bold"
                 placeholder="Search Friend..."
               />
@@ -1535,128 +1405,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               ></i>
             </div>
 
-            <div class="flex flex-col gap-4 max-h-[500px] overflow-y-auto">
-              <div>
-                <div class="text-slate-200 font-bold mb-3">
-                  Friend Request (1)
-                </div>
-                <div class="flex flex-col gap-3">
-                  <div
-                    class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
-                  >
-                    <div class="flex gap-3 h-full items-center">
-                      <img
-                        src="../public/assets/images/profile-picture.png"
-                        alt="Profile Pic"
-                        class="rounded-full w-12 object-cover"
-                      />
-                      <div class="flex flex-col justify-between h-[85%]">
-                        <div class="text-slate-200 text-[14px]">
-                          Coco Thebest
-                        </div>
-                        <div class="text-azure text-[12px]">Online</div>
-                      </div>
-                    </div>
-                    <div class="flex gap-3">
-                      <div
-                        class="bg-blaze cursor-pointer rounded-2xl h-10 w-10 flex items-center justify-center"
-                      >
-                        <i
-                          class="fa-solid fa-xmark font-bold text-xl text-midnight"
-                        ></i>
-                      </div>
-                      <div
-                        class="bg-green-400 cursor-pointer rounded-2xl h-10 w-10 flex items-center justify-center"
-                      >
-                        <i
-                          class="fa-solid fa-check font-bold text-xl text-midnight"
-                        ></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="text-slate-200 font-bold mb-3">Online (1)</div>
-                <div class="flex flex-col gap-3">
-                  <div
-                    class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
-                  >
-                    <div class="flex gap-3 h-full items-center">
-                      <img
-                        src="../public/assets/images/events.jpg"
-                        alt="Profile Pic"
-                        class="rounded-full w-12 object-cover"
-                      />
-                      <div class="flex flex-col justify-between h-[85%]">
-                        <div class="text-slate-200 text-[14px]">Mimi Lord</div>
-                        <div class="text-green-400 text-[12px]">Racing</div>
-                      </div>
-                    </div>
-                    <div
-                      class="bg-lightmidnight cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
-                    >
-                      <i
-                        class="fa-regular fa-comment-dots text-2xl text-frost"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="text-slate-200 font-bold mb-3">Offline (16)</div>
-                <div class="flex flex-col gap-3">
-                  <div
-                    class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
-                  >
-                    <div class="flex gap-3 h-full items-center">
-                      <img
-                        src="../public/assets/images/mikomiko-logo.png"
-                        alt="Profile Pic"
-                        class="rounded-full w-12 object-cover"
-                      />
-                      <div class="flex flex-col justify-between h-[85%]">
-                        <div class="text-slate-200 text-[14px]">Choco Ta</div>
-                        <div class="text-azure text-[12px]">Offline</div>
-                      </div>
-                    </div>
-                    <div
-                      class="bg-lightmidnight cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
-                    >
-                      <i
-                        class="fa-regular fa-comment-dots text-2xl text-frost"
-                      ></i>
-                    </div>
-                  </div>
-
-                  <div
-                    class="bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between"
-                  >
-                    <div class="flex gap-3 h-full items-center">
-                      <img
-                        src="../public/assets/images/profile-picture.png"
-                        alt="Profile Pic"
-                        class="rounded-full w-12 object-cover"
-                      />
-                      <div class="flex flex-col justify-between h-[85%]">
-                        <div class="text-slate-200 text-[14px]">
-                          Mayah TheBee
-                        </div>
-                        <div class="text-azure text-[12px]">Offline</div>
-                      </div>
-                    </div>
-                    <div
-                      class="bg-lightmidnight cursor-pointer rounded-2xl h-12 w-12 flex items-center justify-center"
-                    >
-                      <i
-                        class="fa-regular fa-comment-dots text-2xl text-frost"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div
+              class="flex flex-col gap-4 max-h-[500px] overflow-y-auto"
+              id="friends-list-container"
+            >
+              <!-- Friends will be dynamically inserted here -->
             </div>
           </div>
         </div>
@@ -1808,9 +1561,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
     <!--Login Warning-->
 
-    <script src="../public/js/friends.js"></script>
+    <script type="module" src="../public/js/friends.js"></script>
     <script type="module" src="../public/js/friendsocial.js"></script>
     <script type="module" src="../public/js/socials.js"></script>
     <script type="module" src="../public/js/login.js"></script>
+    <script type="module" src="../public/js/notifications.js"></script>
+
   </body>
 </html>
