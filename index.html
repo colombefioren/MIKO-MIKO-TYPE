@@ -446,7 +446,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             <button
               type="button"
               id="switch-to-signup"
-              class="text-blaze hover:text-frost hover:cursor-pointer hover:underline"
+              class="text-blaze hover:text-frost hover:cursor-pointer hover:underline transition-colors"
             >
               Sign up
             </button>
@@ -465,7 +465,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Create Account</h2>
-          <button id="close-signup-modal" class="text-dusk hover:text-white">
+          <button
+            id="close-signup-modal"
+            class="text-dusk hover:text-white hover:cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
