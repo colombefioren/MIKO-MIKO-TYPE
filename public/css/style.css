@@ -7,6 +7,8 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: Cascadia Mono;
     --color-red-400: oklch(70.4% 0.191 22.216);
+    --color-red-500: oklch(63.7% 0.237 25.331);
+    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-800: oklch(44.4% 0.177 26.899);
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-500: oklch(76.9% 0.188 70.08);
@@ -294,6 +296,9 @@
   .right-3 {
     right: calc(var(--spacing) * 3);
   }
+  .right-5 {
+    right: calc(var(--spacing) * 5);
+  }
   .right-6 {
     right: calc(var(--spacing) * 6);
   }
@@ -315,11 +320,20 @@
   .-z-10 {
     z-index: calc(10 * -1);
   }
+  .z-0 {
+    z-index: 0;
+  }
+  .z-1 {
+    z-index: 1;
+  }
   .z-10 {
     z-index: 10;
   }
   .z-20 {
     z-index: 20;
+  }
+  .z-30 {
+    z-index: 30;
   }
   .z-50 {
     z-index: 50;
@@ -956,6 +970,9 @@
       background-color: color-mix(in oklab, var(--color-amber-600) 20%, transparent);
     }
   }
+  .bg-azure {
+    background-color: var(--color-azure);
+  }
   .bg-black {
     background-color: var(--color-black);
   }
@@ -1051,6 +1068,12 @@
   }
   .bg-red-400 {
     background-color: var(--color-red-400);
+  }
+  .bg-red-500 {
+    background-color: var(--color-red-500);
+  }
+  .bg-red-700 {
+    background-color: var(--color-red-700);
   }
   .bg-red-800 {
     background-color: var(--color-red-800);

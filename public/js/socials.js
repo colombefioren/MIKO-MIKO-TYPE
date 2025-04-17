@@ -2,29 +2,30 @@ import { supabase } from "./database.js";
 import { getCurrentUser } from "./auth.js";
 
 // Post functions
-export async function createPost(
-  title,
-  content,
-  imageUrl = null,
-  hashtags = []
-) {
-  const user = await getCurrentUser();
-  if (!user) throw new Error("User not logged in");
+export async function createPost(title, content, imageUrl, hashtags = []) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) throw new Error("User not authenticated");
 
-  const postData = {
-    user_id: user.id,
-    title: title,
-    content: content,
-    image_url: imageUrl,
-    hashtags: hashtags,
-  };
+    const { data, error } = await supabase
+      .from("posts")
+      .insert([
+        {
+          user_id: user.id,
+          title,
+          content,
+          image_url: imageUrl,
+          hashtags,
+        },
+      ])
+      .select();
 
-  const { data, error } = await supabase
-    .from("posts")
-    .insert(postData)
-    .select();
-  if (error) throw error;
-  return data[0];
+    if (error) throw error;
+    return data[0];
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw error;
+  }
 }
 export async function getPosts() {
   const { data, error } = await supabase

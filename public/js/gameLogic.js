@@ -1,5 +1,15 @@
 import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
+import { createPost } from "./socials.js";
+
+//Share modal elements
+const shareModal = document.getElementById("share-results-modal");
+const closeShareModal = document.getElementById("close-share-modal");
+const cancelShareBtn = document.getElementById("cancel-share-btn");
+const confirmShareBtn = document.getElementById("confirm-share-btn");
+const shareWpmElement = document.getElementById("share-wpm");
+const shareAccuracyElement = document.getElementById("share-accuracy");
+const shareMessageElement = document.getElementById("share-message");
 
 // Cache DOM elements
 const elements = {
@@ -25,7 +35,7 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 30,
+  wordCount: 3,
   activeListeners: new Set(),
 };
 
@@ -384,6 +394,14 @@ const domHandlers = {
   },
 
   updateCharColors: () => {
+    // Added safety checks
+    if (
+      state.wordsToType.length === 0 ||
+      state.currentWordIndex >= state.wordsToType.length
+    ) {
+      return;
+    }
+
     const currentWord = state.wordsToType[state.currentWordIndex];
     const typed = elements.inputField.value;
 
@@ -462,6 +480,43 @@ const game = {
         game.startTest();
       }
     });
+    // Share modal handlers
+    closeShareModal.addEventListener("click", () => {
+      shareModal.classList.add("hidden");
+    });
+
+    cancelShareBtn.addEventListener("click", () => {
+      shareModal.classList.add("hidden");
+    });
+
+    confirmShareBtn.addEventListener("click", async () => {
+      try {
+        const content = shareMessageElement.value.trim();
+        if (content) {
+          await createPost("My results!", content, null, [
+            "mikomiko",
+            "myscore",
+          ]);
+          shareModal.classList.add("hidden");
+
+          const successMessageContainer = document.getElementById(
+            "success-share-message"
+          );
+          const toast = document.createElement("div");
+          toast.className =
+            "bg-azure text-white px-4 py-2 rounded-lg shadow-lg z-50";
+          toast.textContent = "Your result has been shared!";
+          successMessageContainer.appendChild(toast);
+
+          setTimeout(() => {
+            successMessageContainer.innerHTML = "";
+          }, 3000);
+        }
+      } catch (error) {
+        console.error("Error sharing result:", error);
+        alert("Failed to share your result");
+      }
+    });
   },
 
   startTest: (wordCount = state.wordCount) => {
@@ -515,6 +570,15 @@ const game = {
 
   handleWordUpdate: async (event) => {
     if (event.key === " ") {
+      // Added this check as well
+      if (
+        state.wordsToType.length === 0 ||
+        state.currentWordIndex >= state.wordsToType.length
+      ) {
+        event.preventDefault();
+        return;
+      }
+
       if (elements.inputField.value.trim() === "") {
         event.preventDefault();
         return;
@@ -586,21 +650,14 @@ const game = {
         throw new Error("Failed to save game result");
       }
 
-      const share = confirm(
-        `Your score: ${savedResult.wpm} WPM! Share your result?`
-      );
-
-      if (share) {
-        const content = prompt("Add a message to your post:");
-        if (content) {
-          await createPost(content, savedResult);
-          alert("Your score has been shared!");
-          await loadPosts();
-        }
-      }
+      // Show share modal instead of alert
+      shareWpmElement.textContent = savedResult.wpm;
+      shareAccuracyElement.textContent = savedResult.accuracy;
+      shareMessageElement.value = `I just reached ${savedResult.wpm} WPM with ${savedResult.accuracy}% accuracy on Miko-Miko Type! 🚀`;
+      shareModal.classList.remove("hidden");
     } catch (error) {
       console.error("Error in onGameComplete:", error);
-      alert("Failed to save/share your result");
+      alert("Failed to save your result");
     }
   },
 };
@@ -692,8 +749,6 @@ async function updateUserAverages(userId) {
     if (updateError) {
       throw new Error(`Update error: ${updateError.message}`);
     }
-
-    console.log("Averages updated successfully");
   } catch (error) {
     console.error("Error in updateUserAverages:", error);
     throw error;
