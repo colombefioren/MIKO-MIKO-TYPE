@@ -30,11 +30,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
   </head>
 
   <body
-    class="bg-abyss justify-center min-h-screen prevent-select"
+    class="flex flex-col bg-abyss justify-center min-h-screen prevent-select"
   >
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-10"
+      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-20"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
@@ -110,7 +110,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </li>
       </ul>
     </nav>
-    <header class="flex text-white justify-end gap-10 items-center p-3 sticky top-2  bg-abyss/80 backdrop-blur-sm">
+    <header
+      class="flex text-white justify-end items-center gap-10 p-7 fixed top-0 left-0 right-0 bg-abyss/80 backdrop-blur-sm z-10"
+    >
       <div class="flex gap-5">
         <img
           src="./public/assets/images/blank-profile.png"
@@ -149,7 +151,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       </div>
     </header>
 
-    <main class="flex flex-col items-center mt-20">
+    <main class="flex flex-col justify-center items-center mt-28 grow">
       <div class="flex flex-col justify-center items-center gap-22">
         <div
           class="flex items-center p-7 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight h-16 shadow-lg shadow-crystalTwilight/30"

@@ -155,7 +155,7 @@ const updateCursorPosition = () => {
 };
 
 // Initialize the typing test
-const startTest = (wordCount = 5) => {
+const startTest = (wordCount = 25) => {
   wordsToType.length = 0; // Clear previous words
   wordDisplay.innerHTML = ""; // Clear display
   charSpans = []; // Reset character spans
