@@ -336,6 +336,34 @@ const domHandlers = {
   },
 
   updateCursorPosition: () => {
+    // if (
+    //   state.charSpans.length === 0 ||
+    //   state.currentWordIndex >= state.wordsToType.length
+    // )
+    //   return;
+
+    // const currentPosition = elements.inputField.value.length;
+    // const currentWordLength = state.wordsToType[state.currentWordIndex].length;
+    // const spanIndex = state.charSpans.findIndex(
+    //   (span) =>
+    //     parseInt(span.dataset.wordIndex) === state.currentWordIndex &&
+    //     parseInt(span.dataset.charIndex) ===
+    //       Math.min(currentPosition, currentWordLength)
+    // );
+
+    // if (spanIndex >= 0) {
+    //   const span = state.charSpans[spanIndex];
+    //   const rect = span.getBoundingClientRect();
+    //   const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
+
+    //   elements.cursor.style.left = `${
+    //     rect.left - wordDisplayRect.left + elements.wordDisplay.offsetLeft
+    //   }px`;
+    //   elements.cursor.style.top = `${
+    //     rect.top - wordDisplayRect.top + elements.wordDisplay.offsetTop
+    //   }px`;
+    //   elements.cursor.style.height = `55px`;
+    //   elements.cursor.style.opacity = "1";
     if (
       state.charSpans.length === 0 ||
       state.currentWordIndex >= state.wordsToType.length
@@ -343,26 +371,50 @@ const domHandlers = {
       return;
 
     const currentPosition = elements.inputField.value.length;
-    const currentWordLength = state.wordsToType[state.currentWordIndex].length;
-    const spanIndex = state.charSpans.findIndex(
-      (span) =>
-        parseInt(span.dataset.wordIndex) === state.currentWordIndex &&
-        parseInt(span.dataset.charIndex) ===
-          Math.min(currentPosition, currentWordLength)
-    );
+    const currentWord = state.wordsToType[state.currentWordIndex];
+    const currentWordLength = currentWord.length;
 
-    if (spanIndex >= 0) {
-      const span = state.charSpans[spanIndex];
+    let span;
+
+    // When cursor is at start of word
+    if (currentPosition === 0) {
+      span = state.charSpans.find(
+        (s) =>
+          parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
+          parseInt(s.dataset.charIndex) === 0
+      );
+    } else if (currentPosition < currentWordLength) {
+      // Cursor is before the next character
+      span = state.charSpans.find(
+        (s) =>
+          parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
+          parseInt(s.dataset.charIndex) === currentPosition
+      );
+    } else {
+      // At end of word — place after last visible character
+      const currentWordSpans = state.charSpans.filter(
+        (s) =>
+          parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
+          s.textContent !== " "
+      );
+      span = currentWordSpans[currentWordSpans.length - 1];
+    }
+
+    if (span) {
       const rect = span.getBoundingClientRect();
       const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
 
+      // Use rect.left unless it's end-of-word, then use rect.right
+      const isAtEnd = currentPosition >= currentWordLength;
+      const cursorX = isAtEnd ? rect.right : rect.left;
+
       elements.cursor.style.left = `${
-        rect.left - wordDisplayRect.left + elements.wordDisplay.offsetLeft
+        cursorX - wordDisplayRect.left + elements.wordDisplay.offsetLeft
       }px`;
       elements.cursor.style.top = `${
         rect.top - wordDisplayRect.top + elements.wordDisplay.offsetTop
       }px`;
-      elements.cursor.style.height = `${rect.height}px`;
+      elements.cursor.style.height = `55px`;
       elements.cursor.style.opacity = "1";
     }
   },
@@ -394,7 +446,6 @@ const domHandlers = {
   },
 
   updateCharColors: () => {
-    // Added safety checks
     if (
       state.wordsToType.length === 0 ||
       state.currentWordIndex >= state.wordsToType.length
@@ -409,12 +460,21 @@ const domHandlers = {
       (span) => parseInt(span.dataset.wordIndex) === state.currentWordIndex
     );
 
-    for (let i = 0; i < typed.length && i < currentWord.length; i++) {
+    for (let i = 0; i < currentWord.length; i++) {
       const charSpan = currentWordSpans[i];
-      if (typed[i] === currentWord[i]) {
+      const originalChar = currentWord[i];
+      const typedChar = typed[i];
+
+      if (typedChar === undefined) {
+        // Reset to original state (e.g. after backspace)
+        charSpan.textContent = originalChar;
+        charSpan.style.color = ""; // Reset color
+      } else if (typedChar === originalChar) {
+        charSpan.textContent = originalChar;
         charSpan.style.color = "white"; // Correct character
       } else {
-        charSpan.style.color = "red"; // Incorrect character
+        charSpan.textContent = typedChar; // Show incorrect char
+        charSpan.style.color = "red"; // Wrong char
       }
     }
 
@@ -435,6 +495,7 @@ const game = {
     elements.inputField.addEventListener("keydown", (event) => {
       game.startTimer();
       game.handleWordUpdate(event);
+      elements.cursor.classList.remove("blink");
     });
 
     elements.inputField.addEventListener("input", () => {
@@ -475,7 +536,9 @@ const game = {
 
     // Global TAB key restart
     window.addEventListener("keydown", (event) => {
-      const isInput = document.activeElement.tagName === "INPUT";
+      const isInput =
+        document.activeElement.tagName === "INPUT" ||
+        document.activeElement.tagName === "TEXTAREA";
       const isTargetInput = document.activeElement === elements.inputField;
 
       if (isInput) {
@@ -545,6 +608,7 @@ const game = {
     state.startTime = null;
     state.previousEndTime = null;
     state.totalStats = { wpm: 0, accuracy: 0, count: 0 };
+    elements.cursor.classList.add("blink");
 
     const difficulty = utils.getCurrentDifficulty();
 

@@ -32,7 +32,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
   <body
     class="flex flex-col bg-abyss justify-center min-h-screen prevent-select relative"
   >
-  <div id="success-share-message" class="w-full p-5 absolute top-0 z-20 flex items-center justify-center"></div>
+    <div
+      id="success-share-message"
+      class="w-full p-5 absolute top-0 z-20 flex items-center justify-center"
+    ></div>
 
     <!--Navbar-->
     <nav
@@ -363,7 +366,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <div class="relative ml-[90px]">
           <div
             id="pointer-focus"
-            class="hidden justify-center items-center text-dusk gap-5 absolute -z-10 w-full h-full"
+            class="hidden justify-center items-center text-dusk gap-5 absolute top-[50%] left-[50%] translate-[-50%] -z-10 w-full h-full min-w-2xl"
           >
             <i class="fa-solid fa-arrow-pointer"></i>
             <p>Click here or press any key to focus</p>
@@ -381,7 +384,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
               class="text-textPrimary leading-[70px] tracking-[2px]"
               id="word-display"
             ></p>
-            <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+            <div
+              id="typing-cursor"
+              class="absolute h-10 w-0.5 bg-white blink"
+            ></div>
           </div>
         </div>
 
@@ -538,52 +544,58 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
     <!--result popup modal-->
     <div
-  id="share-results-modal"
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
->
-  <div class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-white">Share Your Results</h2>
-      <button
-        id="close-share-modal"
-        class="text-dusk hover:text-white hover:cursor-pointer"
+      id="share-results-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+    >
+      <div
+        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
       >
-        <i class="fas fa-times text-xl"></i>
-      </button>
-    </div>
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-white">Share Your Results</h2>
+          <button
+            id="close-share-modal"
+            class="text-dusk hover:text-white hover:cursor-pointer"
+          >
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
 
-    <div class="mb-6">
-      <p class="text-slate-200 mb-4">
-        You reached <span class="text-blaze font-bold" id="share-wpm">0</span> WPM with 
-        <span class="text-blaze font-bold" id="share-accuracy">0</span>% accuracy!
-      </p>
-      
-      <div class="bg-abyss rounded-lg p-4 border border-lightabyss">
-        <label for="share-message" class="block text-sm text-slate-200 mb-2">Customize your message:</label>
-        <textarea
-          id="share-message"
-          class="w-full bg-midnight border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
-          rows="3"
-        ></textarea>
+        <div class="mb-6">
+          <p class="text-slate-200 mb-4">
+            You reached
+            <span class="text-blaze font-bold" id="share-wpm">0</span> WPM with
+            <span class="text-blaze font-bold" id="share-accuracy">0</span>%
+            accuracy!
+          </p>
+
+          <div class="bg-abyss rounded-lg p-4 border border-lightabyss">
+            <label for="share-message" class="block text-sm text-slate-200 mb-2"
+              >Customize your message:</label
+            >
+            <textarea
+              id="share-message"
+              class="w-full bg-midnight border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            id="cancel-share-btn"
+            class="flex-1 border border-blaze text-blaze px-6 py-3 cursor-pointer rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            id="confirm-share-btn"
+            class="flex-1 bg-blaze text-white px-6 py-3 cursor-pointer rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors"
+          >
+            <i class="fas fa-share mr-2"></i> Share
+          </button>
+        </div>
       </div>
     </div>
-
-    <div class="flex gap-3">
-      <button
-        id="cancel-share-btn"
-        class="flex-1 border border-blaze text-blaze px-6 py-3 cursor-pointer rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
-      >
-        Cancel
-      </button>
-      <button
-        id="confirm-share-btn"
-        class="flex-1 bg-blaze text-white px-6 py-3 cursor-pointer rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors"
-      >
-        <i class="fas fa-share mr-2"></i> Share
-      </button>
-    </div>
-  </div>
-</div>
 
     <script type="module" src="./public/js/gameLogic.js"></script>
     <script src="./public/js/navbar.js"></script>
