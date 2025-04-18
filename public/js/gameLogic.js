@@ -653,7 +653,7 @@ const game = {
       // Show share modal instead of alert
       shareWpmElement.textContent = savedResult.wpm;
       shareAccuracyElement.textContent = savedResult.accuracy;
-      shareMessageElement.value = `I reached ${savedResult.wpm} WPM with ${savedResult.accuracy}% accuracy! 🚀`;
+      shareMessageElement.value = `I just reached ${savedResult.wpm} WPM with ${savedResult.accuracy}% accuracy on Miko-Miko Type! 🚀`;
       shareModal.classList.remove("hidden");
     } catch (error) {
       console.error("Error in onGameComplete:", error);
