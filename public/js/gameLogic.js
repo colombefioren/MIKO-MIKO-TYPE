@@ -475,9 +475,28 @@ const game = {
 
     // Global TAB key restart
     window.addEventListener("keydown", (event) => {
-      if (event.key == "Tab") {
-        event.preventDefault();
-        game.startTest();
+      const isInput = document.activeElement.tagName === "INPUT";
+      const isTargetInput = document.activeElement === elements.inputField;
+
+      if (isInput) {
+        if (isTargetInput) {
+          if (event.key === "Tab") {
+            event.preventDefault();
+            game.startTest();
+            elements.inputField.focus();
+          }
+          // else: normal tap - no special handling needed
+        }
+        // else: normal tap - no special handling needed
+      } else {
+        if (event.key === "Tab") {
+          event.preventDefault();
+          game.startTest();
+          elements.inputField.focus();
+        } else {
+          event.preventDefault();
+          elements.inputField.focus();
+        }
       }
     });
     // Share modal handlers
