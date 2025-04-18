@@ -336,34 +336,6 @@ const domHandlers = {
   },
 
   updateCursorPosition: () => {
-    // if (
-    //   state.charSpans.length === 0 ||
-    //   state.currentWordIndex >= state.wordsToType.length
-    // )
-    //   return;
-
-    // const currentPosition = elements.inputField.value.length;
-    // const currentWordLength = state.wordsToType[state.currentWordIndex].length;
-    // const spanIndex = state.charSpans.findIndex(
-    //   (span) =>
-    //     parseInt(span.dataset.wordIndex) === state.currentWordIndex &&
-    //     parseInt(span.dataset.charIndex) ===
-    //       Math.min(currentPosition, currentWordLength)
-    // );
-
-    // if (spanIndex >= 0) {
-    //   const span = state.charSpans[spanIndex];
-    //   const rect = span.getBoundingClientRect();
-    //   const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
-
-    //   elements.cursor.style.left = `${
-    //     rect.left - wordDisplayRect.left + elements.wordDisplay.offsetLeft
-    //   }px`;
-    //   elements.cursor.style.top = `${
-    //     rect.top - wordDisplayRect.top + elements.wordDisplay.offsetTop
-    //   }px`;
-    //   elements.cursor.style.height = `55px`;
-    //   elements.cursor.style.opacity = "1";
     if (
       state.charSpans.length === 0 ||
       state.currentWordIndex >= state.wordsToType.length
