@@ -136,9 +136,9 @@ async function loadLeaderboard() {
             }" 
                  class="w-12 h-12 rounded-full object-cover" />
             <div>
-              <div class="text-white font-medium text-lg">${
-                profile.username
-              }</div>
+              <div class="text-white font-medium text-lg poster-username hover:underline cursor-pointer" data-user-id="${
+                profile.id
+              }">${profile.username}</div>
               <div class="text-azure text-sm">@${profile.username
                 .toLowerCase()
                 .split(" ")
@@ -157,9 +157,13 @@ async function loadLeaderboard() {
         `;
 
       container.appendChild(row);
+      document.querySelectorAll(".poster-username").forEach((el) => {
+        el.addEventListener("click", () => {
+          const userId = el.dataset.userId;
+          window.location.href = `race.html?id=${userId}`;
+        });
+      });
     });
-
-    console.log(currentUserRank);
 
     if (
       currentUserProfile &&
