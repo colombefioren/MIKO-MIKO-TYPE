@@ -115,6 +115,7 @@ function setupUnauthenticatedPostForm() {
 
   document.getElementById("login-to-post-btn").addEventListener("click", () => {
     document.getElementById("login-modal").classList.remove("hidden");
+    document.getElementById("login-modal").classList.remove("flex");
   });
 }
 document
@@ -398,11 +399,8 @@ function renderPosts(posts) {
         window.location.href = `profile.html?id=${userId}`;
       });
     });
-  setupPostInteractions();
-
+    setupPostInteractions();
   }, 300);
-  
-
 }
 
 function formatDate(dateString) {
@@ -464,6 +462,7 @@ function showLoginPrompt(action) {
     .addEventListener("click", () => {
       document.body.removeChild(loginPrompt);
       document.getElementById("signup-modal").classList.remove("hidden");
+      document.getElementById("signup-modal").classList.add("flex");
     });
 }
 

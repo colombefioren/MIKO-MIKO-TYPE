@@ -30,24 +30,31 @@ const signupForm = document.getElementById("signup-form");
 
 // Event Listeners
 loginBtn.addEventListener("click", () => loginModal.classList.remove("hidden"));
-signupBtn.addEventListener("click", () =>
-  signupModal.classList.remove("hidden")
-);
+signupBtn.addEventListener("click", () => {
+  signupModal.classList.remove("hidden");
+  signupModal.classList.add("flex");
+});
 logoutBtn.addEventListener("click", handleLogout);
 
-closeLoginModal.addEventListener("click", () =>
-  loginModal.classList.add("hidden")
-);
-closeSignupModal.addEventListener("click", () =>
-  signupModal.classList.add("hidden")
-);
+closeLoginModal.addEventListener("click", () => {
+  loginModal.classList.add("hidden");
+  loginModal.classList.remove("flex");
+});
+closeSignupModal.addEventListener("click", () => {
+  signupModal.classList.add("hidden");
+  signupModal.classList.remove("flex");
+});
 switchToSignup.addEventListener("click", () => {
   loginModal.classList.add("hidden");
   signupModal.classList.remove("hidden");
+  loginModal.classList.remove("flex");
+  signupModal.classList.add("flex");
 });
 switchToLogin.addEventListener("click", () => {
   signupModal.classList.add("hidden");
   loginModal.classList.remove("hidden");
+  signupModal.classList.remove("flex");
+  loginModal.classList.add("flex");
 });
 
 loginForm.addEventListener("submit", handleLogin);

@@ -516,6 +516,8 @@ function setupEventListeners() {
   // new chat button
   document.getElementById("new-chat-btn").addEventListener("click", () => {
     document.getElementById("new-chat-modal").classList.remove("hidden");
+    document.getElementById("new-chat-modal").classList.add("flex");
+
     loadFriendsForNewChat();
   });
 
@@ -524,6 +526,8 @@ function setupEventListeners() {
     .getElementById("close-new-chat-modal")
     .addEventListener("click", () => {
       document.getElementById("new-chat-modal").classList.add("hidden");
+      document.getElementById("new-chat-modal").classList.remove("flex");
+
     });
 }
 
@@ -583,6 +587,8 @@ async function loadFriendsForNewChat() {
       friendElement.addEventListener("click", async () => {
         const chat = await createChat(friendUser.id);
         document.getElementById("new-chat-modal").classList.add("hidden");
+        document.getElementById("new-chat-modal").classList.remove("flex");
+
         openChatConversation(
           friendUser.username,
           chat.id,

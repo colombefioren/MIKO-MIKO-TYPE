@@ -68,7 +68,7 @@
 
     <div
       id="guest-interface"
-      class="w-[80%] ml-[390px] h-[100dvh] 2xl:ml-[390px] ml-[350px] overflow-hidden flex justify-center items-center hidden"
+      class="w-[80%] h-[100dvh] 2xl:ml-[390px] ml-[350px] overflow-hidden justify-center items-center hidden"
     >
       <div class="text-dusk text-center">
         You have to log in to view yours and others' profile.
@@ -79,7 +79,7 @@
       <div class="w-[80%] 2xl:ml-[390px] ml-[360px]">
         <!-- Profile Header -->
         <div
-          class="pt-8 sticky top-0 z-10 bg-abyss 2xl:w-[1000px] w-[600px] border-b border-lightabyss pb-6"
+          class="pt-8 sticky top-0 z-10 bg-abyss 2xl:w-full w-[900px] border-b border-lightabyss pb-6"
         >
           <div class="flex items-center justify-between">
             <h1 class="text-white text-3xl font-bold flex items-center gap-3">
@@ -107,7 +107,7 @@
                 />
                 <div
                   id="avatar-edit"
-                  class="hidden absolute inset-0 bg-black/50 rounded-full flex items-center justify-center"
+                  class="hidden absolute inset-0 bg-black/50 rounded-full items-center justify-center"
                 >
                   <i class="fas fa-camera text-white text-2xl"></i>
                 </div>
@@ -219,7 +219,7 @@
             </div>
           </div>
 
-          <div class="2xl:w-[1000px] w-[400px]">
+          <div class="2xl:w-[1000px] w-[600px]">
             <!-- Activity Tabs -->
             <div class="flex border-b border-lightabyss mb-6">
               <button
@@ -381,7 +381,7 @@
     <!-- Change Password Modal -->
     <div
       id="change-password-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-6 w-full max-w-md border border-lightabyss"
@@ -445,50 +445,7 @@
       </div>
     </div>
 
-    <!-- Delete Account Confirmation Modal -->
-    <div
-      id="delete-account-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
-    >
-      <div
-        class="bg-midnight rounded-xl p-6 w-full max-w-md border border-lightabyss"
-      >
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Delete Account</h2>
-          <button
-            id="close-delete-modal"
-            class="text-dusk hover:text-white cursor-pointer"
-          >
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-
-        <div class="mb-6">
-          <p class="text-slate-200 mb-4">
-            Are you sure you want to delete your account? This action cannot be
-            undone.
-          </p>
-          <p class="text-blaze font-bold">
-            All your data will be permanently removed.
-          </p>
-        </div>
-
-        <div class="flex gap-3">
-          <button
-            id="confirm-delete-btn"
-            class="flex-1 bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
-          >
-            Delete Account
-          </button>
-          <button
-            id="cancel-delete-btn"
-            class="flex-1 bg-dusk text-white py-3 rounded-lg font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
+  
 
     <!--notif-->
 

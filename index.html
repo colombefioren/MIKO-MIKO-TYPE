@@ -106,28 +106,26 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <img
           src="./public/assets/images/blank-profile.png"
           alt="Profile picture"
-          class="2xl:w-12 2xl:h-12 w-10 h-10 rounded-full object-cover"
+          class="2xl:size-12 size-9 rounded-full object-cover"
           id="profile-picture"
         />
         <div id="user-info">
-          <div class="flex 2xl:gap-5 gap-3 items-center">
+          <div class="flex gap-2 2xl:gap-5 items-center">
             <p class="font-bold text-subtlegray" id="username">Guest</p>
           </div>
-          <p class="text-dusk 2xl:text-base text-sm" id="account-id">
-            Not logged in
-          </p>
+          <p class="text-dusk" id="account-id">Not logged in</p>
         </div>
       </div>
-      <div id="auth-buttons" class="flex 2xl:gap-4 gap-3">
+      <div id="auth-buttons" class="flex gap-2 2xl:gap-4">
         <button
           id="login-btn"
-          class="border border-blaze cursor-pointer text-blaze 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-sm font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+          class="bg-blaze cursor-pointer text-white px-3 py-1 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
         >
           Log In
         </button>
         <button
           id="signup-btn"
-          class="bg-blaze cursor-pointer text-midnight 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-sm font-medium hover:bg-frost transition-colors"
+          class="bg-frost cursor-pointer text-midnight px-3 py-1 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
         >
           Sign Up
         </button>
@@ -376,7 +374,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Login Modal -->
     <div
       id="login-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl 2xl:p-8 p-6 w-full 2xl:max-w-md max-w-sm border border-lightabyss"
@@ -446,7 +444,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Signup Modal -->
     <div
       id="signup-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl 2xl:p-8 p-6 w-full 2xl:max-w-md max-w-sm border border-lightabyss"

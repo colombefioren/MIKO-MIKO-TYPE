@@ -50,6 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!currentUser) {
       document.getElementById("guest-interface").classList.remove("hidden");
       document.getElementById("user-profile").classList.add("hidden");
+      document.getElementById("guest-interface").classList.add("flex");
+      document.getElementById("user-profile").classList.remove("fmlex");
       return;
     }
 
@@ -625,10 +627,14 @@ function setupEventListeners() {
 
   changePasswordBtn.addEventListener("click", () => {
     changePasswordModal.classList.remove("hidden");
+    changePasswordModal.classList.add("flex");
+
   });
 
   closePasswordModal.addEventListener("click", () => {
     changePasswordModal.classList.add("hidden");
+    changePasswordModal.classList.remove("flex");
+
   });
 
   changePasswordForm.addEventListener("submit", async (e) => {
@@ -715,11 +721,13 @@ function setupEventListeners() {
   profileAvatar.addEventListener("mouseenter", () => {
     if (isCurrentUserProfile) {
       avatarEdit.classList.remove("hidden");
+      avatarEdit.classList.add("flex");
     }
   });
 
   profileAvatar.addEventListener("mouseleave", () => {
     avatarEdit.classList.add("hidden");
+    avatarEdit.classList.remove("flex");
   });
 }
 
