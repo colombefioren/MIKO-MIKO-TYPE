@@ -112,12 +112,10 @@ export async function captureChartImage() {
     captureContainer.style.left = "-9999px";
     captureContainer.style.backgroundColor = "#0F172A";
     captureContainer.style.padding = "20px";
-    captureContainer.style.borderRadius = "12px";
-    captureContainer.style.border = "1px solid #1E293B";
     captureContainer.style.width = "600px";
 
     const title = document.createElement("h3");
-    title.textContent = "Miko-Miko Type Results";
+    title.textContent = "Miko-Miko Type";
     title.style.color = "#FFFFFF";
     title.style.textAlign = "center";
     title.style.marginBottom = "15px";
