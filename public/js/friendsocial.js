@@ -8,7 +8,9 @@ import {
   toggleLike,
 } from "./socials.js";
 import { hideLoading, showLoading } from "./utils.js";
+import { showNotification } from "./gameLogic.js";
 
+const postErrorMessage = document.getElementById("error-message-post");
 let selectedImageFile = null;
 let user;
 let hashtags = [];
@@ -56,12 +58,20 @@ function setupImageUpload() {
       const maxSize = 5 * 1024 * 1024; // 5MB
 
       if (!validTypes.includes(file.type)) {
-        alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
+        postErrorMessage.textContent =
+          "Please upload a valid image file (JPEG, PNG, GIF, or WebP)";
+
+        setTimeout(() => (postErrorMessage.textContent = ""), 3000);
+
         return;
       }
 
       if (file.size > maxSize) {
-        alert("Image size must be less than 5MB");
+        (postErrorMessage.textContent = "Image size must be less than 5MB"),
+          "error";
+
+        setTimeout(() => (postErrorMessage.textContent = ""), 3000);
+
         return;
       }
 
@@ -116,7 +126,11 @@ document
     const content = document.getElementById("post-content-input").value.trim();
 
     if (!title && !content && !selectedImageFile) {
-      alert("Please add at least a title, content, or image to your post");
+      postErrorMessage.textContent =
+        "Please add at least a title, content, or image to your post";
+
+      setTimeout(() => (postErrorMessage.textContent = ""), 3000);
+
       return;
     }
 
@@ -145,7 +159,7 @@ document
       await loadPosts();
     } catch (error) {
       console.error("Error creating post:", error);
-      alert("Failed to create post");
+      showNotification("Failed to create post", "error");
     }
   });
 
