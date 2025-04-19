@@ -493,7 +493,7 @@ const game = {
     });
 
     // Global TAB key restart
-    window.addEventListener("keydown", (event) => {
+    document.addEventListener("keydown", (event) => {
       const isInput =
         document.activeElement.tagName === "INPUT" ||
         document.activeElement.tagName === "TEXTAREA";
@@ -506,14 +506,15 @@ const game = {
             game.startTest();
             elements.inputField.focus();
           }
-          // else: normal tap - no special handling needed
+          // else: normal tap
         }
-        // else: normal tap - no special handling needed
+        // else: normal tap
       } else {
         if (event.key === "Tab") {
           event.preventDefault();
           game.startTest();
           elements.inputField.focus();
+        } else if (event.key === "Control" || event.key === "Escape") {
         } else {
           event.preventDefault();
           elements.inputField.focus();

@@ -395,9 +395,15 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
       </div>
       <!-- Footer -->
-      <div class="p-6 text-center text-dusk absolute bottom-20 text-sm">
+      <div
+        class="p-6 text-center text-dusk absolute bottom-20 text-sm space-y-5"
+      >
         <p>
           <span class="bg-lightabyss p-1 rounded">Tab</span> - restart the test
+        </p>
+        <p>
+          <span class="bg-lightabyss p-1 rounded">Ctrl</span> +
+          <span class="bg-lightabyss p-1 rounded">Esc</span> - toggle the navbar
         </p>
       </div>
       <footer
@@ -622,7 +628,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         id="notification-text"
         class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs text-center"
       >
-        <p id="notification-message-result">You results</p>
+        <p id="notification-message-result">Your results</p>
       </div>
     </div>
 
