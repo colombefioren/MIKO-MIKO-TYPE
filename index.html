@@ -39,7 +39,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-30"
+      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-50"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
@@ -542,58 +542,73 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       </div>
     </div>
 
-    <!--result popup modal-->
+
+
+    <!--results share-->
     <div
-      id="share-results-modal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+      id="results-to-share"
+      class="bg-abyss hidden absolute w-full z-50 text-white min-h-screen flex-col items-center justify-center p-4"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-8 max-w-md w-full border border-lightabyss shadow-lg"
       >
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Share Your Results</h2>
-          <button
-            id="close-share-modal"
-            class="text-dusk hover:text-white hover:cursor-pointer"
-          >
-            <i class="fas fa-times text-xl"></i>
-          </button>
+        <h1 class="text-2xl font-bold text-center mb-6">Your Typing Results</h1>
+
+        <div class="text-center mb-8">
+          <div class="text-5xl font-bold text-blaze mb-2" id="results-wpm">
+            0
+          </div>
+          <div class="text-lg">Words Per Minute</div>
         </div>
 
-        <div class="mb-6">
-          <p class="text-slate-200 mb-4">
-            You reached
-            <span class="text-blaze font-bold" id="share-wpm">0</span> WPM with
-            <span class="text-blaze font-bold" id="share-accuracy">0</span>%
-            accuracy!
-          </p>
-
-          <div class="bg-abyss rounded-lg p-4 border border-lightabyss">
-            <label for="share-message" class="block text-sm text-slate-200 mb-2"
-              >Customize your message:</label
-            >
-            <textarea
-              id="share-message"
-              class="w-full bg-midnight border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
-              rows="3"
-            ></textarea>
+        <div class="flex justify-between mb-8">
+          <div class="text-center">
+            <div class="text-2xl font-bold" id="results-accuracy">0%</div>
+            <div class="text-sm text-dusk">Accuracy</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold" id="results-difficulty">Easy</div>
+            <div class="text-sm text-dusk">Difficulty</div>
           </div>
         </div>
 
-        <div class="flex gap-3">
+        <button
+          id="share-results-btn"
+          class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors mb-4 cursor-pointer"
+        >
+          <i class="fas fa-share mr-2"></i> Share Results
+        </button>
+
+        <button
+          id="try-again-btn"
+          class="w-full border border-blaze text-blaze cursor-pointer py-3 rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+        >
+          Try Again
+        </button>
+
+        <div
+          id="login-prompt"
+          class="hidden mt-4 p-3 bg-abyss rounded-lg text-center"
+        >
+          <p class="text-sm">You need to log in to share your results</p>
           <button
-            id="cancel-share-btn"
-            class="flex-1 border border-blaze text-blaze px-6 py-3 cursor-pointer rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+            id="login-redirect-btn"
+            class="text-blaze hover:underline mt-2 cursor-pointer"
           >
-            Cancel
-          </button>
-          <button
-            id="confirm-share-btn"
-            class="flex-1 bg-blaze text-white px-6 py-3 cursor-pointer rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors"
-          >
-            <i class="fas fa-share mr-2"></i> Share
+            Log In Now
           </button>
         </div>
+      </div>
+    </div>
+    <div
+      id="notification-result"
+      class="fixed top-10 w-full items-end justify-center hidden z-40"
+    >
+      <div
+      id="notification-text"
+        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs text-center"
+      >
+        <p id="notification-message-result">You results</p>
       </div>
     </div>
 
