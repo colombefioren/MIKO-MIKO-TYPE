@@ -68,8 +68,11 @@ export function showNotification(message, type = "success") {
 
   // Add type-specific color
   if (type === "success") {
+    notificationText.classList.remove("bg-red-500");
     notificationText.classList.add("bg-azure");
   } else if (type === "error") {
+    notificationText.classList.remove("bg-azure");
+
     notificationText.classList.add("bg-red-500");
   } else {
     notificationText.classList.add("bg-blaze");

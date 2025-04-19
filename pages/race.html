@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../public/css/navbar.css" />
     <link
       rel="shortcut icon"
-      href="../public/assets/images/mikomiko-logo-reduced.svg"
+      href="./assets/images/mikomiko-logo-reduced.svg"
       type="image/x-icon"
     />
     <link
@@ -19,13 +19,12 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="../public/css/style.css" />
-    <title>Miko-Miko Type</title>
+    <title>User Profile | Miko-Miko Type</title>
   </head>
 
-  <body class="flex flex-col bg-abyss min-h-screen text-white">
-    <!--Navbar-->
+  <body class="bg-abyss flex flex-col min-h-screen prevent-select">
     <nav
-      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-20"
+      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
@@ -81,7 +80,7 @@
         <li class="pl-6 button-links py-[14px] relative">
           <a class="flex text-dusk items-center gap-15" href="./friends.html">
             <i class="fa-solid fa-users text-[27px] button-icon"></i>
-            <div class="text-xl font-bold button-text">Community</div>
+            <div class="text-xl font-bold button-text">Friends</div>
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
@@ -93,245 +92,465 @@
       </ul>
     </nav>
 
-    <header
-      class="sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm w-full pt-5 pb-4 px-6 border-b border-lightabyss"
+    <div
+      id="guest-interface"
+      class="w-[80%] ml-[390px] h-[100dvh] overflow-hidden flex justify-center items-center hidden"
     >
-      <div class="flex justify-end items-center w-full gap-8">
-        <div class="flex gap-5">
-          <img
-            src="../public/assets/images/blank-profile.png"
-            alt="Profile picture"
-            class="w-12 h-12 rounded-full object-cover"
-            id="profile-picture"
-          />
-          <div id="user-info">
-            <div class="flex gap-5 items-center">
-              <p class="font-bold text-subtlegray" id="username">Guest</p>
+      <div class="text-dusk text-center">
+        You have to log in to view yours and others' profile.
+      </div>
+    </div>
+    <!-- Profile Main Content -->
+    <main id="user-profile" class="px-8 pb-8">
+      <div class="w-[80%] ml-[390px]">
+        <!-- Profile Header -->
+        <div
+          class="pt-8 sticky top-0 z-10 bg-abyss w-full border-b border-lightabyss pb-6"
+        >
+          <div class="flex items-center justify-between">
+            <h1 class="text-white text-3xl font-bold flex items-center gap-3">
+              <i class="fas fa-user-circle text-blaze"></i>
+              <span id="profile-title">User Profile</span>
+            </h1>
+            <div id="profile-actions">
+              <!-- Actions will be populated based on whether it's current user or another user -->
             </div>
-            <p class="text-dusk" id="account-id">Not logged in</p>
           </div>
         </div>
-        <div id="auth-buttons" class="flex gap-4">
-          <button
-            id="login-btn"
-            class="bg-blaze cursor-pointer text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
-          >
-            Log In
-          </button>
-          <button
-            id="signup-btn"
-            class="bg-frost cursor-pointer text-midnight px-6 py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
-          >
-            Sign Up
-          </button>
-        </div>
-        <div id="user-menu" class="hidden">
-          <button
-            id="logout-btn"
-            class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
-          >
-            Log Out
-          </button>
-        </div>
-      </div>
-    </header>
 
-    <main
-      class="ml-[369px] p-10 flex flex-col items-center justify-center grow"
-    >
-      <div class="max-w-4xl w-full text-center flex flex-col gap-20">
-        <div
-          class="relative p-[2px] rounded-lg bg-gradient-to-r from-crystalMidnight to-midnight mb-10 shadow-lg shadow-crystalTwilight/30"
-        >
-          <div class="bg-midnight rounded-lg p-8 w-full">
-            <div class="flex flex-col items-center justify-center gap-6">
-              <i class="fas fa-tools text-blaze text-6xl mb-4"></i>
-              <h1
-                class="text-5xl font-bold bg-gradient-to-r from-blaze to-frost bg-clip-text text-transparent"
-              >
-                Coming Soon
-              </h1>
-              <p class="text-xl text-dusk max-w-2xl">
-                We're working hard to bring you an amazing experience. This page
-                isn't quite ready yet, but check back soon!
-              </p>
-
-              <div class="mt-8">
-                <a
-                  href="/"
-                  class="bg-blaze text-midnight px-8 py-3 rounded-sm font-medium hover:bg-frost transition-colors"
+        <!-- Profile Content -->
+        <div class="flex w-full gap-5 mt-6 relative">
+          <!-- Left Column - Profile Info -->
+          <div class="w-[30%] flex flex-col gap-5 sticky top-[106.4px] h-fit">
+            <!-- Profile Card -->
+            <div
+              class="bg-midnight border border-lightabyss rounded-xl p-6 flex flex-col items-center"
+            >
+              <div class="relative group">
+                <img
+                  id="profile-avatar"
+                  src="../public/assets/images/blank-profile.png"
+                  class="w-40 h-40 rounded-full object-cover border-4 border-blaze mb-4"
+                  alt="Profile picture"
+                />
+                <div
+                  id="avatar-edit"
+                  class="hidden absolute inset-0 bg-black/50 rounded-full flex items-center justify-center"
                 >
-                  Return Home
-                </a>
+                  <i class="fas fa-camera text-white text-2xl"></i>
+                </div>
+              </div>
+              <input
+                type="file"
+                id="avatar-upload"
+                accept="image/*"
+                class="hidden"
+              />
+
+              <h2 id="profile-username" class="text-white text-2xl font-bold">
+                Username
+              </h2>
+              <p id="profile-handle" class="text-azure mb-4">@username</p>
+
+              <div id="profile-bio-container" class="w-full text-center mb-6">
+                <p id="profile-bio" class="text-slate-200">No bio yet</p>
+                <textarea
+                  id="profile-bio-edit"
+                  class="hidden w-full bg-abyss border border-lightabyss rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-blaze resize-none"
+                  rows="3"
+                ></textarea>
+                <button
+                  id="save-bio-btn"
+                  class="hidden bg-blaze text-white px-3 py-1 rounded-lg text-sm mt-2"
+                >
+                  Save
+                </button>
+                <button
+                  id="cancel-bio-btn"
+                  class="hidden bg-dusk text-white px-3 py-1 rounded-lg text-sm mt-2 ml-2"
+                >
+                  Cancel
+                </button>
+              </div>
+
+              <div class="w-full bg-lightabyss h-px my-2"></div>
+
+              <div class="text-slate-300 text-sm w-full">
+                <div class="flex justify-between py-2">
+                  <span>Member since</span>
+                  <span id="join-date" class="text-white">-</span>
+                </div>
+                <div class="flex justify-between py-2">
+                  <span>Tests completed</span>
+                  <span id="tests-count" class="text-white">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats Card -->
+            <div class="bg-midnight border border-lightabyss rounded-xl p-6">
+              <h3
+                class="text-white text-xl font-bold mb-4 flex items-center gap-2"
+              >
+                <i class="fas fa-chart-line text-blaze"></i> Typing Stats
+              </h3>
+
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-slate-300 text-sm mb-1">
+                    <span>Average WPM</span>
+                    <span id="avg-wpm" class="text-white font-bold">0</span>
+                  </div>
+                  <div class="w-full bg-lightabyss rounded-full h-2">
+                    <div
+                      id="wpm-bar"
+                      class="bg-blaze h-2 rounded-full"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-slate-300 text-sm mb-1">
+                    <span>Average Accuracy</span>
+                    <span id="avg-accuracy" class="text-white font-bold"
+                      >0%</span
+                    >
+                  </div>
+                  <div class="w-full bg-lightabyss rounded-full h-2">
+                    <div
+                      id="accuracy-bar"
+                      class="bg-green-500 h-2 rounded-full"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                  <div class="bg-lightabyss/30 rounded-lg p-3 text-center">
+                    <div class="text-blaze text-2xl font-bold" id="best-wpm">
+                      0
+                    </div>
+                    <div class="text-slate-300 text-xs">Best WPM</div>
+                  </div>
+                  <div class="bg-lightabyss/30 rounded-lg p-3 text-center">
+                    <div
+                      class="text-green-400 text-2xl font-bold"
+                      id="best-accuracy"
+                    >
+                      0%
+                    </div>
+                    <div class="text-slate-300 text-xs">Best Accuracy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Activity -->
+          <div class="flex-1">
+            <!-- Activity Tabs -->
+            <div class="flex border-b border-lightabyss mb-6">
+              <button
+                class="tab-button active px-6 py-3 text-white font-medium relative cursor-pointer"
+                data-tab="recent"
+              >
+                <i class="fas fa-history mr-2"></i>Recent Activity
+              </button>
+              <button
+                class="tab-button px-6 py-3 text-azure font-medium relative cursor-pointer"
+                data-tab="friends"
+              >
+                <i class="fas fa-users mr-2"></i>Friends
+              </button>
+              <button
+                class="tab-button px-6 py-3 text-azure font-medium hidden cursor-pointer"
+                data-tab="settings"
+                id="settings-tab"
+              >
+                <i class="fas fa-cog mr-2"></i>Settings
+              </button>
+            </div>
+
+            <!-- Recent Activity Content -->
+            <div id="recent-content" class="tab-content active">
+              <div
+                class="bg-midnight border border-lightabyss rounded-xl overflow-hidden"
+              >
+                <div
+                  class="grid grid-cols-12 bg-lightabyss text-azure text-sm font-medium p-4"
+                >
+                  <div class="col-span-2">Date</div>
+                  <div class="col-span-3">Mode</div>
+                  <div class="col-span-2 text-right">WPM</div>
+                  <div class="col-span-2 text-right">Accuracy</div>
+                  <div class="col-span-3 text-right">Details</div>
+                </div>
+
+                <div class="divide-y divide-lightabyss/20" id="activity-list">
+                  <!-- Activity items will be loaded here -->
+                  <div
+                    class="grid grid-cols-12 items-center p-4 text-slate-300 text-sm"
+                  >
+                    <div class="col-span-12 text-center py-8">
+                      Loading activity...
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Friends Content -->
+            <div id="friends-content" class="tab-content hidden">
+              <div class="bg-midnight border border-lightabyss rounded-xl p-6">
+                <h3
+                  class="text-white text-xl font-bold mb-6 flex items-center gap-2"
+                >
+                  <i class="fas fa-users text-blaze"></i> Friends List
+                </h3>
+
+                <div
+                  class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                  id="friends-container"
+                >
+                  <!-- Friends will be loaded here -->
+                  <div
+                    class="flex items-center p-3 bg-lightabyss/30 rounded-lg"
+                  >
+                    <div
+                      class="w-12 h-12 rounded-full bg-lightabyss mr-3 animate-pulse"
+                    ></div>
+                    <div class="flex-1">
+                      <div
+                        class="h-4 bg-lightabyss rounded w-3/4 animate-pulse"
+                      ></div>
+                      <div
+                        class="h-3 bg-lightabyss rounded w-1/2 mt-2 animate-pulse"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Settings Content -->
+            <div id="settings-content" class="tab-content hidden">
+              <div class="bg-midnight border border-lightabyss rounded-xl p-6">
+                <h3 class="text-white text-xl font-bold mb-6">
+                  <i class="fas fa-cog text-blaze mr-2"></i>Account Settings
+                </h3>
+
+                <div class="space-y-6">
+                  <!-- Profile Settings -->
+                  <div class="bg-lightabyss/20 rounded-xl p-6">
+                    <h4 class="text-white font-bold mb-4">Profile Settings</h4>
+
+                    <div class="space-y-4">
+                      <div>
+                        <label class="block text-slate-300 text-sm mb-1"
+                          >Username</label
+                        >
+                        <div class="flex items-center gap-2">
+                          <input
+                            type="text"
+                            id="username-input"
+                            class="flex-1 bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
+                          />
+                          <button
+                            id="save-username-btn"
+                            class="bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90"
+                          >
+                            Save
+                          </button>
+                        </div>
+                        <p class="text-azure text-xs mt-1">
+                          This will change how your name appears to others
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Account Security -->
+                  <div class="bg-lightabyss/20 rounded-xl p-6">
+                    <h4 class="text-white font-bold mb-4">Account Security</h4>
+
+                    <div class="space-y-4">
+                      <div>
+                        <label class="block text-slate-300 text-sm mb-1"
+                          >Email</label
+                        >
+                        <input
+                          type="email"
+                          id="email-input"
+                          class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
+                          disabled
+                        />
+                      </div>
+
+                      <div>
+                        <button
+                          id="change-password-btn"
+                          class="bg-dusk text-white px-4 py-2 rounded-lg hover:bg-dusk/90"
+                        >
+                          Change Password
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Danger Zone -->
+                  <div
+                    class="bg-lightabyss/20 rounded-xl p-6 border border-blaze/30"
+                  >
+                    <h4 class="text-white font-bold mb-4 text-blaze">
+                      Danger Zone
+                    </h4>
+
+                    <div class="space-y-4">
+                      <div>
+                        <button
+                          id="delete-account-btn"
+                          class="bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90"
+                        >
+                          Delete Account
+                        </button>
+                        <p class="text-azure text-xs mt-1">
+                          This will permanently delete your account and all data
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Progress indicator -->
-        <div>
-          <p class="text-subtlegray mb-2">Development Progress</p>
-          <div
-            class="w-full bg-abyss h-4 rounded-full overflow-hidden border border-frost"
-          >
-            <div
-              class="bg-gradient-to-r from-blaze to-frost h-full rounded-full w-3/4 animate-pulse"
-            ></div>
-          </div>
-        </div>
       </div>
     </main>
-    <!-- Login Modal -->
+
+    <!-- Change Password Modal -->
     <div
-      id="login-modal"
+      id="change-password-modal"
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-6 w-full max-w-md border border-lightabyss"
       >
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
-          <button id="close-login-modal" class="text-dusk hover:text-white cursor-pointer">
+          <h2 class="text-2xl font-bold text-white">Change Password</h2>
+          <button
+            id="close-password-modal"
+            class="text-dusk hover:text-white cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
 
-        <form id="login-form" class="space-y-4">
+        <form id="change-password-form" class="space-y-4">
           <div>
-            <label
-              for="login-email"
-              class="block text-sm font-medium text-slate-200 mb-1"
-              >Email</label
-            >
-            <input
-              type="email"
-              id="login-email"
-              required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
-            />
-          </div>
-
-          <div>
-            <label
-              for="login-password"
-              class="block text-sm font-medium text-slate-200 mb-1"
-              >Password</label
+            <label class="block text-slate-300 text-sm mb-1"
+              >Current Password</label
             >
             <input
               type="password"
-              id="login-password"
+              id="current-password"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
+          <div>
+            <label class="block text-slate-300 text-sm mb-1"
+              >New Password</label
+            >
+            <input
+              type="password"
+              id="new-password"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
+              required
+            />
+          </div>
+
+          <div>
+            <label class="block text-slate-300 text-sm mb-1"
+              >Confirm New Password</label
+            >
+            <input
+              type="password"
+              id="confirm-password"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
+              required
+            />
+          </div>
           <button
             type="submit"
-            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors"
+            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
           >
-            Log In
+            Update Password
           </button>
-
-          <div class="text-center text-dusk text-sm">
-            Don't have an account?
-            <button
-              type="button"
-              id="switch-to-signup"
-              class="text-frost hover:underline"
-            >
-              Sign up
-            </button>
-          </div>
         </form>
       </div>
     </div>
 
-    <!-- Signup Modal -->
+    <!-- Delete Account Confirmation Modal -->
     <div
-      id="signup-modal"
+      id="delete-account-modal"
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-6 w-full max-w-md border border-lightabyss"
       >
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Create Account</h2>
-          <button id="close-signup-modal" class="text-dusk hover:text-white cusor-pointer">
+          <h2 class="text-2xl font-bold text-white">Delete Account</h2>
+          <button
+            id="close-delete-modal"
+            class="text-dusk hover:text-white cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
 
-        <form id="signup-form" class="space-y-4">
-          <div>
-            <label
-              for="signup-email"
-              class="block text-sm font-medium text-slate-200 mb-1"
-              >Email</label
-            >
-            <input
-              type="email"
-              id="signup-email"
-              required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
-            />
-          </div>
+        <div class="mb-6">
+          <p class="text-slate-200 mb-4">
+            Are you sure you want to delete your account? This action cannot be
+            undone.
+          </p>
+          <p class="text-blaze font-bold">
+            All your data will be permanently removed.
+          </p>
+        </div>
 
-          <div>
-            <label
-              for="signup-password"
-              class="block text-sm font-medium text-slate-200 mb-1"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="signup-password"
-              required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
-            />
-          </div>
-
-          <div>
-            <label
-              for="signup-username"
-              class="block text-sm font-medium text-slate-200 mb-1"
-              >Display Name</label
-            >
-            <input
-              type="text"
-              id="signup-username"
-              required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
-            />
-          </div>
-
+        <div class="flex gap-3">
           <button
-            type="submit"
-            class="w-full bg-frost text-midnight py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors"
+            id="confirm-delete-btn"
+            class="flex-1 bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
           >
-            Sign Up
+            Delete Account
           </button>
-
-          <div class="text-center text-dusk text-sm">
-            Already have an account?
-            <button
-              type="button"
-              id="switch-to-login"
-              class="text-blaze hover:underline"
-            >
-              Log in
-            </button>
-          </div>
-        </form>
+          <button
+            id="cancel-delete-btn"
+            class="flex-1 bg-dusk text-white py-3 rounded-lg font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer
-      class="ml-[369px] p-6 text-center text-dusk border-t border-lightabyss"
+    <!--notif-->
+
+    <div
+      id="notification-result"
+      class="fixed top-10 w-full items-end justify-center hidden z-50"
     >
-      <p>© 2023 Miko-Miko Type. All rights reserved.</p>
-    </footer>
-    <script src="../public/js/race.js"></script>
-    <script type="module" src="../public/js/login.js"></script>
+      <div
+        id="notification-text"
+        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs text-center"
+      >
+        <p id="notification-message-result"></p>
+      </div>
+    </div>
+    <script type="module" src="../public/js/profile.js"></script>
+    <script type="module" src="../public/js/race.js"></script>
   </body>
 </html>

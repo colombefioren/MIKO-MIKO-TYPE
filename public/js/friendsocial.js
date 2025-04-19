@@ -251,9 +251,9 @@ function renderPosts(posts) {
           }"
                alt="Profile" class="w-12 h-12 rounded-full object-cover">
           <div>
-            <div class="text-slate-200 font-bold">${
-              post.profiles?.username || "Unknown User"
-            }</div>
+            <div id="poster-username" class="text-slate-200 font-bold hover:underline cursor-pointer poster-username" data-user-id="${
+              post.user_id
+            }">${post.profiles?.username || "Unknown User"}</div>
             <div class="text-azure text-sm">${formatDate(post.created_at)}</div>
           </div>
         </div>
@@ -392,7 +392,14 @@ function renderPosts(posts) {
       postElement.classList.add("fade-in");
       postsContainer.appendChild(postElement);
     });
+    document.querySelectorAll(".poster-username").forEach((el) => {
+      el.addEventListener("click", () => {
+        const userId = el.dataset.userId;
+        window.location.href = `race.html?id=${userId}`;
+      });
+    });
   }, 300);
+  
 
   setupPostInteractions();
 }

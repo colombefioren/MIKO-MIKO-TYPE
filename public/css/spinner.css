@@ -1,14 +1,37 @@
-/* Loading spinner */
 .loading-spinner {
-  @apply animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blaze;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px; 
+  border-top: 2px solid #ffa62f; 
+  border-bottom: 2px solid #ffa62f;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  animation: spin 1s linear infinite; 
+  margin-bottom: 5px;
 }
 
-/* Skeleton loading */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .skeleton {
-  @apply bg-lightabyss/20 animate-pulse rounded-lg;
+  background-color: rgba(66, 84, 109, 0.2); 
+  border-radius: 0.5rem; 
+  animation: pulse 1.5s ease-in-out infinite; 
 }
 
-/* Content fade-in animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
 .fade-in {
   animation: fadeIn 0.3s ease-in;
 }

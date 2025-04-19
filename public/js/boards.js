@@ -1,4 +1,5 @@
 import { supabase } from "./database.js";
+import { hideLoading, showLoading } from "./utils.js";
 
 const buttons = document.querySelectorAll(".button-links");
 const buttonTexts = document.querySelectorAll(".button-text");
@@ -77,6 +78,7 @@ document.querySelectorAll(".category-item").forEach((item) => {
 
 async function loadLeaderboard() {
   try {
+    showLoading("#boards-loading");
     // Fetch top 10 profiles ordered by wpm_avg
     const { data: profiles, error } = await supabase
       .from("profiles")
@@ -199,6 +201,8 @@ async function loadLeaderboard() {
     }
   } catch (error) {
     console.error("Error loading leaderboard:", error);
+  } finally {
+    hideLoading("#boards-loading");
   }
 }
 
