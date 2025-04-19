@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentUser = await getCurrentUser();
     if (!currentUser) {
       document.getElementById("guest-interface").classList.remove("hidden");
-      document.getElementById("user-profile").classList.add("hidden")
+      document.getElementById("user-profile").classList.add("hidden");
       return;
     }
 
@@ -195,8 +195,7 @@ async function loadRecentActivity(userId) {
       activityList.innerHTML = `
         <div class="col-span-12 text-center py-8 text-dusk">
           <i class="fas fa-keyboard text-4xl mb-3"></i>
-          <h3 class="text-slate-200 font-bold text-lg mb-1">No activity yet</h3>
-          <p class="text-azure">Complete typing tests to see your activity</p>
+          <h3 class="text-slate-200 font-bold text-lg mb-1">No activity yet</h3>=
         </div>
       `;
       return;
@@ -278,7 +277,6 @@ async function loadFriendsList(userId) {
         <div class="col-span-12 text-center py-8 text-dusk">
           <i class="fas fa-user-friends text-4xl mb-3"></i>
           <h3 class="text-slate-200 font-bold text-lg mb-1">No friends yet</h3>
-          <p class="text-azure">Add friends to see them here</p>
         </div>
       `;
       return;
@@ -342,13 +340,7 @@ function setupProfileActions() {
   } else {
     checkFriendshipStatus().then((status) => {
       if (status === "accepted") {
-        const chatBtn = document.createElement("button");
-        chatBtn.className =
-          "bg-frost text-midnight px-4 py-2 rounded-lg hover:bg-frost/90 transition-colors cursor-pointer";
-        chatBtn.innerHTML = '<i class="fas fa-comment-dots mr-2"></i> Chat';
-        chatBtn.addEventListener("click", () =>
-          openChatWithUser(profileUser.id)
-        );
+    
 
         const removeFriendBtn = document.createElement("button");
         removeFriendBtn.className =
@@ -357,7 +349,6 @@ function setupProfileActions() {
           '<i class="fas fa-user-minus mr-2"></i> Remove Friend';
         removeFriendBtn.addEventListener("click", () => removeFriend());
 
-        profileActions.appendChild(chatBtn);
         profileActions.appendChild(removeFriendBtn);
       } else if (status === "pending") {
         const cancelRequestBtn = document.createElement("button");
@@ -654,35 +645,81 @@ function setupEventListeners() {
   changePasswordForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    // Get form values
     const currentPassword = document.getElementById("current-password").value;
     const newPassword = document.getElementById("new-password").value;
     const confirmPassword = document.getElementById("confirm-password").value;
+
+    // Validation
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      showNotification("Please fill in all fields", "error");
+      return;
+    }
 
     if (newPassword !== confirmPassword) {
       showNotification("New passwords don't match", "error");
       return;
     }
 
+    if (newPassword.length < 6) {
+      showNotification("Password must be at least 6 characters", "error");
+      return;
+    }
+
     try {
+      // Show loading state
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+      // 1. Verify current password by signing in again
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: currentUser.email,
         password: currentPassword,
       });
 
-      if (signInError) throw signInError;
+      if (signInError) {
+        // More specific error messages
+        if (signInError.message.includes("Invalid login credentials")) {
+          throw new Error("Current password is incorrect");
+        } else {
+          throw signInError;
+        }
+      }
 
+      // 2. Update to new password
       const { error: updateError } = await supabase.auth.updateUser({
         password: newPassword,
       });
 
-      if (updateError) throw updateError;
+      if (updateError) {
+        // Handle password policy errors
+        if (updateError.message.includes("password should be at least")) {
+          throw new Error("Password must be at least 6 characters");
+        } else {
+          throw updateError;
+        }
+      }
 
-      showNotification("Password updated successfully", "success");
+      // Success
+      showNotification("Password updated successfully!", "success");
       changePasswordModal.classList.add("hidden");
       changePasswordForm.reset();
     } catch (error) {
-      console.error("Error changing password:", error);
-      showNotification(error.message || "Failed to change password", "error");
+      console.error("Password change error:", error);
+      showNotification(
+        error.message || "Failed to change password. Please try again.",
+        "error"
+      );
+    } finally {
+      // Reset button state
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Update Password";
+      }
     }
   });
 

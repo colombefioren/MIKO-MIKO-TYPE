@@ -358,7 +358,7 @@
                           />
                           <button
                             id="save-username-btn"
-                            class="bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90"
+                            class="bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90 cursor-pointer"
                           >
                             Save
                           </button>
@@ -390,7 +390,7 @@
                       <div>
                         <button
                           id="change-password-btn"
-                          class="bg-dusk text-white px-4 py-2 rounded-lg hover:bg-dusk/90"
+                          class="bg-dusk text-white px-4 py-2 rounded-lg hover:bg-dusk/90 cursor-pointer"
                         >
                           Change Password
                         </button>
@@ -410,7 +410,7 @@
                       <div>
                         <button
                           id="delete-account-btn"
-                          class="bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90"
+                          class="bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90 cursor-pointer"
                         >
                           Delete Account
                         </button>
@@ -446,8 +446,8 @@
           </button>
         </div>
 
-        <form id="change-password-form" class="space-y-4">
-          <div>
+        <form id="change-password-form" class="space-y-1">
+          <div class="mb-4">
             <label class="block text-slate-300 text-sm mb-1"
               >Current Password</label
             >
@@ -459,7 +459,7 @@
             />
           </div>
 
-          <div>
+          <div class="mb-4">
             <label class="block text-slate-300 text-sm mb-1"
               >New Password</label
             >
@@ -468,10 +468,12 @@
               id="new-password"
               class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
               required
+              minlength="6"
             />
+            <p class="text-azure text-xs mt-1">Minimum 6 characters</p>
           </div>
 
-          <div>
+          <div class="mb-4">
             <label class="block text-slate-300 text-sm mb-1"
               >Confirm New Password</label
             >
@@ -480,6 +482,7 @@
               id="confirm-password"
               class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blaze"
               required
+              minlength="6"
             />
           </div>
           <button
