@@ -295,6 +295,9 @@
   .top-10 {
     top: calc(var(--spacing) * 10);
   }
+  .top-\[5-0\] {
+    top: 5-0;
+  }
   .top-\[50\%\] {
     top: 50%;
   }
@@ -396,6 +399,9 @@
   }
   .my-28 {
     margin-block: calc(var(--spacing) * 28);
+  }
+  .my-auto {
+    margin-block: auto;
   }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
@@ -689,6 +695,10 @@
     --tw-translate-y: calc(var(--spacing) * 10);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .translate-y-\[-50\%\] {
+    --tw-translate-y: -50%;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
   .translate-y-full {
     --tw-translate-y: 100%;
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -737,6 +747,9 @@
   }
   .items-start {
     align-items: flex-start;
+  }
+  .justify-around {
+    justify-content: space-around;
   }
   .justify-between {
     justify-content: space-between;

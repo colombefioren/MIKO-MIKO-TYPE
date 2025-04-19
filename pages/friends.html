@@ -103,7 +103,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Start New Chat</h2>
-          <button id="close-new-chat-modal" class="text-dusk hover:text-white cusor-pointer">
+          <button
+            id="close-new-chat-modal"
+            class="text-dusk hover:text-white cusor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
@@ -121,40 +124,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     <nav
       class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
     >
-      <div
-        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
-      >
-        <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
-      </div>
       <img
         src="../public/assets/images/mikomiko-logo.png"
         alt="Miko-Miko Type Logo"
-        class="h-40"
+        class="h-40 absolute"
       />
-      <div class="flex gap-10">
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <img
-            src="../public/assets/images/events.jpg"
-            alt="People typing"
-            class="w-full bg-white h-20 object-cover"
-          />
-          <div
-            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-          >
-            EVENTS
-          </div>
-        </div>
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <div class="w-full bg-slate-500 h-20"></div>
-          <div
-            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-          >
-            WHEEL
-          </div>
-        </div>
-      </div>
+
       <ul
-        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        class="flex flex-col mt-10 gap-6 w-full relative link-container top-[50%] translate-y-[-50%]"
         id="nav-list"
       >
         <div id="focus-highlight" class="focused-btn-highlight"></div>
@@ -1430,7 +1407,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
-          <button id="close-login-modal" class="text-dusk hover:text-white cursor-pointer">
+          <button
+            id="close-login-modal"
+            class="text-dusk hover:text-white cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
@@ -1495,7 +1475,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Create Account</h2>
-          <button id="close-signup-modal" class="text-dusk hover:text-white cursor-pointer">
+          <button
+            id="close-signup-modal"
+            class="text-dusk hover:text-white cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>

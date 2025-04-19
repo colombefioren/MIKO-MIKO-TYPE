@@ -39,14 +39,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-50"
+      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 collapsed z-50"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
       >
         <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
       </div>
-      <div class="logo-container">
+      <div class="logo-container absolute">
         <img
           src="./public/assets/images/mikomiko-logo.png"
           alt="Miko-Miko Type Logo"
@@ -54,26 +54,8 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         />
       </div>
 
-      <div class="flex gap-10">
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <img
-            src="./public/assets/images/events.jpg"
-            alt="People typing"
-            class="w-full bg-white h-20 object-cover"
-          />
-          <div class="bg-lightmidnight w-full text-white text-center font-bold">
-            EVENTS
-          </div>
-        </div>
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <div class="w-full bg-slate-500 h-20"></div>
-          <div class="bg-lightmidnight w-full text-white text-center font-bold">
-            WHEEL
-          </div>
-        </div>
-      </div>
       <ul
-        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        class="flex flex-col mt-10 gap-6 w-full relative link-container top-[50%] translate-y-[-50%]"
         id="nav-list"
       >
         <!-- Highlight background -->
