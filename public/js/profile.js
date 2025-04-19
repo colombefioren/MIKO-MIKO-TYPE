@@ -340,8 +340,6 @@ function setupProfileActions() {
   } else {
     checkFriendshipStatus().then((status) => {
       if (status === "accepted") {
-    
-
         const removeFriendBtn = document.createElement("button");
         removeFriendBtn.className =
           "bg-blaze text-white px-4 py-2 rounded-lg hover:bg-blaze/90 transition-colors cursor-pointer ml-3";
@@ -626,8 +624,11 @@ function setupEventListeners() {
       if (error) throw error;
 
       profileUsername.textContent = newUsername;
-      profileHandle.textContent = `@${newUsername}`;
-      showNotification("Username updated successfully", "success");
+      profileHandle.textContent = `@${newUsername
+        .toLowerCase()
+        .split(" ")
+        .join("")}`;
+      showNotification("Your display name is updated successfully", "success");
     } catch (error) {
       console.error("Error updating username:", error);
       showNotification("Failed to update username", "error");

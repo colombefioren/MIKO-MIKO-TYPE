@@ -7,7 +7,6 @@ import {
   getUserProfile,
   uploadAvatar,
 } from "./auth.js";
-// import { saveGameResult } from "./gameLogic.js";
 import { showNotification } from "./utils.js";
 
 // DOM Elements
@@ -80,8 +79,26 @@ async function handleSignup(e) {
   const username = document.getElementById("signup-username").value;
 
   try {
-    const { error } = await signUp(email, password, username);
-    if (error) throw error;
+    // First sign up the user
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (authError) throw authError;
+
+    // Then create the profile in the profiles table
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .insert([
+        {
+          id: authData.user.id,
+          username: username,
+          email: email,
+        },
+      ]);
+
+    if (profileError) throw profileError;
 
     signupModal.classList.add("hidden");
     signupForm.reset();
@@ -105,16 +122,25 @@ async function handleLogout() {
 
 async function updateUIForLoggedInUser(user) {
   try {
+    // Get the profile data from the profiles table
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("username, avatar_url")
+      .eq("id", user.id)
+      .single();
+
+    if (error) throw error;
+
+    // Use the username from profiles table
     document.getElementById("username").textContent =
-      user.user_metadata?.username || "User";
+      profile?.username || "User";
     document.getElementById("account-id").textContent = user.email;
 
     authButtons.classList.add("hidden");
     userMenu.classList.remove("hidden");
 
-    // get the avatarurl
-    const profile = await getUserProfile(user.id);
-    const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url;
+    // Use avatar_url from profiles table
+    const avatarUrl = profile?.avatar_url;
 
     if (avatarUrl) {
       const profilePic = document.getElementById("profile-picture");
@@ -124,7 +150,7 @@ async function updateUIForLoggedInUser(user) {
       if (currentUserAvatar) currentUserAvatar.src = avatarUrl;
     }
   } catch (error) {
-    showNotification("Error updating UI","error")
+    showNotification("Error updating UI", "error");
     console.error("Error updating UI:", error);
   }
 }
@@ -136,13 +162,6 @@ function updateUIForGuest() {
   userMenu.classList.add("hidden");
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    await checkAuthState();
-  } catch (error) {
-    console.error("Auth initialization error:", error);
-  }
-});
 async function handleLogin(e) {
   e.preventDefault();
   const email = document.getElementById("login-email").value;
@@ -161,6 +180,7 @@ async function handleLogin(e) {
     showNotification(`Login failed : ${error.message}`, "error");
   }
 }
+
 async function handleAvatarUpload(file) {
   try {
     const user = await getCurrentUser();
@@ -188,6 +208,14 @@ async function handleAvatarUpload(file) {
 
     const avatarUrl = await uploadAvatar(user.id, file);
 
+    // Update the avatar_url in the profiles table
+    const { error } = await supabase
+      .from("profiles")
+      .update({ avatar_url: avatarUrl })
+      .eq("id", user.id);
+
+    if (error) throw error;
+
     // Update all avatar images in UI
     document.querySelectorAll(".user-avatar").forEach((img) => {
       img.src = avatarUrl;
@@ -208,6 +236,7 @@ async function handleAvatarUpload(file) {
     return null;
   }
 }
+
 let avatarInput = null;
 
 function addAvatarUploadHandler() {
@@ -256,24 +285,24 @@ function handleAvatarClick() {
   avatarInput.click();
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    await checkAuthState();
-    addAvatarUploadHandler();
-  } catch (error) {
-    console.error("Auth initialization error:", error);
-  }
-});
-
 function setupAvatarErrorHandling() {
   document.querySelectorAll('img[src*="avatar"]').forEach((img) => {
-    img.onerror = function () {
-      const user = getCurrentUser();
-      if (user && user.user_metadata?.username) {
-        // UI Avatars if custom avatar fails to load
-        this.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user.user_metadata.username
-        )}&background=random`;
+    img.onerror = async function () {
+      const user = await getCurrentUser();
+      if (user) {
+        // Get username from profiles table
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("username")
+          .eq("id", user.id)
+          .single();
+
+        if (!error && profile?.username) {
+          // UI Avatars if custom avatar fails to load
+          this.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            profile.username
+          )}&background=random`;
+        }
       }
     };
   });
