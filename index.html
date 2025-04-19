@@ -9,14 +9,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="public/css/cursor.css" />
-    <link rel="stylesheet" href="public/css/font.css" />
-    <link rel="stylesheet" href="public/css/navbar.css" />
-    <link rel="stylesheet" href="public/css/utilities.css" />
-    <link rel="stylesheet" href="public/css/chart.css" />
+    <link rel="stylesheet" href="./public/css/cursor.css" />
+    <link rel="stylesheet" href="./public/css/font.css" />
+    <link rel="stylesheet" href="./public/css/navbar.css" />
+    <link rel="stylesheet" href="./public/css/utilities.css" />
+    <link rel="stylesheet" href="./public/css/chart.css" />
     <link
       rel="shortcut icon"
-      href="public/assets/images/mikomiko-logo-reduced.svg"
+      href="./public/assets/images/mikomiko-logo-reduced.svg"
       type="image/x-icon"
     />
     <link
@@ -26,7 +26,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="public/css/style.css" />
+    <link rel="stylesheet" href="./public/css/style.css" />
     <title>Miko-Miko Type</title>
   </head>
 
@@ -50,7 +50,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       </div>
       <div class="logo-container absolute">
         <img
-          src="public/assets/images/mikomiko-logo.png"
+          src="./public/assets/images/mikomiko-logo.png"
           alt="Miko-Miko Type Logo"
           class="h-[160px] transition-all duration-300 [transition-timing-function:cubic-bezier(0.25,0.8,0.25,1)] drop-shadow-[0_0_10px_rgba(255,107,53,0.3)] hover:drop-shadow-[0_0_15px_rgba(255,107,53,0.3)]"
         />
@@ -73,7 +73,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <li class="pl-6 button-links py-[14px] relative">
           <a
             class="flex text-dusk items-center gap-15"
-            href="pages/profile.html"
+            href="./pages/profile.html"
           >
             <i class="fa-solid fa-horse text-3xl button-icon"></i>
             <div class="text-xl font-bold button-text">Profile</div>
@@ -82,7 +82,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <li class="pl-6 button-links py-[14px] relative">
           <a
             class="flex text-dusk items-center gap-15"
-            href="pages/friends.html"
+            href="./pages/friends.html"
           >
             <i class="fa-solid fa-users text-[27px] button-icon"></i>
             <div class="text-xl font-bold button-text">Community</div>
@@ -91,7 +91,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <li class="pl-6 button-links py-[14px] relative">
           <a
             class="flex text-dusk items-center gap-15"
-            href="pages/boards.html"
+            href="./pages/boards.html"
           >
             <i class="fa-solid fa-medal text-[34px] button-icon"></i>
             <div class="text-xl font-bold button-text">Boards</div>
@@ -104,7 +104,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     >
       <div class="flex 2xl:gap-5 gap-3">
         <img
-          src="public/assets/images/blank-profile.png"
+          src="./public/assets/images/blank-profile.png"
           alt="Profile picture"
           class="2xl:size-12 size-9 rounded-full object-cover"
           id="profile-picture"
@@ -619,13 +619,13 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-    <!-- <script src="public/js/chartUtils.js"></script> -->
+    <!-- <script src="./public/js/chartUtils.js"></script> -->
 
-    <script type="module" src="public/js/gameLogic.js"></script>
+    <script type="module" src="./public/js/gameLogic.js"></script>
 
-    <script src="public/js/navbar.js"></script>
+    <script src="./public/js/navbar.js"></script>
 
-    <script type="module" src="public/js/login.js"></script>
+    <script type="module" src="./public/js/login.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
   </body>
