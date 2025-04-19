@@ -8,7 +8,7 @@ import {
   toggleLike,
 } from "./socials.js";
 import { hideLoading, showLoading } from "./utils.js";
-import { showNotification } from "./gameLogic.js";
+import { showNotification } from "./utils.js";
 
 const postErrorMessage = document.getElementById("error-message-post");
 let selectedImageFile = null;

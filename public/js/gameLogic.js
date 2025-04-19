@@ -1,21 +1,25 @@
 import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
 import { createPost } from "./socials.js";
+import { showNotification } from "./utils.js";
 
-// Cache DOM elements
-const elements = {
-  modeForm: document.getElementById("mode-form"),
-  wordDisplay: document.getElementById("word-display"),
-  inputField: document.getElementById("input-field"),
-  results: document.getElementById("results"),
-  totalResult: document.getElementById("total_result"),
-  cursor: document.getElementById("typing-cursor"),
-  textField: document.getElementById("text-field"),
-  pointerFocus: document.getElementById("pointer-focus"),
-  difficultyInputs: document.querySelectorAll(
-    'input[type="radio"][name="mode"]'
-  ),
-  contentCheckboxes: document.querySelectorAll('input[name="content-type"]'),
+let elements = {};
+
+const initializeElements = () => {
+  elements = {
+    modeForm: document.getElementById("mode-form"),
+    wordDisplay: document.getElementById("word-display"),
+    inputField: document.getElementById("input-field"),
+    results: document.getElementById("results"),
+    totalResult: document.getElementById("total_result"),
+    cursor: document.getElementById("typing-cursor"),
+    textField: document.getElementById("text-field"),
+    pointerFocus: document.getElementById("pointer-focus"),
+    difficultyInputs: document.querySelectorAll(
+      'input[type="radio"][name="mode"]'
+    ),
+    contentCheckboxes: document.querySelectorAll('input[name="content-type"]'),
+  };
 };
 
 // Game state
@@ -380,19 +384,24 @@ const domHandlers = {
   updateContentTypeClasses: () => {
     elements.contentCheckboxes.forEach((checkbox) => {
       const parentLabel = checkbox.closest(".mode-option");
-      parentLabel.classList.toggle("text-blaze", checkbox.checked);
+      if (parentLabel) {
+        parentLabel.classList.toggle("text-blaze", checkbox.checked);
+      }
     });
 
-    // Ensure at least one checkbox is checked
+    // Safely ensure at least one checkbox is checked
     const checkedCount = document.querySelectorAll(
       'input[name="content-type"]:checked'
     ).length;
     if (checkedCount === 0) {
-      document.getElementById("words").checked = true;
-      document
-        .getElementById("words")
-        .closest(".mode-option")
-        .classList.add("text-blaze");
+      const wordsCheckbox = document.getElementById("words");
+      if (wordsCheckbox) {
+        wordsCheckbox.checked = true;
+        const parentLabel = wordsCheckbox.closest(".mode-option");
+        if (parentLabel) {
+          parentLabel.classList.add("text-blaze");
+        }
+      }
     }
   },
 
@@ -442,6 +451,7 @@ const domHandlers = {
 
 const game = {
   initialize: () => {
+    initializeElements();
     domHandlers.updateDifficultyClasses();
     domHandlers.updateContentTypeClasses();
     game.setupEventListeners();
@@ -744,32 +754,6 @@ function resultStats(wpm, accuracy, difficulty) {
       resultModal.classList.add("hidden");
     });
 }
-export function showNotification(message, type = "success") {
-  const notification = document.getElementById("notification-result");
-  const messageEl = document.getElementById("notification-message-result");
-  const notificationText = document.getElementById("notification-text");
-
-  messageEl.textContent = message;
-
-  // Show notification
-  notification.classList.remove("hidden");
-  notification.classList.add("flex");
-
-  // Add type-specific color
-  if (type === "success") {
-    notificationText.classList.add("bg-azure");
-  } else if (type === "error") {
-    notificationText.classList.add("bg-red-500");
-  } else {
-    notificationText.classList.add("bg-blaze");
-  }
-
-  // Hide after 3 seconds
-  setTimeout(() => {
-    notification.classList.add("hidden");
-    notification.classList.remove("flex");
-  }, 6000);
-}
 // Database operations
 async function saveGameResult(result) {
   if (!result) {
@@ -862,6 +846,7 @@ async function updateUserAverages(userId) {
 
 // Initialize the game when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
+  initializeElements();
   game.initialize();
 });
 

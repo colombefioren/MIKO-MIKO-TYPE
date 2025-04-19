@@ -1,7 +1,7 @@
 import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
 import { createChat, openChatConversation } from "./chats.js";
-import { showNotification } from "./gameLogic.js";
+import { showNotification } from "./utils.js";
 
 const buttons = document.querySelectorAll(".button-links");
 const buttonTexts = document.querySelectorAll(".button-text");

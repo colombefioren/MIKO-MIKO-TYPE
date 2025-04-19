@@ -8,7 +8,7 @@ import {
   uploadAvatar,
 } from "./auth.js";
 // import { saveGameResult } from "./gameLogic.js";
-import { showNotification } from "./gameLogic.js";
+import { showNotification } from "./utils.js";
 
 // DOM Elements
 const loginBtn = document.getElementById("login-btn");
@@ -85,8 +85,9 @@ async function handleSignup(e) {
 
     signupModal.classList.add("hidden");
     signupForm.reset();
-    showNotification("Please verify your email!","success");
+    showNotification("Please verify your email!", "success");
   } catch (error) {
+    showNotification(error.message, "error");
     console.log(error.message);
   }
 }
@@ -97,6 +98,7 @@ async function handleLogout() {
     await signOut();
     location.reload();
   } catch (error) {
+    showNotification(error.message, "error");
     console.log(error.message);
   }
 }
@@ -122,6 +124,7 @@ async function updateUIForLoggedInUser(user) {
       if (currentUserAvatar) currentUserAvatar.src = avatarUrl;
     }
   } catch (error) {
+    showNotification("Error updating UI","error")
     console.error("Error updating UI:", error);
   }
 }
