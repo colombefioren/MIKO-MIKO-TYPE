@@ -142,7 +142,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     </header>
 
     <main
-      class="flex flex-col justify-center items-center 2xl:mt-28 mt-20 grow relative"
+      class="flex flex-col justify-center items-center grow relative"
     >
       <div class="flex flex-col justify-center items-center 2xl:gap-22 gap-16">
         <div
@@ -262,8 +262,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                 >
               </label>
 
-           
-
               <!-- Glass Divider -->
               <div
                 class="2xl:h-8 h-6 w-[1px] 2xl:mx-2 mx-1.5 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
@@ -275,42 +273,42 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
               <!-- Challenge Modes -->
               <label
-              for="numbers"
-              class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
-            >
-              <i
-                class="fas fa-hashtag text-indigo-300 group-hover:scale-110 transition-transform"
-              ></i>
-              <input
-                type="checkbox"
-                name="content-type"
-                id="numbers"
-                value="numbers"
-                class="absolute w-0 h-0 opacity-0"
-              />
-              <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                >Numbers</span
+                for="numbers"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
-            </label>
+                <i
+                  class="fas fa-hashtag text-indigo-300 group-hover:scale-110 transition-transform"
+                ></i>
+                <input
+                  type="checkbox"
+                  name="content-type"
+                  id="numbers"
+                  value="numbers"
+                  class="absolute w-0 h-0 opacity-0"
+                />
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Numbers</span
+                >
+              </label>
 
-            <label
-              for="code"
-              class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
-            >
-              <i
-                class="fas fa-code text-blue-300 group-hover:scale-110 transition-transform"
-              ></i>
-              <input
-                type="checkbox"
-                name="content-type"
-                id="code"
-                value="code"
-                class="absolute w-0 h-0 opacity-0"
-              />
-              <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                >Code</span
+              <label
+                for="code"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
-            </label>
+                <i
+                  class="fas fa-code text-blue-300 group-hover:scale-110 transition-transform"
+                ></i>
+                <input
+                  type="checkbox"
+                  name="content-type"
+                  id="code"
+                  value="code"
+                  class="absolute w-0 h-0 opacity-0"
+                />
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Code</span
+                >
+              </label>
             </form>
           </div>
         </div>
@@ -341,14 +339,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             ></div>
           </div>
         </div>
-
-        <p id="results" class="text-white 2xl:text-base text-sm">Results :</p>
-        <p
-          id="total_result"
-          class="text-white text-center 2xl:text-base text-sm"
-        >
-          TOTAL SCORE :
-        </p>
       </div>
       <!-- Footer -->
       <div

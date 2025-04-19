@@ -11,8 +11,6 @@ const initializeElements = () => {
     modeForm: document.getElementById("mode-form"),
     wordDisplay: document.getElementById("word-display"),
     inputField: document.getElementById("input-field"),
-    results: document.getElementById("results"),
-    totalResult: document.getElementById("total_result"),
     cursor: document.getElementById("typing-cursor"),
     textField: document.getElementById("text-field"),
     pointerFocus: document.getElementById("pointer-focus"),
@@ -31,7 +29,7 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 30,
+  wordCount: 25,
   mistake: 0,
   mistakePositions: new Set(),
   activeListeners: new Set(),
@@ -596,8 +594,6 @@ const game = {
 
     domHandlers.createWordDisplay();
     elements.inputField.value = "";
-    elements.results.textContent = "";
-    elements.totalResult.textContent = "";
     domHandlers.updateCursorPosition();
   },
 
@@ -659,7 +655,6 @@ const game = {
       state.totalStats.accuracy += accuracy;
       state.totalStats.count++;
 
-      elements.results.textContent = `WPM: ${wpm}, Accuracy: ${accuracy}%`;
 
       state.currentWordIndex++;
       state.previousEndTime = Date.now();
@@ -673,15 +668,9 @@ const game = {
         const avgAccuracy = (
           state.totalStats.accuracy / state.totalStats.count
         ).toFixed(2);
-        elements.results.textContent = "";
-
-        elements.totalResult.setAttribute("style", "white-space: pre;");
         if (avgAccuracy >= 50) {
-          elements.totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
           await game.onGameComplete({ wpm: avgWpm, accuracy: avgAccuracy });
-        } else {
-          elements.totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
-        }
+        } 
       }
 
       elements.inputField.value = "";
