@@ -2,6 +2,7 @@ import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
 import { createPost } from "./socials.js";
 import { showNotification } from "./utils.js";
+import { createResultsChart, captureChartImage } from "./chartUtils.js";
 
 let elements = {};
 
@@ -30,8 +31,12 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 5,
+  wordCount: 30,
   activeListeners: new Set(),
+  history: {
+    wpm: [],
+    accuracy: [],
+  },
 };
 
 // Content dictionaries with memoization
@@ -601,6 +606,11 @@ const game = {
       if (!state.previousEndTime) state.previousEndTime = state.startTime;
 
       const { wpm, accuracy } = game.getCurrentStats();
+      // Add to history
+      state.history.wpm.push(wpm);
+      state.history.accuracy.push(accuracy);
+
+      // Create the chart with history
       state.totalStats.wpm += wpm;
       state.totalStats.accuracy += accuracy;
       state.totalStats.count++;
@@ -684,6 +694,8 @@ const game = {
 
 function resultStats(wpm, accuracy, difficulty) {
   const resultModal = document.getElementById("results-to-share");
+  createResultsChart(state.history.wpm, state.history.accuracy, difficulty);
+
   document.getElementById("results-wpm").textContent = wpm || "0";
   document.getElementById("results-accuracy").textContent = accuracy || "0%";
   document.getElementById("results-difficulty").textContent =
@@ -704,31 +716,26 @@ function resultStats(wpm, accuracy, difficulty) {
     .getElementById("share-results-btn")
     .addEventListener("click", async () => {
       try {
-        const { getCurrentUser } = await import("./auth.js");
-        const { createPost } = await import("./socials.js");
-
         const user = await getCurrentUser();
         if (!user) {
-          // Show login prompt
           document.getElementById("login-prompt").classList.remove("hidden");
-
-          // Hide after 5 seconds
           setTimeout(() => {
             document.getElementById("login-prompt").classList.add("hidden");
           }, 5000);
-
           return;
         }
 
-        // Create post with results
+        // Capture chart as image
+        const chartImage = await captureChartImage();
+
+        // Create post with results and chart image
         const content = `I just scored ${wpm} WPM with ${accuracy}% accuracy on ${difficulty} mode! 🚀`;
-        await createPost("My Typing Results", content, null, [
+        await createPost("My Typing Results", content, chartImage, [
           "typing",
           "results",
           "mikomiko",
         ]);
 
-        // Show success message
         showNotification(
           "Your results have been shared successfully!",
           "success"
