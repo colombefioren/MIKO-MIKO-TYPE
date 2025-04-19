@@ -1815,11 +1815,6 @@
       width: 70%;
     }
   }
-  .\32 xl\:w-\[70\] {
-    @media (width >= 96rem) {
-      width: 70;
-    }
-  }
   .\32 xl\:w-\[430px\] {
     @media (width >= 96rem) {
       width: 430px;
