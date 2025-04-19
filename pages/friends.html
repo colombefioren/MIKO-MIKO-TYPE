@@ -287,7 +287,16 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="text-red-600 mt-5" id="error-message-post"></div>
         </div>
 
-        <div class="w-full posts-container"></div>
+        <div class="w-full posts-container">
+          <div
+            id="post-loading"
+            class="flex items-center justify-center hidden"
+          >
+            <div
+              class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blaze"
+            ></div>
+          </div>
+        </div>
         <!-- Post Container -->
 
         <div

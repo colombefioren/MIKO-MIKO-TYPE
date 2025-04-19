@@ -1,10 +1,16 @@
-export function showLoading() {
-  document.getElementById("global-loading").classList.remove("hidden");
-}
+// export function showLoading(toLoad) {
+//   switch (toLoad) {
+//     case "post":
+//       document.getElementById("post-loading").classList.remove("hidden");
+//   }
+// }
 
-export function hideLoading() {
-  document.getElementById("global-loading").classList.add("hidden");
-}
+// export function hideLoading(toLoad) {
+//   switch (toLoad) {
+//     case "post":
+//       document.getElementById("post-loading").classList.add("hidden");
+//   }
+// }
 
 export function showNotification(message, type = "success") {
   const notification = document.getElementById("notification-result");

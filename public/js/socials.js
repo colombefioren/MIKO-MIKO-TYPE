@@ -2,10 +2,32 @@ import { supabase } from "./database.js";
 import { getCurrentUser } from "./auth.js";
 
 // Post functions
-export async function createPost(title, content, imageUrl, hashtags = []) {
+export async function createPost(title, content, imageDataUrl, hashtags = []) {
   try {
     const user = await getCurrentUser();
     if (!user) throw new Error("User not authenticated");
+
+    let imageUrl = null;
+
+    if (imageDataUrl) {
+      const response = await fetch(imageDataUrl);
+      const blob = await response.blob();
+
+      const fileName = `post_images/${user.id}/${Date.now()}.png`;
+
+      // Upload to Supabase storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("post-images")
+        .upload(fileName, blob);
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from("post-images")
+        .getPublicUrl(fileName);
+
+      imageUrl = urlData.publicUrl;
+    }
 
     const { data, error } = await supabase
       .from("posts")

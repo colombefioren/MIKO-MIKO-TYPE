@@ -7,7 +7,7 @@ import {
   getComments,
   toggleLike,
 } from "./socials.js";
-import { hideLoading, showLoading } from "./utils.js";
+// import { hideLoading, showLoading } from "./utils.js";
 import { showNotification } from "./utils.js";
 
 const postErrorMessage = document.getElementById("error-message-post");
@@ -165,14 +165,12 @@ document
 
 async function loadPosts() {
   try {
-    // showLoading();
+    
     const posts = await getPosts();
 
     renderPosts(posts);
   } catch (error) {
     console.error("Error loading posts:", error);
-  } finally {
-    // hideLoading();
   }
 }
 

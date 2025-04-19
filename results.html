@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Typing Results | Miko-Miko Type</title>
+    <link rel="stylesheet" href="../public/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <div
+    class="bg-abyss text-white min-h-screen flex flex-col items-center justify-center p-4"
+  >
+    <div
+      class="bg-midnight rounded-xl p-8 max-w-md w-full border border-lightabyss shadow-lg"
+    >
+      <h1 class="text-2xl font-bold text-center mb-6">Your Typing Results</h1>
+
+      <div class="text-center mb-8">
+        <div class="text-5xl font-bold text-blaze mb-2" id="results-wpm">0</div>
+        <div class="text-lg">Words Per Minute</div>
+      </div>
+
+      <div class="flex justify-between mb-8">
+        <div class="text-center">
+          <div class="text-2xl font-bold" id="results-accuracy">0%</div>
+          <div class="text-sm text-dusk">Accuracy</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold" id="results-difficulty">Easy</div>
+          <div class="text-sm text-dusk">Difficulty</div>
+        </div>
+      </div>
+
+      <button
+        id="share-results-btn"
+        class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors mb-4 cursor-pointer"
+      >
+        <i class="fas fa-share mr-2"></i> Share Results
+      </button>
+
+      <button
+        id="try-again-btn"
+        class="w-full border border-blaze text-blaze cursor-pointer py-3 rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+      >
+        Try Again
+      </button>
+
+      <div
+        id="login-prompt"
+        class="hidden mt-4 p-3 bg-abyss rounded-lg text-center"
+      >
+        <p class="text-sm">You need to log in to share your results</p>
+        <button id="login-redirect-btn" class="text-blaze hover:underline mt-2">
+          Log In Now
+        </button>
+      </div>
+    </div>
+    <!-- <div
+      id="notification-result"
+      class="fixed top-10 w-full right-4 items-end justify-center hidden z-40"
+    >
+      <div
+        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs bg-azure text-center"
+      >
+        <p id="notification-message-result">Hiii</p>
+      </div>
+    </div> -->
+
+    <script src="../public/js/resultsHandler.js"></script>
+  </div>
+</html>
