@@ -119,42 +119,42 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <header
       class="flex text-white justify-end items-center gap-10 p-7 fixed top-0 left-0 right-0 bg-abyss/80 backdrop-blur-sm z-10"
     >
-      <div class="flex gap-5">
-        <img
-          src="./public/assets/images/blank-profile.png"
-          alt="Profile picture"
-          class="w-12 h-12 rounded-full object-cover"
-          id="profile-picture"
-        />
-        <div id="user-info">
-          <div class="flex gap-5 items-center">
-            <p class="font-bold text-subtlegray" id="username">Guest</p>
-          </div>
-          <p class="text-dusk" id="account-id">Not logged in</p>
+    <div class="flex gap-5">
+      <img
+        src="./public/assets/images/blank-profile.png"
+        alt="Profile picture"
+        class="w-12 h-12 rounded-full object-cover"
+        id="profile-picture"
+      />
+      <div id="user-info">
+        <div class="flex gap-5 items-center">
+          <p class="font-bold text-subtlegray" id="username">Guest</p>
         </div>
+        <p class="text-dusk" id="account-id">Not logged in</p>
       </div>
-      <div id="auth-buttons" class="flex gap-4">
-        <button
-          id="login-btn"
-          class="border border-blaze cursor-pointer text-blaze px-6 py-2 rounded-sm font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
-        >
-          Log In
-        </button>
-        <button
-          id="signup-btn"
-          class="bg-blaze cursor-pointer text-midnight px-6 py-2 rounded-sm font-medium hover:bg-frost transition-colors"
-        >
-          Sign Up
-        </button>
-      </div>
-      <div id="user-menu" class="hidden">
-        <button
-          id="logout-btn"
-          class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
-        >
-          Log Out
-        </button>
-      </div>
+    </div>
+    <div id="auth-buttons" class="flex gap-4">
+      <button
+        id="login-btn"
+        class="bg-blaze cursor-pointer text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+      >
+        Log In
+      </button>
+      <button
+        id="signup-btn"
+        class="bg-frost cursor-pointer text-midnight px-6 py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
+      >
+        Sign Up
+      </button>
+    </div>
+    <div id="user-menu" class="hidden">
+      <button
+        id="logout-btn"
+        class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
+      >
+        Log Out
+      </button>
+    </div>
     </header>
 
     <main class="flex flex-col justify-center items-center mt-28 grow">
