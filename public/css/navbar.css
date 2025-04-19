@@ -1,0 +1,64 @@
+.focused-btn-highlight {
+  border-radius: 1.5rem 0.5rem 1.5rem 0.5rem;
+  background-image: var(--gradient-azure-frost);
+  border: 3px solid #475f94;
+  position: absolute;
+  height: 60px;
+  width: calc(100% - 3.5rem);
+  transition: transform 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.button-text {
+  transition: color 200ms ease-out 90ms !important;
+}
+.button-icon {
+  transition: color 200ms ease-out 90ms !important;
+}
+
+nav {
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+nav.collapsed {
+  width: 90px !important;
+}
+
+nav.collapsed .button-text {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+nav.collapsed img,
+nav.collapsed .flex.gap-10 {
+  position: relative;
+  left: -200%;
+}
+
+.chevron i {
+  transition: transform 0.5s ease;
+}
+
+nav.collapsed .chevron i {
+  transform: rotate(180deg);
+}
+
+nav.collapsed #nav-list {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+nav.collapsed #focus-highlight {
+  width: calc(100% - 1.4rem) !important;
+  left: 10px;
+}
+
+#nav-list {
+  transition: margin 0.3s ease;
+}

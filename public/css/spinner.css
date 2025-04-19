@@ -1,0 +1,46 @@
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px; 
+  border-top: 2px solid #ffa62f; 
+  border-bottom: 2px solid #ffa62f;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  animation: spin 1s linear infinite; 
+  margin-bottom: 5px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.skeleton {
+  background-color: rgba(66, 84, 109, 0.2); 
+  border-radius: 0.5rem; 
+  animation: pulse 1.5s ease-in-out infinite; 
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "Cascadia Mono";
+  src: url("../assets/fonts/CascadiaMono-Light.otf");
+}
+@font-face {
+  font-family: "Cascadia Display";
+  src: url("../assets/fonts/CascadiaMonoPL-Regular.otf");
+}
+
+* {
+  font-family: "Cascadia Mono";
+}
+
+#word-display {
+  font-family: "Cascadia Display" !important;
+  font-size: 45px;
+  /* text-align: justify; */
+}
+
+.glass-divider {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes animate-shine {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-shine {
+  animation: animate-shine 3s infinite;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
