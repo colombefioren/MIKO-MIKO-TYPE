@@ -20,6 +20,7 @@ const initializeElements = () => {
       'input[type="radio"][name="mode"]'
     ),
     contentCheckboxes: document.querySelectorAll('input[name="content-type"]'),
+    wordCountSelect: document.getElementById("word-count"),
   };
 };
 
@@ -31,7 +32,6 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 30,
   activeListeners: new Set(),
   history: {
     wpm: [],
@@ -538,7 +538,12 @@ const game = {
     });
   },
 
-  startTest: (wordCount = state.wordCount) => {
+  startTest: (wordCount = elements.wordCountSelect.value) => {
+    elements.wordCountSelect.addEventListener("change", () => {
+      game.startTest();
+      elements.inputField.focus();
+    });
+
     state.wordsToType = [];
     state.charSpans = [];
     state.currentWordIndex = 0;
