@@ -7,7 +7,7 @@ import {
   getComments,
   toggleLike,
 } from "./socials.js";
-import { hideLoading, showLoading } from "./utils.js";
+// import { hideLoading, showLoading } from "./utils.js";
 import { showNotification } from "./utils.js";
 
 const postErrorMessage = document.getElementById("error-message-post");
@@ -165,14 +165,12 @@ document
 
 async function loadPosts() {
   try {
-    // showLoading();
+    
     const posts = await getPosts();
 
     renderPosts(posts);
   } catch (error) {
     console.error("Error loading posts:", error);
-  } finally {
-    // hideLoading();
   }
 }
 
@@ -233,7 +231,7 @@ function renderPosts(posts) {
           post.image_url
             ? `
           <div class="rounded-2xl overflow-hidden mb-3">
-            <img src="${post.image_url}" alt="Post image" class="w-full h-[600px] object-cover">
+            <img src="${post.image_url}" alt="Post image" class="w-full h-auto max-h-96 object-cover">
           </div>`
             : ""
         }
