@@ -1,7 +1,7 @@
 import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
 import { createChat, openChatConversation } from "./chats.js";
-import { showNotification } from "./utils.js";
+import { showNotification, showLoading, hideLoading } from "./utils.js";
 
 const buttons = document.querySelectorAll(".button-links");
 const buttonTexts = document.querySelectorAll(".button-text");
@@ -112,6 +112,7 @@ let currentUser = null;
 // search all users
 async function searchUsers(searchTerm) {
   try {
+    showLoading("#search-results-list");
     const { data: users, error } = await supabase
       .from("profiles")
       .select("*")
@@ -124,6 +125,8 @@ async function searchUsers(searchTerm) {
   } catch (error) {
     console.error("Error searching users:", error);
     return [];
+  } finally {
+    hideLoading("#search-results-list");
   }
 }
 
@@ -294,6 +297,7 @@ async function renderSearchResults(users) {
 
 async function loadFriends() {
   try {
+    showLoading("#friends-list-container");
     // get friend requests
     const { data: friendRequests, error: requestsError } = await supabase
       .from("friends")
@@ -341,6 +345,8 @@ async function loadFriends() {
     });
   } catch (error) {
     console.error("Error loading friends:", error);
+  } finally {
+    hideLoading("#friends-list-container");
   }
 }
 
@@ -352,60 +358,85 @@ function renderFriends({ friendRequests, friends }) {
   );
   existingSections.forEach((section) => section.remove());
 
-  if (friendRequests.length > 0) {
-    const requestsSection = document.createElement("div");
-    requestsSection.innerHTML = `
-      <div class="text-slate-200 font-bold mb-3">
-        Friend Requests (${friendRequests.length})
-      </div>
-      <div class="flex flex-col gap-3" id="friend-requests-list"></div>
-    `;
-    container.appendChild(requestsSection);
+  container.innerHTML = `
+    <div class="space-y-4">
+      ${Array(5)
+        .fill()
+        .map(
+          () => `
+        <div class="bg-midnight border border-lightabyss rounded-3xl p-6 h-20 flex items-center">
+          <div class="flex items-center gap-3 w-full">
+            <div class="skeleton w-12 h-12 rounded-full"></div>
+            <div class="flex-1 space-y-2">
+              <div class="skeleton h-4 w-3/4 rounded"></div>
+              <div class="skeleton h-3 w-1/2 rounded"></div>
+            </div>
+            <div class="skeleton w-12 h-12 rounded-xl"></div>
+          </div>
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+  `;
 
-    const requestsList = document.getElementById("friend-requests-list");
-    friendRequests.forEach((request) => {
-      const requestElement = createFriendElement(
-        request.friend,
-        true,
-        request.id
-      );
-      requestsList.appendChild(requestElement);
-    });
-  }
+  setTimeout(() => {
+    container.innerHTML = "";
+    if (friendRequests.length > 0) {
+      const requestsSection = document.createElement("div");
+      requestsSection.innerHTML = `
+        <div class="text-slate-200 font-bold mb-3">
+          Friend Requests (${friendRequests.length})
+        </div>
+        <div class="flex flex-col gap-3" id="friend-requests-list"></div>
+      `;
+      container.appendChild(requestsSection);
 
-  // Friends list
-  if (friends.length > 0) {
-    const friendsSection = document.createElement("div");
-    friendsSection.innerHTML = `
-      <div class="text-slate-200 font-bold mb-3">
-        Friends (${friends.length})
-      </div>
-      <div class="flex flex-col gap-3" id="friends-list"></div>
-    `;
-    container.appendChild(friendsSection);
+      const requestsList = document.getElementById("friend-requests-list");
+      friendRequests.forEach((request) => {
+        const requestElement = createFriendElement(
+          request.friend,
+          true,
+          request.id
+        );
+        requestsList.appendChild(requestElement);
+      });
+    }
 
-    const friendsList = document.getElementById("friends-list");
-    friends.forEach((friend) => {
-      const friendElement = createFriendElement(
-        friend.friend,
-        false,
-        friend.id
-      );
-      friendsList.appendChild(friendElement);
-    });
-  }
+    // Friends list
+    if (friends.length > 0) {
+      const friendsSection = document.createElement("div");
+      friendsSection.innerHTML = `
+        <div class="text-slate-200 font-bold mb-3">
+          Friends (${friends.length})
+        </div>
+        <div class="flex flex-col gap-3" id="friends-list"></div>
+      `;
+      container.appendChild(friendsSection);
 
-  if (friendRequests.length === 0 && friends.length === 0) {
-    const noFriendsSection = document.createElement("div");
-    noFriendsSection.innerHTML = `
-      <div class="text-center py-12 text-dusk">
-        <i class="fas fa-user-friends text-5xl mb-4"></i>
-        <h3 class="text-slate-200 font-bold text-lg mb-2">No friends yet</h3>
-        <p class="text-azure">Add friends to start chatting</p>
-      </div>
-    `;
-    container.appendChild(noFriendsSection);
-  }
+      const friendsList = document.getElementById("friends-list");
+      friends.forEach((friend) => {
+        const friendElement = createFriendElement(
+          friend.friend,
+          false,
+          friend.id
+        );
+        friendsList.appendChild(friendElement);
+      });
+    }
+
+    if (friendRequests.length === 0 && friends.length === 0) {
+      const noFriendsSection = document.createElement("div");
+      noFriendsSection.innerHTML = `
+        <div class="text-center py-12 text-dusk">
+          <i class="fas fa-user-friends text-5xl mb-4"></i>
+          <h3 class="text-slate-200 font-bold text-lg mb-2">No friends yet</h3>
+          <p class="text-azure">Add friends to start chatting</p>
+        </div>
+      `;
+      container.appendChild(noFriendsSection);
+    }
+  }, 300);
 }
 
 function createFriendElement(friend, isRequest = false, friendshipId = null) {
@@ -579,7 +610,17 @@ async function openChatWithUser(userId) {
 }
 // handle friend request (accept/reject)
 async function handleFriendRequest(requestId, status) {
+  const acceptBtn = document.querySelector(
+    `.accept-request[data-request-id="${requestId}"]`
+  );
+  const rejectBtn = document.querySelector(
+    `.reject-request[data-request-id="${requestId}"]`
+  );
+
   try {
+    if (acceptBtn) showButtonLoading(acceptBtn);
+    if (rejectBtn) showButtonLoading(rejectBtn);
+
     const { error } = await supabase
       .from("friends")
       .update({ status })
@@ -587,10 +628,13 @@ async function handleFriendRequest(requestId, status) {
 
     if (error) throw error;
 
-    // reload friends list
     await loadFriends();
   } catch (error) {
     console.error("Error handling friend request:", error);
+    showNotification("Failed to process request", "error");
+  } finally {
+    if (acceptBtn) hideButtonLoading(acceptBtn);
+    if (rejectBtn) hideButtonLoading(rejectBtn);
   }
 }
 

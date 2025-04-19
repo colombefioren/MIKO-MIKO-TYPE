@@ -1,12 +1,23 @@
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+/* Loading spinner */
+.loading-spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blaze;
 }
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+/* Skeleton loading */
+.skeleton {
+  @apply bg-lightabyss/20 animate-pulse rounded-lg;
+}
+
+/* Content fade-in animation */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
