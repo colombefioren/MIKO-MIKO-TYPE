@@ -395,7 +395,7 @@ function renderPosts(posts) {
     document.querySelectorAll(".poster-username").forEach((el) => {
       el.addEventListener("click", () => {
         const userId = el.dataset.userId;
-        window.location.href = `race.html?id=${userId}`;
+        window.location.href = `profile.html?id=${userId}`;
       });
     });
   }, 300);

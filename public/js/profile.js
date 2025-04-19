@@ -302,7 +302,7 @@ async function loadFriendsList(userId) {
       `;
 
       friendElement.addEventListener("click", () => {
-        window.location.href = `race.html?id=${friendUser.id}`;
+        window.location.href = `profile.html?id=${friendUser.id}`;
       });
 
       friendsContainer.appendChild(friendElement);
