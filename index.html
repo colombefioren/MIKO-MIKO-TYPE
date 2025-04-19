@@ -552,7 +552,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       class="bg-abyss hidden absolute w-full z-50 text-white h-full flex-col items-center justify-center p-4"
     >
       <div
-        class="bg-midnight rounded-xl p-8 border border-lightabyss shadow-lg flex flex-col justify-between w-[95%]"
+        class="bg-midnight rounded-xl p-8 border border-lightabyss shadow-lg flex flex-col justify-between w-[95%] relative"
       >
         <h1 class="text-2xl font-bold text-center mb-6">Your Typing Results</h1>
 
@@ -596,17 +596,17 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
           </button>
         </div>
 
-        <div
-          id="login-prompt"
-          class="hidden mt-4 p-3 bg-abyss rounded-lg text-center"
-        >
-          <p class="text-sm">You need to log in to share your results</p>
-          <button
-            id="login-redirect-btn"
-            class="text-blaze hover:underline mt-2 cursor-pointer"
-          >
-            Log In Now
-          </button>
+        <div id="login-prompt" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+ 
+          <div class="p-4 bg-abyss rounded-lg text-center shadow-lg">
+            <p class="text-sm text-white">You need to log in to share your results</p>
+            <button
+              id="login-redirect-btn"
+              class="text-blaze hover:underline mt-2 cursor-pointer"
+            >
+              Log In Now
+            </button>
+          </div>
         </div>
       </div>
     </div>
