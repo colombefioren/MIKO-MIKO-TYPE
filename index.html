@@ -30,7 +30,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
   </head>
 
   <body
-    class="flex flex-col bg-abyss justify-center min-h-screen prevent-select relative"
+    class="flex flex-col bg-abyss justify-center items-center min-h-screen prevent-select relative"
   >
     <div
       id="success-share-message"
@@ -149,14 +149,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       <div id="user-menu" class="hidden">
         <button
           id="logout-btn"
-          class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
+          class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-lightmidnight transition-colors cursor-pointer"
         >
           Log Out
         </button>
       </div>
     </header>
 
-    <main class="flex flex-col justify-center items-center mt-28 grow">
+    <main class="flex flex-col justify-center items-center mt-28 grow relative">
       <div class="flex flex-col justify-center items-center gap-22">
         <div
           class="flex items-center p-7 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight h-16 shadow-lg shadow-crystalTwilight/30"
@@ -394,6 +394,17 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <p id="results" class="text-white">Results :</p>
         <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
       </div>
+      <!-- Footer -->
+      <div class="p-6 text-center text-dusk absolute bottom-20 text-sm">
+        <p>
+          <span class="bg-lightabyss p-1 rounded">Tab</span> - restart the test
+        </p>
+      </div>
+      <footer
+        class="p-6 text-center text-dusk border-t border-lightabyss absolute bottom-0 text-xs"
+      >
+        <p>© 2025 Miko-Miko Type. All rights reserved.</p>
+      </footer>
     </main>
     <!-- Login Modal -->
     <div
@@ -473,7 +484,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Create Account</h2>
-          <button id="close-signup-modal" class="text-dusk hover:text-white cursor-pointer">
+          <button
+            id="close-signup-modal"
+            class="text-dusk hover:text-white cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
