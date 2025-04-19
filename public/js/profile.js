@@ -34,17 +34,11 @@ const usernameInput = document.getElementById("username-input");
 const saveUsernameBtn = document.getElementById("save-username-btn");
 const emailInput = document.getElementById("email-input");
 const changePasswordBtn = document.getElementById("change-password-btn");
-const deleteAccountBtn = document.getElementById("delete-account-btn");
 
 // Modals
 const changePasswordModal = document.getElementById("change-password-modal");
 const closePasswordModal = document.getElementById("close-password-modal");
 const changePasswordForm = document.getElementById("change-password-form");
-const deleteAccountModal = document.getElementById("delete-account-modal");
-const closeDeleteModal = document.getElementById("close-delete-modal");
-const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
-const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
-
 let currentUser = null;
 let profileUser = null;
 let isCurrentUserProfile = false;
@@ -63,12 +57,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userId = urlParams.get("id");
 
     isCurrentUserProfile = !userId || userId === currentUser.id;
-
-    console.log("isCurrentUserProfile:", isCurrentUserProfile);
-    console.log(
-      "Loading profile for:",
-      isCurrentUserProfile ? currentUser.id : userId
-    );
 
     await loadUserProfile(isCurrentUserProfile ? currentUser.id : userId);
     setupEventListeners();
@@ -721,33 +709,6 @@ function setupEventListeners() {
         submitBtn.disabled = false;
         submitBtn.textContent = "Update Password";
       }
-    }
-  });
-
-  deleteAccountBtn.addEventListener("click", () => {
-    deleteAccountModal.classList.remove("hidden");
-  });
-
-  closeDeleteModal.addEventListener("click", () => {
-    deleteAccountModal.classList.add("hidden");
-  });
-
-  cancelDeleteBtn.addEventListener("click", () => {
-    deleteAccountModal.classList.add("hidden");
-  });
-
-  confirmDeleteBtn.addEventListener("click", async () => {
-    try {
-      const { error: authError } = await supabase.auth.admin.deleteUser(
-        currentUser.id
-      );
-      if (authError) throw authError;
-
-      window.location.href = "/";
-    } catch (error) {
-      console.error("Error deleting account:", error);
-      showNotification("Failed to delete account", "error");
-      deleteAccountModal.classList.add("hidden");
     }
   });
 

@@ -343,7 +343,6 @@ const domHandlers = {
 
     let span;
 
-    // When cursor is at start of word
     if (currentPosition === 0) {
       span = state.charSpans.find(
         (s) =>
@@ -351,14 +350,12 @@ const domHandlers = {
           parseInt(s.dataset.charIndex) === 0
       );
     } else if (currentPosition < currentWordLength) {
-      // Cursor is before the next character
       span = state.charSpans.find(
         (s) =>
           parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
           parseInt(s.dataset.charIndex) === currentPosition
       );
     } else {
-      // At end of word — place after last visible character
       const currentWordSpans = state.charSpans.filter(
         (s) =>
           parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
@@ -371,7 +368,6 @@ const domHandlers = {
       const rect = span.getBoundingClientRect();
       const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
 
-      // Use rect.left unless it's end-of-word, then use rect.right
       const isAtEnd = currentPosition >= currentWordLength;
       const cursorX = isAtEnd ? rect.right : rect.left;
 
@@ -394,7 +390,6 @@ const domHandlers = {
       }
     });
 
-    // Safely ensure at least one checkbox is checked
     const checkedCount = document.querySelectorAll(
       'input[name="content-type"]:checked'
     ).length;
@@ -432,21 +427,53 @@ const domHandlers = {
       (span) => parseInt(span.dataset.wordIndex) === state.currentWordIndex
     );
 
+    const existingExtraContainer = document.querySelector(
+      `.extra-chars-container[data-word-index="${state.currentWordIndex}"]`
+    );
+    if (existingExtraContainer) {
+      existingExtraContainer.remove();
+    }
+
     for (let i = 0; i < currentWord.length; i++) {
       const charSpan = currentWordSpans[i];
       const originalChar = currentWord[i];
       const typedChar = typed[i];
 
       if (typedChar === undefined) {
-        // Reset to original state (e.g. after backspace)
         charSpan.textContent = originalChar;
-        charSpan.style.color = ""; // Reset color
+        charSpan.style.color = "";
       } else if (typedChar === originalChar) {
         charSpan.textContent = originalChar;
-        charSpan.style.color = "white"; // Correct character
+        charSpan.style.color = "white";
       } else {
-        charSpan.textContent = typedChar; // Show incorrect char
-        charSpan.style.color = "red"; // Wrong char
+        charSpan.textContent = typedChar;
+        charSpan.style.color = "red";
+      }
+    }
+
+    const spaceSpanIndex = currentWord.length;
+    const hasSpaceSpan =
+      currentWordSpans.length > currentWord.length &&
+      currentWordSpans[spaceSpanIndex]?.textContent === " ";
+
+    //handle extra characters typed
+    if (typed.length > currentWord.length) {
+      const extraContainer = document.createElement("span");
+      extraContainer.className = "extra-chars-container";
+      extraContainer.dataset.wordIndex = state.currentWordIndex;
+
+      for (let i = currentWord.length; i < typed.length; i++) {
+        const extraSpan = document.createElement("span");
+        extraSpan.className = "char-span extra";
+        extraSpan.textContent = typed[i];
+        extraSpan.style.color = "red";
+        extraContainer.appendChild(extraSpan);
+      }
+
+      if (hasSpaceSpan) {
+        currentWordSpans[spaceSpanIndex].before(extraContainer);
+      } else {
+        currentWordSpans[currentWordSpans.length - 1].after(extraContainer);
       }
     }
 
@@ -573,6 +600,7 @@ const game = {
 
     // Accuracy calculation
     let correct = 0;
+    let incorrect = 0;
     const expected = state.wordsToType[state.currentWordIndex];
     const typed = elements.inputField.value;
 

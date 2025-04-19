@@ -45,9 +45,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
       >
-        <i
-          class="fa-solid fa-chevron-left text-white text-3xl"
-        ></i>
+        <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
       </div>
       <div class="logo-container absolute">
         <img
@@ -66,14 +64,12 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
         <!-- Navigation buttons -->
         <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15 href="#">
-            <i
-              class="fa-solid fa-keyboard text-3xl button-icon"
-            ></i>
+          <a class="flex text-dusk items-center gap-15" href="#">
+            <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
             <div class="text-xl font-bold button-text">Type</div>
           </a>
         </li>
-        <li class="pl-6  button-links py-[14px] relative">
+        <li class="pl-6 button-links py-[14px] relative">
           <a
             class="flex text-dusk items-center gap-15"
             href="./pages/profile.html"
@@ -84,15 +80,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </li>
         <li class="pl-6 button-links py-[14px] relative">
           <a
-            class="flex text-dusk items-center gap-15 "
+            class="flex text-dusk items-center gap-15"
             href="./pages/friends.html"
           >
-            <i
-              class="fa-solid fa-users text-[27px] button-icon"
-            ></i>
-            <div class="text-xl font-bold button-text">
-              Community
-            </div>
+            <i class="fa-solid fa-users text-[27px] button-icon"></i>
+            <div class="text-xl font-bold button-text">Community</div>
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
@@ -100,9 +92,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             class="flex text-dusk items-center gap-15"
             href="./pages/boards.html"
           >
-            <i
-              class="fa-solid fa-medal text-[34px] button-icon"
-            ></i>
+            <i class="fa-solid fa-medal text-[34px] button-icon"></i>
             <div class="text-xl font-bold button-text">Boards</div>
           </a>
         </li>
@@ -272,43 +262,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                 >
               </label>
 
-              <label
-                for="numbers"
-                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
-              >
-                <i
-                  class="fas fa-hashtag text-indigo-300 group-hover:scale-110 transition-transform"
-                ></i>
-                <input
-                  type="checkbox"
-                  name="content-type"
-                  id="numbers"
-                  value="numbers"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                  >Numbers</span
-                >
-              </label>
-
-              <label
-                for="code"
-                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
-              >
-                <i
-                  class="fas fa-code text-blue-300 group-hover:scale-110 transition-transform"
-                ></i>
-                <input
-                  type="checkbox"
-                  name="content-type"
-                  id="code"
-                  value="code"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                  >Code</span
-                >
-              </label>
+           
 
               <!-- Glass Divider -->
               <div
@@ -321,61 +275,42 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
               <!-- Challenge Modes -->
               <label
-                for="timed"
-                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+              for="numbers"
+              class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+            >
+              <i
+                class="fas fa-hashtag text-indigo-300 group-hover:scale-110 transition-transform"
+              ></i>
+              <input
+                type="checkbox"
+                name="content-type"
+                id="numbers"
+                value="numbers"
+                class="absolute w-0 h-0 opacity-0"
+              />
+              <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                >Numbers</span
               >
-                <i
-                  class="fas fa-stopwatch text-yellow-300 group-hover:scale-110 transition-transform"
-                ></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="timed"
-                  value="timed"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                  >Timed</span
-                >
-              </label>
+            </label>
 
-              <label
-                for="target"
-                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+            <label
+              for="code"
+              class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+            >
+              <i
+                class="fas fa-code text-blue-300 group-hover:scale-110 transition-transform"
+              ></i>
+              <input
+                type="checkbox"
+                name="content-type"
+                id="code"
+                value="code"
+                class="absolute w-0 h-0 opacity-0"
+              />
+              <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                >Code</span
               >
-                <i
-                  class="fas fa-bullseye text-green-300 group-hover:scale-110 transition-transform"
-                ></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="target"
-                  value="target"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                  >Target WPM</span
-                >
-              </label>
-
-              <label
-                for="zen"
-                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
-              >
-                <i
-                  class="fas fa-spa text-fuchsia-300 group-hover:scale-110 transition-transform"
-                ></i>
-                <input
-                  type="radio"
-                  name="mode"
-                  id="zen"
-                  value="zen"
-                  class="absolute w-0 h-0 opacity-0"
-                />
-                <span class="font-medium tracking-wide 2xl:text-base text-sm"
-                  >Zen</span
-                >
-              </label>
+            </label>
             </form>
           </div>
         </div>

@@ -23,6 +23,7 @@
     --color-blue-300: oklch(80.9% 0.105 251.813);
     --color-indigo-300: oklch(78.5% 0.115 274.713);
     --color-fuchsia-300: oklch(83.3% 0.145 321.434);
+    --color-pink-500: oklch(65.6% 0.241 354.308);
     --color-pink-600: oklch(59.2% 0.249 0.584);
     --color-rose-500: oklch(64.5% 0.246 16.439);
     --color-slate-200: oklch(92.9% 0.013 255.508);
@@ -985,6 +986,9 @@
   }
   .bg-midnight {
     background-color: var(--color-midnight);
+  }
+  .bg-pink-500 {
+    background-color: var(--color-pink-500);
   }
   .bg-pink-600 {
     background-color: var(--color-pink-600);
