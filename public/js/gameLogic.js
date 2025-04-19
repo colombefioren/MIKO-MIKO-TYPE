@@ -671,23 +671,6 @@ const game = {
   },
 
   onGameComplete: async (gameStats) => {
-    if (!gameStats) {
-      console.error("No game stats provided");
-      return;
-    }
-
-    const user = await getCurrentUser();
-    if (!user) {
-      const login = confirm(
-        "You need to be logged in to save your results. Would you like to log in now?"
-      );
-
-      if (login) {
-        document.getElementById("login-modal").classList.remove("hidden");
-      }
-      return;
-    }
-
     const end = Date.now() + 1 * 1000;
 
     // go HEI!
@@ -721,6 +704,23 @@ const game = {
       mode: gameStats.mode || "normal",
       difficulty: utils.getCurrentDifficulty(),
     };
+
+    if (!gameStats) {
+      console.error("No game stats provided");
+      return;
+    }
+
+    const user = await getCurrentUser();
+    if (!user) {
+      const login = confirm(
+        "You need to be logged in to save your results. Would you like to log in now?"
+      );
+
+      if (login) {
+        document.getElementById("login-modal").classList.remove("hidden");
+      }
+      return;
+    }
 
     try {
       const savedResult = await saveGameResult(result);
