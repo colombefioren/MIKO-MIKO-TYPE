@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+  <body>
+    <div
+      id="global-loading"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden"
+    >
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blaze"
+      ></div>
+    </div>
+  </body>
+  <script>
+    function showLoading() {
+      document.getElementById("global-loading").classList.remove("hidden");
+    }
+
+    function hideLoading() {
+      document.getElementById("global-loading").classList.add("hidden");
+    }
+  </script>
+</html>

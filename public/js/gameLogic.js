@@ -11,6 +11,7 @@ const shareWpmElement = document.getElementById("share-wpm");
 const shareAccuracyElement = document.getElementById("share-accuracy");
 const shareMessageElement = document.getElementById("share-message");
 
+
 // Cache DOM elements
 const elements = {
   modeForm: document.getElementById("mode-form"),
@@ -725,24 +726,23 @@ async function updateUserAverages(userId) {
     }
 
     // Calculate averages
-    const totalWpm = results.reduce(
-      (sum, result) => sum + (parseFloat(result.wpm) || 0),
-      0
-    );
-    const totalAccuracy = results.reduce(
-      (sum, result) => sum + (parseFloat(result.accuracy) || 0),
+    const maxAvg = results.reduce(
+      (acc, result) => (acc < result.wpm ? result.wpm : acc),
       0
     );
 
-    const avgWpm = (totalWpm / results.length).toFixed(2);
-    const avgAccuracy = (totalAccuracy / results.length).toFixed(2);
+    const maxAcc = results.reduce(
+      (acc, result) => acc < result.accuracy ? result.accuracy : acc,
+      0
+    )
+
 
     // Update user profile
     const { error: updateError } = await supabase
       .from("profiles")
       .update({
-        wpm_avg: avgWpm,
-        accuracy_avg: avgAccuracy,
+        wpm_avg: maxAvg,
+        accuracy_avg: maxAcc,
       })
       .eq("id", userId);
 

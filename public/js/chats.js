@@ -1,19 +1,42 @@
 import { supabase } from "./database.js";
 import { getCurrentUser } from "./auth.js";
+import {
+  setupRealtimeNotifications,
+  loadNotifications,
+} from "./notifications.js";
 
 let currentChatId = null;
 let currentContact = null;
 let user = null;
+let isUserScrollingUp = false;
+let lastScrollPosition = 0;
+const messagesContainer = document.getElementById("chat-messages");
 
 document.addEventListener("DOMContentLoaded", async () => {
   user = await getCurrentUser();
   if (user) {
-    await loadChats();
+    loadingMessages();
     setupRealtimeChat();
     setupEventListeners();
+    setupRealtimeNotifications();
   }
 });
 
+function loadingMessages() {
+  setInterval(async () => {
+    await loadChats();
+    if (currentChatId && !isUserScrollingUp) {
+      const messages = await getMessages(currentChatId);
+      renderMessages(messages);
+      await markMessagesAsRead(currentChatId);
+    }
+  }, 1000);
+}
+messagesContainer.addEventListener("scroll", () => {
+  const currentScrollPosition = messagesContainer.scrollTop;
+  isUserScrollingUp = currentScrollPosition < lastScrollPosition;
+  lastScrollPosition = currentScrollPosition;
+});
 // Chat functions
 export async function createChat(otherUserId) {
   try {
@@ -49,21 +72,22 @@ export async function createChat(otherUserId) {
 
 export async function getChats() {
   try {
- 
     const {
       data: { user },
-      error: userError
+      error: userError,
     } = await supabase.auth.getUser();
 
     if (userError) throw userError;
 
     const { data: chats, error } = await supabase
       .from("chats")
-      .select(`
+      .select(
+        `
         *,
         user1:user1_id (id, username, avatar_url),
         user2:user2_id (id, username, avatar_url)
-      `)
+      `
+      )
       .or(`user1_id.eq.${user.id},user2_id.eq.${user.id}`)
       .order("updated_at", { ascending: false });
 
@@ -90,7 +114,7 @@ export async function getChats() {
         return {
           ...chat,
           last_message: lastMessage || null,
-          unread_count: unreadMessages?.length || 0
+          unread_count: unreadMessages?.length || 0,
         };
       })
     );
@@ -228,6 +252,10 @@ function renderChats(chats) {
 }
 
 export async function openChatConversation(contactName, chatId, contactAvatar) {
+  if (currentChatId && currentChatId !== chatId) {
+    await markMessagesAsRead(currentChatId);
+  }
+
   currentChatId = chatId;
   currentContact = contactName;
 
@@ -250,16 +278,23 @@ export async function openChatConversation(contactName, chatId, contactAvatar) {
   try {
     const messages = await getMessages(chatId);
     renderMessages(messages);
+    scrollToBottom();
     await markMessagesAsRead(chatId);
     await loadChats(); // refresh chat list to update unread counts
   } catch (error) {
     console.error("Error loading messages:", error);
   }
 }
-
 function renderMessages(messages) {
-  const messagesContainer = document.getElementById("chat-messages");
-  messagesContainer.innerHTML = "";
+  const currentMessageCount = messagesContainer.querySelectorAll(".message-container").length;
+  if (Math.abs(messages.length - currentMessageCount) > 1 || messages.length === 0) {
+    messagesContainer.innerHTML = "";
+  } else if (messages.length === currentMessageCount) {
+    return;
+  }
+
+  const previousScrollHeight = messagesContainer.scrollHeight;
+  const previousScrollTop = messagesContainer.scrollTop;
 
   if (messages.length === 0) {
     messagesContainer.innerHTML = `
@@ -320,7 +355,23 @@ function renderMessages(messages) {
     });
   }
 
-  // scroll to bottom
+  const isNewMessageFromUser = messages[messages.length - 1]?.sender_id === user.id;
+  const wasNearBottom = isScrolledToBottom();
+  
+  if ((!isUserScrollingUp && wasNearBottom) || isNewMessageFromUser) {
+    scrollToBottom();
+  } else {
+    const newScrollHeight = messagesContainer.scrollHeight;
+    messagesContainer.scrollTop = previousScrollTop + (newScrollHeight - previousScrollHeight);
+  }
+}
+
+function isScrolledToBottom() {
+  const { scrollTop, scrollHeight, clientHeight } = messagesContainer;
+  return Math.abs(scrollHeight - scrollTop - clientHeight) < 50; 
+}
+
+function scrollToBottom() {
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
@@ -358,30 +409,48 @@ async function sendChatMessage() {
     // reload messages to show the new one
     const messages = await getMessages(currentChatId);
     renderMessages(messages);
+    loadChats();
+
+    // scroll to bottom
+    scrollToBottom();
   } catch (error) {
     console.error("Error sending message:", error);
   }
 }
 
 function setupRealtimeChat() {
+  const existingChannels = supabase.getChannels();
+  existingChannels.forEach((channel) => {
+    if (
+      channel.topic === "realtime:public:messages" ||
+      channel.topic === "realtime:public:chats"
+    ) {
+      supabase.removeChannel(channel);
+    }
+  });
+
   const messagesChannel = supabase
     .channel("messages_changes")
     .on(
       "postgres_changes",
       {
-        event: "INSERT",
+        event: "*",
         schema: "public",
         table: "messages",
-        filter: `chat_id=eq.${currentChatId}`,
+        filter: `chat_id=in.(${getUserChatIds()})`,
       },
       async (payload) => {
-        //update if the new message isn't from the current user
-        if (payload.new.sender_id !== user.id) {
+        if (payload.new.chat_id === currentChatId) {
           const messages = await getMessages(currentChatId);
           renderMessages(messages);
           await markMessagesAsRead(currentChatId);
-          await loadChats(); //update chat list with new unread counts
+
+          // scroll to bottom if the new message is from the other user
+          if (payload.new.sender_id !== user.id) {
+            scrollToBottom();
+          }
         }
+        await loadChats(); 
       }
     )
     .subscribe();
@@ -406,6 +475,22 @@ function setupRealtimeChat() {
     supabase.removeChannel(messagesChannel);
     supabase.removeChannel(chatsChannel);
   };
+}
+
+async function getUserChatIds() {
+  try {
+    const { data: chats, error } = await supabase
+      .from("chats")
+      .select("id")
+      .or(`user1_id.eq.${user.id},user2_id.eq.${user.id}`);
+
+    if (error) throw error;
+
+    return chats.map((chat) => chat.id).join(",");
+  } catch (error) {
+    console.error("Error getting user chats:", error);
+    return "";
+  }
 }
 function setupEventListeners() {
   // send on button click
@@ -438,7 +523,7 @@ async function loadFriendsForNewChat() {
   try {
     const {
       data: { user },
-      error: userError
+      error: userError,
     } = await supabase.auth.getUser();
     if (userError) throw userError;
 
@@ -490,7 +575,11 @@ async function loadFriendsForNewChat() {
       friendElement.addEventListener("click", async () => {
         const chat = await createChat(friendUser.id);
         document.getElementById("new-chat-modal").classList.add("hidden");
-        openChatConversation(friendUser.username, chat.id, friendUser.avatar_url);
+        openChatConversation(
+          friendUser.username,
+          chat.id,
+          friendUser.avatar_url
+        );
       });
 
       friendsList.appendChild(friendElement);
@@ -499,7 +588,6 @@ async function loadFriendsForNewChat() {
     console.error("Error loading friends:", error);
   }
 }
-
 
 function formatChatDate(dateString) {
   if (!dateString) return "";

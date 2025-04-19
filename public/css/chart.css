@@ -1,0 +1,10 @@
+#stats-chart {
+  width: 100%;
+  height: calc(100% - 60px);
+  min-height: 400px;
+}
+
+#stats-modal .bg-midnight {
+  width: 95%;
+  max-width: 1200px;
+}

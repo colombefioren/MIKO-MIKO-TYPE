@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-async function loadNotifications() {
+
+
+
+export async function loadNotifications() {
   try {
     const { data: notifications, error } = await supabase
       .from("notifications")
@@ -102,37 +105,49 @@ function renderNotifications(notifications) {
   });
 }
 
-function setupRealtimeNotifications() {
+export function setupRealtimeNotifications() {
+  const existingChannels = supabase.getChannels();
+  existingChannels.forEach(channel => {
+    if (channel.topic === 'realtime:public:notifications') {
+      supabase.removeChannel(channel);
+    }
+  });
+
   const channel = supabase
-    .channel("notifications_changes")
+    .channel('notifications_changes')
     .on(
-      "postgres_changes",
+      'postgres_changes',
       {
-        event: "INSERT",
-        schema: "public",
-        table: "notifications",
-        filter: `recipient_id=eq.${user.id}`,
+        event: '*',
+        schema: 'public',
+        table: 'notifications',
+        filter: `recipient_id=eq.${user.id}`
       },
-      (payload) => {
-        // Add new notification to the top
-        const container = document.getElementById("notifications-container");
-        if (
-          container.children.length > 0 &&
-          container.children[0].classList.contains("text-center")
-        ) {
-          container.innerHTML = "";
+      async (payload) => {
+        await loadNotifications();
+        
+        if (payload.eventType === 'INSERT') {
+          showNewNotificationIndicator();
         }
-
-        const notificationElement = createNotificationElement(payload.new);
-        container.insertBefore(notificationElement, container.firstChild);
-
-        // Show a toast or badge count update
-        updateNotificationBadge();
       }
     )
     .subscribe();
 
   return () => supabase.removeChannel(channel);
+}
+
+// Add this helper function
+function showNewNotificationIndicator() {
+  const badge = document.getElementById('notification-badge');
+  if (badge) {
+    badge.classList.remove('hidden');
+    badge.classList.add('animate-pulse');
+    
+    // Stop animation after 2 seconds
+    setTimeout(() => {
+      badge.classList.remove('animate-pulse');
+    }, 2000);
+  }
 }
 
 function formatNotificationDate(dateString) {

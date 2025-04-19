@@ -417,7 +417,6 @@ function setupPostInteractions() {
           ? `<span class="text-blaze like-span">Liked</span>`
           : `<span class="like-span">Like</span>`;
 
-        // Optionally update the like count
         const postElement = btn.closest(".bg-midnight");
         const likeCountSpan = postElement.querySelector(".text-dusk span");
         likeCountSpan.textContent = `${updatedPost.likes_count || 0} likes`;

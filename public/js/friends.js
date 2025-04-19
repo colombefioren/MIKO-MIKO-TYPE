@@ -545,7 +545,7 @@ function setupEventListeners() {
       return;
     }
 
-    // Set new timeout to debounce the search
+    // set new timeout to debounce the search
     searchTimeout = setTimeout(async () => {
       const users = await searchUsers(searchTerm);
       renderSearchResults(users);
