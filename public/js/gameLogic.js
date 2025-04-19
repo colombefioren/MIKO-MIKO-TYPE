@@ -663,8 +663,22 @@ const game = {
       console.error("No game stats provided");
       return;
     }
+
     const difficulty = utils.getCurrentDifficulty();
-    resultStats(gameStats.wpm, gameStats.accuracy, difficulty);
+    try {
+      resultStats(gameStats.wpm, gameStats.accuracy, difficulty);
+
+      await saveGameResult({
+        wpm: gameStats.wpm,
+        accuracy: gameStats.accuracy,
+        difficulty: difficulty,
+      });
+
+    } catch (error) {
+      console.error("Error saving game results:", error);
+      // still show results even if save failed
+      resultStats(gameStats.wpm, gameStats.accuracy, difficulty);
+    }
   },
 };
 
@@ -775,10 +789,9 @@ async function saveGameResult(result) {
   }
 
   const completeResult = {
-    wpm: result.wpm || 0,
-    accuracy: result.accuracy || 0,
-    mode: result.mode || "normal",
-    difficulty: result.difficulty || "normal",
+    wpm: parseFloat(result.wpm) || 0,
+    accuracy: parseFloat(result.accuracy) || 0,
+    mode: result.difficulty || "easy",
   };
 
   const user = await getCurrentUser();
