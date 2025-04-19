@@ -11,7 +11,6 @@ const shareWpmElement = document.getElementById("share-wpm");
 const shareAccuracyElement = document.getElementById("share-accuracy");
 const shareMessageElement = document.getElementById("share-message");
 
-
 // Cache DOM elements
 const elements = {
   modeForm: document.getElementById("mode-form"),
@@ -672,10 +671,27 @@ const game = {
   },
 
   onGameComplete: async (gameStats) => {
+    if (!gameStats) {
+      console.error("No game stats provided");
+      return;
+    }
+
+    const user = await getCurrentUser();
+    if (!user) {
+      const login = confirm(
+        "You need to be logged in to save your results. Would you like to log in now?"
+      );
+
+      if (login) {
+        document.getElementById("login-modal").classList.remove("hidden");
+      }
+      return;
+    }
+
     const end = Date.now() + 1 * 1000;
 
-    // go Buckeyes!
-    const colors = ["#ffa62f", "#2596d1"];
+    // go HEI!
+    const colors = ["#ffa62f", "#2596d1", "#ffffff"];
 
     (function frame() {
       confetti({
@@ -698,22 +714,6 @@ const game = {
         requestAnimationFrame(frame);
       }
     })();
-
-    if (!gameStats) {
-      console.error("No game stats provided");
-      return;
-    }
-
-    const user = await getCurrentUser();
-    if (!user) {
-      const login = confirm(
-        "You need to be logged in to save your results. Would you like to log in now?"
-      );
-      if (login) {
-        loginModal.classList.remove("hidden");
-      }
-      return;
-    }
 
     const result = {
       wpm: gameStats.wpm || 0,
@@ -809,10 +809,9 @@ async function updateUserAverages(userId) {
     );
 
     const maxAcc = results.reduce(
-      (acc, result) => acc < result.accuracy ? result.accuracy : acc,
+      (acc, result) => (acc < result.accuracy ? result.accuracy : acc),
       0
-    )
-
+    );
 
     // Update user profile
     const { error: updateError } = await supabase
