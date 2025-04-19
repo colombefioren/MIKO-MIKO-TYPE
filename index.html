@@ -409,7 +409,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Login Modal -->
     <div
       id="login-modal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -477,7 +477,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Signup Modal -->
     <div
       id="signup-modal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -612,9 +612,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </div>
       </div>
     </div>
+    <!--notif-->
+
     <div
       id="notification-result"
-      class="fixed top-10 w-full items-end justify-center hidden z-40"
+      class="fixed top-10 w-full items-end justify-center hidden z-50"
     >
       <div
         id="notification-text"

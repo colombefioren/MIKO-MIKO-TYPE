@@ -1,6 +1,7 @@
 import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
 import { createChat, openChatConversation } from "./chats.js";
+import { showNotification } from "./gameLogic.js";
 
 const buttons = document.querySelectorAll(".button-links");
 const buttonTexts = document.querySelectorAll(".button-text");
@@ -400,7 +401,7 @@ function renderFriends({ friendRequests, friends }) {
       <div class="text-center py-12 text-dusk">
         <i class="fas fa-user-friends text-5xl mb-4"></i>
         <h3 class="text-slate-200 font-bold text-lg mb-2">No friends yet</h3>
-        <p class="text-azure">Add friends to start chatting and racing</p>
+        <p class="text-azure">Add friends to start chatting</p>
       </div>
     `;
     container.appendChild(noFriendsSection);
@@ -573,7 +574,7 @@ async function openChatWithUser(userId) {
     switchTab("chat", 0);
   } catch (error) {
     console.error("Error opening chat:", error);
-    alert("Failed to open chat. Please try again.");
+    showNotification("Failed to open chat. Please try again.", "error");
   }
 }
 // handle friend request (accept/reject)

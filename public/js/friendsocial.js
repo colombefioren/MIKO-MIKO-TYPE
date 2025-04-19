@@ -8,7 +8,9 @@ import {
   toggleLike,
 } from "./socials.js";
 import { hideLoading, showLoading } from "./utils.js";
+import { showNotification } from "./gameLogic.js";
 
+const postErrorMessage = document.getElementById("error-message-post");
 let selectedImageFile = null;
 let user;
 let hashtags = [];
@@ -56,12 +58,20 @@ function setupImageUpload() {
       const maxSize = 5 * 1024 * 1024; // 5MB
 
       if (!validTypes.includes(file.type)) {
-        alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
+        postErrorMessage.textContent =
+          "Please upload a valid image file (JPEG, PNG, GIF, or WebP)";
+
+        setTimeout(() => (postErrorMessage.textContent = ""), 3000);
+
         return;
       }
 
       if (file.size > maxSize) {
-        alert("Image size must be less than 5MB");
+        (postErrorMessage.textContent = "Image size must be less than 5MB"),
+          "error";
+
+        setTimeout(() => (postErrorMessage.textContent = ""), 3000);
+
         return;
       }
 
@@ -95,7 +105,7 @@ function setupUnauthenticatedPostForm() {
       <input type="text" placeholder="Log in to create posts" class="bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none flex-1" readonly>
     </div>
     <div class="flex justify-end">
-      <button class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors" id="login-to-post-btn">
+      <button class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors cursor-pointer" id="login-to-post-btn">
         Log In
       </button>
     </div>
@@ -116,7 +126,11 @@ document
     const content = document.getElementById("post-content-input").value.trim();
 
     if (!title && !content && !selectedImageFile) {
-      alert("Please add at least a title, content, or image to your post");
+      postErrorMessage.textContent =
+        "Please add at least a title, content, or image to your post";
+
+      setTimeout(() => (postErrorMessage.textContent = ""), 3000);
+
       return;
     }
 
@@ -145,7 +159,7 @@ document
       await loadPosts();
     } catch (error) {
       console.error("Error creating post:", error);
-      alert("Failed to create post");
+      showNotification("Failed to create post", "error");
     }
   });
 
@@ -350,16 +364,16 @@ function showLoginPrompt(action) {
     <div class="bg-midnight rounded-xl p-6 max-w-sm w-full border border-lightabyss">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-slate-200 font-bold text-lg">Login Required</h3>
-        <button class="text-dusk hover:text-slate-200 close-login-prompt">
+        <button class="text-dusk hover:text-slate-200 close-login-prompt cursor-pointer">
           <i class="fas fa-times"></i>
         </button>
       </div>
       <p class="text-slate-200 mb-4">You need to log in to ${action}.</p>
       <div class="flex gap-3">
-        <button class="flex-1 bg-blaze text-white py-2 rounded-lg font-medium hover:bg-blaze/90 transition-colors" id="prompt-login-btn">
+        <button class="flex-1 bg-blaze cursor-pointer text-white py-2 rounded-lg font-medium hover:bg-blaze/90 transition-colors" id="prompt-login-btn">
           Log In
         </button>
-        <button class="flex-1 bg-frost text-midnight py-2 rounded-lg font-medium hover:bg-frost/90 transition-colors" id="prompt-signup-btn">
+        <button class="flex-1 cursor-pointer bg-frost text-midnight py-2 rounded-lg font-medium hover:bg-frost/90 transition-colors" id="prompt-signup-btn">
           Sign Up
         </button>
       </div>
@@ -677,7 +691,7 @@ function updateHashtagsPreview() {
       "bg-lightabyss/30 text-azure px-3 py-1 rounded-full text-sm flex items-center";
     tagElement.innerHTML = `
       #${tag}
-      <button class="ml-1 text-dusk hover:text-slate-200 remove-hashtag" data-index="${index}">
+      <button class="ml-1 text-dusk hover:text-slate-200 remove-hashtag cursor-pointer" data-index="${index}">
         <i class="fas fa-times text-xs"></i>
       </button>
     `;

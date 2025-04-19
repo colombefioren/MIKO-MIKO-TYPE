@@ -8,7 +8,7 @@ import {
   uploadAvatar,
 } from "./auth.js";
 // import { saveGameResult } from "./gameLogic.js";
-import { createPost } from "./socials.js";
+import { showNotification } from "./gameLogic.js";
 
 // DOM Elements
 const loginBtn = document.getElementById("login-btn");
@@ -54,7 +54,6 @@ switchToLogin.addEventListener("click", () => {
 loginForm.addEventListener("submit", handleLogin);
 signupForm.addEventListener("submit", handleSignup);
 
-
 checkAuthState();
 
 supabase.auth.onAuthStateChange((_event, session) => {
@@ -86,12 +85,9 @@ async function handleSignup(e) {
 
     signupModal.classList.add("hidden");
     signupForm.reset();
-    alert(
-      "Account created successfully! Please check your email for verification."
-    );
-    location.reload();
+    showNotification("Please verify your email!","success");
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -101,7 +97,7 @@ async function handleLogout() {
     await signOut();
     location.reload();
   } catch (error) {
-    alert(error.message);
+    console.log(error.message);
   }
 }
 
@@ -137,8 +133,6 @@ function updateUIForGuest() {
   userMenu.classList.add("hidden");
 }
 
-
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await checkAuthState();
@@ -161,7 +155,7 @@ async function handleLogin(e) {
     location.reload();
   } catch (error) {
     console.error("Login error:", error);
-    alert(`Login failed: ${error.message}`);
+    showNotification(`Login failed : ${error.message}`, "error");
   }
 }
 async function handleAvatarUpload(file) {
@@ -177,12 +171,15 @@ async function handleAvatarUpload(file) {
     const maxSize = 5 * 1024 * 1024; // 5MB
 
     if (!validTypes.includes(file.type)) {
-      alert("Please upload a valid image file (JPEG, PNG, GIF, or WebP)");
+      showNotification(
+        "Please upload a valid image file (JPEG, PNG, GIF, or WebP)",
+        "error"
+      );
       return null;
     }
 
     if (file.size > maxSize) {
-      alert("Image size must be less than 5MB");
+      showNotification("Image size must be less than 5MB", "error");
       return null;
     }
 
@@ -204,11 +201,11 @@ async function handleAvatarUpload(file) {
       errorMessage = "File is too large (max 5MB)";
     }
 
-    alert(errorMessage);
+    showNotification(errorMessage);
     return null;
   }
 }
-let avatarInput = null; 
+let avatarInput = null;
 
 function addAvatarUploadHandler() {
   if (!avatarInput) {

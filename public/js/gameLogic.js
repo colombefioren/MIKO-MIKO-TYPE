@@ -673,7 +673,6 @@ const game = {
         accuracy: gameStats.accuracy,
         difficulty: difficulty,
       });
-
     } catch (error) {
       console.error("Error saving game results:", error);
       // still show results even if save failed
@@ -753,34 +752,33 @@ function resultStats(wpm, accuracy, difficulty) {
       resultModal.classList.remove("flex");
       resultModal.classList.add("hidden");
     });
-  function showNotification(message, type = "success") {
-    const notification = document.getElementById("notification-result");
-    const messageEl = document.getElementById("notification-message-result");
-    const notificationText = document.getElementById("notification-text");
-
-    messageEl.textContent = message;
-
-    // Show notification
-    notification.classList.remove("hidden");
-    notification.classList.add("flex");
-
-    // Add type-specific color
-    if (type === "success") {
-      notificationText.classList.add("bg-azure");
-    } else if (type === "error") {
-      notificationText.classList.add("bg-red-500");
-    } else {
-      notificationText.classList.add("bg-blaze");
-    }
-
-    // Hide after 3 seconds
-    setTimeout(() => {
-      notification.classList.add("hidden");
-      notification.classList.remove("flex");
-    }, 3000);
-  }
 }
+export function showNotification(message, type = "success") {
+  const notification = document.getElementById("notification-result");
+  const messageEl = document.getElementById("notification-message-result");
+  const notificationText = document.getElementById("notification-text");
 
+  messageEl.textContent = message;
+
+  // Show notification
+  notification.classList.remove("hidden");
+  notification.classList.add("flex");
+
+  // Add type-specific color
+  if (type === "success") {
+    notificationText.classList.add("bg-azure");
+  } else if (type === "error") {
+    notificationText.classList.add("bg-red-500");
+  } else {
+    notificationText.classList.add("bg-blaze");
+  }
+
+  // Hide after 3 seconds
+  setTimeout(() => {
+    notification.classList.add("hidden");
+    notification.classList.remove("flex");
+  }, 6000);
+}
 // Database operations
 async function saveGameResult(result) {
   if (!result) {
