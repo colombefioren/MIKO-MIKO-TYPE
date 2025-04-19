@@ -35,7 +35,7 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
-  wordCount: 3,
+  wordCount: 5,
   activeListeners: new Set(),
 };
 
@@ -214,15 +214,10 @@ const contentDictionaries = {
       "Array.from()",
       "Array.of()",
       "requestAnimationFrame()",
-      "new Set()",
-      "new Map()",
-      "new WeakMap()",
-      "new WeakSet()",
       "Object.prototype",
       "Function.prototype",
       "Array.prototype",
       "String.prototype",
-      "new Proxy()",
       "Reflect.get()",
       "Reflect.set()",
       "Reflect.has()",
@@ -676,6 +671,33 @@ const game = {
   },
 
   onGameComplete: async (gameStats) => {
+    const end = Date.now() + 1 * 1000;
+
+    // go Buckeyes!
+    const colors = ["#ffa62f", "#2596d1"];
+
+    (function frame() {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors,
+      });
+
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors,
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+
     if (!gameStats) {
       console.error("No game stats provided");
       return;
