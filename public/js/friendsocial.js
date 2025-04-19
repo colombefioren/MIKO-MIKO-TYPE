@@ -105,7 +105,7 @@ function setupUnauthenticatedPostForm() {
       <input type="text" placeholder="Log in to create posts" class="bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none flex-1" readonly>
     </div>
     <div class="flex justify-end">
-      <button class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors" id="login-to-post-btn">
+      <button class="bg-blaze text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors cursor-pointer" id="login-to-post-btn">
         Log In
       </button>
     </div>
@@ -364,16 +364,16 @@ function showLoginPrompt(action) {
     <div class="bg-midnight rounded-xl p-6 max-w-sm w-full border border-lightabyss">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-slate-200 font-bold text-lg">Login Required</h3>
-        <button class="text-dusk hover:text-slate-200 close-login-prompt">
+        <button class="text-dusk hover:text-slate-200 close-login-prompt cursor-pointer">
           <i class="fas fa-times"></i>
         </button>
       </div>
       <p class="text-slate-200 mb-4">You need to log in to ${action}.</p>
       <div class="flex gap-3">
-        <button class="flex-1 bg-blaze text-white py-2 rounded-lg font-medium hover:bg-blaze/90 transition-colors" id="prompt-login-btn">
+        <button class="flex-1 bg-blaze cursor-pointer text-white py-2 rounded-lg font-medium hover:bg-blaze/90 transition-colors" id="prompt-login-btn">
           Log In
         </button>
-        <button class="flex-1 bg-frost text-midnight py-2 rounded-lg font-medium hover:bg-frost/90 transition-colors" id="prompt-signup-btn">
+        <button class="flex-1 cursor-pointer bg-frost text-midnight py-2 rounded-lg font-medium hover:bg-frost/90 transition-colors" id="prompt-signup-btn">
           Sign Up
         </button>
       </div>
