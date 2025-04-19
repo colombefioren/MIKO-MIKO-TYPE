@@ -142,9 +142,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       </div>
     </header>
 
-    <main
-      class="flex flex-col justify-center items-center grow relative"
-    >
+    <main class="flex flex-col 2xl:mt-60 mt-50 items-center grow relative">
       <div class="flex flex-col justify-center items-center 2xl:gap-22 gap-16">
         <div
           class="flex items-center 2xl:p-7 p-5 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight 2xl:h-16 h-14 shadow-lg shadow-crystalTwilight/30"
@@ -321,10 +319,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
               </div>
 
               <!-- Challenge Modes -->
-              <select name="word-count" id="word-count">
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+              <select name="word-count" class="cursor-pointer" id="word-count">
+                <option class="text-midnight" value="15">15</option>
+                <option class="text-midnight" value="30">30</option>
+                <option class="text-midnight" value="50">50</option>
               </select>
             </form>
           </div>
