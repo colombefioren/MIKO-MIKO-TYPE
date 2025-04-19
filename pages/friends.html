@@ -37,19 +37,19 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     </div> -->
     <div
       id="chat-conversation"
-      class="fixed 2xl:right-[450px] 2xl:bottom-5 shadow-sm shadow-black 2xl:w-[350px] 2xl:h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
+      class="fixed right-[450px] bottom-5 shadow-sm shadow-black w-[350px] h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
     >
       <div
-        class="2xl:p-4 border-b border-lightabyss flex justify-between items-center"
+        class="p-4 border-b border-lightabyss flex justify-between items-center"
       >
         <div class="flex items-center">
           <img
             id="chat-contact-avatar"
             src="../public/assets/images/profile-picture.png"
             alt="Profile"
-            class="2xl:w-8 2xl:h-8 rounded-full"
+            class="2xl:size-8 size-6 rounded-full"
           />
-          <div class="text-slate-200 font-bold 2xl:ml-2" id="chat-contact-name">
+          <div class="text-slate-200 font-bold ml-2" id="chat-contact-name">
             Loading...
           </div>
         </div>
@@ -66,26 +66,26 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       <!-- Messages Container with custom scrollbar -->
       <div
         id="chat-messages"
-        class="flex-1 2xl:p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-blaze/50 scrollbar-track-midnight hover:scrollbar-thumb-blaze/70 scrollbar-thumb-rounded-full scrollbar-track-rounded-full transition-colors duration-300"
+        class="flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-blaze/50 scrollbar-track-midnight hover:scrollbar-thumb-blaze/70 scrollbar-thumb-rounded-full scrollbar-track-rounded-full transition-colors duration-300"
       >
         <div class="flex items-center justify-center h-full">
           <div class="text-dusk text-center">
-            <i class="fas fa-comments 2xl:text-4xl 2xl:mb-2"></i>
+            <i class="fas fa-comments 2xl:text-4xl mb-2"></i>
             <p>Select a conversation to start chatting</p>
           </div>
         </div>
       </div>
 
-      <div class="2xl:p-4 border-t border-lightabyss">
-        <div class="flex 2xl:gap-2">
+      <div class="2xl:p-4 p-2 border-t border-lightabyss">
+        <div class="flex gap-2">
           <input
             type="text"
             placeholder="Type a message..."
             id="chat-message-input"
-            class="flex-1 bg-abyss border border-lightabyss rounded-full 2xl:py-3 2xl:px-4 text-slate-200 focus:outline-none focus:border-blaze"
+            class="flex-1 bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-3 2xl:px-4 text-slate-200 focus:outline-none focus:border-blaze"
           />
           <button
-            class="bg-blaze text-white 2xl:px-4 rounded-full hover:bg-blaze/90 transition-colors cursor-pointer"
+            class="bg-blaze text-white px-2 2xl:px-4 rounded-full hover:bg-blaze/90 transition-colors cursor-pointer"
             id="chat-send-btn"
           >
             <i class="fas fa-paper-plane"></i>
@@ -99,9 +99,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl 2xl:p-6 w-full 2xl:max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-3 2xl:p-6 w-full max-w-sm 2xl:max-w-md border border-lightabyss"
       >
-        <div class="flex justify-between items-center 2xl:mb-6">
+        <div class="flex justify-between items-center mb-6">
           <h2 class="2xl:text-2xl font-bold text-white">Start New Chat</h2>
           <button
             id="close-new-chat-modal"
@@ -122,7 +122,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
+      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-50"
     >
       <img
         src="../public/assets/images/mikomiko-logo.png"
@@ -165,12 +165,12 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
     </nav>
     <main class="flex ml-[420px] justify-between 2xl:pb-5">
       <div
-        class="flex 2xl:w-[70%] w-[60%] items-center 2xl:gap-5 flex-col relative"
+        class="flex 2xl:w-[70%] w-[55%] items-center gap-5 flex-col relative"
       >
         <div
-          class="sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm w-full pt-5 pb-4 px-6 border-b border-lightabyss"
+          class="sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm 2xl:w-full w-screen pt-5 pb-4 px-6 border-b border-lightabyss"
         >
-          <div class="flex justify-end items-center w-full 2xl:gap-8">
+          <div class="flex justify-end items-center w-full gap-4 2xl:gap-8">
             <div class="flex items-center gap-2 2xl:gap-5">
               <img
                 src="../public/assets/images/blank-profile.png"
@@ -202,7 +202,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <div id="user-menu" class="hidden">
               <button
                 id="logout-btn"
-                class="bg-dusk text-white 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
+                class="bg-dusk text-white 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-full font-medium hover:bg-lightmidnight transition-colors cursor-pointer"
               >
                 Log Out
               </button>
@@ -213,43 +213,40 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         <!-- Post Creation Form -->
         <div
           id="post-creation-form"
-          class="bg-midnight border border-lightabyss rounded-3xl 2xl:p-6 2xl:mb-6"
+          class="bg-midnight border border-lightabyss rounded-3xl p-3 mb-3 2xl:p-6 2xl:mb-6"
         >
-          <div class="flex items-center 2xl:gap-3 2xl:mb-4">
+          <div class="flex items-center gap-3 mb-4">
             <img
               src="../public/assets/images/blank-profile.png"
               alt="You"
-              class="2xl:w-12 2xl:h-12 rounded-full object-cover"
+              class="2xl:size-12 size-9 rounded-full object-cover"
               id="current-user-avatar"
             />
             <div class="flex-1">
               <input
                 type="text"
                 placeholder="Post title"
-                class="bg-abyss border border-lightabyss rounded-full 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full 2xl:mb-2"
+                class="bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full mb-1 2xl:mb-2"
                 id="post-title-input"
               />
               <input
                 type="text"
                 placeholder="What's on your mind?"
-                class="bg-abyss border border-lightabyss rounded-full 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full"
+                class="bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full"
                 id="post-content-input"
               />
             </div>
           </div>
 
           <!-- Hashtag input -->
-          <div class="2xl:mb-3">
+          <div class="2xl:mb-3 mb-1">
             <input
               type="text"
               placeholder="Add hashtags (space separated)"
-              class="bg-abyss border border-lightabyss rounded-full 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full"
+              class="bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full"
               id="hashtags-input"
             />
-            <div
-              id="hashtags-preview"
-              class="flex flex-wrap 2xl:gap-2 2xl:mt-2"
-            ></div>
+            <div id="hashtags-preview" class="flex flex-wrap gap-2 mt-2"></div>
           </div>
 
           <!-- Image upload section -->
@@ -262,19 +259,19 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             />
             <button
               id="add-image-btn"
-              class="text-azure hover:text-slate-200 flex items-center 2xl:gap-2 cursor-pointer"
+              class="text-azure hover:text-slate-200 flex items-center gap-2 cursor-pointer"
             >
               <i class="fas fa-image"></i>
               <span>Add Image</span>
             </button>
-            <div id="image-preview" class="2xl:mt-2 hidden">
+            <div id="image-preview" class="mt-2 hidden">
               <img
                 id="preview-image"
-                class="2xl:max-h-60 rounded-lg w-full object-contain"
+                class="max-h-60 rounded-lg w-full object-contain"
               />
               <button
                 id="remove-image-btn"
-                class="text-blaze 2xl:mt-2 2xl:text-sm cursor-pointer"
+                class="text-blaze mt-2 2xl:text-sm cursor-pointer"
               >
                 <i class="fas fa-times"></i> Remove
               </button>
@@ -284,7 +281,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex justify-end">
             <button
               id="create-post-btn"
-              class="bg-blaze text-white cursor-pointer 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+              class="bg-blaze text-white cursor-pointer px-3 py-1 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
             >
               Post
             </button>
@@ -304,7 +301,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </div>
       </div>
       <div
-        class="2xl:w-[430px] w-[325px] h-full 2xl:pt-5 2xl:pr-5 pt-5 pr-5 mt-12 2xl:mt-0 fixed top-0 right-0"
+        class="2xl:w-[430px] w-[400px] h-full 2xl:pt-5 2xl:pr-5 pt-5 pr-5 mt-15 2xl:mt-0 fixed top-0 right-0"
       >
         <!-- <div class="flex flex-col gap-8">
           <div class="w-full h-52 bg-green-600 rounded-2xl"></div>
@@ -409,9 +406,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl 2xl:p-8 w-full 2xl:max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-8 w-full max-w-sm 2xl:max-w-md border border-lightabyss"
       >
-        <div class="flex justify-between items-center 2xl:mb-6">
+        <div class="flex justify-between items-center mb-6">
           <h2 class="2xl:text-2xl font-bold text-white">Welcome Back</h2>
           <button
             id="close-login-modal"
@@ -421,38 +418,38 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </button>
         </div>
 
-        <form id="login-form" class="2xl:space-y-4">
+        <form id="login-form" class="space-y-4">
           <div>
             <label
               for="login-email"
-              class="block 2xl:text-sm font-medium text-slate-200 2xl:mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Email</label
             >
             <input
               type="email"
               id="login-email"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="login-password"
-              class="block 2xl:text-sm font-medium text-slate-200 2xl:mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Password</label
             >
             <input
               type="password"
               id="login-password"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full bg-blaze text-white 2xl:py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
+            class="w-full bg-blaze text-white py-1 2xl:py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
           >
             Log In
           </button>
@@ -477,9 +474,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl 2xl:p-8 w-full 2xl:max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-8 w-full max-w-sm 2xl:max-w-md border border-lightabyss"
       >
-        <div class="flex justify-between items-center 2xl:mb-6">
+        <div class="flex justify-between items-center mb-6">
           <h2 class="2xl:text-2xl font-bold text-white">Create Account</h2>
           <button
             id="close-signup-modal"
@@ -489,52 +486,52 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </button>
         </div>
 
-        <form id="signup-form" class="2xl:space-y-4">
+        <form id="signup-form" class="space-y-4">
           <div>
             <label
               for="signup-email"
-              class="block 2xl:text-sm font-medium text-slate-200 2xl:mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Email</label
             >
             <input
               type="email"
               id="signup-email"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="signup-password"
-              class="block 2xl:text-sm font-medium text-slate-200 2xl:mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Password</label
             >
             <input
               type="password"
               id="signup-password"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="signup-username"
-              class="block 2xl:text-sm font-medium text-slate-200 2xl:mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Display Name</label
             >
             <input
               type="text"
               id="signup-username"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full bg-frost text-midnight 2xl:py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors cursor-pointer"
+            class="w-full bg-frost text-midnight py-1 2xl:py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors cursor-pointer"
           >
             Sign Up
           </button>
@@ -557,11 +554,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
     <div
       id="notification-result"
-      class="fixed 2xl:top-10 w-full items-end justify-center hidden z-50"
+      class="fixed top-10 w-full items-end justify-center hidden z-50"
     >
       <div
         id="notification-text"
-        class="2xl:px-6 2xl:py-4 rounded-lg shadow-lg 2xl:text-lg text-white font-medium 2xl:max-w-xs text-center"
+        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs text-center"
       >
         <p id="notification-message-result">You results</p>
       </div>
