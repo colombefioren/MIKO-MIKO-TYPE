@@ -46,6 +46,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
       >
         <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
+        <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
       </div>
       <div class="logo-container absolute">
         <img
@@ -309,6 +310,22 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   >Code</span
                 >
               </label>
+
+              <!-- Glass Divider -->
+              <div
+                class="2xl:h-8 h-6 w-[1px] 2xl:mx-2 mx-1.5 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent animate-shine"
+                ></div>
+              </div>
+
+              <!-- Challenge Modes -->
+              <select name="word-count" id="word-count">
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+              </select>
             </form>
           </div>
         </div>
