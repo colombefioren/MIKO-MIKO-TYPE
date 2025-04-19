@@ -366,7 +366,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         <div class="relative ml-[90px]">
           <div
             id="pointer-focus"
-            class="hidden justify-center items-center text-dusk gap-5 absolute -z-10 w-full h-full"
+            class="hidden justify-center items-center text-dusk gap-5 absolute top-[50%] left-[50%] translate-[-50%] -z-10 w-full h-full min-w-2xl"
           >
             <i class="fa-solid fa-arrow-pointer"></i>
             <p>Click here or press any key to focus</p>
@@ -384,7 +384,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
               class="text-textPrimary leading-[70px] tracking-[2px]"
               id="word-display"
             ></p>
-            <div id="typing-cursor" class="absolute h-10 w-0.5 bg-white"></div>
+            <div
+              id="typing-cursor"
+              class="absolute h-10 w-0.5 bg-white blink"
+            ></div>
           </div>
         </div>
 
@@ -395,7 +398,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Login Modal -->
     <div
       id="login-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -463,7 +466,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Signup Modal -->
     <div
       id="signup-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -542,7 +545,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!--result popup modal-->
     <div
       id="share-results-modal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -593,10 +596,10 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </div>
       </div>
     </div>
-    
 
     <script type="module" src="./public/js/gameLogic.js"></script>
     <script src="./public/js/navbar.js"></script>
     <script type="module" src="./public/js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
   </body>
 </html>

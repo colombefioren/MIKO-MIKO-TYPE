@@ -18,3 +18,16 @@
   display: inline-block;
   width: 0.5em; /* Ensure consistent space width */
 }
+
+.blink {
+  animation: blink 1s infinite alternate-reverse;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
