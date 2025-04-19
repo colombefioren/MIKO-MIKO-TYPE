@@ -328,12 +328,7 @@ function renderPosts(posts) {
           <i class="fa-solid fa-comment"></i>
           <span>Comment</span>
         </button>
-        <button class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 share-btn cursor-pointer" data-post-id="${
-          post.id
-        }">
-          <i class="fas fa-share"></i>
-          <span>Share</span>
-        </button>
+       
       </div>
 
       <div class="hidden comments-section" id="comments-section-${post.id}">
@@ -616,13 +611,6 @@ function setupPostInteractions() {
           console.error("Error creating comment:", error);
         }
       }
-    });
-  });
-
-  document.querySelectorAll(".share-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (!user) return showLoginPrompt("share posts");
-      console.log("Sharing post:", btn.dataset.postId);
     });
   });
 }
