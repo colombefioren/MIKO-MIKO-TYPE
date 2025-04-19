@@ -49,15 +49,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }, 10);
 });
 document.addEventListener("DOMContentLoaded", function () {
-  const chevron = document.querySelector(".chevron");
+
   const nav = document.querySelector("nav");
   const linkContainer = document.querySelector(".link-container");
 
   linkContainer.classList.toggle("px-7");
-  chevron.addEventListener("click", function () {
-    nav.classList.toggle("collapsed");
-    linkContainer.classList.toggle("px-7");
-  });
+
 });
 
 document.querySelectorAll(".category-item").forEach((item) => {
