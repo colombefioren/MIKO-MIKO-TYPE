@@ -31,7 +31,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
   </head>
 
   <body
-    class="flex flex-col bg-abyss justify-center min-h-screen prevent-select relative"
+    class="flex flex-col bg-abyss justify-center items-center min-h-screen prevent-select relative"
   >
     <div
       id="success-share-message"
@@ -40,14 +40,16 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 collapsed z-50"
+      class="fixed bg-midnight top-0 left-0 h-full w-[369px] flex flex-col items-center py-5 collapsed z-50"
     >
       <div
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
       >
-        <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
+        <i
+          class="fa-solid fa-chevron-left text-white text-3xl"
+        ></i>
       </div>
-      <div class="logo-container">
+      <div class="logo-container absolute">
         <img
           src="./public/assets/images/mikomiko-logo.png"
           alt="Miko-Miko Type Logo"
@@ -55,26 +57,8 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         />
       </div>
 
-      <div class="flex gap-10">
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <img
-            src="./public/assets/images/events.jpg"
-            alt="People typing"
-            class="w-full bg-white h-20 object-cover"
-          />
-          <div class="bg-lightmidnight w-full text-white text-center font-bold">
-            EVENTS
-          </div>
-        </div>
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <div class="w-full bg-slate-500 h-20"></div>
-          <div class="bg-lightmidnight w-full text-white text-center font-bold">
-            WHEEL
-          </div>
-        </div>
-      </div>
       <ul
-        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        class="flex flex-col mt-10 gap-6 w-full relative link-container top-[50%] translate-y-[-50%]"
         id="nav-list"
       >
         <!-- Highlight background -->
@@ -82,12 +66,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
         <!-- Navigation buttons -->
         <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="#">
-            <i class="fa-solid fa-keyboard text-3xl button-icon"></i>
+          <a class="flex text-dusk items-center gap-15 href="#">
+            <i
+              class="fa-solid fa-keyboard text-3xl button-icon"
+            ></i>
             <div class="text-xl font-bold button-text">Type</div>
           </a>
         </li>
-        <li class="pl-6 button-links py-[14px] relative">
+        <li class="pl-6  button-links py-[14px] relative">
           <a
             class="flex text-dusk items-center gap-15"
             href="./pages/profile.html"
@@ -98,11 +84,15 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </li>
         <li class="pl-6 button-links py-[14px] relative">
           <a
-            class="flex text-dusk items-center gap-15"
+            class="flex text-dusk items-center gap-15 "
             href="./pages/friends.html"
           >
-            <i class="fa-solid fa-users text-[27px] button-icon"></i>
-            <div class="text-xl font-bold button-text">Community</div>
+            <i
+              class="fa-solid fa-users text-[27px] button-icon"
+            ></i>
+            <div class="text-xl font-bold button-text">
+              Community
+            </div>
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
@@ -110,68 +100,74 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             class="flex text-dusk items-center gap-15"
             href="./pages/boards.html"
           >
-            <i class="fa-solid fa-medal text-[34px] button-icon"></i>
+            <i
+              class="fa-solid fa-medal text-[34px] button-icon"
+            ></i>
             <div class="text-xl font-bold button-text">Boards</div>
           </a>
         </li>
       </ul>
     </nav>
     <header
-      class="flex text-white justify-end items-center gap-10 p-7 fixed top-0 left-0 right-0 bg-abyss/80 backdrop-blur-sm z-10"
+      class="flex text-white justify-end items-center 2xl:gap-10 gap-6 2xl:p-7 p-5 fixed top-0 left-0 right-0 bg-abyss/80 backdrop-blur-sm z-10"
     >
-    <div class="flex gap-5">
-      <img
-        src="./public/assets/images/blank-profile.png"
-        alt="Profile picture"
-        class="w-12 h-12 rounded-full object-cover"
-        id="profile-picture"
-      />
-      <div id="user-info">
-        <div class="flex gap-5 items-center">
-          <p class="font-bold text-subtlegray" id="username">Guest</p>
+      <div class="flex 2xl:gap-5 gap-3">
+        <img
+          src="./public/assets/images/blank-profile.png"
+          alt="Profile picture"
+          class="2xl:w-12 2xl:h-12 w-10 h-10 rounded-full object-cover"
+          id="profile-picture"
+        />
+        <div id="user-info">
+          <div class="flex 2xl:gap-5 gap-3 items-center">
+            <p class="font-bold text-subtlegray" id="username">Guest</p>
+          </div>
+          <p class="text-dusk 2xl:text-base text-sm" id="account-id">
+            Not logged in
+          </p>
         </div>
-        <p class="text-dusk" id="account-id">Not logged in</p>
       </div>
-    </div>
-    <div id="auth-buttons" class="flex gap-4">
-      <button
-        id="login-btn"
-        class="bg-blaze cursor-pointer text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
-      >
-        Log In
-      </button>
-      <button
-        id="signup-btn"
-        class="bg-frost cursor-pointer text-midnight px-6 py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
-      >
-        Sign Up
-      </button>
-    </div>
-    <div id="user-menu" class="hidden">
-      <button
-        id="logout-btn"
-        class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
-      >
-        Log Out
-      </button>
-    </div>
+      <div id="auth-buttons" class="flex 2xl:gap-4 gap-3">
+        <button
+          id="login-btn"
+          class="border border-blaze cursor-pointer text-blaze 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-sm font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+        >
+          Log In
+        </button>
+        <button
+          id="signup-btn"
+          class="bg-blaze cursor-pointer text-midnight 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-sm font-medium hover:bg-frost transition-colors"
+        >
+          Sign Up
+        </button>
+      </div>
+      <div id="user-menu" class="hidden">
+        <button
+          id="logout-btn"
+          class="bg-dusk text-white 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-full font-medium hover:bg-lightmidnight transition-colors cursor-pointer"
+        >
+          Log Out
+        </button>
+      </div>
     </header>
 
-    <main class="flex flex-col justify-center items-center mt-28 grow">
-      <div class="flex flex-col justify-center items-center gap-22">
+    <main
+      class="flex flex-col justify-center items-center 2xl:mt-28 mt-20 grow relative"
+    >
+      <div class="flex flex-col justify-center items-center 2xl:gap-22 gap-16">
         <div
-          class="flex items-center p-7 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight h-16 shadow-lg shadow-crystalTwilight/30"
+          class="flex items-center 2xl:p-7 p-5 rounded-full bg-gradient-to-r from-crystalMidnight to-midnight 2xl:h-16 h-14 shadow-lg shadow-crystalTwilight/30"
         >
           <div class="w-full">
             <form
               action=""
               id="mode-form"
-              class="flex flex-wrap justify-center gap-2 text-white items-center"
+              class="flex flex-wrap justify-center 2xl:gap-2 gap-1.5 text-white items-center"
             >
               <!-- Difficulty Levels -->
               <label
                 for="easy"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-seedling text-emerald-300 group-hover:scale-110 transition-transform"
@@ -184,12 +180,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   class="absolute w-0 h-0 opacity-0"
                   checked
                 />
-                <span class="font-medium tracking-wide">Easy</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Easy</span
+                >
               </label>
 
               <label
                 for="medium"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-mountain text-amber-400 group-hover:scale-110 transition-transform"
@@ -201,12 +199,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="medium"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Medium</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Medium</span
+                >
               </label>
 
               <label
                 for="hard"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-bolt text-rose-500 group-hover:scale-110 transition-transform"
@@ -218,12 +218,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="hard"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Hard</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Hard</span
+                >
               </label>
 
               <!-- Glass Divider -->
               <div
-                class="h-8 w-[1px] mx-2 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
+                class="2xl:h-8 h-6 w-[1px] 2xl:mx-2 mx-1.5 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
               >
                 <div
                   class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent animate-shine"
@@ -231,10 +233,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
               </div>
 
               <!-- Content Types -->
-              <!-- Content Types (Checkboxes) -->
               <label
                 for="words"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-font text-sky-300 group-hover:scale-110 transition-transform"
@@ -247,12 +248,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   class="absolute w-0 h-0 opacity-0"
                   checked
                 />
-                <span class="font-medium tracking-wide">Words</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Words</span
+                >
               </label>
 
               <label
                 for="symbols"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-asterisk text-teal-300 group-hover:scale-110 transition-transform"
@@ -264,12 +267,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="symbols"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Symbols</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Symbols</span
+                >
               </label>
 
               <label
                 for="numbers"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-hashtag text-indigo-300 group-hover:scale-110 transition-transform"
@@ -281,12 +286,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="numbers"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Numbers</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Numbers</span
+                >
               </label>
 
               <label
                 for="code"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-code text-blue-300 group-hover:scale-110 transition-transform"
@@ -298,12 +305,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="code"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Code</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Code</span
+                >
               </label>
 
               <!-- Glass Divider -->
               <div
-                class="h-8 w-[1px] mx-2 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
+                class="2xl:h-8 h-6 w-[1px] 2xl:mx-2 mx-1.5 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
               >
                 <div
                   class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent animate-shine"
@@ -313,7 +322,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
               <!-- Challenge Modes -->
               <label
                 for="timed"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-stopwatch text-yellow-300 group-hover:scale-110 transition-transform"
@@ -325,12 +334,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="timed"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Timed</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Timed</span
+                >
               </label>
 
               <label
                 for="target"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-bullseye text-green-300 group-hover:scale-110 transition-transform"
@@ -342,12 +353,14 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="target"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Target WPM</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Target WPM</span
+                >
               </label>
 
               <label
                 for="zen"
-                class="mode-option group flex gap-3 cursor-pointer items-center px-4 py-2 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
+                class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
               >
                 <i
                   class="fas fa-spa text-fuchsia-300 group-hover:scale-110 transition-transform"
@@ -359,20 +372,22 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                   value="zen"
                   class="absolute w-0 h-0 opacity-0"
                 />
-                <span class="font-medium tracking-wide">Zen</span>
+                <span class="font-medium tracking-wide 2xl:text-base text-sm"
+                  >Zen</span
+                >
               </label>
             </form>
           </div>
         </div>
-        <div class="relative ml-[90px]">
+        <div class="relative 2xl:ml-[90px] ml-[90px]">
           <div
             id="pointer-focus"
-            class="hidden justify-center items-center text-dusk gap-5 absolute top-[50%] left-[50%] translate-[-50%] -z-10 w-full h-full min-w-2xl"
+            class="hidden justify-center items-center text-dusk 2xl:gap-5 gap-3 absolute top-[50%] left-[50%] translate-[-50%] -z-10 w-full h-full 2xl:min-w-2xl min-w-xl"
           >
             <i class="fa-solid fa-arrow-pointer"></i>
             <p>Click here or press any key to focus</p>
           </div>
-          <div id="text-field" class="relative px-16">
+          <div id="text-field" class="relative 2xl:px-16 px-10">
             <input
               class="border border-slate-300 text-white w-full h-full absolute top-0 left-0 right-0 z-10 opacity-0"
               type="text"
@@ -382,19 +397,41 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
               autocomplete="false"
             />
             <p
-              class="text-textPrimary leading-[70px] tracking-[2px]"
+              class="text-textPrimary 2xl:leading-[70px] leading-[50px] 2xl:tracking-[2px] tracking-[1.5px]"
               id="word-display"
             ></p>
             <div
               id="typing-cursor"
-              class="absolute h-10 w-0.5 bg-white blink"
+              class="absolute 2xl:h-10 h-8 w-0.5 bg-white blink"
             ></div>
           </div>
         </div>
 
-        <p id="results" class="text-white">Results :</p>
-        <p id="total_result" class="text-white text-center">TOTAL SCORE :</p>
+        <p id="results" class="text-white 2xl:text-base text-sm">Results :</p>
+        <p
+          id="total_result"
+          class="text-white text-center 2xl:text-base text-sm"
+        >
+          TOTAL SCORE :
+        </p>
       </div>
+      <!-- Footer -->
+      <div
+        class="2xl:p-6 p-4 text-center text-dusk absolute 2xl:bottom-20 bottom-16 2xl:text-sm text-xs 2xl:space-y-5 space-y-3"
+      >
+        <p>
+          <span class="bg-lightabyss p-1 rounded">Tab</span> - restart the test
+        </p>
+        <p>
+          <span class="bg-lightabyss p-1 rounded">Ctrl</span> +
+          <span class="bg-lightabyss p-1 rounded">Esc</span> - toggle the navbar
+        </p>
+      </div>
+      <footer
+        class="2xl:p-6 p-4 text-center text-dusk border-t border-lightabyss absolute bottom-0 2xl:text-xs text-[10px]"
+      >
+        <p>© 2025 Miko-Miko Type. All rights reserved.</p>
+      </footer>
     </main>
     <!-- Login Modal -->
     <div
@@ -402,55 +439,57 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl 2xl:p-8 p-6 w-full 2xl:max-w-md max-w-sm border border-lightabyss"
       >
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
+        <div class="flex justify-between items-center 2xl:mb-6 mb-4">
+          <h2 class="2xl:text-2xl text-xl font-bold text-white">
+            Welcome Back
+          </h2>
           <button
             id="close-login-modal"
             class="text-dusk hover:text-white cursor-pointer"
           >
-            <i class="fas fa-times text-xl"></i>
+            <i class="fas fa-times 2xl:text-xl text-lg"></i>
           </button>
         </div>
 
-        <form id="login-form" class="space-y-4">
+        <form id="login-form" class="2xl:space-y-4 space-y-3">
           <div>
             <label
               for="login-email"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm text-xs font-medium text-slate-200 mb-1"
               >Email</label
             >
             <input
               type="email"
               id="login-email"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 px-3 2xl:py-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="login-password"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm text-xs font-medium text-slate-200 mb-1"
               >Password</label
             >
             <input
               type="password"
               id="login-password"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 px-3 2xl:py-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss hover:cursor-pointer transition-colors mt-5"
+            class="w-full bg-blaze text-white 2xl:py-3 py-2 rounded-lg font-medium hover:bg-frost hover:text-abyss hover:cursor-pointer transition-colors 2xl:mt-5 mt-4"
           >
             Log In
           </button>
 
-          <div class="text-center text-dusk text-sm">
+          <div class="text-center text-dusk 2xl:text-sm text-xs">
             Don't have an account?
             <button
               type="button"
@@ -470,69 +509,71 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl 2xl:p-8 p-6 w-full 2xl:max-w-md max-w-sm border border-lightabyss"
       >
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Create Account</h2>
+        <div class="flex justify-between items-center 2xl:mb-6 mb-4">
+          <h2 class="2xl:text-2xl text-xl font-bold text-white">
+            Create Account
+          </h2>
           <button
             id="close-signup-modal"
             class="text-dusk hover:text-white cursor-pointer"
           >
-            <i class="fas fa-times text-xl"></i>
+            <i class="fas fa-times 2xl:text-xl text-lg"></i>
           </button>
         </div>
 
-        <form id="signup-form" class="space-y-4">
+        <form id="signup-form" class="2xl:space-y-4 space-y-3">
           <div>
             <label
               for="signup-email"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm text-xs font-medium text-slate-200 mb-1"
               >Email</label
             >
             <input
               type="email"
               id="signup-email"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 px-3 2xl:py-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="signup-password"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm text-xs font-medium text-slate-200 mb-1"
               >Password</label
             >
             <input
               type="password"
               id="signup-password"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 px-3 2xl:py-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="signup-username"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm text-xs font-medium text-slate-200 mb-1"
               >Display Name</label
             >
             <input
               type="text"
               id="signup-username"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg 2xl:px-4 px-3 2xl:py-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss hover:cursor-pointer transition-colors mt-5"
+            class="w-full bg-blaze text-white 2xl:py-3 py-2 rounded-lg font-medium hover:bg-frost hover:text-abyss hover:cursor-pointer transition-colors 2xl:mt-5 mt-4"
           >
             Sign Up
           </button>
 
-          <div class="text-center text-dusk text-sm">
+          <div class="text-center text-dusk 2xl:text-sm text-xs">
             Already have an account?
             <button
               type="button"
@@ -549,64 +590,75 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!--results share-->
     <div
       id="results-to-share"
-      class="bg-abyss hidden absolute w-full z-50 text-white h-full flex-col items-center justify-center p-4"
+      class="bg-abyss hidden absolute w-full z-50 text-white h-full flex-col items-center justify-center 2xl:p-4 p-3"
     >
       <div
-        class="bg-midnight rounded-xl p-8 border border-lightabyss shadow-lg flex flex-col justify-between w-[95%] relative"
+        class="bg-midnight rounded-xl 2xl:p-8 p-6 border border-lightabyss shadow-lg flex flex-col justify-between w-[95%]"
       >
-        <h1 class="text-2xl font-bold text-center mb-6">Your Typing Results</h1>
+        <h1 class="2xl:text-2xl text-xl font-bold text-center 2xl:mb-6 mb-4">
+          Your Typing Results
+        </h1>
 
-        <div class="mb-6 h-[500px] w-full">
+        <div class="2xl:mb-6 mb-4 2xl:h-[500px] h-[400px] w-full">
           <div class="chart-container h-full">
             <canvas id="results-chart"></canvas>
           </div>
         </div>
 
-        <div class="text-center mb-8">
-          <div class="text-5xl font-bold text-blaze mb-2" id="results-wpm">
+        <div class="text-center 2xl:mb-8 mb-6">
+          <div
+            class="2xl:text-5xl text-4xl font-bold text-blaze mb-2"
+            id="results-wpm"
+          >
             0
           </div>
-          <div class="text-lg">Words Per Minute</div>
+          <div class="2xl:text-lg text-base">Words Per Minute</div>
         </div>
 
-        <div class="flex gap-10 mb-8 w-full justify-center">
+        <div class="flex 2xl:gap-10 gap-8 2xl:mb-8 mb-6 w-full justify-center">
           <div class="text-center">
-            <div class="text-2xl font-bold" id="results-accuracy">0%</div>
-            <div class="text-sm text-dusk">Accuracy</div>
+            <div class="2xl:text-2xl text-xl font-bold" id="results-accuracy">
+              0%
+            </div>
+            <div class="2xl:text-sm text-xs text-dusk">Accuracy</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold" id="results-difficulty">Easy</div>
-            <div class="text-sm text-dusk">Difficulty</div>
+            <div class="2xl:text-2xl text-xl font-bold" id="results-difficulty">
+              Easy
+            </div>
+            <div class="2xl:text-sm text-xs text-dusk">Difficulty</div>
           </div>
         </div>
 
-        <div class="flex items-center justify-center w-full gap-10">
+        <div class="flex items-center justify-center w-full 2xl:gap-10 gap-6">
           <button
             id="share-results-btn"
-            class="w-[30%] bg-blaze text-white py-3 rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors cursor-pointer"
+            class="w-[30%] bg-blaze text-white 2xl:py-3 py-2 rounded-lg font-medium hover:bg-frost hover:text-abyss transition-colors cursor-pointer"
           >
             <i class="fas fa-share mr-2"></i> Share Results
           </button>
 
           <button
             id="try-again-btn"
-            class="w-[30%] border border-blaze text-blaze cursor-pointer py-3 rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
+            class="w-[30%] border border-blaze text-blaze cursor-pointer 2xl:py-3 py-2 rounded-lg font-medium hover:bg-frost hover:border-frost hover:text-abyss transition-colors"
           >
             Try Again
           </button>
         </div>
 
-        <div id="login-prompt" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
- 
-          <div class="p-4 bg-abyss rounded-lg text-center shadow-lg">
-            <p class="text-sm text-white">You need to log in to share your results</p>
-            <button
-              id="login-redirect-btn"
-              class="text-blaze hover:underline mt-2 cursor-pointer"
-            >
-              Log In Now
-            </button>
-          </div>
+        <div
+          id="login-prompt"
+          class="hidden 2xl:mt-4 mt-3 2xl:p-3 p-2 bg-abyss rounded-lg text-center"
+        >
+          <p class="2xl:text-sm text-xs">
+            You need to log in to share your results
+          </p>
+          <button
+            id="login-redirect-btn"
+            class="text-blaze hover:underline 2xl:mt-2 mt-1 cursor-pointer"
+          >
+            Log In Now
+          </button>
         </div>
       </div>
     </div>
@@ -615,22 +667,28 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
 
     <div
       id="notification-result"
-      class="fixed top-10 w-full items-end justify-center hidden z-50"
+      class="fixed 2xl:top-10 top-8 w-full items-end justify-center hidden z-50"
     >
       <div
         id="notification-text"
-        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs text-center"
+        class="2xl:px-6 px-4 2xl:py-4 py-3 rounded-lg shadow-lg 2xl:text-lg text-base text-white font-medium 2xl:max-w-xs max-w-[250px] text-center"
       >
         <p id="notification-message-result"></p>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
     <!-- <script src="./public/js/chartUtils.js"></script> -->
+
     <script type="module" src="./public/js/gameLogic.js"></script>
+
     <script src="./public/js/navbar.js"></script>
+
     <script type="module" src="./public/js/login.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
   </body>
 </html>

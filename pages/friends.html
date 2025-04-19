@@ -44,7 +44,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             id="chat-contact-avatar"
             src="../public/assets/images/profile-picture.png"
             alt="Profile"
-            class="w-8 h-8 rounded-full"
+            class="2xl:size-8 size-6 rounded-full"
           />
           <div class="text-slate-200 font-bold ml-2" id="chat-contact-name">
             Loading...
@@ -67,22 +67,22 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       >
         <div class="flex items-center justify-center h-full">
           <div class="text-dusk text-center">
-            <i class="fas fa-comments text-4xl mb-2"></i>
+            <i class="fas fa-comments 2xl:text-4xl mb-2"></i>
             <p>Select a conversation to start chatting</p>
           </div>
         </div>
       </div>
 
-      <div class="p-4 border-t border-lightabyss">
+      <div class="2xl:p-4 p-2 border-t border-lightabyss">
         <div class="flex gap-2">
           <input
             type="text"
             placeholder="Type a message..."
             id="chat-message-input"
-            class="flex-1 bg-abyss border border-lightabyss rounded-full py-3 px-4 text-slate-200 focus:outline-none focus:border-blaze"
+            class="flex-1 bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-3 2xl:px-4 text-slate-200 focus:outline-none focus:border-blaze"
           />
           <button
-            class="bg-blaze text-white px-4 rounded-full hover:bg-blaze/90 transition-colors cursor-pointer"
+            class="bg-blaze text-white px-2 2xl:px-4 rounded-full hover:bg-blaze/90 transition-colors cursor-pointer"
             id="chat-send-btn"
           >
             <i class="fas fa-paper-plane"></i>
@@ -96,22 +96,22 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-6 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-3 2xl:p-6 w-full max-w-sm 2xl:max-w-md border border-lightabyss"
       >
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Start New Chat</h2>
+          <h2 class="2xl:text-2xl font-bold text-white">Start New Chat</h2>
           <button
             id="close-new-chat-modal"
             class="text-dusk hover:text-white cursor-pointer"
           >
-            <i class="fas fa-times text-xl"></i>
+            <i class="fas fa-times 2xl:text-xl"></i>
           </button>
         </div>
 
         <!-- zearch Friends -->
 
         <!-- friends List -->
-        <div class="max-h-96 overflow-y-auto" id="friends-list">
+        <div class="2xl:max-h-96 overflow-y-auto" id="friends-list">
           <!-- friends will be dynamically inserted here -->
         </div>
       </div>
@@ -119,42 +119,16 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
 
     <!--Navbar-->
     <nav
-      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-10"
+      class="fixed bg-midnight left-0 h-full w-[369px] flex flex-col items-center py-5 gap-5 z-50"
     >
-      <div
-        class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
-      >
-        <i class="fa-solid fa-chevron-left text-slate-200 text-3xl"></i>
-      </div>
       <img
         src="../public/assets/images/mikomiko-logo.png"
         alt="Miko-Miko Type Logo"
-        class="h-40"
+        class="h-40 absolute"
       />
-      <div class="flex gap-10">
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <img
-            src="../public/assets/images/events.jpg"
-            alt="People typing"
-            class="w-full bg-white h-20 object-cover"
-          />
-          <div
-            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-          >
-            EVENTS
-          </div>
-        </div>
-        <div class="rounded-md overflow-hidden flex flex-col w-28">
-          <div class="w-full bg-slate-500 h-20"></div>
-          <div
-            class="bg-lightmidnight w-full text-slate-200 text-center font-bold"
-          >
-            WHEEL
-          </div>
-        </div>
-      </div>
+
       <ul
-        class="flex flex-col mt-10 gap-6 w-full relative link-container"
+        class="flex flex-col mt-10 gap-6 w-full relative link-container top-[50%] translate-y-[-50%]"
         id="nav-list"
       >
         <div id="focus-highlight" class="focused-btn-highlight"></div>
@@ -186,36 +160,38 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         </li>
       </ul>
     </nav>
-    <main class="flex ml-[420px] justify-between pb-5">
-      <div class="flex w-[70%] items-center gap-5 flex-col relative">
+    <main class="flex ml-[420px] justify-between 2xl:pb-5">
+      <div
+        class="flex 2xl:w-[70%] w-[55%] items-center gap-5 flex-col relative"
+      >
         <div
-          class="sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm w-full pt-5 pb-4 px-6 border-b border-lightabyss"
+          class="sticky top-0 z-10 bg-abyss/80 backdrop-blur-sm 2xl:w-full w-screen pt-5 pb-4 px-6 border-b border-lightabyss"
         >
-          <div class="flex justify-end items-center w-full gap-8">
-            <div class="flex gap-5">
+          <div class="flex justify-end items-center w-full gap-4 2xl:gap-8">
+            <div class="flex items-center gap-2 2xl:gap-5">
               <img
                 src="../public/assets/images/blank-profile.png"
                 alt="Profile picture"
-                class="w-12 h-12 rounded-full object-cover"
+                class="2xl:size-12 size-9 rounded-full object-cover"
                 id="profile-picture"
               />
               <div id="user-info">
-                <div class="flex gap-5 items-center">
+                <div class="flex gap-2 2xl:gap-5 items-center">
                   <p class="font-bold text-subtlegray" id="username">Guest</p>
                 </div>
                 <p class="text-dusk" id="account-id">Not logged in</p>
               </div>
             </div>
-            <div id="auth-buttons" class="flex gap-4">
+            <div id="auth-buttons" class="flex gap-2 2xl:gap-4">
               <button
                 id="login-btn"
-                class="bg-blaze cursor-pointer text-white px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+                class="bg-blaze cursor-pointer text-white px-3 py-1 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
               >
                 Log In
               </button>
               <button
                 id="signup-btn"
-                class="bg-frost cursor-pointer text-midnight px-6 py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
+                class="bg-frost cursor-pointer text-midnight px-3 py-1 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-frost/90 transition-colors"
               >
                 Sign Up
               </button>
@@ -223,7 +199,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <div id="user-menu" class="hidden">
               <button
                 id="logout-btn"
-                class="bg-dusk text-white px-6 py-2 rounded-full font-medium hover:bg-dusk/90 transition-colors cursor-pointer"
+                class="bg-dusk text-white 2xl:px-6 px-4 2xl:py-2 py-1.5 rounded-full font-medium hover:bg-lightmidnight transition-colors cursor-pointer"
               >
                 Log Out
               </button>
@@ -234,44 +210,44 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
         <!-- Post Creation Form -->
         <div
           id="post-creation-form"
-          class="bg-midnight border border-lightabyss rounded-3xl p-6 mb-6"
+          class="bg-midnight border border-lightabyss rounded-3xl p-3 mb-3 2xl:p-6 2xl:mb-6"
         >
           <div class="flex items-center gap-3 mb-4">
             <img
               src="../public/assets/images/blank-profile.png"
               alt="You"
-              class="w-12 h-12 rounded-full object-cover"
+              class="2xl:size-12 size-9 rounded-full object-cover"
               id="current-user-avatar"
             />
             <div class="flex-1">
               <input
                 type="text"
                 placeholder="Post title"
-                class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full mb-2"
+                class="bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full mb-1 2xl:mb-2"
                 id="post-title-input"
               />
               <input
                 type="text"
                 placeholder="What's on your mind?"
-                class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
+                class="bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full"
                 id="post-content-input"
               />
             </div>
           </div>
 
           <!-- Hashtag input -->
-          <div class="mb-3">
+          <div class="2xl:mb-3 mb-1">
             <input
               type="text"
               placeholder="Add hashtags (space separated)"
-              class="bg-abyss border border-lightabyss rounded-full py-2 px-4 text-slate-200 focus:outline-none w-full"
+              class="bg-abyss border border-lightabyss rounded-full py-1 px-2 2xl:py-2 2xl:px-4 text-slate-200 focus:outline-none w-full"
               id="hashtags-input"
             />
             <div id="hashtags-preview" class="flex flex-wrap gap-2 mt-2"></div>
           </div>
 
           <!-- Image upload section -->
-          <div class="mb-4">
+          <div class="2xl:mb-4">
             <input
               type="file"
               id="post-image-input"
@@ -292,7 +268,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               />
               <button
                 id="remove-image-btn"
-                class="text-blaze mt-2 text-sm cursor-pointer"
+                class="text-blaze mt-2 2xl:text-sm cursor-pointer"
               >
                 <i class="fas fa-times"></i> Remove
               </button>
@@ -302,1048 +278,47 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div class="flex justify-end">
             <button
               id="create-post-btn"
-              class="bg-blaze text-white cursor-pointer px-6 py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
+              class="bg-blaze text-white cursor-pointer px-3 py-1 2xl:px-6 2xl:py-2 rounded-full font-medium hover:bg-blaze/90 transition-colors"
             >
               Post
             </button>
           </div>
-          <div class="text-red-600 mt-5" id="error-message-post"></div>
+          <div class="text-red-600 2xl:mt-5" id="error-message-post"></div>
         </div>
 
         <div class="w-full posts-container">
-          <div id="post-loading"></div>
-        </div>
-        <!-- Post Container -->
-
-        <div
-          class="bg-midnight w-full border border-lightabyss rounded-3xl p-6 mb-6"
-        >
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="Profile"
-                class="w-12 h-12 rounded-full object-cover"
-              />
-              <div>
-                <div class="text-slate-200 font-bold">Coco Thebest</div>
-                <div class="text-azure text-sm">2 hours ago</div>
-              </div>
-            </div>
-            <button class="text-dusk hover:text-slate-200">
-              <i class="fas fa-ellipsis-h"></i>
-            </button>
-          </div>
-
-          <!-- Post Content -->
-          <div class="mb-4">
-            <h3 class="text-slate-200 text-xl font-bold mb-4">
-              Check out my new score!
-            </h3>
-            <p class="text-lg text-slate-200">
-              Just upgraded to this WPM! Who wants to challenge me? 🚗💨
-            </p>
-            <p class="text-azure">#SpeedDemon</p>
-          </div>
-
-          <!-- Post Image -->
-          <div class="rounded-2xl overflow-hidden mb-6">
-            <img
-              src="../public/assets/images/type.png"
-              alt="Post Image"
-              class="w-full h-96 object-cover"
-            />
-          </div>
-
-          <div class="flex items-center justify-between text-dusk text-sm mb-4">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-heart text-blaze"></i>
-              <span>248 likes</span>
-            </div>
-            <div>
-              <span>12 comments</span>
-              <span class="mx-2">•</span>
-              <span>5 shares</span>
-            </div>
-          </div>
-
-          <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-            >
-              <i class="far fa-heart"></i>
-              <span>Like</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-              onclick="toggleComments('comments-section-1')"
-            >
-              <i class="fa-solid fa-comment"></i>
-              <span>Comment</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-            >
-              <i class="fas fa-share"></i>
-              <span>Share</span>
-            </button>
-          </div>
-
-          <div class="hidden" id="comments-section-1">
-            <div class="mb-4">
-              <!-- Comment 1 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/events.jpg"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    Mimi Lord
-                  </div>
-                  <p class="text-azure text-sm">
-                    That's sick! I'll race you anytime 😎
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">1h ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Comment 2 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/mikomiko-logo.png"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    Choco Ta
-                  </div>
-                  <p class="text-azure text-sm">
-                    What's the top speed on that?
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">30m ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Write comment -->
-            <div class="flex gap-3 items-center mt-4">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="You"
-                class="w-10 h-10 rounded-full object-cover"
-              />
-              <div class="flex justify-between items-center w-full">
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input-1"
-                  onkeyup="checkCommentInput(this)"
-                />
-                <button
-                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
-                  disabled
-                  onclick="postComment('comment-input-1', 'comments-section-1')"
-                >
-                  <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--Another Post-->
-        <div
-          class="bg-midnight w-full border border-lightabyss rounded-3xl p-6 mb-6"
-        >
-          <!-- Post Header -->
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="Profile"
-                class="w-12 h-12 rounded-full object-cover border border-blaze/50"
-              />
-              <div>
-                <div class="text-slate-200 font-bold">TypingTornado</div>
-                <div class="text-azure text-sm">45 minutes ago</div>
-              </div>
-            </div>
-            <button
-              class="text-dusk hover:text-slate-200 p-2 rounded-full hover:bg-lightabyss/20"
-            >
-              <i class="fas fa-ellipsis-h"></i>
-            </button>
-          </div>
-
-          <!-- Text Content -->
-          <div class="mb-6">
-            <p class="text-slate-200 text-xl font-bold mb-4">
-              Just had the most intense typing duel with @SpeedRacer! 🚀
-            </p>
-            <p class="text-slate-200 text-lg leading-relaxed">
-              We went head-to-head for 10 rounds straight - fingers flying,
-              keyboards smoking! In the end, I pulled off a new personal best of
-              142 WPM! 💻🔥 Who's up for the next challenge? Drop your fastest
-              speed below! ⬇️
-            </p>
-            <p class="text-azure">#NewRecord #LetsRace</p>
-          </div>
-
-          <!-- Post Stats -->
-          <div class="flex items-center justify-between text-dusk text-sm mb-4">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-heart text-blaze"></i>
-              <span>87 likes</span>
-            </div>
-            <div>
-              <span>23 comments</span>
-              <span class="mx-2">•</span>
-              <span>9 shares</span>
-            </div>
-          </div>
-
-          <!-- Post Actions -->
-          <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
-            >
-              <i class="far fa-heart"></i>
-              <span>Like</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
-              onclick="toggleComments('comments-section-2')"
-            >
-              <i class="fa-solid fa-comment"></i>
-              <span>Comment</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
-            >
-              <i class="fas fa-share"></i>
-              <span>Share</span>
-            </button>
-          </div>
-
-          <!-- Comments Section -->
-          <div class="hidden" id="comments-section-2">
-            <div class="mb-4">
-              <!-- Comment 1 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/events.jpg"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover border border-lightabyss"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    SpeedRacer
-                  </div>
-                  <p class="text-azure text-sm">
-                    That last round was insane! I'm coming for that record
-                    tomorrow though 😤
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">32m ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Comment 2 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/mikomiko-logo.png"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover border border-lightabyss"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    KeyboardQueen
-                  </div>
-                  <p class="text-azure text-sm">
-                    142 WPM?? That's legendary status! What keyboard are you
-                    using?
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">18m ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Write comment -->
-            <div class="flex gap-3 items-center mt-4">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="You"
-                class="w-10 h-10 rounded-full object-cover"
-              />
-              <div class="flex justify-between items-center w-full">
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input-2"
-                  onkeyup="checkCommentInput(this)"
-                />
-                <button
-                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
-                  disabled
-                  onclick="postComment('comment-input-2', 'comments-section-2')"
-                >
-                  <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!--Challenge Cards-->
-        <div class="w-full flex justify-between gap-8">
           <div
-            class="bg-midnight border border-blaze/30 rounded-3xl p-5 mb-6 overflow-hidden"
+            id="post-loading"
+            class="flex items-center justify-center hidden"
           >
-            <div class="flex items-center justify-between mb-4">
-              <h3
-                class="text-slate-200 font-bold text-xl flex items-center gap-2"
-              >
-                <i class="fas fa-bolt text-blaze"></i> Live Challenges
-              </h3>
-              <a href="#" class="text-azure text-sm hover:text-slate-200"
-                >View All</a
-              >
-            </div>
-
-            <div class="flex flex-col gap-3">
-              <!-- Challenge 1 -->
-              <div
-                class="bg-lightabyss/20 rounded-2xl p-4 hover:bg-lightabyss/40 transition-colors cursor-pointer"
-              >
-                <div class="flex items-center gap-3">
-                  <div class="bg-blaze/10 rounded-full p-2">
-                    <i class="fas fa-keyboard text-blaze text-xl"></i>
-                  </div>
-                  <div class="flex-1">
-                    <div class="text-slate-200 font-medium">
-                      Speed Demon Showdown
-                    </div>
-                    <div class="text-azure text-sm">
-                      5 participants racing now
-                    </div>
-                  </div>
-                  <button
-                    class="bg-blaze text-slate-200 px-4 py-1 rounded-full text-sm font-bold hover:bg-blaze/80"
-                  >
-                    Join
-                  </button>
-                </div>
-              </div>
-
-              <!-- Challenge 2 -->
-              <div
-                class="bg-lightabyss/20 rounded-2xl p-4 hover:bg-lightabyss/40 transition-colors cursor-pointer"
-              >
-                <div class="flex items-center gap-3">
-                  <div class="bg-frost/10 rounded-full p-2">
-                    <i class="fas fa-stopwatch text-frost text-xl"></i>
-                  </div>
-                  <div class="flex-1">
-                    <div class="text-slate-200 font-medium">
-                      3-Minute Marathon
-                    </div>
-                    <div class="text-azure text-sm">Starts in 15 minutes</div>
-                  </div>
-                  <button
-                    class="bg-frost text-midnight px-4 py-1 rounded-full text-sm font-bold hover:bg-frost/80"
-                  >
-                    Prepare
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="bg-midnight border flex-1 border-lightabyss rounded-3xl p-5 mb-6"
-          >
-            <h3 class="text-slate-200 font-bold text-xl mb-3">
-              Your Daily Progress
-            </h3>
-
-            <div class="space-y-4">
-              <!-- Progress Bar 1 -->
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-azure">Words Typed</span>
-                  <span class="text-slate-200">1,240/2,000</span>
-                </div>
-                <div class="w-full bg-lightabyss rounded-full h-2">
-                  <div
-                    class="bg-blaze h-2 rounded-full"
-                    style="width: 62%"
-                  ></div>
-                </div>
-              </div>
-
-              <!-- Progress Bar 2 -->
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span class="text-azure">Accuracy</span>
-                  <span class="text-slate-200">96% (Goal: 98%)</span>
-                </div>
-                <div class="w-full bg-lightabyss rounded-full h-2">
-                  <div
-                    class="bg-frost h-2 rounded-full"
-                    style="width: 96%"
-                  ></div>
-                </div>
-              </div>
-
-              <!-- Streak -->
-              <div
-                class="flex items-center justify-between bg-lightabyss/20 rounded-xl p-3 mt-4"
-              >
-                <div class="flex items-center gap-2">
-                  <i class="fas fa-fire text-blaze text-xl"></i>
-                  <span class="text-slate-200">7-day streak</span>
-                </div>
-                <div class="text-azure text-sm">2 more days for bonus!</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Post Container -->
-
-        <div
-          class="bg-midnight w-full border border-lightabyss rounded-3xl p-6 mb-6"
-        >
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="Profile"
-                class="w-12 h-12 rounded-full object-cover"
-              />
-              <div>
-                <div class="text-slate-200 font-bold">Coco Thebest</div>
-                <div class="text-azure text-sm">2 hours ago</div>
-              </div>
-            </div>
-            <button class="text-dusk hover:text-slate-200">
-              <i class="fas fa-ellipsis-h"></i>
-            </button>
-          </div>
-
-          <!-- Post Content -->
-          <div class="mb-4">
-            <h3 class="text-slate-200 text-xl font-bold mb-4">
-              Check out my new score!
-            </h3>
-            <p class="text-lg text-slate-200">
-              Just upgraded to this WPM! Who wants to challenge me? 🚗💨
-            </p>
-            <p class="text-azure">#SpeedDemon</p>
-          </div>
-
-          <!-- Post Image -->
-          <div class="rounded-2xl overflow-hidden mb-6">
-            <img
-              src="../public/assets/images/type.png"
-              alt="Post Image"
-              class="w-full h-96 object-cover"
-            />
-          </div>
-
-          <div class="flex items-center justify-between text-dusk text-sm mb-4">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-heart text-blaze"></i>
-              <span>248 likes</span>
-            </div>
-            <div>
-              <span>12 comments</span>
-              <span class="mx-2">•</span>
-              <span>5 shares</span>
-            </div>
-          </div>
-
-          <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-            >
-              <i class="far fa-heart"></i>
-              <span>Like</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-              onclick="toggleComments('comments-section-3')"
-            >
-              <i class="fa-solid fa-comment"></i>
-              <span>Comment</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer"
-            >
-              <i class="fas fa-share"></i>
-              <span>Share</span>
-            </button>
-          </div>
-
-          <div class="hidden" id="comments-section-3">
-            <div class="mb-4">
-              <!-- Comment 1 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/events.jpg"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    Mimi Lord
-                  </div>
-                  <p class="text-azure text-sm">
-                    That's sick! I'll race you anytime 😎
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">1h ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Comment 2 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/mikomiko-logo.png"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    Choco Ta
-                  </div>
-                  <p class="text-azure text-sm">
-                    What's the top speed on that?
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">30m ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Write comment -->
-            <div class="flex gap-3 items-center mt-4">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="You"
-                class="w-10 h-10 rounded-full object-cover"
-              />
-              <div class="flex justify-between items-center w-full">
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input-3"
-                  onkeyup="checkCommentInput(this)"
-                />
-                <button
-                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
-                  disabled
-                  onclick="postComment('comment-input-3', 'comments-section-3')"
-                >
-                  <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex justify-between w-full gap-8">
-          <!--Upcoming tournament-->
-
-          <div
-            class="bg-midnight border border-frost/30 rounded-3xl p-5 mb-6 overflow-hidden"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-white font-bold text-xl flex items-center gap-2">
-                <i class="fas fa-calendar-star text-frost"></i> Upcoming Events
-              </h3>
-              <a href="#" class="text-azure text-sm hover:text-white"
-                >See Calendar</a
-              >
-            </div>
-
-            <div class="space-y-4">
-              <!-- Event 1 -->
-              <div
-                class="bg-gradient-to-r from-lightabyss/10 to-frost/5 rounded-2xl p-4 border border-frost/10 hover:border-frost/30 transition-colors"
-              >
-                <div class="flex items-start gap-3">
-                  <div class="bg-frost/10 rounded-lg p-2 text-center min-w-14">
-                    <div class="text-frost font-bold text-lg">15</div>
-                    <div class="text-azure text-xs">JUN</div>
-                  </div>
-                  <div class="flex-1">
-                    <div class="text-white font-medium">
-                      Global Typing Championship
-                    </div>
-                    <div class="text-azure text-sm mt-1">
-                      $5,000 prize pool • 9:00 PM UTC
-                    </div>
-                    <div class="flex gap-2 mt-2">
-                      <span
-                        class="bg-frost/10 text-frost text-xs px-2 py-1 rounded-full"
-                        >Pro</span
-                      >
-                      <span
-                        class="bg-lightabyss/30 text-azure text-xs px-2 py-1 rounded-full"
-                        >100+ participants</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Event 2 -->
-              <div
-                class="bg-gradient-to-r from-lightabyss/10 to-blaze/5 rounded-2xl p-4 border border-blaze/10 hover:border-blaze/30 transition-colors"
-              >
-                <div class="flex items-start gap-3">
-                  <div class="bg-blaze/10 rounded-lg p-2 text-center min-w-14">
-                    <div class="text-blaze font-bold text-lg">22</div>
-                    <div class="text-azure text-xs">JUN</div>
-                  </div>
-                  <div class="flex-1">
-                    <div class="text-white font-medium">
-                      Beginner's Bootcamp
-                    </div>
-                    <div class="text-azure text-sm mt-1">
-                      Free entry • 7:00 PM UTC
-                    </div>
-                    <div class="flex gap-2 mt-2">
-                      <span
-                        class="bg-blaze/10 text-blaze text-xs px-2 py-1 rounded-full"
-                        >Newbies</span
-                      >
-                      <span
-                        class="bg-lightabyss/30 text-azure text-xs px-2 py-1 rounded-full"
-                        >Coached session</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!--Achievement Friends-->
-          <div
-            class="bg-midnight border border-lightabyss rounded-3xl p-5 mb-6 flex-1"
-          >
-            <h3 class="text-white font-bold text-xl mb-4">
-              Friends' Milestones
-            </h3>
-
-            <div class="space-y-4">
-              <!-- Achievement 1 -->
-              <div class="flex items-center gap-3">
-                <img
-                  src="../public/assets/images/events.jpg"
-                  class="w-12 h-12 rounded-full object-cover"
-                />
-                <div class="flex-1">
-                  <p class="text-white text-sm">
-                    <span class="font-bold">SpeedRacer</span> unlocked
-                    <span class="text-blaze">100 WPM Club</span>
-                  </p>
-                  <p class="text-azure text-xs mt-1">
-                    New personal best: 102 WPM
-                  </p>
-                </div>
-                <div class="bg-blaze/10 text-blaze p-2 rounded-lg">
-                  <i class="fas fa-trophy"></i>
-                </div>
-              </div>
-
-              <!-- Achievement 2 -->
-              <div class="flex items-center gap-3">
-                <img
-                  src="../public/assets/images/mikomiko-logo.png"
-                  class="w-12 h-12 rounded-full object-cover"
-                />
-                <div class="flex-1">
-                  <p class="text-white text-sm">
-                    <span class="font-bold">KeyboardQueen</span> completed
-                    <span class="text-frost">30-Day Challenge</span>
-                  </p>
-                  <p class="text-azure text-xs mt-1">Perfect attendance!</p>
-                </div>
-                <div class="bg-frost/10 text-frost p-2 rounded-lg">
-                  <i class="fas fa-medal"></i>
-                </div>
-              </div>
-
-              <!-- Achievement 3 -->
-              <div class="flex items-center gap-3">
-                <img
-                  src="../public/assets/images/profile-picture.png"
-                  class="w-12 h-12 rounded-full object-cover"
-                />
-                <div class="flex-1">
-                  <p class="text-white text-sm">
-                    <span class="font-bold">TypingTornado</span> reached
-                    <span class="text-green-400">Level 20</span>
-                  </p>
-                  <p class="text-azure text-xs mt-1">Top 5% of players</p>
-                </div>
-                <div class="bg-green-400/10 text-green-400 p-2 rounded-lg">
-                  <i class="fas fa-level-up-alt"></i>
-                </div>
-              </div>
-              <!-- Achievement 4 -->
-              <div class="flex items-center gap-3">
-                <img
-                  src="../public/assets/images/events.jpg"
-                  class="w-12 h-12 rounded-full object-cover"
-                />
-                <div class="flex-1">
-                  <p class="text-white text-sm">
-                    <span class="font-bold">SpeedRacer</span> unlocked
-                    <span class="text-blaze">100 WPM Club</span>
-                  </p>
-                  <p class="text-azure text-xs mt-1">
-                    New personal best: 102 WPM
-                  </p>
-                </div>
-                <div class="bg-blaze/10 text-blaze p-2 rounded-lg">
-                  <i class="fas fa-trophy"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--News-->
-        <div class="bg-midnight border border-blaze/20 rounded-3xl p-6 mb-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="bg-blaze/20 p-3 rounded-full">
-              <i class="fas fa-crown text-blaze text-xl"></i>
-            </div>
-            <div>
-              <div class="text-white font-bold">Miko-Miko Official</div>
-              <div class="text-azure text-sm">
-                System Announcement • 1 hour ago
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <h3 class="text-white text-xl font-bold mb-2">
-              🏆 New Leaderboard Champion!
-            </h3>
-            <p class="text-slate-200 text-lg">
-              We have a new typing king!
-              <span class="text-blaze font-bold">@cocothebest18</span> has
-              claimed the #1 spot with an incredible
-              <span class="text-azure">162 WPM average</span> across 50 races!
-            </p>
-          </div>
-
-          <div class="bg-lightabyss/30 rounded-2xl p-4 flex items-center gap-4">
-            <img
-              src="../public/assets/images/profile-picture.png"
-              alt="New Leader"
-              class="w-16 h-16 rounded-full object-cover border-2 border-blaze"
-            />
-            <div>
-              <div class="text-white font-bold">Coco TheBest</div>
-              <div class="text-azure text-sm">Joined 3 months ago</div>
-              <div class="flex gap-2 mt-1">
-                <span
-                  class="bg-blaze/10 text-blaze text-xs px-2 py-1 rounded-full"
-                  >162 WPM</span
-                >
-                <span
-                  class="bg-lightabyss text-azure text-xs px-2 py-1 rounded-full"
-                  >98.7% Accuracy</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="flex justify-end mt-4">
-            <button
-              class="text-azure text-sm hover:text-white flex items-center gap-1"
-            >
-              View Leaderboard <i class="fas fa-chevron-right text-xs"></i>
-            </button>
-          </div>
-        </div>
-        <!--Another Post-->
-        <div
-          class="bg-midnight w-full border border-lightabyss rounded-3xl p-6 mb-6"
-        >
-          <!-- Post Header -->
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="Profile"
-                class="w-12 h-12 rounded-full object-cover border border-blaze/50"
-              />
-              <div>
-                <div class="text-slate-200 font-bold">TypingTornado</div>
-                <div class="text-azure text-sm">45 minutes ago</div>
-              </div>
-            </div>
-            <button
-              class="text-dusk hover:text-slate-200 p-2 rounded-full hover:bg-lightabyss/20"
-            >
-              <i class="fas fa-ellipsis-h"></i>
-            </button>
-          </div>
-
-          <!-- Text Content -->
-          <div class="mb-6">
-            <p class="text-slate-200 text-xl font-bold mb-4">
-              Just had the most intense typing duel with @SpeedRacer! 🚀
-            </p>
-            <p class="text-slate-200 text-lg leading-relaxed">
-              We went head-to-head for 10 rounds straight - fingers flying,
-              keyboards smoking! In the end, I pulled off a new personal best of
-              142 WPM! 💻🔥 Who's up for the next challenge? Drop your fastest
-              speed below! ⬇️
-            </p>
-            <p class="text-azure">#NewRecord #LetsRace</p>
-          </div>
-
-          <!-- Post Stats -->
-          <div class="flex items-center justify-between text-dusk text-sm mb-4">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-heart text-blaze"></i>
-              <span>87 likes</span>
-            </div>
-            <div>
-              <span>23 comments</span>
-              <span class="mx-2">•</span>
-              <span>9 shares</span>
-            </div>
-          </div>
-
-          <!-- Post Actions -->
-          <div class="flex border-t border-b border-lightabyss py-2 mb-4">
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
-            >
-              <i class="far fa-heart"></i>
-              <span>Like</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
-              onclick="toggleComments('comments-section-4')"
-            >
-              <i class="fa-solid fa-comment"></i>
-              <span>Comment</span>
-            </button>
-            <button
-              class="flex-1 flex items-center justify-center gap-2 text-dusk hover:text-slate-200 py-2 comment-toggle-btn cursor-pointer transition-colors"
-            >
-              <i class="fas fa-share"></i>
-              <span>Share</span>
-            </button>
-          </div>
-
-          <!-- Comments Section -->
-          <div class="hidden" id="comments-section-4">
-            <div class="mb-4">
-              <!-- Comment 1 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/events.jpg"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover border border-lightabyss"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    SpeedRacer
-                  </div>
-                  <p class="text-azure text-sm">
-                    That last round was insane! I'm coming for that record
-                    tomorrow though 😤
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">32m ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Comment 2 -->
-              <div class="flex gap-3 mb-3">
-                <img
-                  src="../public/assets/images/mikomiko-logo.png"
-                  alt="Commenter"
-                  class="w-10 h-10 rounded-full object-cover border border-lightabyss"
-                />
-                <div class="w-fit bg-lightabyss rounded-2xl p-3">
-                  <div class="text-slate-200 font-bold text-sm mb-1">
-                    KeyboardQueen
-                  </div>
-                  <p class="text-azure text-sm">
-                    142 WPM?? That's legendary status! What keyboard are you
-                    using?
-                  </p>
-                  <div class="flex items-center gap-3 mt-1">
-                    <span class="text-dusk text-xs">18m ago</span>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Like
-                    </button>
-                    <button class="text-dusk text-xs hover:text-slate-200">
-                      Reply
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Write comment -->
-            <div class="flex gap-3 items-center mt-4">
-              <img
-                src="../public/assets/images/profile-picture.png"
-                alt="You"
-                class="w-10 h-10 rounded-full object-cover"
-              />
-              <div class="flex justify-between items-center w-full">
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  class="bg-abyss border w-[96%] focus:outline-none border-lightabyss rounded-4xl py-6 px-10 text-slate-200 text-sm pr-12"
-                  id="comment-input-4"
-                  onkeyup="checkCommentInput(this)"
-                />
-                <button
-                  class="send-comment-btn cursor-pointer text-frost opacity-50 cursor-not-allowed"
-                  disabled
-                  onclick="postComment('comment-input-4', 'comments-section-4')"
-                >
-                  <i class="fas fa-paper-plane text-2xl cursor-pointer"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!--New Future enhancements-->
-        <div class="bg-midnight border border-frost/20 rounded-3xl p-6 mb-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="bg-frost/20 p-3 rounded-full">
-              <i class="fas fa-magic text-frost text-xl"></i>
-            </div>
-            <div>
-              <div class="text-white font-bold">Miko-Miko Updates</div>
-              <div class="text-azure text-sm">New Feature • 2 days ago</div>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <h3 class="text-slate-200 text-xl font-bold mb-2">
-              ✨ New Practice Mode Available!
-            </h3>
-            <p class="text-slate-200 text-lg">
-              We've launched
-              <span class="text-frost font-bold">Custom Drills</span> - create
-              your own typing challenges with specific word lists and difficulty
-              settings!
-            </p>
-            <ul class="list-disc list-inside text-azure mt-3 space-y-1">
-              <li>Focus on problem words</li>
-              <li>Adjust speed/accuracy weighting</li>
-              <li>Share drills with friends</li>
-            </ul>
-          </div>
-
-          <div
-            class="bg-gradient-to-r from-frost/5 to-lightabyss/10 rounded-2xl p-4 border border-frost/10"
-          >
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-slate-200 font-medium">Try it now!</div>
-                <div class="text-azure text-sm">
-                  First 100 users get bonus XP
-                </div>
-              </div>
-              <button
-                class="bg-frost text-midnight px-4 py-2 rounded-full font-bold hover:bg-frost/80 transition-colors"
-              >
-                Launch Practice
-              </button>
-            </div>
+            <div
+              class="animate-spin rounded-full 2xl:h-12 2xl:w-12 border-t-2 border-b-2 border-blaze"
+            ></div>
           </div>
         </div>
       </div>
-      <div class="w-[430px] h-full pt-5 pr-5 fixed top-0 right-0">
+      <div
+        class="2xl:w-[430px] w-[400px] h-full 2xl:pt-5 2xl:pr-5 pt-5 pr-5 mt-15 2xl:mt-0 fixed top-0 right-0"
+      >
         <!-- <div class="flex flex-col gap-8">
           <div class="w-full h-52 bg-green-600 rounded-2xl"></div>
           <div class="w-full h-32 bg-red-400 rounded-2xl"></div>
         </div> -->
         <div
-          class="w-full justify-between flex px-8 pb-4 border-b border-lightabyss relative mt-5"
+          class="w-full justify-between flex px-4 pb-2 2xl:px-8 2xl:pb-4 border-b border-lightabyss relative mt-5 2xl:mt-5"
         >
           <div
-            class="nav-item pb-2 relative cursor-pointer group"
+            class="nav-item 2xl:pb-2 pb-2 relative cursor-pointer group"
             onclick="switchTab('chat', 0)"
           >
             <div class="flex gap-2 items-center">
               <i
                 id="chat-icon"
-                class="fa-regular fa-comment-dots text-frost text-3xl"
+                class="fa-regular fa-comment-dots text-frost 2xl:text-3xl"
               ></i>
-              <div id="chat-text" class="text-dusk font-bold text-lg">Chat</div>
+              <div id="chat-text" class="text-dusk font-bold 2xl:text-lg">
+                Chat
+              </div>
             </div>
           </div>
           <div
@@ -1351,7 +326,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             onclick="switchTab('messages', 1)"
           >
             <div class="flex gap-2 items-center">
-              <div id="messages-text" class="text-dusk font-bold text-lg">
+              <div id="messages-text" class="text-dusk font-bold 2xl:text-lg">
                 Messages
               </div>
             </div>
@@ -1361,7 +336,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             onclick="switchTab('friends', 2)"
           >
             <div class="flex gap-2 items-center">
-              <div id="friends-text" class="text-dusk font-bold text-lg">
+              <div id="friends-text" class="text-dusk font-bold 2xl:text-lg">
                 Friends
               </div>
             </div>
@@ -1384,7 +359,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <div class="mt-6 flex justify-center">
               <button
                 id="new-chat-btn"
-                class="bg-blaze text-midnight font-bold py-3 px-6 rounded-3xl flex items-center gap-2 cursor-pointer"
+                class="bg-blaze text-midnight font-bold 2xl:py-3 2xl:px-6 py-1 px-3 rounded-3xl flex items-center gap-2 cursor-pointer"
               >
                 <i class="fa-solid fa-plus"></i> New Message
               </button>
@@ -1404,11 +379,11 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
             <div class="relative w-full mb-4">
               <input
                 id="search-friends-input"
-                class="bg-abyss border border-lightabyss w-full rounded-4xl py-3 px-6 h-16 text-dusk font-bold"
+                class="bg-abyss border border-lightabyss w-full rounded-4xl 2xl:py-3 py-1 px-3 2xl:px-6 2xl:h-16 h-8 text-dusk font-bold"
                 placeholder="Search Friend..."
               />
               <i
-                class="fa-solid fa-search cursor-pointer text-frost text-xl absolute right-6 -translate-y-1/2 top-1/2"
+                class="fa-solid fa-search cursor-pointer text-frost 2xl:text-xl absolute right-6 -translate-y-1/2 top-1/2"
               ></i>
             </div>
 
@@ -1428,15 +403,15 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-8 w-full max-w-sm 2xl:max-w-md border border-lightabyss"
       >
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
+          <h2 class="2xl:text-2xl font-bold text-white">Welcome Back</h2>
           <button
             id="close-login-modal"
             class="text-dusk hover:text-white cursor-pointer"
           >
-            <i class="fas fa-times text-xl"></i>
+            <i class="fas fa-times 2xl:text-xl"></i>
           </button>
         </div>
 
@@ -1444,39 +419,39 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div>
             <label
               for="login-email"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Email</label
             >
             <input
               type="email"
               id="login-email"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="login-password"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Password</label
             >
             <input
               type="password"
               id="login-password"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full bg-blaze text-white py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
+            class="w-full bg-blaze text-white py-1 2xl:py-3 rounded-lg font-medium hover:bg-blaze/90 transition-colors cursor-pointer"
           >
             Log In
           </button>
 
-          <div class="text-center text-dusk text-sm">
+          <div class="text-center text-dusk 2xl:text-sm">
             Don't have an account?
             <button
               type="button"
@@ -1496,15 +471,15 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
-        class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
+        class="bg-midnight rounded-xl p-8 w-full max-w-sm 2xl:max-w-md border border-lightabyss"
       >
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-white">Create Account</h2>
+          <h2 class="2xl:text-2xl font-bold text-white">Create Account</h2>
           <button
             id="close-signup-modal"
             class="text-dusk hover:text-white cursor-pointer"
           >
-            <i class="fas fa-times text-xl"></i>
+            <i class="fas fa-times 2xl:text-xl"></i>
           </button>
         </div>
 
@@ -1512,53 +487,53 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <div>
             <label
               for="signup-email"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Email</label
             >
             <input
               type="email"
               id="signup-email"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="signup-password"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Password</label
             >
             <input
               type="password"
               id="signup-password"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <div>
             <label
               for="signup-username"
-              class="block text-sm font-medium text-slate-200 mb-1"
+              class="block 2xl:text-sm font-medium text-slate-200 mb-1"
               >Display Name</label
             >
             <input
               type="text"
               id="signup-username"
               required
-              class="w-full bg-abyss border border-lightabyss rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
+              class="w-full bg-abyss border border-lightabyss rounded-lg px-2 py-1 2xl:px-4 2xl:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blaze"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full bg-frost text-midnight py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors cursor-pointer"
+            class="w-full bg-frost text-midnight py-1 2xl:py-3 rounded-lg font-medium hover:bg-frost/90 transition-colors cursor-pointer"
           >
             Sign Up
           </button>
 
-          <div class="text-center text-dusk text-sm">
+          <div class="text-center text-dusk 2xl:text-sm">
             Already have an account?
             <button
               type="button"

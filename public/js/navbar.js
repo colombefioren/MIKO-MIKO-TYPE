@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainElement = document.querySelector("main");
   const headerElement = document.querySelector("header");
   const linkContainer = document.querySelector(".link-container");
+  let ctrlPressed = false;
 
   chevron.addEventListener("click", function () {
     nav.classList.toggle("collapsed");
@@ -72,5 +73,19 @@ document.addEventListener("DOMContentLoaded", function () {
         linkContainer.classList.toggle("px-7");
       }
     });
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Control") {
+      ctrlPressed = true;
+    }
+    if (event.key === "Escape" && ctrlPressed) {
+      nav.classList.toggle("collapsed");
+      linkContainer.classList.toggle("px-7");
+      // Add blur when navabr is not collasped
+      mainElement.classList.toggle("blur-sm");
+      headerElement.classList.toggle("blur-sm");
+      ctrlPressed = false;
+    }
   });
 });

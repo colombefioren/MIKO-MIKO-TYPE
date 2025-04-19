@@ -508,7 +508,7 @@ const game = {
     });
 
     // Global TAB key restart
-    window.addEventListener("keydown", (event) => {
+    document.addEventListener("keydown", (event) => {
       const isInput =
         document.activeElement.tagName === "INPUT" ||
         document.activeElement.tagName === "TEXTAREA";
@@ -521,14 +521,15 @@ const game = {
             game.startTest();
             elements.inputField.focus();
           }
-          // else: normal tap - no special handling needed
+          // else: normal tap
         }
-        // else: normal tap - no special handling needed
+        // else: normal tap
       } else {
         if (event.key === "Tab") {
           event.preventDefault();
           game.startTest();
           elements.inputField.focus();
+        } else if (event.key === "Control" || event.key === "Escape") {
         } else {
           event.preventDefault();
           elements.inputField.focus();
@@ -646,7 +647,9 @@ const game = {
 
   onGameComplete: async (gameStats) => {
     const end = Date.now() + 1 * 1000;
-    const colors = ["#ffa62f", "#2596d1"];
+
+    // go HEI!
+    const colors = ["#ffa62f", "#2596d1", "#ffffff"];
 
     (function frame() {
       confetti({
@@ -669,6 +672,13 @@ const game = {
         requestAnimationFrame(frame);
       }
     })();
+
+    const result = {
+      wpm: gameStats.wpm || 0,
+      accuracy: gameStats.accuracy || 0,
+      mode: gameStats.mode || "normal",
+      difficulty: utils.getCurrentDifficulty(),
+    };
 
     if (!gameStats) {
       console.error("No game stats provided");
