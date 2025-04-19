@@ -9,7 +9,9 @@
     --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
+    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-800: oklch(44.4% 0.177 26.899);
+    --color-amber-200: oklch(92.4% 0.12 95.746);
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-amber-600: oklch(66.6% 0.179 58.318);
@@ -980,6 +982,9 @@
       background-color: color-mix(in oklab, var(--color-abyss) 80%, transparent);
     }
   }
+  .bg-amber-200 {
+    background-color: var(--color-amber-200);
+  }
   .bg-azure {
     background-color: var(--color-azure);
   }
@@ -1034,6 +1039,9 @@
   .bg-midnight {
     background-color: var(--color-midnight);
   }
+  .bg-pink-500 {
+    background-color: var(--color-pink-500);
+  }
   .bg-pink-600 {
     background-color: var(--color-pink-600);
   }
@@ -1042,6 +1050,9 @@
   }
   .bg-red-500 {
     background-color: var(--color-red-500);
+  }
+  .bg-red-700 {
+    background-color: var(--color-red-700);
   }
   .bg-slate-500 {
     background-color: var(--color-slate-500);
@@ -1710,6 +1721,11 @@
   .\32 xl\:mt-5 {
     @media (width >= 96rem) {
       margin-top: calc(var(--spacing) * 5);
+    }
+  }
+  .\32 xl\:mt-20 {
+    @media (width >= 96rem) {
+      margin-top: calc(var(--spacing) * 20);
     }
   }
   .\32 xl\:mt-28 {

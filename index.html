@@ -46,6 +46,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         class="bg-blaze rounded-full aspect-square w-12 flex justify-center items-center absolute -right-6 top-10 cursor-pointer hover:scale-110 transition-transform chevron"
       >
         <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
+        <i class="fa-solid fa-chevron-left text-white text-3xl"></i>
       </div>
       <div class="logo-container absolute">
         <img
@@ -142,7 +143,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     </header>
 
     <main
-      class="flex flex-col justify-center items-center 2xl:mt-28 mt-20 grow relative"
+      class="flex flex-col justify-center items-center grow relative"
     >
       <div class="flex flex-col justify-center items-center 2xl:gap-22 gap-16">
         <div
@@ -262,6 +263,16 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
                 >
               </label>
 
+              <!-- Glass Divider -->
+              <div
+                class="2xl:h-8 h-6 w-[1px] 2xl:mx-2 mx-1.5 bg-white/20 backdrop-blur-sm relative overflow-hidden glass-divider"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-transparent animate-shine"
+                ></div>
+              </div>
+
+              <!-- Challenge Modes -->
               <label
                 for="numbers"
                 class="mode-option group flex 2xl:gap-3 gap-2 cursor-pointer items-center 2xl:px-4 px-3 2xl:py-2 py-1.5 rounded-full transition-all duration-300 hover:bg-crystalDawn/20"
@@ -345,14 +356,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
             ></div>
           </div>
         </div>
-
-        <p id="results" class="text-white 2xl:text-base text-sm">Results :</p>
-        <p
-          id="total_result"
-          class="text-white text-center 2xl:text-base text-sm"
-        >
-          TOTAL SCORE :
-        </p>
       </div>
       <!-- Footer -->
       <div

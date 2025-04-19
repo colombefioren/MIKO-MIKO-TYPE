@@ -11,8 +11,6 @@ const initializeElements = () => {
     modeForm: document.getElementById("mode-form"),
     wordDisplay: document.getElementById("word-display"),
     inputField: document.getElementById("input-field"),
-    results: document.getElementById("results"),
-    totalResult: document.getElementById("total_result"),
     cursor: document.getElementById("typing-cursor"),
     textField: document.getElementById("text-field"),
     pointerFocus: document.getElementById("pointer-focus"),
@@ -32,6 +30,8 @@ const state = {
   wordsToType: [],
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
+  mistake: 0,
+  mistakePositions: new Set(),
   activeListeners: new Set(),
   history: {
     wpm: [],
@@ -640,7 +640,6 @@ const domHandlers = {
 
     let span;
 
-    // When cursor is at start of word
     if (currentPosition === 0) {
       span = state.charSpans.find(
         (s) =>
@@ -648,14 +647,12 @@ const domHandlers = {
           parseInt(s.dataset.charIndex) === 0
       );
     } else if (currentPosition < currentWordLength) {
-      // Cursor is before the next character
       span = state.charSpans.find(
         (s) =>
           parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
           parseInt(s.dataset.charIndex) === currentPosition
       );
     } else {
-      // At end of word — place after last visible character
       const currentWordSpans = state.charSpans.filter(
         (s) =>
           parseInt(s.dataset.wordIndex) === state.currentWordIndex &&
@@ -668,7 +665,6 @@ const domHandlers = {
       const rect = span.getBoundingClientRect();
       const wordDisplayRect = elements.wordDisplay.getBoundingClientRect();
 
-      // Use rect.left unless it's end-of-word, then use rect.right
       const isAtEnd = currentPosition >= currentWordLength;
       const cursorX = isAtEnd ? rect.right : rect.left;
 
@@ -691,7 +687,6 @@ const domHandlers = {
       }
     });
 
-    // Safely ensure at least one checkbox is checked
     const checkedCount = document.querySelectorAll(
       'input[name="content-type"]:checked'
     ).length;
@@ -729,21 +724,65 @@ const domHandlers = {
       (span) => parseInt(span.dataset.wordIndex) === state.currentWordIndex
     );
 
+    const existingExtraContainer = document.querySelector(
+      `.extra-chars-container[data-word-index="${state.currentWordIndex}"]`
+    );
+    if (existingExtraContainer) {
+      existingExtraContainer.remove();
+    }
+
     for (let i = 0; i < currentWord.length; i++) {
       const charSpan = currentWordSpans[i];
       const originalChar = currentWord[i];
       const typedChar = typed[i];
 
       if (typedChar === undefined) {
-        // Reset to original state (e.g. after backspace)
         charSpan.textContent = originalChar;
-        charSpan.style.color = ""; // Reset color
+        charSpan.style.color = "";
       } else if (typedChar === originalChar) {
         charSpan.textContent = originalChar;
-        charSpan.style.color = "white"; // Correct character
+        charSpan.style.color = "white";
       } else {
-        charSpan.textContent = typedChar; // Show incorrect char
-        charSpan.style.color = "red"; // Wrong char
+        charSpan.textContent = typedChar;
+        charSpan.style.color = "red";
+
+        if (!state.mistakePositions.has(i)) {
+          state.mistake++;
+          state.mistakePositions.add(i);
+        }
+      }
+    }
+
+    const spaceSpanIndex = currentWord.length;
+    const hasSpaceSpan =
+      currentWordSpans.length > currentWord.length &&
+      currentWordSpans[spaceSpanIndex]?.textContent === " ";
+
+    // Handle extra characters typed
+    if (typed.length > currentWord.length) {
+      const extraContainer = document.createElement("span");
+      extraContainer.className = "extra-chars-container";
+      extraContainer.dataset.wordIndex = state.currentWordIndex;
+
+      for (let i = currentWord.length; i < typed.length; i++) {
+        const extraSpan = document.createElement("span");
+        extraSpan.className = "char-span extra";
+        extraSpan.textContent = typed[i];
+        extraSpan.style.color = "red";
+        extraContainer.appendChild(extraSpan);
+
+        // Count each extra character as a mistake (only once)
+        if (!state.mistakePositions.has(i)) {
+          state.mistake++;
+          state.mistakePositions.add(i);
+          console.log("the mistakes : " + state.mistake);
+        }
+      }
+
+      if (hasSpaceSpan) {
+        currentWordSpans[spaceSpanIndex].before(extraContainer);
+      } else {
+        currentWordSpans[currentWordSpans.length - 1].after(extraContainer);
       }
     }
 
@@ -818,9 +857,7 @@ const game = {
             game.startTest();
             elements.inputField.focus();
           }
-          // else: normal tap
         }
-        // else: normal tap
       } else {
         if (event.key === "Tab") {
           event.preventDefault();
@@ -848,6 +885,8 @@ const game = {
     state.previousEndTime = null;
     state.totalStats = { wpm: 0, accuracy: 0, count: 0 };
     elements.cursor.classList.add("blink");
+    state.mistakePositions.clear();
+    state.mistake = 0;
 
     const difficulty = utils.getCurrentDifficulty();
 
@@ -857,8 +896,6 @@ const game = {
 
     domHandlers.createWordDisplay();
     elements.inputField.value = "";
-    elements.results.textContent = "";
-    elements.totalResult.textContent = "";
     domHandlers.updateCursorPosition();
   },
 
@@ -875,6 +912,7 @@ const game = {
 
     // Accuracy calculation
     let correct = 0;
+    let incorrect = state.mistake;
     const expected = state.wordsToType[state.currentWordIndex];
     const typed = elements.inputField.value;
 
@@ -882,7 +920,8 @@ const game = {
       if (typed[i] === expected[i]) correct++;
     }
 
-    const accuracy = (correct / Math.max(typed.length, expected.length)) * 100;
+    const accuracy =
+      ((correct - incorrect) / Math.max(typed.length, expected.length)) * 100;
 
     return {
       wpm: parseFloat(wpm.toFixed(2)),
@@ -918,10 +957,11 @@ const game = {
       state.totalStats.accuracy += accuracy;
       state.totalStats.count++;
 
-      elements.results.textContent = `WPM: ${wpm}, Accuracy: ${accuracy}%`;
 
       state.currentWordIndex++;
       state.previousEndTime = Date.now();
+      state.mistake = 0;
+      state.mistakePositions.clear();
 
       if (state.currentWordIndex >= state.wordsToType.length) {
         const avgWpm = (state.totalStats.wpm / state.totalStats.count).toFixed(
@@ -930,15 +970,9 @@ const game = {
         const avgAccuracy = (
           state.totalStats.accuracy / state.totalStats.count
         ).toFixed(2);
-        elements.results.textContent = "";
-
-        elements.totalResult.setAttribute("style", "white-space: pre;");
         if (avgAccuracy >= 50) {
-          elements.totalResult.textContent = `Congratulations ! \r\nTOTAL SCORE:\r\nWPM : ${avgWpm} | Accuracy : ${avgAccuracy}%`;
           await game.onGameComplete({ wpm: avgWpm, accuracy: avgAccuracy });
-        } else {
-          elements.totalResult.textContent = `Test failed, because of your accuracy: \r\nWPM: ${avgWpm} | Accuracy ${avgAccuracy}%`;
-        }
+        } 
       }
 
       elements.inputField.value = "";
