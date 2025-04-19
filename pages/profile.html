@@ -68,7 +68,7 @@
 
     <div
       id="guest-interface"
-      class="w-[80%] ml-[390px] h-[100dvh] overflow-hidden flex justify-center items-center hidden"
+      class="w-[80%] ml-[390px] h-[100dvh] 2xl:ml-[390px] ml-[350px] overflow-hidden flex justify-center items-center hidden"
     >
       <div class="text-dusk text-center">
         You have to log in to view yours and others' profile.
@@ -76,10 +76,10 @@
     </div>
     <!-- Profile Main Content -->
     <main id="user-profile" class="px-8 pb-8">
-      <div class="w-[80%] ml-[390px]">
+      <div class="w-[80%] 2xl:ml-[390px] ml-[360px]">
         <!-- Profile Header -->
         <div
-          class="pt-8 sticky top-0 z-10 bg-abyss w-full border-b border-lightabyss pb-6"
+          class="pt-8 sticky top-0 z-10 bg-abyss 2xl:w-[1000px] w-[600px] border-b border-lightabyss pb-6"
         >
           <div class="flex items-center justify-between">
             <h1 class="text-white text-3xl font-bold flex items-center gap-3">
@@ -87,14 +87,12 @@
               <span id="profile-title">User Profile</span>
             </h1>
             <div id="profile-actions">
-              <!-- Actions will be populated based on whether it's current user or another user -->
             </div>
           </div>
         </div>
 
         <!-- Profile Content -->
         <div class="flex w-full gap-5 mt-6 relative">
-          <!-- Left Column - Profile Info -->
           <div class="w-[30%] flex flex-col gap-5 sticky top-[106.4px] h-fit">
             <!-- Profile Card -->
             <div
@@ -221,8 +219,7 @@
             </div>
           </div>
 
-          <!-- Right Column - Activity -->
-          <div class="flex-1">
+          <div class="2xl:w-[1000px] w-[400px]">
             <!-- Activity Tabs -->
             <div class="flex border-b border-lightabyss mb-6">
               <button

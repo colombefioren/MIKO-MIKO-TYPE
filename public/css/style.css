@@ -473,8 +473,20 @@
   .ml-3 {
     margin-left: calc(var(--spacing) * 3);
   }
+  .ml-\[30px\] {
+    margin-left: 30px;
+  }
   .ml-\[90px\] {
     margin-left: 90px;
+  }
+  .ml-\[300px\] {
+    margin-left: 300px;
+  }
+  .ml-\[350px\] {
+    margin-left: 350px;
+  }
+  .ml-\[360px\] {
+    margin-left: 360px;
   }
   .ml-\[390px\] {
     margin-left: 390px;
@@ -649,6 +661,9 @@
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
+  .w-\[00px\] {
+    width: 00px;
+  }
   .w-\[1px\] {
     width: 1px;
   }
@@ -658,8 +673,14 @@
   .w-\[30\%\] {
     width: 30%;
   }
+  .w-\[40\%\] {
+    width: 40%;
+  }
   .w-\[55\%\] {
     width: 55%;
+  }
+  .w-\[70\%\] {
+    width: 70%;
   }
   .w-\[80\%\] {
     width: 80%;
@@ -678,6 +699,15 @@
   }
   .w-\[400px\] {
     width: 400px;
+  }
+  .w-\[600px\] {
+    width: 600px;
+  }
+  .w-\[900px\] {
+    width: 900px;
+  }
+  .w-\[1000px\] {
+    width: 1000px;
   }
   .w-fit {
     width: fit-content;
@@ -1791,6 +1821,16 @@
       margin-left: 90px;
     }
   }
+  .\32 xl\:ml-\[390px\] {
+    @media (width >= 96rem) {
+      margin-left: 390px;
+    }
+  }
+  .\32 xl\:ml-\[420px\] {
+    @media (width >= 96rem) {
+      margin-left: 420px;
+    }
+  }
   .\32 xl\:size-8 {
     @media (width >= 96rem) {
       width: calc(var(--spacing) * 8);
@@ -1838,14 +1878,44 @@
       width: calc(var(--spacing) * 12);
     }
   }
+  .\32 xl\:w-\[1\] {
+    @media (width >= 96rem) {
+      width: 1;
+    }
+  }
   .\32 xl\:w-\[70\%\] {
     @media (width >= 96rem) {
       width: 70%;
     }
   }
+  .\32 xl\:w-\[80\%\] {
+    @media (width >= 96rem) {
+      width: 80%;
+    }
+  }
+  .\32 xl\:w-\[400px\] {
+    @media (width >= 96rem) {
+      width: 400px;
+    }
+  }
   .\32 xl\:w-\[430px\] {
     @media (width >= 96rem) {
       width: 430px;
+    }
+  }
+  .\32 xl\:w-\[900px\] {
+    @media (width >= 96rem) {
+      width: 900px;
+    }
+  }
+  .\32 xl\:w-\[1000px\] {
+    @media (width >= 96rem) {
+      width: 1000px;
+    }
+  }
+  .\32 xl\:w-\[full\] {
+    @media (width >= 96rem) {
+      width: full;
     }
   }
   .\32 xl\:w-full {
