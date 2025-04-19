@@ -2,15 +2,6 @@ import { getCurrentUser } from "./auth.js";
 import { supabase } from "./database.js";
 import { createPost } from "./socials.js";
 
-//Share modal elements
-const shareModal = document.getElementById("share-results-modal");
-const closeShareModal = document.getElementById("close-share-modal");
-const cancelShareBtn = document.getElementById("cancel-share-btn");
-const confirmShareBtn = document.getElementById("confirm-share-btn");
-const shareWpmElement = document.getElementById("share-wpm");
-const shareAccuracyElement = document.getElementById("share-accuracy");
-const shareMessageElement = document.getElementById("share-message");
-
 // Cache DOM elements
 const elements = {
   modeForm: document.getElementById("mode-form"),
@@ -529,43 +520,6 @@ const game = {
         }
       }
     });
-    // Share modal handlers
-    closeShareModal.addEventListener("click", () => {
-      shareModal.classList.add("hidden");
-    });
-
-    cancelShareBtn.addEventListener("click", () => {
-      shareModal.classList.add("hidden");
-    });
-
-    confirmShareBtn.addEventListener("click", async () => {
-      try {
-        const content = shareMessageElement.value.trim();
-        if (content) {
-          await createPost("My results!", content, null, [
-            "mikomiko",
-            "myscore",
-          ]);
-          shareModal.classList.add("hidden");
-
-          const successMessageContainer = document.getElementById(
-            "success-share-message"
-          );
-          const toast = document.createElement("div");
-          toast.className =
-            "bg-azure text-white px-4 py-2 rounded-lg shadow-lg z-50";
-          toast.textContent = "Your result has been shared!";
-          successMessageContainer.appendChild(toast);
-
-          setTimeout(() => {
-            successMessageContainer.innerHTML = "";
-          }, 3000);
-        }
-      } catch (error) {
-        console.error("Error sharing result:", error);
-        alert("Failed to share your result");
-      }
-    });
   },
 
   startTest: (wordCount = state.wordCount) => {
@@ -709,36 +663,109 @@ const game = {
       console.error("No game stats provided");
       return;
     }
-
-    const user = await getCurrentUser();
-    if (!user) {
-      const login = confirm(
-        "You need to be logged in to save your results. Would you like to log in now?"
-      );
-
-      if (login) {
-        document.getElementById("login-modal").classList.remove("hidden");
-      }
-      return;
-    }
-
-    try {
-      const savedResult = await saveGameResult(result);
-      if (!savedResult) {
-        throw new Error("Failed to save game result");
-      }
-
-      // Show share modal instead of alert
-      shareWpmElement.textContent = savedResult.wpm;
-      shareAccuracyElement.textContent = savedResult.accuracy;
-      shareMessageElement.value = `I just reached ${savedResult.wpm} WPM with ${savedResult.accuracy}% accuracy on Miko-Miko Type! 🚀`;
-      shareModal.classList.remove("hidden");
-    } catch (error) {
-      console.error("Error in onGameComplete:", error);
-      alert("Failed to save your result");
-    }
+    const difficulty = utils.getCurrentDifficulty();
+    resultStats(gameStats.wpm, gameStats.accuracy, difficulty);
   },
 };
+
+function resultStats(wpm, accuracy, difficulty) {
+  const resultModal = document.getElementById("results-to-share");
+  document.getElementById("results-wpm").textContent = wpm || "0";
+  document.getElementById("results-accuracy").textContent = accuracy || "0%";
+  document.getElementById("results-difficulty").textContent =
+    difficulty || "Easy";
+
+  resultModal.classList.remove("hidden");
+  resultModal.classList.add("flex");
+
+  // Button event listeners
+  document.getElementById("try-again-btn").addEventListener("click", () => {
+    resultModal.classList.remove("flex");
+    resultModal.classList.add("hidden");
+    game.initialize();
+    elements.inputField.focus();
+  });
+
+  document
+    .getElementById("share-results-btn")
+    .addEventListener("click", async () => {
+      try {
+        const { getCurrentUser } = await import("./auth.js");
+        const { createPost } = await import("./socials.js");
+
+        const user = await getCurrentUser();
+        if (!user) {
+          // Show login prompt
+          document.getElementById("login-prompt").classList.remove("hidden");
+
+          // Hide after 5 seconds
+          setTimeout(() => {
+            document.getElementById("login-prompt").classList.add("hidden");
+          }, 5000);
+
+          return;
+        }
+
+        // Create post with results
+        const content = `I just scored ${wpm} WPM with ${accuracy}% accuracy on ${difficulty} mode! 🚀`;
+        await createPost("My Typing Results", content, null, [
+          "typing",
+          "results",
+          "mikomiko",
+        ]);
+
+        // Show success message
+        showNotification(
+          "Your results have been shared successfully!",
+          "success"
+        );
+        resultModal.classList.remove("flex");
+        resultModal.classList.add("hidden");
+        game.initialize();
+        elements.inputField.focus();
+      } catch (error) {
+        console.error("Error sharing results:", error);
+        showNotification(
+          "Failed to share your results. Please try again.",
+          "error"
+        );
+      }
+    });
+
+  document
+    .getElementById("login-redirect-btn")
+    .addEventListener("click", () => {
+      document.getElementById("login-modal").classList.remove("hidden");
+      resultModal.classList.remove("flex");
+      resultModal.classList.add("hidden");
+    });
+  function showNotification(message, type = "success") {
+    const notification = document.getElementById("notification-result");
+    const messageEl = document.getElementById("notification-message-result");
+    const notificationText = document.getElementById("notification-text");
+
+    messageEl.textContent = message;
+
+    // Show notification
+    notification.classList.remove("hidden");
+    notification.classList.add("flex");
+
+    // Add type-specific color
+    if (type === "success") {
+      notificationText.classList.add("bg-azure");
+    } else if (type === "error") {
+      notificationText.classList.add("bg-red-500");
+    } else {
+      notificationText.classList.add("bg-blaze");
+    }
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+      notification.classList.add("hidden");
+      notification.classList.remove("flex");
+    }, 3000);
+  }
+}
 
 // Database operations
 async function saveGameResult(result) {
