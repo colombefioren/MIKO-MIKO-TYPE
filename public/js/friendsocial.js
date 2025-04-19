@@ -691,7 +691,7 @@ function updateHashtagsPreview() {
       "bg-lightabyss/30 text-azure px-3 py-1 rounded-full text-sm flex items-center";
     tagElement.innerHTML = `
       #${tag}
-      <button class="ml-1 text-dusk hover:text-slate-200 remove-hashtag" data-index="${index}">
+      <button class="ml-1 text-dusk hover:text-slate-200 remove-hashtag cursor-pointer" data-index="${index}">
         <i class="fas fa-times text-xs"></i>
       </button>
     `;

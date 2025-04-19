@@ -398,7 +398,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Login Modal -->
     <div
       id="login-modal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
@@ -466,14 +466,17 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     <!-- Signup Modal -->
     <div
       id="signup-modal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
     >
       <div
         class="bg-midnight rounded-xl p-8 w-full max-w-md border border-lightabyss"
       >
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-white">Create Account</h2>
-          <button id="close-signup-modal" class="text-dusk hover:text-white cursor-pointer">
+          <button
+            id="close-signup-modal"
+            class="text-dusk hover:text-white cursor-pointer"
+          >
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
@@ -598,7 +601,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
         </div>
       </div>
     </div>
-<!--notif-->
+    <!--notif-->
 
     <div
       id="notification-result"
@@ -606,7 +609,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./public/css/style.css --watch
     >
       <div
         id="notification-text"
-        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white  font-medium max-w-xs text-center"
+        class="px-6 py-4 rounded-lg shadow-lg text-lg text-white font-medium max-w-xs text-center"
       >
         <p id="notification-message-result">You results</p>
       </div>
