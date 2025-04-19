@@ -32,6 +32,8 @@ const state = {
   charSpans: [],
   totalStats: { wpm: 0, accuracy: 0, count: 0, mode: "" },
   wordCount: 30,
+  mistake: 0,
+  mistakePositions: new Set(),
   activeListeners: new Set(),
   history: {
     wpm: [],
@@ -448,6 +450,11 @@ const domHandlers = {
       } else {
         charSpan.textContent = typedChar;
         charSpan.style.color = "red";
+
+        if (!state.mistakePositions.has(i)) {
+          state.mistake++;
+          state.mistakePositions.add(i);
+        }
       }
     }
 
@@ -456,7 +463,7 @@ const domHandlers = {
       currentWordSpans.length > currentWord.length &&
       currentWordSpans[spaceSpanIndex]?.textContent === " ";
 
-    //handle extra characters typed
+    // Handle extra characters typed
     if (typed.length > currentWord.length) {
       const extraContainer = document.createElement("span");
       extraContainer.className = "extra-chars-container";
@@ -468,6 +475,13 @@ const domHandlers = {
         extraSpan.textContent = typed[i];
         extraSpan.style.color = "red";
         extraContainer.appendChild(extraSpan);
+
+        // Count each extra character as a mistake (only once)
+        if (!state.mistakePositions.has(i)) {
+          state.mistake++;
+          state.mistakePositions.add(i);
+          console.log("the mistakes : " + state.mistake);
+        }
       }
 
       if (hasSpaceSpan) {
@@ -548,9 +562,7 @@ const game = {
             game.startTest();
             elements.inputField.focus();
           }
-          // else: normal tap
         }
-        // else: normal tap
       } else {
         if (event.key === "Tab") {
           event.preventDefault();
@@ -573,6 +585,8 @@ const game = {
     state.previousEndTime = null;
     state.totalStats = { wpm: 0, accuracy: 0, count: 0 };
     elements.cursor.classList.add("blink");
+    state.mistakePositions.clear();
+    state.mistake = 0;
 
     const difficulty = utils.getCurrentDifficulty();
 
@@ -600,7 +614,7 @@ const game = {
 
     // Accuracy calculation
     let correct = 0;
-    let incorrect = 0;
+    let incorrect = state.mistake;
     const expected = state.wordsToType[state.currentWordIndex];
     const typed = elements.inputField.value;
 
@@ -608,7 +622,8 @@ const game = {
       if (typed[i] === expected[i]) correct++;
     }
 
-    const accuracy = (correct / Math.max(typed.length, expected.length)) * 100;
+    const accuracy =
+      ((correct - incorrect) / Math.max(typed.length, expected.length)) * 100;
 
     return {
       wpm: parseFloat(wpm.toFixed(2)),
@@ -648,6 +663,8 @@ const game = {
 
       state.currentWordIndex++;
       state.previousEndTime = Date.now();
+      state.mistake = 0;
+      state.mistakePositions.clear();
 
       if (state.currentWordIndex >= state.wordsToType.length) {
         const avgWpm = (state.totalStats.wpm / state.totalStats.count).toFixed(
