@@ -398,10 +398,11 @@ function renderPosts(posts) {
         window.location.href = `profile.html?id=${userId}`;
       });
     });
+  setupPostInteractions();
+
   }, 300);
   
 
-  setupPostInteractions();
 }
 
 function formatDate(dateString) {

@@ -226,6 +226,7 @@ const contentDictionaries = {
   },
 };
 
+
 // Utility functions
 const utils = {
   debounce: (func, wait) => {
