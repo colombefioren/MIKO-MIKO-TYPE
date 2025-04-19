@@ -4,6 +4,7 @@ import {
   setupRealtimeNotifications,
   loadNotifications,
 } from "./notifications.js";
+import { hideLoading, showLoading, showNotification } from "./utils.js";
 
 let currentChatId = null;
 let currentContact = null;
@@ -186,10 +187,11 @@ export async function markMessagesAsRead(chatId) {
 async function loadChats() {
   try {
     const chats = await getChats();
-    renderChats(chats);
+
+    renderChats(chats || []);
   } catch (error) {
     console.error("Error loading chats:", error);
-    showError("Failed to load chats");
+    showNotification("Failed to load chats", "error");
   }
 }
 
@@ -199,12 +201,12 @@ function renderChats(chats) {
 
   if (chats.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-12">
-        <i class="fas fa-comments text-5xl text-dusk mb-4"></i>
-        <h3 class="text-slate-200 font-bold text-lg mb-2">No conversations yet</h3>
-        <p class="text-azure">Start a new chat to connect with friends</p>
-      </div>
-    `;
+        <div class="text-center py-12">
+          <i class="fas fa-comments text-5xl text-dusk mb-4"></i>
+          <h3 class="text-slate-200 font-bold text-lg mb-2">No conversations yet</h3>
+          <p class="text-azure">Start a new chat to connect with friends</p>
+        </div>
+      `;
     return;
   }
 
@@ -216,33 +218,33 @@ function renderChats(chats) {
     chatElement.className =
       "bg-midnight border border-lightabyss w-full rounded-3xl py-3 px-6 h-20 flex items-center justify-between cursor-pointer hover:bg-lightabyss/20 transition-colors";
     chatElement.innerHTML = `
-      <div class="flex gap-3 h-full items-center">
-        <img src="${
-          otherUser.avatar_url || "../public/assets/images/blank-profile.png"
-        }"
-             alt="Profile Pic" class="rounded-full w-12 h-12 object-cover">
-        <div class="flex flex-col justify-between h-[85%]">
-          <div class="text-slate-200 text-[14px]">${otherUser.username}</div>
-          <div class="text-azure text-[12px] truncate max-w-[180px]">
-            ${chat.last_message?.content || "No messages yet"}
+        <div class="flex gap-3 h-full items-center">
+          <img src="${
+            otherUser.avatar_url || "../public/assets/images/blank-profile.png"
+          }"
+               alt="Profile Pic" class="rounded-full w-12 h-12 object-cover">
+          <div class="flex flex-col justify-between h-[85%]">
+            <div class="text-slate-200 text-[14px]">${otherUser.username}</div>
+            <div class="text-azure text-[12px] truncate max-w-[180px]">
+              ${chat.last_message?.content || "No messages yet"}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="flex flex-col items-end gap-1">
-        <div class="text-dusk text-xs">${formatChatDate(
-          chat.last_message?.created_at || chat.created_at
-        )}</div>
-        ${
-          unreadCount > 0
-            ? `
-          <div class="bg-green-400 rounded-full w-5 h-5 flex items-center justify-center text-xs text-midnight">
-            ${unreadCount}
-          </div>
-        `
-            : ""
-        }
-      </div>
-    `;
+        <div class="flex flex-col items-end gap-1">
+          <div class="text-dusk text-xs">${formatChatDate(
+            chat.last_message?.created_at || chat.created_at
+          )}</div>
+          ${
+            unreadCount > 0
+              ? `
+            <div class="bg-green-400 rounded-full w-5 h-5 flex items-center justify-center text-xs text-midnight">
+              ${unreadCount}
+            </div>
+          `
+              : ""
+          }
+        </div>
+      `;
 
     chatElement.addEventListener("click", () =>
       openChatConversation(otherUser.username, chat.id, otherUser.avatar_url)
@@ -286,8 +288,12 @@ export async function openChatConversation(contactName, chatId, contactAvatar) {
   }
 }
 function renderMessages(messages) {
-  const currentMessageCount = messagesContainer.querySelectorAll(".message-container").length;
-  if (Math.abs(messages.length - currentMessageCount) > 1 || messages.length === 0) {
+  const currentMessageCount =
+    messagesContainer.querySelectorAll(".message-container").length;
+  if (
+    Math.abs(messages.length - currentMessageCount) > 1 ||
+    messages.length === 0
+  ) {
     messagesContainer.innerHTML = "";
   } else if (messages.length === currentMessageCount) {
     return;
@@ -355,20 +361,22 @@ function renderMessages(messages) {
     });
   }
 
-  const isNewMessageFromUser = messages[messages.length - 1]?.sender_id === user.id;
+  const isNewMessageFromUser =
+    messages[messages.length - 1]?.sender_id === user.id;
   const wasNearBottom = isScrolledToBottom();
-  
+
   if ((!isUserScrollingUp && wasNearBottom) || isNewMessageFromUser) {
     scrollToBottom();
   } else {
     const newScrollHeight = messagesContainer.scrollHeight;
-    messagesContainer.scrollTop = previousScrollTop + (newScrollHeight - previousScrollHeight);
+    messagesContainer.scrollTop =
+      previousScrollTop + (newScrollHeight - previousScrollHeight);
   }
 }
 
 function isScrolledToBottom() {
   const { scrollTop, scrollHeight, clientHeight } = messagesContainer;
-  return Math.abs(scrollHeight - scrollTop - clientHeight) < 50; 
+  return Math.abs(scrollHeight - scrollTop - clientHeight) < 50;
 }
 
 function scrollToBottom() {
@@ -450,7 +458,7 @@ function setupRealtimeChat() {
             scrollToBottom();
           }
         }
-        await loadChats(); 
+        await loadChats(); // This updates the chat list
       }
     )
     .subscribe();

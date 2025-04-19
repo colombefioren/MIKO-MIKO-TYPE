@@ -7,7 +7,7 @@ import {
   getComments,
   toggleLike,
 } from "./socials.js";
-// import { hideLoading, showLoading } from "./utils.js";
+import { hideLoading, showLoading } from "./utils.js";
 import { showNotification } from "./utils.js";
 
 const postErrorMessage = document.getElementById("error-message-post");
@@ -120,6 +120,9 @@ function setupUnauthenticatedPostForm() {
 document
   .getElementById("create-post-btn")
   ?.addEventListener("click", async () => {
+    const btn = document.getElementById("create-post-btn");
+    const originalText = btn.innerHTML;
+
     if (!user) return showLoginPrompt("create posts");
 
     const title = document.getElementById("post-title-input").value.trim();
@@ -135,6 +138,13 @@ document
     }
 
     try {
+      btn.innerHTML = `
+      <div class="flex items-center justify-center gap-2">
+        <div class="loading-spinner"></div>
+        <span>Posting...</span>
+      </div>
+    `;
+      btn.disabled = true;
       let imageUrl = null;
       if (selectedImageFile) {
         imageUrl = await uploadPostImage(user.id, selectedImageFile);
@@ -160,32 +170,79 @@ document
     } catch (error) {
       console.error("Error creating post:", error);
       showNotification("Failed to create post", "error");
+    } finally {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
     }
   });
 
 async function loadPosts() {
   try {
-    
+    showLoading("#post-loading");
     const posts = await getPosts();
-
     renderPosts(posts);
   } catch (error) {
     console.error("Error loading posts:", error);
+    showNotification("Failed to load posts", "error");
+  } finally {
+    hideLoading("#post-loading");
   }
 }
 
 function renderPosts(posts) {
   const postsContainer = document.querySelector(".posts-container");
-  postsContainer.innerHTML = "";
+  postsContainer.innerHTML = `
+  <div class="space-y-6">
+    ${Array(3)
+      .fill()
+      .map(
+        () => `
+      <div class="bg-midnight border border-lightabyss rounded-3xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="skeleton w-12 h-12 rounded-full"></div>
+          <div class="flex-1 space-y-2">
+            <div class="skeleton h-4 w-3/4 rounded"></div>
+            <div class="skeleton h-3 w-1/2 rounded"></div>
+          </div>
+        </div>
+        <div class="space-y-3 mb-4">
+          <div class="skeleton h-5 w-full rounded"></div>
+          <div class="skeleton h-5 w-2/3 rounded"></div>
+        </div>
+        <div class="skeleton h-60 w-full rounded-xl mb-4"></div>
+        <div class="flex justify-between">
+          <div class="skeleton h-4 w-1/4 rounded"></div>
+          <div class="skeleton h-4 w-1/4 rounded"></div>
+        </div>
+      </div>
+    `
+      )
+      .join("")}
+  </div>
+`;
 
-  posts.forEach((post) => {
-    const likedByUser = post.likes.some((like) => like.user_id === user?.id);
+  setTimeout(() => {
+    postsContainer.innerHTML = "";
 
-    const postElement = document.createElement("div");
-    postElement.className =
-      "bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 w-full";
+    if (posts.length === 0) {
+      postsContainer.innerHTML = `
+      <div class="text-center py-12 text-dusk">
+        <i class="fas fa-newspaper text-4xl mb-3"></i>
+        <h3 class="text-slate-200 font-bold text-lg mb-1">No posts yet</h3>
+        <p class="text-azure">Be the first to create a post!</p>
+      </div>
+    `;
+      return;
+    }
 
-    postElement.innerHTML = `
+    posts.forEach((post) => {
+      const likedByUser = post.likes.some((like) => like.user_id === user?.id);
+
+      const postElement = document.createElement("div");
+      postElement.className =
+        "bg-midnight border border-lightabyss rounded-3xl p-6 mb-6 w-full";
+
+      postElement.innerHTML = `
       <div class="flex items-center justify-between mb-4 w-full">
         <div class="flex items-center gap-3">
           <img src="${
@@ -194,9 +251,9 @@ function renderPosts(posts) {
           }"
                alt="Profile" class="w-12 h-12 rounded-full object-cover">
           <div>
-            <div class="text-slate-200 font-bold">${
-              post.profiles?.username || "Unknown User"
-            }</div>
+            <div id="poster-username" class="text-slate-200 font-bold hover:underline cursor-pointer poster-username" data-user-id="${
+              post.user_id
+            }">${post.profiles?.username || "Unknown User"}</div>
             <div class="text-azure text-sm">${formatDate(post.created_at)}</div>
           </div>
         </div>
@@ -332,9 +389,17 @@ function renderPosts(posts) {
       </div>
   
     `;
-
-    postsContainer.appendChild(postElement);
-  });
+      postElement.classList.add("fade-in");
+      postsContainer.appendChild(postElement);
+    });
+    document.querySelectorAll(".poster-username").forEach((el) => {
+      el.addEventListener("click", () => {
+        const userId = el.dataset.userId;
+        window.location.href = `profile.html?id=${userId}`;
+      });
+    });
+  }, 300);
+  
 
   setupPostInteractions();
 }

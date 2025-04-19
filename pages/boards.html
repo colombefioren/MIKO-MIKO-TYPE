@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../public/css/cursor.css" />
     <link rel="stylesheet" href="../public/css/font.css" />
     <link rel="stylesheet" href="../public/css/navbar.css" />
+    <link rel="stylesheet" href="../public/css/spinner.css" />
+
     <link
       rel="shortcut icon"
       href="../public/assets/images/mikomiko-logo-reduced.svg"
@@ -47,9 +49,9 @@
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="./race.html">
+          <a class="flex text-dusk items-center gap-15" href="./profile.html">
             <i class="fa-solid fa-horse text-3xl button-icon"></i>
-            <div class="text-xl font-bold button-text">Race</div>
+            <div class="text-xl font-bold button-text">Profile</div>
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
@@ -80,7 +82,7 @@
               <i class="fas fa-trophy text-blaze"></i> Leaderboards
             </h1>
 
-            <div class="flex flex-col sm:flex-row gap-4">
+            <!-- <div class="flex flex-col sm:flex-row gap-4">
               <div class="relative">
                 <select
                   class="bg-midnight border border-lightabyss text-white rounded-lg py-2 px-4 pr-8 appearance-none focus:outline-none"
@@ -105,12 +107,12 @@
                   class="fas fa-search text-azure absolute left-3 top-1/2 transform -translate-y-1/2"
                 ></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="flex w-full gap-5 relative">
           <!-- Category Btn -->
-          <div
+          <!-- <div
             class="flex flex-col mb-6 bg-lightabyss w-[20%] rounded-xl overflow-hidden sticky top-[106.4px] h-fit"
           >
             <div
@@ -148,13 +150,13 @@
             >
               <i class="fas fa-code mr-2"></i>Programming
             </div>
-          </div>
+          </div> -->
 
           <div
-            class="bg-midnight flex-1 border border-lightabyss rounded-xl mb-8 relative"
+            class="bg-midnight flex-1 border border-lightabyss rounded-xl mt-5 min-h-52 mb-8 relative"
           >
             <div
-              class="grid grid-cols-12 bg-lightabyss text-azure text-sm font-medium p-4 sticky top-[106.4px] z-10"
+              class="grid grid-cols-12 bg-lightabyss text-azure text-sm font-medium p-4 sticky top-[106.4px] z-10 rounded-t-xl"
             >
               <div class="col-span-1 text-center">#</div>
               <div class="col-span-6">Name</div>
@@ -167,7 +169,7 @@
               class="divide-y divide-lightabyss/20"
               id="leaderboard-container"
             >
-              <!-- This will be populated by JavaScript -->
+              <div id="boards-loading" class="mt-20"></div>
             </div>
           </div>
         </div>

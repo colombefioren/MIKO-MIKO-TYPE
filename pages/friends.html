@@ -32,9 +32,6 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
   </head>
 
   <body class="bg-abyss flex flex-col min-h-screen">
-    <!-- <div id="global-loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden">
-      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blaze"></div>
-    </div> -->
     <div
       id="chat-conversation"
       class="fixed right-[450px] bottom-5 shadow-sm shadow-black w-[350px] h-[500px] bg-midnight translate-y-full rounded-xl border border-dusk transition-transform duration-300 z-20 flex-col hidden"
@@ -105,7 +102,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           <h2 class="2xl:text-2xl font-bold text-white">Start New Chat</h2>
           <button
             id="close-new-chat-modal"
-            class="text-dusk hover:text-white cusor-pointer"
+            class="text-dusk hover:text-white cursor-pointer"
           >
             <i class="fas fa-times 2xl:text-xl"></i>
           </button>
@@ -144,9 +141,9 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
-          <a class="flex text-dusk items-center gap-15" href="./race.html">
+          <a class="flex text-dusk items-center gap-15" href="./profile.html">
             <i class="fa-solid fa-horse text-3xl button-icon"></i>
-            <div class="text-xl font-bold button-text">Race</div>
+            <div class="text-xl font-bold button-text">Profile</div>
           </a>
         </li>
         <li class="pl-6 button-links py-[14px] relative">
@@ -356,7 +353,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               class="flex flex-col gap-3 max-h-[500px] overflow-y-auto"
               id="chat-list-container"
             >
-              <!-- chats will be dynamically inserted here -->
+              <div id="chat-loading"></div>
             </div>
 
             <div class="mt-6 flex justify-center">
@@ -394,7 +391,7 @@ npx @tailwindcss/cli -i ./src/input.css -o ./build/css/style.css --watch
               class="flex flex-col gap-4 max-h-[500px] overflow-y-auto"
               id="friends-list-container"
             >
-              <!-- Friends will be dynamically inserted here -->
+              <div id="friends-loading"></div>
             </div>
           </div>
         </div>
