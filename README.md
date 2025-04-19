@@ -104,5 +104,9 @@ We’ve got big dreams for Miko-Miko! While we had to keep things tight for the 
 
 ---
 
+NB: Sometimes there is an issue from supabase when trying to sign up, to be able to see the logged in privilege, just in case, user these credentials : 
+email : hei.colombe@gmail.com
+password : mama123
+
 Thanks for checking out **Miko-Miko**!  
 Have fun typing — and don’t forget to invite your friends! 😄
