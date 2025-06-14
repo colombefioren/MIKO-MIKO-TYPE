@@ -1,0 +1,29 @@
+---
+layout: nul
+permalink: /404.html 
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+
+        (function() {
+            const path = window.location.pathname.replace(/^\/+/, '');
+            
+
+            if (path.startsWith('MIKO-MIKO-TYPE/') || 
+                window.location.search.includes('redirect_fix')) {
+                
+     
+                window.location.href = '/' + path + 
+                    (window.location.search ? '&' : '?') + 'redirect_fix=1';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>Redirecting to the correct page...</p>
+</body>
+</html>
