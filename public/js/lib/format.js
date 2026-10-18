@@ -2,6 +2,15 @@ const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 
+// "Jun 18" for dates in the current year, "Jun 18, 2025" otherwise.
+export function calendarDate(value, { weekday = false, now = new Date() } = {}) {
+  const date = new Date(value);
+  const options = { month: "short", day: "numeric" };
+  if (weekday) options.weekday = "long";
+  if (date.getFullYear() !== now.getFullYear()) options.year = "numeric";
+  return date.toLocaleDateString(undefined, options);
+}
+
 export function timeAgo(value) {
   const date = new Date(value);
   const diff = Date.now() - date.getTime();
@@ -9,7 +18,7 @@ export function timeAgo(value) {
   if (diff < HOUR) return `${Math.floor(diff / MINUTE)}m ago`;
   if (diff < DAY) return `${Math.floor(diff / HOUR)}h ago`;
   if (diff < 7 * DAY) return `${Math.floor(diff / DAY)}d ago`;
-  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  return calendarDate(date);
 }
 
 export function clockTime(value) {
@@ -22,12 +31,10 @@ export function dayLabel(value) {
   const yesterday = new Date(today.getTime() - DAY);
   if (date.toDateString() === today.toDateString()) return "Today";
   if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
-  return date.toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" });
+  return calendarDate(date, { weekday: true });
 }
 
-export function shortDate(value) {
-  return new Date(value).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-}
+export const shortDate = (value) => calendarDate(value);
 
 export function round(value, digits = 0) {
   const factor = 10 ** digits;

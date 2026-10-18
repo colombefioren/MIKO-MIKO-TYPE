@@ -1,3 +1,4 @@
+import { calendarDate } from "../lib/format.js";
 import { token, onThemeChange } from "../lib/theme.js";
 
 const charts = new WeakMap();
@@ -76,7 +77,7 @@ function buildConfig(kind, data) {
   return {
     type: "line",
     data: {
-      labels: data.map((row) => new Date(row.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })),
+      labels: data.map((row) => calendarDate(row.created_at)),
       datasets: [
         { label: "wpm", data: data.map((row) => Number(row.wpm)), borderColor: colors.accent, backgroundColor: colors.accent, borderWidth: 2, pointRadius: 2.5, tension: 0.3 },
         { label: "accuracy", data: data.map((row) => Number(row.accuracy)), borderColor: colors.frost, borderWidth: 1.5, borderDash: [4, 4], pointRadius: 0, tension: 0.3 },
