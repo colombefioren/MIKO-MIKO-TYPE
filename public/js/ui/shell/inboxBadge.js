@@ -1,6 +1,5 @@
 // Unread counter on the header bell: notifications plus unread messages, kept live.
-import { h, icon } from "../../lib/dom.js";
-import { pageUrl } from "../../lib/routes.js";
+import { h } from "../../lib/dom.js";
 import { getAuthState } from "../../services/auth.js";
 import { countUnreadMessages } from "../../services/chat.js";
 import { countUnreadNotifications } from "../../services/notifications.js";
@@ -30,10 +29,11 @@ export function scheduleBadgeRefresh() {
   timer = setTimeout(() => refresh(user.id), 250);
 }
 
-// Returns the bell link and a function that stops its live updates.
-export function createInboxBadge(userId) {
+// Puts a live unread counter on the given bell link. Returns a function that stops it.
+export function createInboxBadge(userId, link) {
+  link.querySelector(".badge")?.remove();
   badge = h("span.badge", { hidden: true });
-  const link = h("a.icon-btn.has-badge", { href: pageUrl("pages/friends.html#inbox"), "aria-label": "Inbox" }, icon("bell"), badge);
+  link.append(badge);
   refresh(userId);
   const stop = subscribeToChanges(
     "badge",
@@ -44,9 +44,9 @@ export function createInboxBadge(userId) {
     scheduleBadgeRefresh
   );
   return {
-    link,
     stop() {
       stop();
+      badge?.remove();
       badge = null;
     },
   };

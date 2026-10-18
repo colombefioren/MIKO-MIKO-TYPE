@@ -1,13 +1,9 @@
 // Top bar: brand and tab bar on phones, theme toggle, inbox and account menu everywhere.
+// This module stays free of Supabase imports so the header can be drawn before the SDK loads.
 import { h, icon, replaceChildren } from "../../lib/dom.js";
 import { avatar } from "../../lib/avatar.js";
 import { assetUrl, NAV, pageUrl, profileUrl } from "../../lib/routes.js";
 import { currentTheme, onThemeChange, toggleTheme } from "../../lib/theme.js";
-import { errorMessage, toast } from "../../lib/toast.js";
-import { signOut } from "../../services/auth.js";
-import { joinPresence, leavePresence } from "../../services/realtime.js";
-import { openAuthDialog } from "../auth/dialog.js";
-import { createInboxBadge } from "./inboxBadge.js";
 
 function brand() {
   return h(
@@ -46,7 +42,9 @@ function themeButton() {
   return button;
 }
 
+// Heavy modules (auth, realtime, dialogs) load on demand so the header never waits on them.
 async function logOut() {
+  const [{ signOut }, { errorMessage, toast }] = await Promise.all([import("../../services/auth.js"), import("../../lib/toast.js")]);
   try {
     await signOut();
     toast("You are logged out.", "info");
@@ -55,43 +53,60 @@ async function logOut() {
   }
 }
 
-function accountMenu(profile) {
+async function openLogin() {
+  const { openAuthDialog } = await import("../auth/dialog.js");
+  openAuthDialog("login");
+}
+
+function accountMenu(account) {
   const menu = h(
     "div.menu",
     { popover: "auto", id: "account-menu" },
-    h("div.menu-header", {}, h("strong", {}, profile.username)),
-    h("a.menu-item", { href: profileUrl(profile.id) }, icon("user-circle"), "Your profile"),
+    h("div.menu-header", {}, h("strong", {}, account.username)),
+    h("a.menu-item", { href: profileUrl(account.id) }, icon("user-circle"), "Your profile"),
     h("button.menu-item", { type: "button", onclick: logOut }, icon("sign-out"), "Log out")
   );
   const trigger = h(
     "button.account-btn",
-    { type: "button", popovertarget: "account-menu", "aria-label": `Account menu for ${profile.username}` },
-    avatar(profile, 32),
-    h("span.account-name", {}, profile.username)
+    { type: "button", popovertarget: "account-menu", "aria-label": `Account menu for ${account.username}` },
+    avatar(account, 32),
+    h("span.account-name", {}, account.username)
   );
   return [trigger, menu];
 }
 
 export function createHeader(root, active) {
   const actions = h("div.header-actions");
-  let stopBadge = () => {};
+  const inbox = h("a.icon-btn.has-badge", { href: pageUrl("pages/friends.html#inbox"), "aria-label": "Inbox" }, icon("bell"));
+  let stopLive = () => {};
+  let shownKey = null;
   root.classList.add("site-header");
   replaceChildren(root, h("div.header-inner", {}, brand(), tabBar(active), actions));
 
   return {
-    // Shows the guest or signed-in controls for the given auth state.
-    render({ user, profile }) {
-      stopBadge();
-      stopBadge = () => {};
-      if (!user) {
-        leavePresence();
-        replaceChildren(actions, themeButton(), h("button.btn.btn-primary.btn-sm", { type: "button", onclick: () => openAuthDialog("login") }, "Log in"));
-        return;
-      }
-      const inbox = createInboxBadge(user.id);
-      stopBadge = inbox.stop;
-      replaceChildren(actions, themeButton(), inbox.link, ...accountMenu(profile ?? { id: user.id, username: user.email }));
-      joinPresence(user.id);
+    // Draws the guest or account controls; skipped when nothing visible changed.
+    show(account) {
+      const key = account ? [account.id, account.username, account.avatar_url].join("|") : "guest";
+      if (key === shownKey) return;
+      shownKey = key;
+      stopLive();
+      stopLive = () => {};
+      if (!account) replaceChildren(actions, themeButton(), h("button.btn.btn-primary.btn-sm", { type: "button", onclick: openLogin }, "Log in"));
+      else replaceChildren(actions, themeButton(), inbox, ...accountMenu(account));
+    },
+    // Starts the live parts once the session is confirmed: unread badge and online presence.
+    async goLive(userId) {
+      const [{ createInboxBadge }, { joinPresence }] = await Promise.all([import("./inboxBadge.js"), import("../../services/realtime.js")]);
+      stopLive();
+      const live = createInboxBadge(userId, inbox);
+      joinPresence(userId);
+      stopLive = live.stop;
+    },
+    async goOffline() {
+      stopLive();
+      stopLive = () => {};
+      const { leavePresence } = await import("../../services/realtime.js");
+      leavePresence();
     },
   };
 }
