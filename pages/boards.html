@@ -10,6 +10,8 @@
     <script>
       try {
         document.documentElement.dataset.theme = localStorage.getItem("mikomiko:theme") || "dark";
+        const sidebar = localStorage.getItem("mikomiko:sidebar-collapsed") ?? "false";
+        if (sidebar === "true") document.documentElement.classList.add("sidebar-collapsed");
       } catch {}
     </script>
     <link rel="preload" href="../public/assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />

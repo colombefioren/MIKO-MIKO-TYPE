@@ -9,16 +9,18 @@ import { countUnreadNotifications } from "../services/notifications.js";
 import { countUnreadMessages } from "../services/chat.js";
 import { joinPresence, leavePresence, subscribeToChanges } from "../services/realtime.js";
 import { openAuthDialog } from "./authDialog.js";
+import { createSidebar } from "./sidebar.js";
 
 const ROOT = new URL("../../../", import.meta.url);
 export const pageUrl = (path) => new URL(path, ROOT).href;
 export const profileUrl = (userId) => pageUrl(`pages/profile.html?id=${encodeURIComponent(userId)}`);
 
+// Same pages, labels and icons as the original Miko-Miko sidebar.
 const NAV = [
   { id: "type", label: "Type", icon: "keyboard", href: "index.html" },
+  { id: "profile", label: "Profile", icon: "horse", href: "pages/profile.html" },
   { id: "community", label: "Community", icon: "users-three", href: "pages/friends.html" },
-  { id: "boards", label: "Leaderboard", icon: "trophy", href: "pages/boards.html" },
-  { id: "profile", label: "Profile", icon: "user-circle", href: "pages/profile.html" },
+  { id: "boards", label: "Boards", icon: "medal", href: "pages/boards.html" },
 ];
 
 let badgeEl;
@@ -149,6 +151,8 @@ export async function initShell(active) {
   const actions = h("div.header-actions");
   header.classList.add("site-header");
   replaceChildren(header, h("div.header-inner", {}, brand(), nav(active), actions));
+  // The typing page starts with the sidebar collapsed so the text gets the room, like before.
+  header.before(createSidebar({ items: NAV, active, pageUrl, collapsedByDefault: active === "type" }));
 
   if (!isBackendReady) {
     renderActions(actions, { user: null, profile: null });
