@@ -1,11 +1,12 @@
 // Floating direct-message window with live delivery and a typing indicator.
-import { h, icon, replaceChildren } from "../lib/dom.js";
-import { avatar } from "../lib/avatar.js";
-import { clockTime, dayLabel } from "../lib/format.js";
-import { errorMessage, toast } from "../lib/toast.js";
-import { profileUrl, scheduleBadgeRefresh } from "./shell.js";
-import { getMessages, markChatRead, sendMessage } from "../services/chat.js";
-import { isOnline, joinChatRoom, onOnlineChange } from "../services/realtime.js";
+import { h, icon, replaceChildren } from "../../lib/dom.js";
+import { avatar } from "../../lib/avatar.js";
+import { clockTime, dayLabel } from "../../lib/format.js";
+import { errorMessage, toast } from "../../lib/toast.js";
+import { profileUrl } from "../../lib/routes.js";
+import { scheduleBadgeRefresh } from "../shell/inboxBadge.js";
+import { getMessages, markChatRead, sendMessage } from "../../services/chat.js";
+import { isOnline, joinChatRoom, onOnlineChange } from "../../services/realtime.js";
 
 export function createChatWindow({ onActivity }) {
   let me = null;

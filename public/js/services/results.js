@@ -32,6 +32,19 @@ export async function listResults(userId, limit = 50) {
   );
 }
 
+// One page of a user's results, newest first, with the total count for pagination.
+export async function listResultsPage(userId, { page = 1, pageSize = 10 } = {}) {
+  const from = (page - 1) * pageSize;
+  const { data, count, error } = await supabase
+    .from("game_results")
+    .select("*", { count: "exact" })
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .range(from, from + pageSize - 1);
+  if (error) throw error;
+  return { rows: data, total: count ?? 0 };
+}
+
 export async function getLeaderboard(difficulty = null, limit = 50) {
   return unwrap(await supabase.rpc("leaderboard", { p_difficulty: difficulty, p_limit: limit }));
 }

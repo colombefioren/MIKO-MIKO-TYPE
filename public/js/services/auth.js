@@ -1,3 +1,4 @@
+import { pageUrl } from "../lib/routes.js";
 import { supabase, isBackendReady, unwrap } from "../lib/supabase.js";
 
 const listeners = new Set();
@@ -76,7 +77,7 @@ export async function signUp(email, password, username) {
       password,
       options: {
         data: { username },
-        emailRedirectTo: new URL("../../index.html", import.meta.url).href,
+        emailRedirectTo: pageUrl("index.html"),
       },
     })
   );

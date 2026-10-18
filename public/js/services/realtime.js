@@ -51,6 +51,7 @@ export function onOnlineChange(listener) {
 }
 
 export const isOnline = (userId) => onlineIds.has(userId);
+export const getOnlineIds = () => onlineIds;
 
 // Typing indicator inside a conversation, sent as ephemeral broadcast messages.
 export function joinChatRoom(chatId, onTyping) {

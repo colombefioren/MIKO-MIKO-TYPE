@@ -1,0 +1,388 @@
+/* Community feed, side panel and chat window. */
+
+.community {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.composer {
+  padding: 16px;
+}
+
+.composer-row {
+  display: flex;
+  gap: 12px;
+}
+
+.composer .textarea {
+  min-height: 72px;
+  border: 0;
+  padding: 8px 2px;
+  background: transparent;
+  box-shadow: none;
+  font-size: 16px;
+}
+
+.composer-preview {
+  position: relative;
+  margin-top: 10px;
+  width: fit-content;
+}
+
+.composer-preview img {
+  max-height: 220px;
+  border-radius: var(--radius);
+}
+
+.composer-preview .icon-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--overlay);
+  color: #f4f5f7;
+}
+
+.post {
+  padding: 18px 20px;
+}
+
+.post-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-author {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-time {
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.post-head .icon-btn {
+  margin-left: auto;
+}
+
+.post-body {
+  margin-top: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.hashtag {
+  color: var(--frost);
+}
+
+.post-image {
+  margin-top: 12px;
+  max-height: 460px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.result-card {
+  display: grid;
+  grid-template-columns: auto repeat(3, minmax(0, auto));
+  justify-content: start;
+  align-items: end;
+  gap: 4px 28px;
+  margin-top: 12px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.result-card-wpm {
+  font-family: var(--font-mono);
+  font-size: 40px;
+  font-weight: 650;
+  line-height: 1;
+  color: var(--accent-text);
+}
+
+.result-card dt {
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.result-card dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 17px;
+}
+
+.post-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+  margin-left: -8px;
+}
+
+.post-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-action:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.post-action .ph,
+.post-action .ph-fill {
+  font-size: 18px;
+}
+
+.post-action[aria-pressed="true"] {
+  color: var(--danger);
+}
+
+.comments {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-bubble {
+  min-width: 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+
+.comment-bubble p {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.comment-delete {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.comment-delete:hover {
+  color: var(--danger);
+}
+
+.comment-form {
+  display: flex;
+  gap: 8px;
+}
+
+.feed-more {
+  align-self: center;
+}
+
+.side-panel {
+  position: sticky;
+  top: calc(var(--header-height) + 20px);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - var(--header-height) - 40px);
+  padding: 6px 16px 16px;
+}
+
+.side-panel .tabs {
+  margin: 0 -16px 12px;
+  padding: 0 8px;
+}
+
+.side-panel .tab {
+  padding-inline: 10px;
+  gap: 6px;
+}
+
+.side-panel [role="tabpanel"] {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.panel-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+button.list-row:hover,
+a.list-row:hover {
+  background: var(--surface-2);
+}
+
+.search {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.search .ph {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search .input {
+  padding-left: 36px;
+}
+
+.chat {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  height: min(520px, calc(100dvh - var(--header-height) - 48px));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  animation: rise 0.25s var(--ease);
+}
+
+.chat-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-head .list-main a {
+  text-decoration: none;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-width: thin;
+}
+
+.chat-day {
+  align-self: center;
+  margin: 10px 0 6px;
+  color: var(--text-faint);
+  font-size: 12px;
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 7px 12px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.bubble.is-mine {
+  align-self: flex-end;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.bubble-time {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  opacity: 0.65;
+  text-align: right;
+}
+
+.chat-typing {
+  min-height: 20px;
+  padding: 0 16px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.chat-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 980px) {
+  .community {
+    grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    position: static;
+    max-height: none;
+    order: -1;
+  }
+
+  .side-panel [role="tabpanel"] {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 760px) {
+  .chat {
+    inset: var(--header-height) 0 calc(var(--tabbar-height) + env(safe-area-inset-bottom)) 0;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    border-width: 1px 0;
+  }
+
+  .post {
+    padding: 16px;
+  }
+
+  .result-card {
+    grid-template-columns: repeat(2, minmax(0, auto));
+  }
+}

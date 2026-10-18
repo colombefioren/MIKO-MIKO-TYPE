@@ -1,6 +1,6 @@
 // Desktop sidebar from the original Miko-Miko layout: logo, navigation with the active
 // page highlighted, and a collapse toggle (also Ctrl + Esc). Phones use the bottom tab bar instead.
-import { h, icon } from "../lib/dom.js";
+import { h, icon } from "../../lib/dom.js";
 
 const KEY = "mikomiko:sidebar-collapsed";
 
@@ -57,7 +57,7 @@ export function createSidebar({ items, active, pageUrl, collapsedByDefault }) {
     toggle
   );
 
-  // The highlight sits behind the current page's link only.
+  // The highlight sits behind the current page's link, and slides to a link when it is clicked.
   function moveTo(link, { instant = false } = {}) {
     if (!link) {
       highlight.style.opacity = "0";
@@ -79,6 +79,25 @@ export function createSidebar({ items, active, pageUrl, collapsedByDefault }) {
     toggle.setAttribute("aria-expanded", String(!collapsed));
     toggle.setAttribute("aria-label", collapsed ? "Expand the sidebar" : "Collapse the sidebar");
     if (remember) saveCollapsed(collapsed);
+  }
+
+  // Clicking another page slides the highlight there first, then navigates, like the original.
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  for (const link of links) {
+    link.addEventListener("click", (event) => {
+      const plainClick = event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+      if (!plainClick || link === current || reducedMotion.matches) return;
+      event.preventDefault();
+      moveTo(link);
+      let left = false;
+      const go = () => {
+        if (left) return;
+        left = true;
+        location.href = link.href;
+      };
+      highlight.addEventListener("transitionend", go, { once: true });
+      setTimeout(go, 450);
+    });
   }
 
   const isCollapsed = () => document.documentElement.classList.contains("sidebar-collapsed");
