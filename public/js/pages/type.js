@@ -132,7 +132,9 @@ async function showResults(summary) {
   $("#result-pb").hidden = true;
   els.share.hidden = true;
   els.saveLogin.hidden = true;
-  els.next.focus();
+  // Focus the panel, not the Next button: a space typed right after the last word
+  // would otherwise press the button and skip the results.
+  els.results.focus({ preventScroll: true });
 
   renderResultsChart($("#results-chart"), summary.samples);
 
@@ -229,7 +231,7 @@ document.addEventListener("keydown", (event) => {
   const nothingFocused = !active || active === document.body;
 
   if (!els.results.hidden) {
-    if (event.key === "Enter" && nothingFocused) startNewTest();
+    if (event.key === "Enter" && (nothingFocused || active === els.results)) startNewTest();
     return;
   }
   // Typing anywhere on the page goes to the test, but never steals keys from other controls.

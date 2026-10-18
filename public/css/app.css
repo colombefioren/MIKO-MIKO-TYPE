@@ -1415,6 +1415,10 @@ kbd {
 
 /* Results */
 
+.results:focus {
+  outline: none;
+}
+
 .results {
   display: flex;
   flex-direction: column;
