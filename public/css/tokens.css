@@ -43,6 +43,17 @@
   --shadow: 0 1px 2px rgb(0 4 12 / 0.4), 0 14px 36px rgb(0 4 12 / 0.5);
   --overlay: rgb(1 6 14 / 0.7);
 
+  /* Sidebar: brand navy with the original gradient highlight. */
+  --sidebar-bg: linear-gradient(180deg, #061a30 0%, #041322 55%, #020e1b 100%);
+  --sidebar-border: rgb(162 191 254 / 0.08);
+  --sidebar-link: #7d86b8;
+  --sidebar-link-hover: #c9d3f2;
+  --sidebar-link-active: #ffffff;
+  --sidebar-icon-active: #a2bffe;
+  --sidebar-hl-bg: linear-gradient(90deg, #06182c 0%, #1d2b52 100%);
+  --sidebar-hl-border: #3b5285;
+  --sidebar-hl-shadow: inset 0 1px 0 rgb(162 191 254 / 0.14), 0 6px 16px rgb(0 6 18 / 0.45);
+
   --radius: 12px;
   --radius-lg: 20px;
   --header-height: 68px;
@@ -74,4 +85,14 @@
   --success: #1c8d5c;
   --shadow: 0 1px 2px rgb(11 26 51 / 0.06), 0 12px 32px rgb(11 26 51 / 0.1);
   --overlay: rgb(11 26 51 / 0.45);
+
+  --sidebar-bg: linear-gradient(180deg, #f9fbff 0%, #f1f5fd 60%, #e9effa 100%);
+  --sidebar-border: #d6dfef;
+  --sidebar-link: #5d6a8f;
+  --sidebar-link-hover: #1b2b4d;
+  --sidebar-link-active: #0b1a33;
+  --sidebar-icon-active: #1f6fb2;
+  --sidebar-hl-bg: linear-gradient(90deg, #ffffff 0%, #e2ebfb 100%);
+  --sidebar-hl-border: #bccbe4;
+  --sidebar-hl-shadow: inset 0 1px 0 #ffffff, 0 6px 16px rgb(11 26 51 / 0.08);
 }

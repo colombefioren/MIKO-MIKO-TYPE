@@ -17,10 +17,9 @@
   flex-direction: column;
   width: var(--sidebar-w);
   padding: 22px 16px 18px;
-  /* The sidebar keeps the brand navy in both themes, as in the original design. */
-  background: linear-gradient(180deg, #061a30 0%, #041322 55%, #020e1b 100%);
-  border-right: 1px solid rgb(162 191 254 / 0.08);
-  color: #e8eeff;
+    background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  color: var(--text);
   transition: width 0.3s var(--ease), opacity 0.3s;
 }
 
@@ -68,12 +67,10 @@
   right: 0;
   height: 44px;
   opacity: 0;
-  border: 1px solid #3b5285;
+  border: 1px solid var(--sidebar-hl-border);
   border-radius: 16px 6px 16px 6px;
-  background: linear-gradient(90deg, #06182c 0%, #1d2b52 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(162 191 254 / 0.14),
-    0 6px 16px rgb(0 6 18 / 0.45);
+  background: var(--sidebar-hl-bg);
+  box-shadow: var(--sidebar-hl-shadow);
   pointer-events: none;
   transition:
     transform 0.4s var(--sidebar-ease),
@@ -90,7 +87,7 @@
   height: 44px;
   padding: 0 16px;
   border-radius: 16px 6px 16px 6px;
-  color: #7d86b8;
+  color: var(--sidebar-link);
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
@@ -107,23 +104,23 @@
 /* Hover only brightens the text; the highlight stays on the current page. */
 
 .sidebar-link:hover {
-  color: #c9d3f2;
+  color: var(--sidebar-link-hover);
 }
 
 .sidebar-link:hover .sidebar-icon {
-  color: #a2bffe;
+  color: var(--sidebar-icon-active);
 }
 
 .sidebar-link.is-lit {
-  color: #ffffff;
+  color: var(--sidebar-link-active);
 }
 
 .sidebar-link.is-lit .sidebar-icon {
-  color: #a2bffe;
+  color: var(--sidebar-icon-active);
 }
 
 .sidebar-link:focus-visible {
-  outline: 2px solid #ffa62f;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -134,16 +131,16 @@
 .sidebar-hint {
   flex: none;
   margin-top: auto;
-  color: #6b76a6;
+  color: var(--text-faint);
   font-size: 12px;
   text-align: center;
   white-space: nowrap;
 }
 
 .sidebar-hint kbd {
-  background: #0c2139;
-  border-color: #213a63;
-  color: #a9b6dc;
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+  color: var(--text-muted);
 }
 
 .sidebar-toggle {
@@ -156,8 +153,8 @@
   height: 36px;
   border: 3px solid var(--bg);
   border-radius: 50%;
-  background: #ffa62f;
-  color: #1c1000;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 17px;
   box-shadow: 0 6px 16px rgb(255 166 47 / 0.35);
   transition: transform 0.2s var(--ease), box-shadow 0.2s;
@@ -210,9 +207,9 @@
   left: calc(100% + 14px);
   padding: 6px 10px;
   border-radius: 8px;
-  background: #0c2139;
-  border: 1px solid #213a63;
-  color: #e8eeff;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
   font-size: 13px;
   font-weight: 600;
   opacity: 0;
