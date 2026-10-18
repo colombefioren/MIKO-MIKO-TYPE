@@ -89,6 +89,7 @@ By default it targets the local stack. For a hosted project, set `DB_URL`, `SUPA
    ```
 3. In `public/js/config.js`, fill `PRODUCTION` with the project URL and the **anon (public)** key. Never put the service role key in the frontend.
 4. In the Supabase dashboard, under Authentication, set the Site URL to your deployed address.
+   Email confirmation is turned off on the live project, so new accounts can play right away. To require it, enable "Confirm email" under Authentication > Sign In / Providers > Email; the app already shows a "check your inbox" message in that case.
 5. Deploy the repository root to any static host (Vercel, Netlify, GitHub Pages).
 
 If `PRODUCTION` is left empty, the deployed site still works as a guest-only typing test.
