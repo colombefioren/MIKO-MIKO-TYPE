@@ -86,7 +86,12 @@ declare
   extension text;
   new_path text;
 begin
-  if parts is null then
+  -- Only the old app buckets, and no path tricks: these paths are later read from disk.
+  if parts is null
+     or parts[1] not in ('avatar', 'post-images')
+     or parts[2] !~ '^[A-Za-z0-9_./-]+$'
+     or parts[2] ~ '(^|/)\.\.(/|$)'
+     or parts[2] like '/%' then
     return null;
   end if;
   extension := lower(coalesce(substring(parts[2] from '\.([A-Za-z0-9]+)$'), 'png'));

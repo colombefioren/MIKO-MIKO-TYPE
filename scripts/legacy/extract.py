@@ -22,6 +22,7 @@ TABLES = {
 }
 
 COPY_RE = re.compile(r"^COPY (\w+\.\w+) \((.*)\) FROM stdin;$")
+COLUMN_RE = re.compile(r"^[a-z_][a-z0-9_]*$")
 
 
 def main(dump_path, out_path):
@@ -31,19 +32,31 @@ def main(dump_path, out_path):
         lines = iter(dump)
         for line in lines:
             match = COPY_RE.match(line.rstrip("\n"))
-            if not match or match.group(1) not in TABLES:
+            if not match:
                 continue
-            name = TABLES[match.group(1)]
-            columns = [c.strip() for c in match.group(2).split(",")]
-            column_defs = ", ".join(f"{c} text" for c in columns)
-            out.write(f"create table legacy.{name} ({column_defs});\n")
-            out.write(f"copy legacy.{name} ({', '.join(columns)}) from stdin;\n")
+            wanted = match.group(1) in TABLES
+            if wanted and match.group(1) in found:
+                sys.exit(f"Table appears twice in the dump: {match.group(1)}")
+
+            columns = [c.strip().strip('"') for c in match.group(2).split(",")]
+            if wanted and not all(COLUMN_RE.match(c) for c in columns):
+                sys.exit(f"Unexpected column names for {match.group(1)}")
+
+            if wanted:
+                name = TABLES[match.group(1)]
+                quoted = [f'"{c}"' for c in columns]
+                out.write(f"create table legacy.{name} ({', '.join(f'{c} text' for c in quoted)});\n")
+                out.write(f"copy legacy.{name} ({', '.join(quoted)}) from stdin;\n")
+
+            # Consume the whole data block, kept or not, so its rows are never parsed as SQL.
             for row in lines:
-                out.write(row)
+                if wanted:
+                    out.write(row)
                 if row.rstrip("\n") == "\\.":
                     break
-            out.write("\n")
-            found.add(match.group(1))
+            if wanted:
+                out.write("\n")
+                found.add(match.group(1))
 
     missing = set(TABLES) - found
     if missing:

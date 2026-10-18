@@ -24,7 +24,7 @@ SUPABASE_URL="${SUPABASE_URL:-http://127.0.0.1:54321}"
 # Public demo key of the local Supabase stack.
 SERVICE_ROLE_KEY="${SERVICE_ROLE_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU}"
 
-for tool in python3 psql unzip curl; do
+for tool in python3 psql unzip curl realpath; do
   command -v "$tool" >/dev/null || { echo "Missing required tool: $tool" >&2; exit 1; }
 done
 
@@ -47,13 +47,16 @@ mkdir -p "$WORK/files"
 unzip -q "$STORAGE_ZIP" -d "$WORK/files"
 # The archive has one folder named after the old project ref.
 ROOT="$(find "$WORK/files" -mindepth 1 -maxdepth 1 -type d | head -n 1)"
+ROOT_REAL="$(realpath -e "$ROOT")"
 psql "$DB_URL" -q -At -F $'\t' -c "select old_bucket, old_path, new_bucket, new_path from legacy.uploads" > "$WORK/uploads.tsv"
 
 uploaded=0
 missing=()
 while IFS=$'\t' read -r old_bucket old_path new_bucket new_path; do
   file="$ROOT/$old_bucket/$old_path"
-  if [[ ! -f "$file" ]]; then
+  # Only regular files inside the extracted archive: no symlinks, nothing outside it.
+  real="$(realpath -e "$file" 2>/dev/null || true)"
+  if [[ -L "$file" || -z "$real" || "$real" != "$ROOT_REAL/"* || ! -f "$real" ]]; then
     missing+=("$new_bucket/$new_path")
     continue
   fi
@@ -66,7 +69,7 @@ while IFS=$'\t' read -r old_bucket old_path new_bucket new_path; do
     -H "apikey: $SERVICE_ROLE_KEY" \
     -H "Content-Type: $type" \
     -H "x-upsert: true" \
-    --data-binary "@$file"
+    --data-binary "@$real"
   uploaded=$((uploaded + 1))
 done < "$WORK/uploads.tsv"
 echo "Uploaded $uploaded files"
