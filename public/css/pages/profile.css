@@ -204,3 +204,16 @@
     display: none;
   }
 }
+
+.pagination-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.history-row.board-head .num {
+  font-family: var(--font-sans);
+}

@@ -6,12 +6,12 @@ import { errorMessage } from "../lib/toast.js";
 import { getAuthState, onAuthChange, refreshProfile } from "../services/auth.js";
 import { getFriendsOf } from "../services/friends.js";
 import { getProfile } from "../services/profiles.js";
-import { getGuestResults, listResults } from "../services/results.js";
+import { getGuestResults, listResults, listResultsPage } from "../services/results.js";
 import { openAuthDialog } from "../ui/auth/dialog.js";
 import { createTabs } from "../ui/common/tabs.js";
 import { friendsSection } from "../ui/profile/friends.js";
 import { profileHeader } from "../ui/profile/header.js";
-import { historySection } from "../ui/profile/history.js";
+import { HISTORY_PAGE_SIZE, historySection, pageFromArray } from "../ui/profile/history.js";
 import { renderRelationship } from "../ui/profile/relationship.js";
 import { settingsSection } from "../ui/profile/settings.js";
 import { profileStats, statGrid, summarizeResults } from "../ui/profile/stats.js";
@@ -37,7 +37,15 @@ async function renderProfile(profileId, viewer) {
     };
     const header = profileHeader(profile, { editable: isMe, userId: viewer?.id, onChange });
     const sections = [
-      { id: "history", label: "History", icon: "clock-counter-clockwise", content: historySection(results) },
+      {
+        id: "history",
+        label: "History",
+        icon: "clock-counter-clockwise",
+        content: historySection({
+          latest: results,
+          loadPage: (page) => listResultsPage(profileId, { page, pageSize: HISTORY_PAGE_SIZE }),
+        }),
+      },
       { id: "friends", label: `Friends (${friends.length})`, icon: "users-three", content: friendsSection(friends) },
     ];
     if (isMe) sections.push({ id: "settings", label: "Settings", icon: "gear-six", content: settingsSection(viewer, profile, onChange) });
@@ -69,7 +77,7 @@ function renderGuest() {
     header.element,
     statGrid(summarizeResults(results)),
     h("h2.section-title", { style: { marginBottom: "14px" } }, "Recent tests"),
-    historySection(results)
+    historySection({ latest: results.slice(0, 50), loadPage: pageFromArray(results) })
   );
 }
 
