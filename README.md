@@ -64,6 +64,18 @@ npm run db:reset   # wipe the local database and re-apply migrations
 npm run db:stop    # stop the local Supabase containers
 ```
 
+## Importing Miko-Miko data
+
+Backups of the old Miko-Miko project (a `pg_dumpall` `.gz` file and the storage `.zip`) can be imported into a Typhoon database:
+
+```bash
+npm run db:import-legacy -- /path/to/backup.gz /path/to/storage.zip
+```
+
+This keeps every account with its existing password, profiles, typing results, friend requests, posts with images, likes, comments and chats. Usernames are adjusted to the new format (spaces become underscores) and old images are re-uploaded into each owner's folder. Old results had no word count or duration, so those are stored as a 30-word test with an estimated time. Running it twice is refused.
+
+By default it targets the local stack. For a hosted project, set `DB_URL`, `SUPABASE_URL` and `SERVICE_ROLE_KEY` first (see the header of `scripts/import-legacy.sh`). Requires `python3`, `psql`, `unzip` and `curl`.
+
 ## Deploying
 
 1. Create a project on [supabase.com](https://supabase.com).
