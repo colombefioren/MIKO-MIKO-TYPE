@@ -3,7 +3,8 @@ import { h, icon, replaceChildren } from "../lib/dom.js";
 import { avatar } from "../lib/avatar.js";
 import { clockTime, dayLabel } from "../lib/format.js";
 import { errorMessage, toast } from "../lib/toast.js";
-import { profileUrl, scheduleBadgeRefresh } from "./shell.js";
+import { profileUrl } from "../lib/routes.js";
+import { scheduleBadgeRefresh } from "./shell/inboxBadge.js";
 import { getMessages, markChatRead, sendMessage } from "../services/chat.js";
 import { isOnline, joinChatRoom, onOnlineChange } from "../services/realtime.js";
 

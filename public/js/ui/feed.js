@@ -3,9 +3,9 @@ import { $, append, h, icon, emptyState, replaceChildren, setBusy, skeletonRows 
 import { avatar } from "../lib/avatar.js";
 import { round, timeAgo } from "../lib/format.js";
 import { errorMessage, toast } from "../lib/toast.js";
-import { profileUrl } from "./shell.js";
-import { openAuthDialog } from "./authDialog.js";
-import { confirmAction } from "./confirm.js";
+import { profileUrl } from "../lib/routes.js";
+import { openAuthDialog } from "./auth/dialog.js";
+import { confirmAction } from "./common/confirm.js";
 import { MAX_POST_IMAGE_BYTES, validateImage } from "../services/profiles.js";
 import { isStorageUrl } from "../lib/supabase.js";
 import {

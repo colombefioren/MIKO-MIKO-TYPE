@@ -1,7 +1,7 @@
 import { $, emptyState, replaceChildren } from "../lib/dom.js";
 import { isBackendReady } from "../lib/supabase.js";
 import { errorMessage, toast } from "../lib/toast.js";
-import { initShell } from "../ui/shell.js";
+import { initShell } from "../ui/shell/index.js";
 import { createFeed } from "../ui/feed.js";
 import { createSidePanel } from "../ui/sidePanel.js";
 import { createChatWindow } from "../ui/chatWindow.js";

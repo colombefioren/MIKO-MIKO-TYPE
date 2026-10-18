@@ -1,4 +1,4 @@
-import { h } from "../lib/dom.js";
+import { h } from "../../lib/dom.js";
 
 // Promise-based replacement for window.confirm built on <dialog>.
 export function confirmAction({ title, body, confirmLabel = "Confirm", danger = false }) {

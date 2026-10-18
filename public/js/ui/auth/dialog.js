@@ -1,7 +1,8 @@
-import { h, icon, setBusy } from "../lib/dom.js";
-import { isBackendReady } from "../lib/supabase.js";
-import { errorMessage, toast } from "../lib/toast.js";
-import { signIn, signUp, USERNAME_PATTERN } from "../services/auth.js";
+import { h, icon, setBusy } from "../../lib/dom.js";
+import { assetUrl } from "../../lib/routes.js";
+import { isBackendReady } from "../../lib/supabase.js";
+import { errorMessage, toast } from "../../lib/toast.js";
+import { signIn, signUp, USERNAME_PATTERN } from "../../services/auth.js";
 
 let dialog;
 
@@ -184,7 +185,7 @@ function build() {
     buildSignupForm(close, () => select("login"))
   );
 
-  const logoSrc = new URL("../../assets/images/mikomiko-logo.webp", import.meta.url).href;
+  const logoSrc = assetUrl("mikomiko-logo.webp");
 
   const main = isBackendReady
     ? [

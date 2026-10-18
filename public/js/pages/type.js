@@ -1,8 +1,8 @@
 import { $ } from "../lib/dom.js";
 import { errorMessage, toast } from "../lib/toast.js";
 import { duration, round } from "../lib/format.js";
-import { initShell } from "../ui/shell.js";
-import { openAuthDialog } from "../ui/authDialog.js";
+import { initShell } from "../ui/shell/index.js";
+import { openAuthDialog } from "../ui/auth/dialog.js";
 import { getAuthState, onAuthChange, refreshProfile } from "../services/auth.js";
 import { getGuestResults, saveGuestResult, saveResult } from "../services/results.js";
 import { createPost } from "../services/social.js";

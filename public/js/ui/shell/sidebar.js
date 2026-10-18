@@ -1,6 +1,6 @@
 // Desktop sidebar from the original Miko-Miko layout: logo, navigation with the active
 // page highlighted, and a collapse toggle (also Ctrl + Esc). Phones use the bottom tab bar instead.
-import { h, icon } from "../lib/dom.js";
+import { h, icon } from "../../lib/dom.js";
 
 const KEY = "mikomiko:sidebar-collapsed";
 

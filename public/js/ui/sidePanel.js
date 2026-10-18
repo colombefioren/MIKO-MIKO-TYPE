@@ -3,9 +3,10 @@ import { h, icon, emptyState, replaceChildren, setBusy, skeletonRows } from "../
 import { avatar } from "../lib/avatar.js";
 import { round, timeAgo } from "../lib/format.js";
 import { errorMessage, toast } from "../lib/toast.js";
-import { profileUrl, scheduleBadgeRefresh } from "./shell.js";
-import { openAuthDialog } from "./authDialog.js";
-import { confirmAction } from "./confirm.js";
+import { profileUrl } from "../lib/routes.js";
+import { scheduleBadgeRefresh } from "./shell/inboxBadge.js";
+import { openAuthDialog } from "./auth/dialog.js";
+import { confirmAction } from "./common/confirm.js";
 import { getChatList } from "../services/chat.js";
 import {
   clearNotifications,
