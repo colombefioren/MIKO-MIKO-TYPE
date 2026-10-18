@@ -94,11 +94,12 @@ export function createTypingTest({ viewport, wordsEl, caret, input, onStart, onP
     if (!el) return;
     const typedLength = (state.typed[state.index] ?? "").length;
     const letters = el.children;
+    // Letters are positioned relative to the words container (their offsetParent), not the word.
     let x;
-    if (typedLength < letters.length) x = el.offsetLeft + letters[typedLength].offsetLeft;
+    if (typedLength < letters.length) x = letters[typedLength].offsetLeft;
     else {
       const last = letters[letters.length - 1];
-      x = el.offsetLeft + (last ? last.offsetLeft + last.offsetWidth : 0);
+      x = last ? last.offsetLeft + last.offsetWidth : el.offsetLeft;
     }
 
     // Keep the active word on the second visible line.
