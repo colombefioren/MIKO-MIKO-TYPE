@@ -5,13 +5,26 @@ import { signIn, signUp, USERNAME_PATTERN } from "../services/auth.js";
 
 let dialog;
 
-function field({ id, label, type = "text", autocomplete, hint, ...rest }) {
+function field({ id, label, type = "text", autocomplete, hint, iconName, ...rest }) {
   const hintId = hint ? `${id}-hint` : undefined;
+  const input = h("input.input.has-icon", { id, name: id, type, autocomplete, required: true, "aria-describedby": hintId, ...rest });
+  let toggle = null;
+  if (type === "password") {
+    toggle = h("button.input-action", { type: "button", "aria-label": "Show password", "aria-pressed": "false" }, icon("eye"));
+    toggle.addEventListener("click", () => {
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      toggle.setAttribute("aria-pressed", String(show));
+      toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+      toggle.replaceChildren(icon(show ? "eye-slash" : "eye"));
+      input.focus();
+    });
+  }
   return h(
     "div.field",
     {},
     h("label.field-label", { for: id }, label),
-    h("input.input", { id, name: id, type, autocomplete, required: true, "aria-describedby": hintId, ...rest }),
+    h("div.input-wrap", {}, icon(iconName, "input-icon"), input, toggle),
     hint && h("p.field-hint", { id: hintId }, hint)
   );
 }
@@ -30,10 +43,10 @@ function buildLoginForm(close) {
   const form = h(
     "form.stack",
     { novalidate: false },
-    field({ id: "login-email", label: "Email", type: "email", autocomplete: "email" }),
-    field({ id: "login-password", label: "Password", type: "password", autocomplete: "current-password" }),
+    field({ id: "login-email", label: "Email", type: "email", autocomplete: "email", iconName: "envelope-simple", placeholder: "you@example.com" }),
+    field({ id: "login-password", label: "Password", type: "password", autocomplete: "current-password", iconName: "lock-simple" }),
     error,
-    h("button.btn.btn-primary.btn-block", { type: "submit" }, "Log in")
+    h("button.btn.btn-primary.btn-block.btn-lg", { type: "submit" }, "Log in")
   );
 
   form.addEventListener("submit", async (event) => {
@@ -63,23 +76,26 @@ function buildSignupForm(close, showLogin) {
       id: "signup-username",
       label: "Username",
       autocomplete: "username",
+      iconName: "at",
+      placeholder: "mimi_types",
       // Escaped dash: HTML patterns compile with the `v` flag.
       pattern: "[A-Za-z0-9_.\\-]{3,24}",
       minlength: 3,
       maxlength: 24,
       hint: "3 to 24 characters: letters, numbers, dot, dash or underscore.",
     }),
-    field({ id: "signup-email", label: "Email", type: "email", autocomplete: "email" }),
+    field({ id: "signup-email", label: "Email", type: "email", autocomplete: "email", iconName: "envelope-simple", placeholder: "you@example.com" }),
     field({
       id: "signup-password",
       label: "Password",
       type: "password",
       autocomplete: "new-password",
+      iconName: "lock-simple",
       minlength: 8,
       hint: "At least 8 characters.",
     }),
     error,
-    h("button.btn.btn-primary.btn-block", { type: "submit" }, "Create account")
+    h("button.btn.btn-primary.btn-block.btn-lg", { type: "submit" }, "Create account")
   );
 
   form.addEventListener("submit", async (event) => {
@@ -112,24 +128,50 @@ function buildSignupForm(close, showLogin) {
   return form;
 }
 
+const COPY = {
+  login: {
+    title: "Welcome back",
+    subtitle: "Log in to save your results and catch up with friends.",
+    switchText: "New to Miko-Miko Type?",
+    switchAction: "Create an account",
+  },
+  signup: {
+    title: "Create your account",
+    subtitle: "Pick a username. It is how your friends will find you.",
+    switchText: "Already have an account?",
+    switchAction: "Log in",
+  },
+};
+
 function build() {
   const close = () => dialog.close();
   const tabs = {};
   const panels = {};
+  const title = h("h2.auth-title", { id: "auth-title" });
+  const subtitle = h("p.auth-subtitle");
+  const switchText = h("span");
+  const switchButton = h("button.link-btn", { type: "button" });
+  let current = "login";
 
   const select = (mode) => {
+    current = mode;
     for (const [name, tab] of Object.entries(tabs)) {
       const active = name === mode;
       tab.setAttribute("aria-selected", String(active));
       tab.tabIndex = active ? 0 : -1;
       panels[name].hidden = !active;
     }
+    title.textContent = COPY[mode].title;
+    subtitle.textContent = COPY[mode].subtitle;
+    switchText.textContent = COPY[mode].switchText;
+    switchButton.textContent = COPY[mode].switchAction;
     panels[mode].querySelector("input")?.focus();
   };
+  switchButton.addEventListener("click", () => select(current === "login" ? "signup" : "login"));
 
   for (const [mode, label] of [["login", "Log in"], ["signup", "Sign up"]]) {
     tabs[mode] = h(
-      "button.tab",
+      "button.switch-option",
       { type: "button", role: "tab", id: `auth-tab-${mode}`, "aria-controls": `auth-panel-${mode}`, onclick: () => select(mode) },
       label
     );
@@ -142,33 +184,49 @@ function build() {
     buildSignupForm(close, () => select("login"))
   );
 
-  const body = isBackendReady
-    ? [h("div.tabs", { role: "tablist", "aria-label": "Account" }, tabs.login, tabs.signup), panels.login, panels.signup]
+  const logoSrc = new URL("../../assets/images/mikomiko-logo.webp", import.meta.url).href;
+
+  const main = isBackendReady
+    ? [
+        h("img.auth-logo-small", { src: logoSrc, alt: "", width: 120, height: 95 }),
+        title,
+        subtitle,
+        h("div.switch", { role: "tablist", "aria-label": "Account" }, tabs.login, tabs.signup),
+        panels.login,
+        panels.signup,
+        h("p.auth-switch", {}, switchText, " ", switchButton),
+      ]
     : [
+        h("img.auth-logo-small", { src: logoSrc, alt: "", width: 120, height: 95 }),
+        h("h2.auth-title", { id: "auth-title" }, "Accounts are offline"),
         h(
           "p.notice",
           {},
           icon("cloud-slash"),
-          h("span", {}, "Accounts are unavailable because the server is not configured. You can still take typing tests as a guest.")
+          h("span", {}, "The server is not configured. You can still take typing tests as a guest.")
         ),
       ];
 
   dialog = h(
-    "dialog.dialog",
+    "dialog.dialog.auth-dialog",
     { "aria-labelledby": "auth-title" },
-    h("img.dialog-logo", {
-      src: new URL("../../assets/images/mikomiko-logo.webp", import.meta.url).href,
-      alt: "Miko-Miko Type",
-      width: 160,
-      height: 126,
-    }),
     h(
-      "div.dialog-header",
+      "div.auth-shell",
       {},
-      h("h2.dialog-title", { id: "auth-title" }, "Your Miko-Miko account"),
-      h("button.icon-btn", { type: "button", "aria-label": "Close", onclick: close }, icon("x"))
-    ),
-    ...body
+      h(
+        "aside.auth-brand",
+        { "aria-hidden": "true" },
+        h("img.auth-logo", { src: logoSrc, alt: "", width: 240, height: 189 }),
+        h("p.auth-brand-title", {}, "Type with friends."),
+        h("p.auth-brand-body", {}, "Save every run, climb the leaderboard and chat while you practise.")
+      ),
+      h(
+        "section.auth-main",
+        {},
+        h("button.icon-btn.auth-close", { type: "button", "aria-label": "Close", onclick: close }, icon("x")),
+        ...main
+      )
+    )
   );
 
   // Clicking the backdrop closes the dialog.
@@ -176,7 +234,7 @@ function build() {
     if (event.target === dialog) close();
   });
   document.body.append(dialog);
-  return select;
+  return isBackendReady ? select : null;
 }
 
 let selectMode;
