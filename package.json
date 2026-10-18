@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 5500 --bind 127.0.0.1",
+    "test": "node --test \"tests/**/*.test.js\"",
     "db:start": "npx --yes supabase@2.121.0 start",
     "db:stop": "npx --yes supabase@2.121.0 stop",
     "db:reset": "npx --yes supabase@2.121.0 db reset"
