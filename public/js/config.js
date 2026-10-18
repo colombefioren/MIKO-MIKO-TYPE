@@ -12,8 +12,9 @@ const LOCAL = {
 };
 
 const PRODUCTION = {
-  url: "",
-  anonKey: "",
+  url: "https://ddwyditiohdbslvvjqli.supabase.co",
+  anonKey:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkd3lkaXRpb2hkYnNsdnZqcWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIyOTczMTUsImV4cCI6MjEwNzg3MzMxNX0.hfQfbsGvFBXswH9vehBGkPcXG1-0654sQlWwP2B1Yj4",
 };
 
 const isLocalHost = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
