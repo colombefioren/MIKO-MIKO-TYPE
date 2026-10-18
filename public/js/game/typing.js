@@ -1,17 +1,15 @@
-import { h } from "../lib/dom.js";
 import { generateTest, normalizeOptions } from "./generator.js";
 import { summarize, wordsPerMinute, correctWordChars } from "./stats.js";
+import { createWordsView } from "./wordsView.js";
 
 const MAX_EXTRA_CHARS = 8;
-const VISIBLE_LINES = 3;
 
 // Drives one typing test inside the given elements. Text goes through a hidden input so
 // physical keyboards, mobile keyboards and IME all produce the same `input` events.
 export function createTypingTest({ viewport, wordsEl, caret, input, onStart, onProgress, onFinish }) {
   let state;
-  let wordEls = [];
   let sampleTimer = null;
-  let lineStep = 0;
+  const view = createWordsView({ viewport, wordsEl, caret });
 
   function reset(options) {
     clearInterval(sampleTimer);
@@ -32,7 +30,7 @@ export function createTypingTest({ viewport, wordsEl, caret, input, onStart, onP
       lastSampleAt: 0,
     };
     input.value = "";
-    renderWords();
+    view.render(state.targets);
     onProgress?.(progress());
   }
 
@@ -46,66 +44,18 @@ export function createTypingTest({ viewport, wordsEl, caret, input, onStart, onP
     };
   }
 
-  function renderWords() {
-    wordEls = state.targets.map((word) =>
-      h("div.word", {}, [...word].map((char) => h("span.letter", {}, char)))
-    );
-    wordsEl.replaceChildren(...wordEls, caret);
-    wordsEl.style.transform = "";
-    measure();
-  }
-
-  // Line height and viewport size depend on the font, so they are measured, not hard-coded.
-  function measure() {
-    const first = wordEls[0];
-    if (!first) return;
-    const rowGap = parseFloat(getComputedStyle(wordsEl).rowGap) || 0;
-    lineStep = first.offsetHeight + rowGap;
-    viewport.style.setProperty("--words-height", `${lineStep * VISIBLE_LINES - rowGap}px`);
-    caret.style.height = `${first.offsetHeight}px`;
-    placeCaret();
-  }
-
+  // Redraws one word from the state and keeps the caret where typing continues.
   function renderWord(index) {
-    const target = state.targets[index];
-    const typed = state.typed[index] ?? "";
-    const el = wordEls[index];
-    const letters = [...el.children];
-
-    letters.forEach((letter, i) => {
-      if (i >= target.length) {
-        letter.remove();
-        return;
-      }
-      letter.classList.toggle("is-correct", i < typed.length && typed[i] === target[i]);
-      letter.classList.toggle("is-incorrect", i < typed.length && typed[i] !== target[i]);
+    view.updateWord(index, {
+      target: state.targets[index],
+      typed: state.typed[index] ?? "",
+      isDone: index < state.committed,
+      isActive: index === state.index && !state.finished,
     });
-    for (let i = target.length; i < typed.length; i++) {
-      el.append(h("span.letter.is-extra", {}, typed[i]));
-    }
-
-    const isPast = index < state.committed;
-    el.classList.toggle("has-error", isPast && typed !== target);
-    el.classList.toggle("is-active", index === state.index && !state.finished);
   }
 
   function placeCaret() {
-    const el = wordEls[state.index];
-    if (!el) return;
-    const typedLength = (state.typed[state.index] ?? "").length;
-    const letters = el.children;
-    // Letters are positioned relative to the words container (their offsetParent), not the word.
-    let x;
-    if (typedLength < letters.length) x = letters[typedLength].offsetLeft;
-    else {
-      const last = letters[letters.length - 1];
-      x = last ? last.offsetLeft + last.offsetWidth : el.offsetLeft;
-    }
-
-    // Keep the active word on the second visible line.
-    const shift = Math.max(0, el.offsetTop - lineStep);
-    wordsEl.style.transform = shift ? `translateY(${-shift}px)` : "";
-    caret.style.transform = `translate(${x}px, ${el.offsetTop}px)`;
+    view.moveCaret(state.index, (state.typed[state.index] ?? "").length);
   }
 
   function start() {
@@ -233,9 +183,6 @@ export function createTypingTest({ viewport, wordsEl, caret, input, onStart, onP
       event.preventDefault();
     }
   });
-
-  new ResizeObserver(() => measure()).observe(viewport);
-  document.fonts?.ready.then(measure);
 
   return {
     reset,
