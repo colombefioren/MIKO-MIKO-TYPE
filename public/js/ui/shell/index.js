@@ -4,12 +4,14 @@ import { isBackendReady } from "../../lib/supabase.js";
 import { getAuthState, initAuth, onAuthChange } from "../../services/auth.js";
 import { createHeader } from "./header.js";
 import { createSidebar } from "./sidebar.js";
+import { replayEntranceOnRestore } from "./transitions.js";
 
 export async function initShell(active) {
   const root = document.querySelector("[data-shell]");
   const header = createHeader(root, active);
   // The typing page starts with the sidebar collapsed so the text gets the room, like before.
   root.before(createSidebar({ items: NAV, active, pageUrl, collapsedByDefault: active === "type" }));
+  replayEntranceOnRestore();
 
   if (!isBackendReady) {
     header.render({ user: null, profile: null });

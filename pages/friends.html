@@ -12,6 +12,8 @@
         document.documentElement.dataset.theme = localStorage.getItem("mikomiko:theme") || "dark";
         const sidebar = localStorage.getItem("mikomiko:sidebar-collapsed") ?? "false";
         if (sidebar === "true") document.documentElement.classList.add("sidebar-collapsed");
+        // Browsers without cross-document view transitions get a fade-in on load instead.
+        if (!("onpagereveal" in window)) document.documentElement.classList.add("no-view-transitions");
       } catch {}
     </script>
     <link rel="preload" href="../public/assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
@@ -21,6 +23,7 @@
     <link rel="stylesheet" href="../public/css/base.css" />
     <link rel="stylesheet" href="../public/css/layout.css" />
     <link rel="stylesheet" href="../public/css/sidebar.css" />
+    <link rel="stylesheet" href="../public/css/transitions.css" />
     <link rel="stylesheet" href="../public/css/components/controls.css" />
     <link rel="stylesheet" href="../public/css/components/overlays.css" />
     <link rel="stylesheet" href="../public/css/components/auth-dialog.css" />
