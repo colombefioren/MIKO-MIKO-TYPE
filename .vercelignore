@@ -1,0 +1,8 @@
+# Only the static site is deployed.
+supabase/
+scripts/
+tests/
+node_modules/
+.idea/
+.vscode/
+.env*
