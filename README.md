@@ -1,112 +1,108 @@
-# 🎮 Miko-Miko
+# Typhoon
 
-## ✨ Introduction
+**Type up a storm.** Typhoon is a typing test with a social side: save your results, climb a live leaderboard, add friends, chat in real time and share your best runs with the community.
 
-Hi there! 👋  
-**Miko-Miko** is a simple yet fun typing game built using **HTML**, **CSS**, and **Vanilla JavaScript**. It lets you connect and interact with friends from all around the world in a playful typing challenge.
+Built with plain HTML, CSS and vanilla JavaScript (ES modules, no build step) on top of [Supabase](https://supabase.com) for auth, Postgres, storage and realtime websockets.
 
-This project was created by [Colombe](https://github.com/colombefioren) (STD24176) and [Mihaja](https://github.com/Whipander) (STD24126) as part of a **WEB1 exam**.
+Typhoon started as **Miko-Miko Type**, a WEB1 exam project by [Colombe](https://github.com/colombefioren) (STD24176) and [Mihaja](https://github.com/Whipander) (STD24126) at HEI.
 
-> ⚠️ **Important:**  
-To enjoy the game fully:
-> - Use the **Live Server** extension in **VS Code**.
-> - Make sure to open the server on **port 5500**.
-> - And don’t forget to **stay connected to the Internet**.  
-> Let’s keep things smooth and friendly. 😊
+## Features
 
----
+### Typing test
 
-## 🛠️ Features
+- Difficulty: easy, medium, hard
+- Content mix: words, numbers, symbols, code
+- Length: 15, 30 or 50 words
+- Live progress and speed, a three-line scrolling text window and a smooth caret
+- Standard scoring: WPM from correctly typed words, raw WPM, keystroke accuracy and a correct / incorrect / extra / missed breakdown
+- Speed chart with per-second raw speed and errors
+- Backspace into the previous word to fix a mistake
+- <kbd>Tab</kbd> restarts, <kbd>Enter</kbd> starts the next test
+- Works without an account: guest results are kept in the browser, and logging in from the results screen saves the last test
 
-### 🔐 Log In & Sign Up
+### Profile
 
-Create an account (highly recommended!) to unlock a bunch of cool features. Multiple accounts? Totally possible.
+- Best and average WPM and accuracy, test count and a history chart
+- Last 20 tests, friends list with online status
+- Settings: username, bio, profile picture and password
 
----
+### Community
 
-### ⌨️ Typing Section
+- Feed with text, images, #hashtags and shared test results
+- Likes and comments with live counters
+- Direct messages between friends with live delivery, unread counts and a typing indicator
+- Inbox for friend requests, accepted requests, likes and comments
+- Friend search, requests and online presence
 
-The core of the game! Customize your experience with:
-- **Difficulty levels**:  
-  - 🟢 Easy  
-  - 🟡 Medium  
-  - 🔴 Hard
+### Leaderboard
 
-- **Typing content** (mix and match as you like!):  
-  - Words  
-  - Numbers  
-  - Symbols  
-  - Code  
+- Best result per typist, filterable by difficulty
+- Updates live when anyone finishes a test
 
-- **Word count options**:  
-  - 15  
-  - 30  
-  - 50  
+### Everywhere
 
----
+- Light and dark themes (follows the system, with a toggle)
+- Responsive layout with a bottom tab bar on phones
+- Keyboard accessible, with visible focus and reduced-motion support
 
-### 👤 Profile Section
+## Running locally
 
-View and manage your account in detail:
+Requirements: Node 20+, Docker, Python 3 (or any static file server).
 
-- 📅 Account age  
-- 🧪 Total tests completed  
-- 📈 Average WPM & Accuracy  
-- 🏆 Best WPM & Accuracy  
-- 📜 Detailed history of all completed tests  
-- 👥 Friends list  
+```bash
+npm run db:start   # starts Supabase in Docker and applies supabase/migrations
+npm run dev        # serves the site on http://127.0.0.1:5500
+```
 
-You can also:
-- 📝 Edit your bio  
-- 🖼️ Change your profile picture  
-- ⚙️ Update username, email, or password  
+Open <http://127.0.0.1:5500>. On `localhost` and `127.0.0.1` the app connects to the local Supabase automatically (see `public/js/config.js`). Email confirmation is off locally, so new accounts can log in right away.
 
----
+Other commands:
 
-### 🌐 Community Section
+```bash
+npm test           # unit tests for scoring and word generation
+npm run db:reset   # wipe the local database and re-apply migrations
+npm run db:stop    # stop the local Supabase containers
+```
 
-The **social hub** of Miko-Miko!  
-Think of it as a mini social network where you can:
+## Deploying
 
-- ✏️ Create and share posts  
-- ❤️ React to others' posts  
-- 📬 Send and receive messages  
-- 🤝 Add or remove friends  
+1. Create a project on [supabase.com](https://supabase.com).
+2. Apply the schema:
+   ```bash
+   npx supabase@2.121.0 link --project-ref <your-project-ref>
+   npx supabase@2.121.0 db push
+   ```
+3. In `public/js/config.js`, fill `PRODUCTION` with the project URL and the **anon (public)** key. Never put the service role key in the frontend.
+4. In the Supabase dashboard, under Authentication, set the Site URL to your deployed address.
+5. Deploy the repository root to any static host (Vercel, Netlify, GitHub Pages).
 
-Everything is dynamically rendered for a seamless experience.
+If `PRODUCTION` is left empty, the deployed site still works as a guest-only typing test.
 
-> Feel free to explore and connect! 😉
+## Project structure
 
----
+```
+index.html                  typing test
+pages/                      profile, community, leaderboard
+public/css/app.css          design tokens, light and dark themes, components
+public/js/
+  config.js                 Supabase URL and anon key
+  lib/                      DOM helpers, formatting, theme, toasts, Supabase client
+  services/                 data access: auth, profiles, results, social, friends, chat, notifications, realtime
+  game/                     word lists, generator, scoring, typing engine, charts
+  ui/                       shared header, auth dialog, feed, chat window, side panel
+  pages/                    one entry module per page
+supabase/migrations/        database schema, row level security, triggers, realtime and storage
+tests/                      node:test unit tests
+```
 
-### 🏆 Leaderboard Section
+## Security notes
 
-Track the **top players in real time**.  
-Will your name rise to the top?
+- Every table has row level security. Users can only write their own rows; messages are visible to chat members only.
+- Profile stats, notifications and chat timestamps are written by database triggers, so clients cannot forge them.
+- Results are checked by database constraints (for example, WPM above 350 is rejected).
+- User content is always rendered as text, never as HTML.
+- Third-party scripts are pinned to exact versions with Subresource Integrity.
 
-> **Think you’ve got what it takes?**  
-Challenge others and claim your spot on the board!
+## Credits
 
----
-
-## 🚀 What’s Next?
-
-We’ve got big dreams for Miko-Miko! While we had to keep things tight for the exam, here’s what’s coming soon:
-
-### 🔮 Planned Enhancements
-
-- [ ] Leaderboard filters  
-- [ ] More game modes (Timed, Zen, etc.)  
-- [ ] Share feature for posts  
-- [ ] Multiplayer / **Race Mode**  
-- [ ] Improved login flow (e.g. Forgot password)  
-- [ ] Integrated AI Assistant  
-
----
-
-NB: Sometimes there is an issue from supabase when trying to sign up, to be able to see the logged in privilege, just in case, use these credentials : 
-email : hei.colombe@gmail.com
-password : mama123
-
-Thanks for checking out **Miko-Miko**!  
-Have fun typing — and don’t forget to invite your friends! 😄
+Fonts: [Geist and Geist Mono](https://vercel.com/font) (SIL Open Font License). Icons: [Phosphor](https://phosphoricons.com). Charts: [Chart.js](https://www.chartjs.org).
