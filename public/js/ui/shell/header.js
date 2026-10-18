@@ -58,6 +58,19 @@ async function openLogin() {
   openAuthDialog("login");
 }
 
+// Popovers live in the top layer, so place the menu under its button, right edges aligned.
+function anchorBelow(menu, trigger) {
+  const place = () => {
+    const rect = trigger.getBoundingClientRect();
+    menu.style.top = `${rect.bottom + 8}px`;
+    menu.style.right = `${Math.max(8, document.documentElement.clientWidth - rect.right)}px`;
+  };
+  menu.addEventListener("beforetoggle", (event) => {
+    if (event.newState === "open") place();
+  });
+  window.addEventListener("resize", () => menu.matches(":popover-open") && place());
+}
+
 function accountMenu(account) {
   const menu = h(
     "div.menu",
@@ -72,6 +85,7 @@ function accountMenu(account) {
     avatar(account, 32),
     h("span.account-name", {}, account.username)
   );
+  anchorBelow(menu, trigger);
   return [trigger, menu];
 }
 

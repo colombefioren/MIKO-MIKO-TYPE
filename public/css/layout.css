@@ -117,6 +117,7 @@
 }
 
 .menu {
+  /* top and right are set from the account button's position (see header.js). */
   position: fixed;
   inset: calc(var(--header-height) - 4px) 16px auto auto;
   margin: 0;
