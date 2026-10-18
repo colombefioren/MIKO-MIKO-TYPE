@@ -440,7 +440,7 @@ kbd {
 .sidebar-logo {
   display: grid;
   place-items: center;
-  height: 140px;
+  height: 128px;
   flex: none;
 }
 
@@ -456,20 +456,21 @@ kbd {
 }
 
 .sidebar-logo-full {
-  width: 160px;
+  width: 150px;
 }
 
 .sidebar-logo-mark {
   display: none;
-  width: 46px;
+  width: 42px;
 }
 
+/* Links sit right under the logo. */
 .sidebar-nav {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin: auto 0;
+  gap: 4px;
+  margin-top: 28px;
 }
 
 .sidebar-highlight {
@@ -477,30 +478,16 @@ kbd {
   top: 0;
   left: 0;
   right: 0;
-  height: 56px;
+  height: 44px;
   opacity: 0;
-  border: 1.5px solid #475f94;
-  border-radius: 22px 8px 22px 8px;
-  background: linear-gradient(90deg, #041322 5%, #202e54 95%);
+  border: 1px solid #3b5285;
+  border-radius: 16px 6px 16px 6px;
+  background: linear-gradient(90deg, #06182c 0%, #1d2b52 100%);
   box-shadow:
-    inset 0 1px 0 rgb(162 191 254 / 0.18),
-    0 10px 26px rgb(0 6 18 / 0.55),
-    0 0 0 4px rgb(37 150 209 / 0.07);
+    inset 0 1px 0 rgb(162 191 254 / 0.14),
+    0 6px 16px rgb(0 6 18 / 0.45);
   pointer-events: none;
-  transition: transform 0.38s var(--sidebar-ease), height 0.2s, opacity 0.2s;
-}
-
-.sidebar-highlight::before {
-  content: "";
-  position: absolute;
-  left: 9px;
-  top: 50%;
-  width: 4px;
-  height: 22px;
-  border-radius: 4px;
-  background: #ffa62f;
-  box-shadow: 0 0 12px rgb(255 166 47 / 0.6);
-  transform: translateY(-50%);
+  transition: opacity 0.2s;
 }
 
 .sidebar-link {
@@ -508,22 +495,31 @@ kbd {
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 18px;
-  height: 56px;
-  padding: 0 24px;
-  border-radius: 22px 8px 22px 8px;
+  gap: 14px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 16px 6px 16px 6px;
   color: #7d86b8;
-  font-size: 17px;
-  font-weight: 650;
+  font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 0.2s 0.06s;
+  transition: color 0.15s;
 }
 
 .sidebar-icon {
   flex: none;
-  font-size: 27px;
-  transition: color 0.2s 0.06s, transform 0.25s var(--sidebar-ease);
+  font-size: 21px;
+  transition: color 0.15s;
+}
+
+/* Hover only brightens the text; the highlight stays on the current page. */
+.sidebar-link:hover {
+  color: #c9d3f2;
+}
+
+.sidebar-link:hover .sidebar-icon {
+  color: #a2bffe;
 }
 
 .sidebar-link.is-lit,
@@ -533,7 +529,6 @@ kbd {
 
 .sidebar-link.is-lit .sidebar-icon {
   color: #a2bffe;
-  transform: scale(1.08);
 }
 
 .sidebar-link:focus-visible {
@@ -547,6 +542,7 @@ kbd {
 
 .sidebar-hint {
   flex: none;
+  margin-top: auto;
   color: #6b76a6;
   font-size: 12px;
   text-align: center;
@@ -609,10 +605,6 @@ kbd {
   overflow: hidden;
   clip-path: inset(50%);
   opacity: 0;
-}
-
-.sidebar-collapsed .sidebar-highlight::before {
-  display: none;
 }
 
 .sidebar-collapsed .sidebar-hint {

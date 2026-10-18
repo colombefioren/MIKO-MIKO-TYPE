@@ -1,5 +1,5 @@
-// Desktop sidebar from the original Miko-Miko layout: logo, navigation with a sliding
-// highlight, and a collapse toggle (also Ctrl + Esc). Phones use the bottom tab bar instead.
+// Desktop sidebar from the original Miko-Miko layout: logo, navigation with the active
+// page highlighted, and a collapse toggle (also Ctrl + Esc). Phones use the bottom tab bar instead.
 import { h, icon } from "../lib/dom.js";
 
 const KEY = "mikomiko:sidebar-collapsed";
@@ -57,7 +57,7 @@ export function createSidebar({ items, active, pageUrl, collapsedByDefault }) {
     toggle
   );
 
-  // The highlight slides to whichever link is hovered or focused, then back to the current page.
+  // The highlight sits behind the current page's link only.
   function moveTo(link, { instant = false } = {}) {
     if (!link) {
       highlight.style.opacity = "0";
@@ -73,15 +73,6 @@ export function createSidebar({ items, active, pageUrl, collapsedByDefault }) {
       highlight.style.transition = "";
     }
   }
-
-  for (const link of links) {
-    link.addEventListener("mouseenter", () => moveTo(link));
-    link.addEventListener("focus", () => moveTo(link));
-  }
-  sidebar.querySelector(".sidebar-nav").addEventListener("mouseleave", () => moveTo(current));
-  sidebar.querySelector(".sidebar-nav").addEventListener("focusout", (event) => {
-    if (!sidebar.contains(event.relatedTarget)) moveTo(current);
-  });
 
   function setCollapsed(collapsed, { remember = false } = {}) {
     document.documentElement.classList.toggle("sidebar-collapsed", collapsed);
@@ -100,9 +91,7 @@ export function createSidebar({ items, active, pageUrl, collapsedByDefault }) {
   });
 
   // Link sizes change while the sidebar animates, so keep the highlight on its link.
-  new ResizeObserver(() => moveTo(links.find((link) => link.classList.contains("is-lit")) ?? current, { instant: true })).observe(
-    sidebar
-  );
+  new ResizeObserver(() => moveTo(current, { instant: true })).observe(sidebar);
 
   setCollapsed(readCollapsed(collapsedByDefault));
   requestAnimationFrame(() => moveTo(current, { instant: true }));
