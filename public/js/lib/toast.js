@@ -30,7 +30,6 @@ export function errorMessage(error, fallback = "Something went wrong. Please try
   if (/email not confirmed/i.test(message)) return "Confirm your email first, then log in.";
   if (/already registered/i.test(message)) return "An account with this email already exists.";
   if (/duplicate key.*username|profiles_username_lower_idx/i.test(message)) return "That username is taken.";
-  if (/only message friends/i.test(message)) return "You can only message friends.";
   if (/row-level security/i.test(message)) return "You are not allowed to do that.";
   return message || fallback;
 }

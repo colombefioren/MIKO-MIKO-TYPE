@@ -30,8 +30,8 @@ export function createChatsTab({ panel, setCount, onOpenChat, onFindFriends }) {
           emptyState({
             iconName: "chats-circle",
             title: "No conversations yet",
-            body: "Message a friend to start chatting.",
-            action: h("button.btn.btn-secondary.btn-sm", { type: "button", onclick: onFindFriends }, "Find friends"),
+            body: "Message anyone from their profile or the Friends tab.",
+            action: h("button.btn.btn-secondary.btn-sm", { type: "button", onclick: onFindFriends }, "Find typists"),
           })
         );
         return;

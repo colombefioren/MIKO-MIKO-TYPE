@@ -1,4 +1,4 @@
-// Friend buttons on someone else's profile: add, accept, cancel, message, unfriend.
+// Buttons on someone else's profile: message (always), plus add, accept, cancel or unfriend.
 import { h, icon, replaceChildren } from "../../lib/dom.js";
 import { pageUrl } from "../../lib/routes.js";
 import { acceptFriendRequest, getFriendshipWith, removeFriendship, sendFriendRequest } from "../../services/friends.js";
@@ -21,12 +21,15 @@ export async function renderRelationship(container, me, profile) {
       onclick: (event) => runAction(event.currentTarget, { ...options, after: rerender }),
     }, iconName && icon(iconName), label);
 
-  const buttons = [];
+  // Anyone can be messaged, friends or not.
+  const buttons = [
+    h("a.btn.btn-primary", { href: pageUrl(`pages/friends.html?chat=${encodeURIComponent(profile.id)}`) }, icon("chat-circle"), "Message"),
+  ];
   if (!friendship) {
-    buttons.push(button("btn-primary", "Add friend", "user-plus", { busyLabel: "Sending", action: () => sendFriendRequest(me.id, profile.id), success: "Friend request sent." }));
+    buttons.push(button("btn-secondary", "Add friend", "user-plus", { busyLabel: "Sending", action: () => sendFriendRequest(me.id, profile.id), success: "Friend request sent." }));
   } else if (friendship.status === "pending" && friendship.incoming) {
     buttons.push(
-      button("btn-primary", "Accept request", "check", { busyLabel: "Accepting", action: () => acceptFriendRequest(friendship.id), success: "You are now friends." }),
+      button("btn-secondary", "Accept request", "check", { busyLabel: "Accepting", action: () => acceptFriendRequest(friendship.id), success: "You are now friends." }),
       button("btn-secondary", "Decline", null, { busyLabel: "Declining", action: () => removeFriendship(friendship.id) })
     );
   } else if (friendship.status === "pending") {
@@ -36,13 +39,13 @@ export async function renderRelationship(container, me, profile) {
     unfriend.addEventListener("click", async () => {
       const ok = await confirmAction({
         title: `Remove ${profile.username}?`,
-        body: "You will no longer be able to message each other.",
+        body: "They will be removed from your friends. You can still message each other.",
         confirmLabel: "Unfriend",
         danger: true,
       });
       if (ok) runAction(unfriend, { busyLabel: "Removing", action: () => removeFriendship(friendship.id), success: "Friend removed.", after: rerender });
     });
-    buttons.push(h("a.btn.btn-primary", { href: pageUrl(`pages/friends.html?chat=${encodeURIComponent(profile.id)}`) }, icon("chat-circle"), "Message"), unfriend);
+    buttons.push(unfriend);
   }
   replaceChildren(container, buttons);
 }

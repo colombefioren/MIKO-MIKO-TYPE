@@ -44,23 +44,28 @@ export function createFriendsTab({ panel, setCount, onMessage }) {
   function friendRow(row) {
     const unfriend = h("button.icon-btn", { type: "button", "aria-label": `Unfriend ${row.other.username}`, title: "Unfriend" }, icon("user-minus"));
     unfriend.addEventListener("click", async () => {
-      const ok = await confirmAction({ title: `Remove ${row.other.username}?`, body: "You will no longer be able to message each other.", confirmLabel: "Unfriend", danger: true });
+      const ok = await confirmAction({ title: `Remove ${row.other.username}?`, body: "They will be removed from your friends. You can still message each other.", confirmLabel: "Unfriend", danger: true });
       if (ok) runAction(unfriend, { action: () => removeFriendship(row.id), success: "Friend removed.", after: refresh });
     });
-    const message = h("button.icon-btn", { type: "button", "aria-label": `Message ${row.other.username}`, title: "Message", onclick: () => onMessage(row.other) }, icon("chat-circle"));
-    return personRow(row.other, [message, unfriend]);
+    return personRow(row.other, [messageButton(row.other), unfriend]);
   }
+
+  // Anyone can be messaged, friends or not.
+  const messageButton = (profile) =>
+    h("button.icon-btn", { type: "button", "aria-label": `Message ${profile.username}`, title: "Message", onclick: () => onMessage(profile) }, icon("chat-circle"));
 
   const incomingRow = (row) =>
     personRow(
       row.other,
       [
+        messageButton(row.other),
         action("Accept", "check", () => acceptFriendRequest(row.id), `You and ${row.other.username} are now friends.`, ".is-active"),
         action("Decline", "x", () => removeFriendship(row.id)),
       ],
       "Wants to be friends"
     );
-  const outgoingRow = (row) => personRow(row.other, [action("Cancel request", "x", () => removeFriendship(row.id), "Request cancelled.")], "Request pending");
+  const outgoingRow = (row) =>
+    personRow(row.other, [messageButton(row.other), action("Cancel request", "x", () => removeFriendship(row.id), "Request cancelled.")], "Request pending");
 
   function renderLists() {
     const { friends, incoming, outgoing } = friendships;
@@ -82,7 +87,7 @@ export function createFriendsTab({ panel, setCount, onMessage }) {
     if (incoming) return incomingRow(incoming);
     const outgoing = find(friendships.outgoing);
     if (outgoing) return outgoingRow(outgoing);
-    return personRow(profile, [action(`Add ${profile.username}`, "user-plus", () => sendFriendRequest(user.id, profile.id), "Friend request sent.")]);
+    return personRow(profile, [messageButton(profile), action(`Add ${profile.username}`, "user-plus", () => sendFriendRequest(user.id, profile.id), "Friend request sent.")]);
   }
 
   let searchToken = 0;
