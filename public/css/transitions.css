@@ -18,12 +18,19 @@ main {
   view-transition-name: page;
 }
 
-/* The sidebar is already in its final state when the page changes, so it does not fade. */
-::view-transition-old(sidebar) {
+/* The sidebar and header look the same on both pages, so they swap instantly instead of
+   cross-fading (a cross-fade of two identical bars reads as a flicker). */
+::view-transition-old(sidebar),
+::view-transition-old(site-header) {
   display: none;
 }
 
-::view-transition-new(sidebar) {
+::view-transition-new(sidebar),
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-group(site-header) {
   animation: none;
 }
 

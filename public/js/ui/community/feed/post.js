@@ -3,7 +3,7 @@ import { append, h, icon } from "../../../lib/dom.js";
 import { avatar } from "../../../lib/avatar.js";
 import { round, timeAgo } from "../../../lib/format.js";
 import { profileUrl } from "../../../lib/routes.js";
-import { isStorageUrl } from "../../../lib/supabase.js";
+import { isStorageUrl } from "../../../lib/storageUrl.js";
 import { errorMessage, toast } from "../../../lib/toast.js";
 import { deletePost, setLike } from "../../../services/social.js";
 import { openAuthDialog } from "../../auth/dialog.js";

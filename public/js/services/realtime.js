@@ -59,13 +59,17 @@ export function joinChatRoom(chatId, onTyping) {
   // Private channel: realtime policies only let the two chat members join.
   const channel = supabase.channel(`chat:${chatId}`, { config: { private: true, broadcast: { self: false } } });
   channel.on("broadcast", { event: "typing" }, () => onTyping());
-  channel.subscribe();
+  let ready = false;
+  channel.subscribe((status) => {
+    ready = status === "SUBSCRIBED";
+  });
 
+  // Pings before the channel is joined would be lost, so they are not counted against the throttle.
   let lastSent = 0;
   return {
     sendTyping() {
       const now = Date.now();
-      if (now - lastSent < 1500) return;
+      if (!ready || now - lastSent < 1500) return;
       lastSent = now;
       channel.send({ type: "broadcast", event: "typing", payload: {} });
     },

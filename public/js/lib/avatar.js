@@ -1,5 +1,5 @@
 import { h } from "./dom.js";
-import { isStorageUrl } from "./supabase.js";
+import { isStorageUrl } from "./storageUrl.js";
 
 function hue(text) {
   let hash = 0;
