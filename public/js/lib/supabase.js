@@ -19,6 +19,17 @@ async function createSupabaseClient() {
 export const supabase = await createSupabaseClient();
 export const isBackendReady = supabase !== null;
 
+// Only images served by this project's storage are rendered, never arbitrary third-party URLs.
+export function isStorageUrl(url) {
+  if (!url || !SUPABASE.url) return false;
+  try {
+    const parsed = new URL(url);
+    return parsed.origin === new URL(SUPABASE.url).origin && parsed.pathname.startsWith("/storage/v1/object/public/");
+  } catch {
+    return false;
+  }
+}
+
 // Throws the Supabase error so callers can use plain try/catch.
 export function unwrap({ data, error }) {
   if (error) throw error;

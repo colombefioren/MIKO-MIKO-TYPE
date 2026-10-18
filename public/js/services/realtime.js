@@ -53,12 +53,11 @@ export function onOnlineChange(listener) {
 export const isOnline = (userId) => onlineIds.has(userId);
 
 // Typing indicator inside a conversation, sent as ephemeral broadcast messages.
-export function joinChatRoom(chatId, userId, onTyping) {
+export function joinChatRoom(chatId, onTyping) {
   if (!isBackendReady) return { sendTyping() {}, leave() {} };
-  const channel = supabase.channel(`chat:${chatId}`, { config: { broadcast: { self: false } } });
-  channel.on("broadcast", { event: "typing" }, ({ payload }) => {
-    if (payload.userId !== userId) onTyping(payload.userId);
-  });
+  // Private channel: realtime policies only let the two chat members join.
+  const channel = supabase.channel(`chat:${chatId}`, { config: { private: true, broadcast: { self: false } } });
+  channel.on("broadcast", { event: "typing" }, () => onTyping());
   channel.subscribe();
 
   let lastSent = 0;
@@ -67,7 +66,7 @@ export function joinChatRoom(chatId, userId, onTyping) {
       const now = Date.now();
       if (now - lastSent < 1500) return;
       lastSent = now;
-      channel.send({ type: "broadcast", event: "typing", payload: { userId } });
+      channel.send({ type: "broadcast", event: "typing", payload: {} });
     },
     leave() {
       supabase.removeChannel(channel);

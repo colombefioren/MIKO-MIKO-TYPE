@@ -1,4 +1,5 @@
 import { h } from "./dom.js";
+import { isStorageUrl } from "./supabase.js";
 
 function hue(text) {
   let hash = 0;
@@ -24,7 +25,7 @@ function fallback(name, size) {
 // Renders a profile picture, or coloured initials when there is none or it fails to load.
 export function avatar(profile, size = 40) {
   const name = profile?.username ?? "";
-  if (!profile?.avatar_url) return fallback(name, size);
+  if (!isStorageUrl(profile?.avatar_url)) return fallback(name, size);
 
   const img = h("img.avatar", {
     src: profile.avatar_url,

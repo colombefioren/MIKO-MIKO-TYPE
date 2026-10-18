@@ -85,7 +85,7 @@ export function createChatWindow({ onActivity }) {
       title.href = profileUrl(chat.other.id);
       typing.textContent = "";
       replaceChildren(messages, h("div.skeleton.skeleton-row"), h("div.skeleton.skeleton-row"));
-      room = joinChatRoom(chat.id, me.id, () => {
+      room = joinChatRoom(chat.id, () => {
         typing.textContent = `${chat.other.username} is typing`;
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => (typing.textContent = ""), 3000);

@@ -7,6 +7,7 @@ import { profileUrl } from "./shell.js";
 import { openAuthDialog } from "./authDialog.js";
 import { confirmAction } from "./confirm.js";
 import { MAX_POST_IMAGE_BYTES, validateImage } from "../services/profiles.js";
+import { isStorageUrl } from "../lib/supabase.js";
 import {
   addComment,
   createPost,
@@ -211,7 +212,7 @@ export function createFeed({ composerSlot, list, loadMoreButton, newPostsButton 
       ),
       post.content && h("p.post-body", {}, richText(post.content)),
       post.result && resultCard(post.result),
-      post.image_url && h("img.post-image", { src: post.image_url, alt: "Image shared with the post", loading: "lazy" }),
+      isStorageUrl(post.image_url) && h("img.post-image", { src: post.image_url, alt: "Image shared with the post", loading: "lazy" }),
       h(
         "div.post-actions",
         {},
