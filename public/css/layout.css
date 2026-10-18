@@ -1,0 +1,271 @@
+/* Page chrome: top header, mobile tab bar, account menu, page container and footer.
+   Layers: header and mobile nav 20, sidebar 25, chat panel 30, toasts 50; dialogs use the top layer. */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--header-height);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  height: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 750;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  width: auto;
+  height: 42px;
+  transition: transform 0.25s var(--ease);
+}
+
+.brand:hover .brand-mark {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.brand-type {
+  margin-left: 6px;
+  color: var(--accent-text);
+}
+
+.site-nav {
+  display: flex;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.nav-link .ph {
+  font-size: 18px;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.nav-link[aria-current="page"] .ph {
+  color: var(--accent-text);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+  justify-content: flex-end;
+}
+
+.account-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 12px 0 4px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 500;
+}
+
+.account-btn:hover {
+  border-color: var(--border-strong);
+}
+
+.account-name {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu {
+  position: fixed;
+  inset: calc(var(--header-height) - 4px) 16px auto auto;
+  margin: 0;
+  min-width: 200px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.menu-header {
+  padding: 8px 10px 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background: var(--surface-2);
+}
+
+@media (max-width: 760px) {
+  /* backdrop-filter would make the header the containing block of the fixed tab bar. */
+  .site-header {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .header-inner {
+    padding: 0 16px;
+  }
+
+  .site-nav {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    height: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+    padding: 6px 8px env(safe-area-inset-bottom);
+    margin: 0;
+    justify-content: space-around;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-link {
+    flex-direction: column;
+    gap: 2px;
+    height: auto;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .nav-link .ph {
+    font-size: 22px;
+  }
+
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
+    background: none;
+  }
+
+  .header-actions {
+    margin-left: auto;
+    min-width: 0;
+  }
+
+  .account-name {
+    display: none;
+  }
+
+  .account-btn {
+    padding: 0 4px;
+  }
+
+  body {
+    padding-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+  }
+}
+
+.page {
+  width: 100%;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 650;
+}
+
+.page-subtitle {
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.card-pad {
+  padding: 20px;
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding: 20px 16px 32px;
+  }
+
+  .page-title {
+    font-size: 23px;
+  }
+}

@@ -1,0 +1,119 @@
+/* Dialogs and toasts. */
+
+.dialog {
+  margin: auto;
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.dialog::backdrop {
+  background: var(--overlay);
+}
+
+.dialog[open] {
+  animation: dialog-in 0.22s var(--ease);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dialog-title {
+  font-size: 19px;
+  font-weight: 650;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.toast-region {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: min(420px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  pointer-events: auto;
+  animation: toast-in 0.25s var(--ease);
+}
+
+.toast .ph {
+  font-size: 19px;
+  flex: none;
+}
+
+.toast[data-type="success"] .ph {
+  color: var(--success);
+}
+
+.toast[data-type="error"] .ph {
+  color: var(--danger);
+}
+
+.toast[data-type="info"] .ph {
+  color: var(--accent-text);
+}
+
+.toast.is-leaving {
+  animation: toast-out 0.2s ease forwards;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (max-width: 760px) {
+  .toast-region {
+    bottom: calc(var(--tabbar-height) + 16px);
+  }
+}

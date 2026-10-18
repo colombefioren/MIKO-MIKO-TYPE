@@ -1,0 +1,63 @@
+/* Leaderboard. */
+
+.board {
+  overflow: hidden;
+}
+
+.board-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 84px 84px 76px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+}
+
+.board-row + .board-row {
+  border-top: 1px solid var(--border);
+}
+
+.board-row .num {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.board-rank {
+  font-family: var(--font-mono);
+  font-weight: 650;
+  color: var(--text-muted);
+}
+
+.board-row[data-rank="1"] .board-rank,
+.board-row[data-rank="2"] .board-rank,
+.board-row[data-rank="3"] .board-rank {
+  color: var(--accent-text);
+}
+
+.board-row[data-rank="1"] .board-rank {
+  font-size: 19px;
+}
+
+.board-row.is-me {
+  background: var(--accent-soft);
+}
+
+.board-wpm {
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.board-me {
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .board-row {
+    grid-template-columns: 34px minmax(0, 1fr) 64px 64px;
+    padding: 12px 14px;
+  }
+
+  .board-row > :nth-child(5) {
+    display: none;
+  }
+}
