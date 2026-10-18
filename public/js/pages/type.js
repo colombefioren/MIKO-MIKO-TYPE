@@ -10,7 +10,7 @@ import { createTypingTest } from "../game/typing.js";
 import { invalidReason } from "../game/stats.js";
 import { renderResultsChart } from "../game/chart.js";
 
-const PREFS_KEY = "typhoon:test-options";
+const PREFS_KEY = "mikomiko:test-options";
 
 const els = {
   test: $("#test"),
@@ -105,9 +105,16 @@ function bestSoFar(user, profile) {
   return Math.max(0, ...getGuestResults().map((result) => Number(result.wpm)));
 }
 
-function celebrate() {
+// Confetti from both sides of the screen when a test is finished, in the brand colours.
+function celebrate({ big = false } = {}) {
   if (typeof window.confetti !== "function" || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  window.confetti({ particleCount: 80, spread: 70, origin: { y: 0.35 }, colors: ["#f2a33a", "#ffd08a", "#e9ecf1"] });
+  const colors = ["#ffa62f", "#2596d1", "#a2bffe", "#ffffff"];
+  const end = Date.now() + (big ? 2200 : 1000);
+  (function frame() {
+    window.confetti({ particleCount: big ? 4 : 2, angle: 60, spread: 55, origin: { x: 0 }, colors });
+    window.confetti({ particleCount: big ? 4 : 2, angle: 120, spread: 55, origin: { x: 1 }, colors });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
 }
 
 async function showResults(summary) {
@@ -149,17 +156,15 @@ async function showResults(summary) {
   const { user, profile } = getAuthState();
   const previousBest = bestSoFar(user, profile);
   const hadHistory = user ? Number(profile?.tests_count ?? 0) > 0 : getGuestResults().length > 0;
+  const isPersonalBest = hadHistory && summary.wpm > previousBest;
+  $("#result-pb").hidden = !isPersonalBest;
+  celebrate({ big: isPersonalBest });
 
   if (user) await saveForUser();
   else {
     saveGuestResult(lastResult);
     els.status.textContent = "Saved in this browser. Log in to keep your results and join the leaderboard.";
     els.saveLogin.hidden = false;
-  }
-
-  if (hadHistory && summary.wpm > previousBest) {
-    $("#result-pb").hidden = false;
-    celebrate();
   }
 }
 

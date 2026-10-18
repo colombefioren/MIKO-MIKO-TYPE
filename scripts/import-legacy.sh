@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Imports a Miko-Miko backup (pg_dumpall .gz and storage .zip) into a Typhoon database.
+# Imports a Miko-Miko backup (pg_dumpall .gz and storage .zip) into the current Miko-Miko Type database.
 #
 #   scripts/import-legacy.sh <cluster-dump.gz> <storage.zip>
 #
@@ -39,7 +39,7 @@ python3 -I "$HERE/legacy/extract.py" "$WORK/dump.sql" "$WORK/legacy.sql"
 echo "Loading legacy tables"
 psql "$DB_URL" -q -v ON_ERROR_STOP=1 -f "$WORK/legacy.sql"
 
-echo "Copying data into the Typhoon schema"
+echo "Copying data into the new schema"
 psql "$DB_URL" -q -v ON_ERROR_STOP=1 -v base_url="$SUPABASE_URL" -f "$HERE/legacy/transform.sql"
 
 echo "Uploading images"

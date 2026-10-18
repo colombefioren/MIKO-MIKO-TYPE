@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Community | Typhoon</title>
-    <meta name="description" content="Share results, chat with friends and follow other typists on Typhoon." />
-    <meta name="theme-color" content="#0f1216" />
-    <link rel="icon" href="../public/assets/images/favicon.svg" type="image/svg+xml" />
+    <title>Community | Miko-Miko Type</title>
+    <meta name="description" content="Share results, chat with friends and follow other typists on Miko-Miko Type." />
+    <meta name="theme-color" content="#020e1b" />
+    <link rel="icon" href="../public/assets/images/favicon.png" type="image/png" />
     <script>
       try {
-        const theme = localStorage.getItem("typhoon:theme");
-        if (theme) document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.theme = localStorage.getItem("mikomiko:theme") || "dark";
       } catch {}
     </script>
     <link rel="preload" href="../public/assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
@@ -45,7 +44,7 @@
     </main>
 
     <footer class="site-footer">
-      <p>Typhoon, built by Colombe and Mihaja at HEI.</p>
+      <p>Miko-Miko Type, built by Colombe and Mihaja at HEI.</p>
     </footer>
   </body>
 </html>

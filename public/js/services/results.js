@@ -1,6 +1,6 @@
 import { supabase, unwrap } from "../lib/supabase.js";
 
-const GUEST_KEY = "typhoon:guest-results";
+const GUEST_KEY = "mikomiko:guest-results";
 const GUEST_LIMIT = 50;
 
 export async function saveResult(result) {
