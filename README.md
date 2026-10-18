@@ -25,7 +25,7 @@ Miko-Miko Type started as a WEB1 exam project by [Colombe](https://github.com/co
 ### Profile
 
 - Best and average WPM and accuracy, test count and a history chart
-- Last 20 tests, friends list with online status
+- Full test history with pagination, friends list with online status
 - Settings: username, bio, profile picture and password
 
 ### Community
@@ -44,7 +44,8 @@ Miko-Miko Type started as a WEB1 exam project by [Colombe](https://github.com/co
 ### Everywhere
 
 - Navy dark theme by default, with a light theme toggle
-- Responsive layout with a bottom tab bar on phones
+- Sidebar from the original design with a sliding highlight (collapse with <kbd>Ctrl</kbd>+<kbd>Esc</kbd>), bottom tab bar on phones
+- Animated page transitions
 - Keyboard accessible, with visible focus and reduced-motion support
 
 ## Running locally
@@ -95,19 +96,33 @@ If `PRODUCTION` is left empty, the deployed site still works as a guest-only typ
 ## Project structure
 
 ```
-index.html                  typing test
-pages/                      profile, community, leaderboard
-public/css/app.css          design tokens, light and dark themes, components
+index.html                     typing test
+pages/                         profile, community, leaderboard
+public/css/
+  tokens.css                   fonts, colours (dark and light), radii
+  base.css, layout.css         reset, utilities, header, tab bar, page container
+  sidebar.css, transitions.css desktop sidebar, page transitions
+  components/                  controls, dialogs and toasts, auth dialog, shared content
+  pages/                       one stylesheet per page
 public/js/
-  config.js                 Supabase URL and anon key
-  lib/                      DOM helpers, formatting, theme, toasts, Supabase client
-  services/                 data access: auth, profiles, results, social, friends, chat, notifications, realtime
-  game/                     word lists, generator, scoring, typing engine, charts
-  ui/                       shared header, auth dialog, feed, chat window, side panel
-  pages/                    one entry module per page
-supabase/migrations/        database schema, row level security, triggers, realtime and storage
-tests/                      node:test unit tests
+  config.js                    Supabase URL and anon key
+  lib/                         DOM helpers, routes, formatting, theme, toasts, Supabase client
+  services/                    data access: auth, profiles, results, social, friends, chat, notifications, realtime
+  game/                        word lists, generator, scoring, typing engine, word view, charts
+  ui/
+    shell/                     header, sidebar, inbox badge, page transitions
+    auth/                      login and sign-up dialog
+    common/                    tabs, pagination, confirm dialog, presence dots, button actions
+    type/                      test options, results view, saving and sharing, confetti
+    profile/                   profile header, stats, paged history, friends, settings
+    community/                 feed (posts, comments, composer), side panel tabs, chat window
+  pages/                       one small entry module per page
+supabase/migrations/           database schema, row level security, triggers, realtime and storage
+scripts/                       Miko-Miko backup import
+tests/                         node:test unit tests
 ```
+
+Each page loads one entry module from `public/js/pages/`, which wires the UI modules together. UI modules never talk to Supabase directly; they go through `services/`.
 
 ## Security notes
 
