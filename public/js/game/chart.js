@@ -11,6 +11,7 @@ function palette() {
     error: token("--danger"),
     surface: token("--surface-2"),
     text: token("--text"),
+    frost: token("--frost"),
   };
 }
 
@@ -48,7 +49,7 @@ function buildConfig(kind, data) {
         labels: data.map((sample) => `${Math.round(sample.second)}s`),
         datasets: [
           { label: "wpm", data: data.map((s) => s.wpm), borderColor: colors.accent, backgroundColor: colors.accent, borderWidth: 2, pointRadius: 0, tension: 0.35 },
-          { label: "raw", data: data.map((s) => s.raw), borderColor: colors.faint, borderWidth: 1.5, borderDash: [4, 4], pointRadius: 0, tension: 0.35 },
+          { label: "raw", data: data.map((s) => s.raw), borderColor: colors.frost, borderWidth: 1.5, borderDash: [4, 4], pointRadius: 0, tension: 0.35 },
           {
             label: "errors",
             type: "scatter",
@@ -78,7 +79,7 @@ function buildConfig(kind, data) {
       labels: data.map((row) => new Date(row.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })),
       datasets: [
         { label: "wpm", data: data.map((row) => Number(row.wpm)), borderColor: colors.accent, backgroundColor: colors.accent, borderWidth: 2, pointRadius: 2.5, tension: 0.3 },
-        { label: "accuracy", data: data.map((row) => Number(row.accuracy)), borderColor: colors.faint, borderWidth: 1.5, borderDash: [4, 4], pointRadius: 0, tension: 0.3 },
+        { label: "accuracy", data: data.map((row) => Number(row.accuracy)), borderColor: colors.frost, borderWidth: 1.5, borderDash: [4, 4], pointRadius: 0, tension: 0.3 },
       ],
     },
     options: base,

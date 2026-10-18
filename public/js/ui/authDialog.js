@@ -101,7 +101,7 @@ function buildSignupForm(close, showLogin) {
         toast("Check your inbox to confirm your email, then log in.", "info", 8000);
       } else {
         close();
-        toast(`Welcome to Typhoon, ${username}.`, "success");
+        toast(`Welcome to Miko-Miko Type, ${username}.`, "success");
       }
     } catch (err) {
       showError(error, errorMessage(err));
@@ -156,10 +156,16 @@ function build() {
   dialog = h(
     "dialog.dialog",
     { "aria-labelledby": "auth-title" },
+    h("img.dialog-logo", {
+      src: new URL("../../assets/images/mikomiko-logo.webp", import.meta.url).href,
+      alt: "Miko-Miko Type",
+      width: 160,
+      height: 126,
+    }),
     h(
       "div.dialog-header",
       {},
-      h("h2.dialog-title", { id: "auth-title" }, "Your Typhoon account"),
+      h("h2.dialog-title", { id: "auth-title" }, "Your Miko-Miko account"),
       h("button.icon-btn", { type: "button", "aria-label": "Close", onclick: close }, icon("x"))
     ),
     ...body

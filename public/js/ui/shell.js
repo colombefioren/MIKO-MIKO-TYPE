@@ -27,9 +27,9 @@ let stopBadgeFeed = () => {};
 function brand() {
   return h(
     "a.brand",
-    { href: pageUrl("index.html"), "aria-label": "Typhoon home" },
-    h("span.brand-mark", { "aria-hidden": "true" }, icon("tornado")),
-    h("span.brand-name", {}, "typhoon")
+    { href: pageUrl("index.html"), "aria-label": "Miko-Miko Type home" },
+    h("img.brand-mark", { src: pageUrl("public/assets/images/mikomiko-mark.webp"), alt: "", width: 34, height: 42 }),
+    h("span.brand-name", {}, "Miko-Miko", h("span.brand-type", {}, "Type"))
   );
 }
 

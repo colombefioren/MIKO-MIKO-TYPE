@@ -3,18 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Typhoon: typing test</title>
-    <meta name="description" content="Typhoon is a typing test with friends, chat and live leaderboards. Type up a storm." />
-    <meta name="theme-color" content="#0f1216" />
-    <link rel="icon" href="./public/assets/images/favicon.svg" type="image/svg+xml" />
+    <title>Miko-Miko Type</title>
+    <meta name="description" content="Miko-Miko Type is a typing test with friends, chat and live leaderboards." />
+    <meta name="theme-color" content="#020e1b" />
+    <link rel="icon" href="./public/assets/images/favicon.png" type="image/png" />
     <script>
       try {
-        const theme = localStorage.getItem("typhoon:theme");
-        if (theme) document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.theme = localStorage.getItem("mikomiko:theme") || "dark";
       } catch {}
     </script>
     <link rel="preload" href="./public/assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="./public/assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./public/assets/fonts/CascadiaMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous" />
     <link rel="stylesheet" href="./public/css/app.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js" integrity="sha384-b0GXujLkk9eYYSmcSfoyZbfyElGAQnDyY0skCHSG6w3JgTMFnz11ggrTAr7seu9f" crossorigin="anonymous"></script>
@@ -125,7 +124,7 @@
     </main>
 
     <footer class="site-footer">
-      <p>Typhoon, built by Colombe and Mihaja at HEI.</p>
+      <p>Miko-Miko Type, built by Colombe and Mihaja at HEI.</p>
     </footer>
   </body>
 </html>

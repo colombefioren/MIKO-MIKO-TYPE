@@ -10,7 +10,7 @@ import { createTypingTest } from "../game/typing.js";
 import { invalidReason } from "../game/stats.js";
 import { renderResultsChart } from "../game/chart.js";
 
-const PREFS_KEY = "typhoon:test-options";
+const PREFS_KEY = "mikomiko:test-options";
 
 const els = {
   test: $("#test"),

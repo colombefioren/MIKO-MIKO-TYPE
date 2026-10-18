@@ -1,5 +1,7 @@
-/* Typhoon stylesheet.
-   Shapes: controls use --radius (10px), containers use --radius-lg (16px),
+/* Miko-Miko Type stylesheet.
+   Brand: navy "abyss" backgrounds, blaze orange accent, frost blue for secondary details.
+   Dark is the default theme; [data-theme="light"] switches to the light palette.
+   Shapes: controls use --radius (12px), containers use --radius-lg (20px),
    chips, badges and avatars are fully round.
    Layers: header and mobile nav 20, chat panel 30, toasts 50. Dialogs and menus use the top layer. */
 
@@ -11,93 +13,72 @@
 }
 
 @font-face {
-  font-family: "Geist Mono";
-  src: url("../assets/fonts/GeistMono-Variable.woff2") format("woff2");
-  font-weight: 100 900;
+  font-family: "Cascadia Mono";
+  src: url("../assets/fonts/CascadiaMono-Variable.woff2") format("woff2");
+  font-weight: 200 700;
   font-display: swap;
 }
 
 /* ---------------------------------------------------------------- Tokens */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: "Cascadia Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  --bg: #f5f6f8;
-  --surface: #fcfcfd;
-  --surface-2: #eff1f4;
-  --surface-3: #e5e8ed;
-  --border: #dde1e7;
-  --border-strong: #c7cdd6;
-  --text: #14181d;
-  --text-muted: #525b68;
-  --text-faint: #858d99;
-  --accent: #f0a030;
-  --accent-hover: #e6931c;
-  --accent-ink: #1d1304;
-  --accent-text: #985700;
-  --accent-soft: rgb(240 160 48 / 0.14);
-  --danger: #cf3a43;
-  --danger-soft: rgb(207 58 67 / 0.12);
-  --success: #1f8f5c;
-  --shadow: 0 1px 2px rgb(20 24 29 / 0.06), 0 8px 24px rgb(20 24 29 / 0.08);
-  --overlay: rgb(20 24 29 / 0.45);
+  --bg: #020e1b;
+  --bg-glow: rgb(37 150 209 / 0.1);
+  --surface: #071a2e;
+  --surface-2: #0c2139;
+  --surface-3: #132a47;
+  --border: #15294a;
+  --border-strong: #213a63;
+  --text: #e8eeff;
+  --text-muted: #94a2cc;
+  --text-faint: #5a6899;
+  --accent: #ffa62f;
+  --accent-hover: #ffb752;
+  --accent-ink: #1c1000;
+  --accent-text: #ffb44f;
+  --accent-soft: rgb(255 166 47 / 0.14);
+  --frost: #a2bffe;
+  --danger: #ff6b7a;
+  --danger-soft: rgb(255 107 122 / 0.14);
+  --success: #4ccf95;
+  --shadow: 0 1px 2px rgb(0 4 12 / 0.4), 0 14px 36px rgb(0 4 12 / 0.5);
+  --overlay: rgb(1 6 14 / 0.7);
 
-  --radius: 10px;
-  --radius-lg: 16px;
-  --header-height: 64px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --header-height: 68px;
   --tabbar-height: 64px;
   --page-width: 1180px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #0f1216;
-    --surface: #151a20;
-    --surface-2: #1b2129;
-    --surface-3: #232a34;
-    --border: #262e38;
-    --border-strong: #353e4b;
-    --text: #e8ebef;
-    --text-muted: #9ba4b1;
-    --text-faint: #646e7b;
-    --accent: #f2a33a;
-    --accent-hover: #f6b456;
-    --accent-ink: #1d1304;
-    --accent-text: #f5b65e;
-    --accent-soft: rgb(242 163 58 / 0.14);
-    --danger: #f0686d;
-    --danger-soft: rgb(240 104 109 / 0.14);
-    --success: #4cc38a;
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.35);
-    --overlay: rgb(5 7 10 / 0.65);
-  }
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0f1216;
-  --surface: #151a20;
-  --surface-2: #1b2129;
-  --surface-3: #232a34;
-  --border: #262e38;
-  --border-strong: #353e4b;
-  --text: #e8ebef;
-  --text-muted: #9ba4b1;
-  --text-faint: #646e7b;
-  --accent: #f2a33a;
-  --accent-hover: #f6b456;
-  --accent-ink: #1d1304;
-  --accent-text: #f5b65e;
-  --accent-soft: rgb(242 163 58 / 0.14);
-  --danger: #f0686d;
-  --danger-soft: rgb(240 104 109 / 0.14);
-  --success: #4cc38a;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px rgb(0 0 0 / 0.35);
-  --overlay: rgb(5 7 10 / 0.65);
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2f5fc;
+  --bg-glow: rgb(162 191 254 / 0.35);
+  --surface: #fbfcff;
+  --surface-2: #eaf0fb;
+  --surface-3: #dde6f6;
+  --border: #d6dfef;
+  --border-strong: #bccbe4;
+  --text: #0b1a33;
+  --text-muted: #46557a;
+  --text-faint: #8a97b8;
+  --accent: #ffa62f;
+  --accent-hover: #f59611;
+  --accent-ink: #1c1000;
+  --accent-text: #9a5400;
+  --accent-soft: rgb(255 166 47 / 0.18);
+  --frost: #1f6fb2;
+  --danger: #d23a4a;
+  --danger-soft: rgb(210 58 74 / 0.12);
+  --success: #1c8d5c;
+  --shadow: 0 1px 2px rgb(11 26 51 / 0.06), 0 12px 32px rgb(11 26 51 / 0.1);
+  --overlay: rgb(11 26 51 / 0.45);
 }
 
 /* ---------------------------------------------------------------- Base */
@@ -121,7 +102,9 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background:
+    radial-gradient(1100px 520px at 50% -12%, var(--bg-glow), transparent 70%) no-repeat,
+    var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 15px;
@@ -242,20 +225,25 @@ kbd {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 750;
   font-size: 19px;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .brand-mark {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: 19px;
+  width: auto;
+  height: 42px;
+  transition: transform 0.25s var(--ease);
+}
+
+.brand:hover .brand-mark {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.brand-type {
+  margin-left: 6px;
+  color: var(--accent-text);
 }
 
 .site-nav {
@@ -837,6 +825,13 @@ kbd {
     opacity: 0;
     transform: translateY(8px) scale(0.98);
   }
+}
+
+.dialog-logo {
+  display: block;
+  width: 150px;
+  height: auto;
+  margin: -4px auto 12px;
 }
 
 .dialog-header {
@@ -1750,7 +1745,7 @@ kbd {
 }
 
 .hashtag {
-  color: var(--accent-text);
+  color: var(--frost);
 }
 
 .post-image {

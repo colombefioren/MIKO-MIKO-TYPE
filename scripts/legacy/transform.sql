@@ -1,4 +1,4 @@
--- Copies Miko-Miko data from the `legacy` schema (see extract.py) into the Typhoon schema.
+-- Copies Miko-Miko data from the `legacy` schema (see extract.py) into the current schema.
 -- Run with: psql -v base_url=<SUPABASE_URL> -f transform.sql
 -- Image files are uploaded afterwards from the list in legacy.uploads.
 

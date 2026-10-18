@@ -1,10 +1,12 @@
-# Typhoon
+<p align="center"><img src="public/assets/images/mikomiko-logo.webp" alt="Miko-Miko Type" width="280" /></p>
 
-**Type up a storm.** Typhoon is a typing test with a social side: save your results, climb a live leaderboard, add friends, chat in real time and share your best runs with the community.
+# Miko-Miko Type
+
+Miko-Miko Type is a typing test with a social side: save your results, climb a live leaderboard, add friends, chat in real time and share your best runs with the community.
 
 Built with plain HTML, CSS and vanilla JavaScript (ES modules, no build step) on top of [Supabase](https://supabase.com) for auth, Postgres, storage and realtime websockets.
 
-Typhoon started as **Miko-Miko Type**, a WEB1 exam project by [Colombe](https://github.com/colombefioren) (STD24176) and [Mihaja](https://github.com/Whipander) (STD24126) at HEI.
+Miko-Miko Type started as a WEB1 exam project by [Colombe](https://github.com/colombefioren) (STD24176) and [Mihaja](https://github.com/Whipander) (STD24126) at HEI.
 
 ## Features
 
@@ -15,7 +17,7 @@ Typhoon started as **Miko-Miko Type**, a WEB1 exam project by [Colombe](https://
 - Length: 15, 30 or 50 words
 - Live progress and speed, a three-line scrolling text window and a smooth caret
 - Standard scoring: WPM from correctly typed words, raw WPM, keystroke accuracy and a correct / incorrect / extra / missed breakdown
-- Speed chart with per-second raw speed and errors
+- Speed chart with per-second raw speed and errors, plus confetti when you finish (extra for a personal best)
 - Backspace into the previous word to fix a mistake
 - <kbd>Tab</kbd> restarts, <kbd>Enter</kbd> starts the next test
 - Works without an account: guest results are kept in the browser, and logging in from the results screen saves the last test
@@ -41,7 +43,7 @@ Typhoon started as **Miko-Miko Type**, a WEB1 exam project by [Colombe](https://
 
 ### Everywhere
 
-- Light and dark themes (follows the system, with a toggle)
+- Navy dark theme by default, with a light theme toggle
 - Responsive layout with a bottom tab bar on phones
 - Keyboard accessible, with visible focus and reduced-motion support
 
@@ -66,7 +68,7 @@ npm run db:stop    # stop the local Supabase containers
 
 ## Importing Miko-Miko data
 
-Backups of the old Miko-Miko project (a `pg_dumpall` `.gz` file and the storage `.zip`) can be imported into a Typhoon database:
+Backups of the old Miko-Miko project (a `pg_dumpall` `.gz` file and the storage `.zip`) can be imported into the current database:
 
 ```bash
 npm run db:import-legacy -- /path/to/backup.gz /path/to/storage.zip
@@ -117,4 +119,4 @@ tests/                      node:test unit tests
 
 ## Credits
 
-Fonts: [Geist and Geist Mono](https://vercel.com/font) (SIL Open Font License). Icons: [Phosphor](https://phosphoricons.com). Charts: [Chart.js](https://www.chartjs.org).
+Logo: Mimi and Coco, the Miko-Miko mascots. Fonts: [Geist](https://vercel.com/font) and [Cascadia Mono](https://github.com/microsoft/cascadia-code) (SIL Open Font License). Icons: [Phosphor](https://phosphoricons.com). Charts: [Chart.js](https://www.chartjs.org).

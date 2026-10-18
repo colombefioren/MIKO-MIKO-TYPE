@@ -385,7 +385,7 @@ async function renderProfile(profileId, viewer) {
     replaceChildren(root, emptyState({ iconName: "user-circle-dashed", title: "Profile not found", body: "This typist does not exist or deleted their account." }));
     return;
   }
-  document.title = `${profile.username} | Typhoon`;
+  document.title = `${profile.username} | Miko-Miko Type`;
 
   const [results, friends] = await Promise.all([listResults(profileId, 50), getFriendsOf(profileId)]);
 

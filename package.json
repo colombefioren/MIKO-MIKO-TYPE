@@ -1,8 +1,8 @@
 {
-  "name": "typhoon",
+  "name": "miko-miko-type",
   "version": "2.0.0",
   "private": true,
-  "description": "Typhoon: a social typing test with friends, chat and live leaderboards, built with vanilla JavaScript and Supabase.",
+  "description": "Miko-Miko Type: a social typing test with friends, chat and live leaderboards, built with vanilla JavaScript and Supabase.",
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 5500 --bind 127.0.0.1",
